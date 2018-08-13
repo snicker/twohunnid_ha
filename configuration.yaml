@@ -74,4 +74,4 @@ light:
   - platform: x10
     devices:
       - id: b2
-        name: Backyard String Lights
+        name: backyard_string_lights
