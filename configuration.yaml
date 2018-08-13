@@ -69,3 +69,9 @@ cloud:
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
+
+light:
+  - platform: x10
+    devices:
+      - id: b2
+        name: Backyard String Lights
