@@ -1,0 +1,20 @@
+media_player.chrome:
+  config_entry_id:
+  name: Chrome Plex Client
+  platform: plex
+  unique_id: 2wwxq0668wq168in541omrqq
+media_player.aftt:
+  config_entry_id:
+  name:
+  platform: plex
+  unique_id: 53d059d0d37a5f5e-com-plexapp-android
+media_player.aftt_2:
+  config_entry_id:
+  name:
+  platform: plex
+  unique_id: 15f9531cecae6b7a-com-plexapp-android
+media_player.iphone_3:
+  config_entry_id:
+  name:
+  platform: plex
+  unique_id: 447F25E1-D805-4F02-A3FD-52EBCFA720C8
