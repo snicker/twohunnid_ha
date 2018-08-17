@@ -1,6 +1,15 @@
-default_view:
-  view: yes
-  icon: mdi:home
+hahardware:
+  name: HomeAssistant Hardware
+  view: no
   entities:
-    - group.all_lights
-    - group.all_locks
+    - sensor.disk_use_percent_home
+    - sensor.memory_use_percent
+    - sensor.load_5m
+    - sensor.since_last_boot
+	
+configuration:
+  name: Config
+  icon: mdi:cogs
+  view: yes
+  entities:
+    - group.hahardware
