@@ -42,6 +42,12 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 
 #begin two hunnid crap
+vera:
+  vera_controller_url: http://192.168.1.191:3480/
+  exclude: []
+  # Optional to import switches as lights - this is a list of vera device ids
+  lights: [19,28,27]
+  
 light:
   - platform: x10
     devices:
