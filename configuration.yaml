@@ -34,10 +34,6 @@ tts:
 
 cloud:
 
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
-
 #begin two hunnid crap
 vera:
   vera_controller_url: http://192.168.1.191:3480/
@@ -66,3 +62,7 @@ sensor:
       - type: load_5m
       - type: since_last_boot
       
+#includes	  
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
