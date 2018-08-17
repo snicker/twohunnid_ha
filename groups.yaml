@@ -6,7 +6,7 @@ hahardware:
     - sensor.memory_use_percent
     - sensor.load_5m
     - sensor.since_last_boot
-	
+
 configuration:
   name: Config
   icon: mdi:cogs
