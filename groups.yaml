@@ -1,6 +1,5 @@
-group:
-  default_view:
-    view: yes
-    icon: mdi:home
-    entities:
-      - light.backyard_string_lights
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - light.backyard_string_lights
