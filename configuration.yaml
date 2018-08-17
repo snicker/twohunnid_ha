@@ -49,7 +49,7 @@ light:
   - platform: x10
     devices:
       - id: b2
-        name: Backyard String Lights
+        name: String Lights
 
 sensor:
   - platform: yr
