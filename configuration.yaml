@@ -57,3 +57,13 @@ light:
     devices:
       - id: b2
         name: backyard_string_lights
+        friendly_name: Backyard String Lights
+        
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_use_percent
+      - type: load_5m
+      - type: since_last_boot
