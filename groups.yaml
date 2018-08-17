@@ -1,6 +1,6 @@
-  default_view:
-    view: yes
-    icon: mdi:home-assistant
-    entities:
-      - group.all_lights
-      - group.all_locks
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.all_lights
+    - group.all_locks
