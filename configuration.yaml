@@ -29,9 +29,6 @@ map:
 
 sun:
 
-sensor:
-  - platform: yr
-
 tts:
   - platform: google
 
@@ -58,8 +55,9 @@ light:
       - id: b2
         name: backyard_string_lights
         friendly_name: Backyard String Lights
-        
+
 sensor:
+  - platform: yr
   - platform: systemmonitor
     resources:
       - type: disk_use_percent
@@ -67,3 +65,4 @@ sensor:
       - type: memory_use_percent
       - type: load_5m
       - type: since_last_boot
+      
