@@ -26,6 +26,6 @@ lights:
   view: no
   entities:
     - light.string_lights
-	- light.basement_lamp_28
-	- light.christmas_tree_27
-	- light.patio_lights_19
+    - light.basement_lamp_28
+    - light.christmas_tree_27
+    - light.patio_lights_19
