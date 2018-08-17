@@ -1,3 +1,10 @@
+default_view:
+  view: yes
+  name: Main
+  entities:
+    - group.all_locks
+    - group.all_lights
+
 hahardware:
   name: HomeAssistant Hardware
   view: no
@@ -13,3 +20,12 @@ configuration:
   view: yes
   entities:
     - group.hahardware
+
+lights:
+  name: Lights
+  view: no
+  entities:
+    - light.string_lights
+	- light.basement_lamp_28
+	- light.christmas_tree_27
+	- light.patio_lights_19
