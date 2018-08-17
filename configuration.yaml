@@ -48,6 +48,10 @@ vera:
   # Optional to import switches as lights - this is a list of vera device ids
   lights: [19,28,27]
   
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  
 light:
   - platform: x10
     devices:
