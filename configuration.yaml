@@ -61,7 +61,7 @@ sensor:
       - type: load_5m
       - type: since_last_boot
       
-#includes	  
+#includes  
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
