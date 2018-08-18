@@ -6,3 +6,8 @@ presence detection
 edgerouter syslog monitor https://github.com/scadagenius/erxsyslog
 bluetooth device detection
 HA app on devices
+
+plants
+===
+set up plantgateway on a pi zero https://github.com/ChristianKuehnel/plantgateway/blob/master/doc/overview.md
+add plantmonitor stuffs
