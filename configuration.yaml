@@ -63,6 +63,88 @@ sensor:
       - type: memory_use_percent
       - type: load_5m
       - type: since_last_boot
+  ##### PLANTS #####
+  #### PLANTS - zebra plant ####
+  - platform: mqtt
+    state_topic: "twohunnidha/sensors/plants/zebra_plant/"
+    name: plant_zebra_plant
+    value_template: "{{ value_json.moisture }}"
+    json_attributes:
+      - battery
+      - moisture
+      - temperature
+      - brightness
+      - timestamp
+      - conductivity
+  - platform: template
+    sensors:
+      plant_zebra_plant_battery:
+        friendly_name: "Zebra Plant - Battery"
+        entity_id: sensor.plant_zebra_plant
+        value_template: "{{ sensor.plant_zebra_plant.attributes.battery }}"
+        device_class: battery
+        unit_of_measurement: '%'
+      plant_zebra_plant_moisture:
+        friendly_name: "Zebra Plant - Moisture"
+        entity_id: sensor.plant_zebra_plant
+        unit_of_measurement: '%'
+        value_template: "{{ sensor.plant_zebra_plant.attributes.moisture }}"
+      plant_zebra_plant_temperature:
+        friendly_name: "Zebra Plant - Temperature"
+        entity_id: sensor.plant_zebra_plant
+        unit_of_measurement: '°F'
+        value_template: >
+          {{((sensor.plant_zebra_plant.attributes.temperature* 9 / 5)+ 32)|round(1)}}
+      plant_zebra_plant_brightness:
+        friendly_name: "Zebra Plant - Brightness"
+        entity_id: sensor.plant_zebra_plant
+        value_template: "{{ sensor.plant_zebra_plant.attributes.brightness }}"
+      plant_zebra_plant_conductivity:
+        friendly_name: "Zebra Plant - Conductivity"
+        entity_id: sensor.plant_zebra_plant
+        unit_of_measurement: 'µS/cm'
+        value_template: "{{ sensor.plant_zebra_plant.attributes.conductivity }}"
+        
+  #### PLANTS - desert rose ####
+  - platform: mqtt
+    state_topic: "twohunnidha/sensors/plants/desert_rose/"
+    name: plant_desert_rose
+    value_template: "{{ value_json.moisture }}"
+    json_attributes:
+      - battery
+      - moisture
+      - temperature
+      - brightness
+      - timestamp
+      - conductivity
+  - platform: template
+    sensors:
+      plant_desert_rose_battery:
+        friendly_name: "Desert Rose - Battery"
+        entity_id: sensor.plant_desert_rose
+        value_template: "{{ sensor.plant_desert_rose.attributes.battery }}"
+        device_class: battery
+        unit_of_measurement: '%'
+      plant_desert_rose_moisture:
+        friendly_name: "Desert Rose - Moisture"
+        entity_id: sensor.plant_desert_rose
+        unit_of_measurement: '%'
+        value_template: "{{ sensor.plant_desert_rose.attributes.moisture }}"
+      plant_desert_rose_temperature:
+        friendly_name: "Desert Rose - Temperature"
+        entity_id: sensor.plant_desert_rose
+        unit_of_measurement: '°F'
+        value_template: >
+          {{((sensor.plant_desert_rose.attributes.temperature* 9 / 5)+ 32)|round(1)}}
+      plant_desert_rose_brightness:
+        friendly_name: "Desert Rose - Brightness"
+        entity_id: sensor.plant_desert_rose
+        value_template: "{{ sensor.plant_desert_rose.attributes.brightness }}"
+      plant_desert_rose_conductivity:
+        friendly_name: "Desert Rose - Conductivity"
+        entity_id: sensor.plant_desert_rose
+        unit_of_measurement: 'µS/cm'
+        value_template: "{{ sensor.plant_desert_rose.attributes.conductivity }}"
       
 #includes  
 group: !include groups.yaml
