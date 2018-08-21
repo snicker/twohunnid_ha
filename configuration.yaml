@@ -94,7 +94,7 @@ sensor:
         entity_id: sensor.plant_zebra_plant
         unit_of_measurement: '°F'
         value_template: >
-          {{((state_attr('sensor.plant_desert_rose', 'temperature')* 9 / 5)+ 32)|round(1)}}
+          {{ ((float(state_attr('sensor.plant_zebra_plant', 'temperature')) * 9 /5)+32)|round(1 }}
       plant_zebra_plant_brightness:
         friendly_name: "Zebra Plant - Brightness"
         entity_id: sensor.plant_zebra_plant
@@ -135,7 +135,7 @@ sensor:
         entity_id: sensor.plant_desert_rose
         unit_of_measurement: '°F'
         value_template: >
-          {{((state_attr('sensor.plant_desert_rose', 'temperature')* 9 / 5)+ 32)|round(1)}}
+          {{ ((float(state_attr('sensor.plant_desert_rose', 'temperature')) * 9 /5)+32)|round(1 }}
       plant_desert_rose_brightness:
         friendly_name: "Desert Rose - Brightness"
         entity_id: sensor.plant_desert_rose
