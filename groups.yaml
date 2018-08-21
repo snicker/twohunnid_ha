@@ -29,3 +29,10 @@ lights:
     - light.basement_lamp_28
     - light.christmas_tree_27
     - light.patio_lights_19
+    
+plants:
+  name: Plants
+  view: yes
+  entities:
+    - plant.desert_rose
+    - plant.zebra_plant
