@@ -145,6 +145,34 @@ sensor:
         entity_id: sensor.plant_desert_rose
         unit_of_measurement: 'µS/cm'
         value_template: "{{ states.sensor.plant_desert_rose.attributes.conductivity }}"
+        
+plant:
+  zebra_plant:
+    sensors:
+      moisture: sensor.plant_zebra_plant_moisture
+      battery: sensor.plant_zebra_plant_battery
+      temperature: sensor.plant_zebra_plant_temperature
+      conductivity: sensor.plant_zebra_plant_conductivity
+      brightness: sensor.plant_zebra_plant_brightness
+    min_moisture: 20
+    max_moisture: 60
+    min_battery: 17
+    min_conductivity: 350
+    min_temperature: 15
+    max_temperature: 30
+  desert_rose:
+    sensors:
+      moisture: sensor.plant_desert_rose_moisture
+      battery: sensor.plant_desert_rose_battery
+      temperature: sensor.plant_desert_rose_temperature
+      conductivity: sensor.plant_desert_rose_conductivity
+      brightness: sensor.plant_desert_rose_brightness
+    min_moisture: 20
+    max_moisture: 60
+    min_battery: 17
+    min_conductivity: 350
+    min_temperature: 15
+    max_temperature: 30
       
 #includes  
 group: !include groups.yaml
