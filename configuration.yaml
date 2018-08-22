@@ -157,7 +157,7 @@ plant:
     min_moisture: 20
     max_moisture: 60
     min_battery: 17
-    min_conductivity: 350
+    min_conductivity: 250
     min_temperature: 15
     max_temperature: 30
   desert_rose:
@@ -170,7 +170,7 @@ plant:
     min_moisture: 20
     max_moisture: 60
     min_battery: 17
-    min_conductivity: 350
+    min_conductivity: 250
     min_temperature: 15
     max_temperature: 30
       
