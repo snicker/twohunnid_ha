@@ -36,3 +36,4 @@ plants:
   entities:
     - plant.desert_rose
     - plant.zebra_plant
+    - plant.peace_lily
