@@ -18,3 +18,13 @@ media_player.iphone_3:
   name:
   platform: plex
   unique_id: 447F25E1-D805-4F02-A3FD-52EBCFA720C8
+climate.hallway:
+  config_entry_id: 86a6945c561341d2b902130dfd2db7e3
+  name:
+  platform: nest
+  unique_id: 0iAlloSPgoffNGL2a2nzo_TXaDaB5-0k
+climate.dining_room:
+  config_entry_id: 86a6945c561341d2b902130dfd2db7e3
+  name:
+  platform: nest
+  unique_id: 0iAlloSPgofArlwOdr8FEPTXaDaB5-0k

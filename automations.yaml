@@ -1,1 +1,33 @@
-[]
+- id: '1534899458430'
+  alias: 'String Lights: On at Dusk'
+  trigger:
+  - event: sunset
+    offset: -00:10
+    platform: sun
+  condition: []
+  action:
+  - data:
+      entity_id: ' light.string_lights'
+    service: light.turn_on
+- id: '1534899747739'
+  alias: 'String Lights: Off at 10pm'
+  trigger:
+  - at: '22:00:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: light.string_lights
+    service: light.turn_off
+- id: '1534900268165'
+  alias: 'Plants: Notify of Problems'
+  trigger:
+  - entity_id: group.all_plants
+    from: ok
+    platform: state
+    to: problem
+  condition: []
+  action:
+  - data:
+      message: plant problems!
+    service: persistent_notification.create

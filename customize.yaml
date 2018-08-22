@@ -2,8 +2,6 @@ group.all_lights:
   hidden: false
 group.all_locks:
   hidden: false
-
-#plants
 plant.desert_rose:
   friendly_name: Desert Rose
 plant.zebra_plant:
