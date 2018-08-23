@@ -187,6 +187,47 @@ sensor:
         unit_of_measurement: 'µS/cm'
         value_template: "{{ states.sensor.plant_peace_lily.attributes.conductivity }}"
         
+  #### PLANTS - lemon_verbena ####
+  - platform: mqtt
+    state_topic: "twohunnidha/sensors/plants/lemon_verbena/"
+    name: plant_lemon_verbena
+    value_template: "{{ value_json.moisture }}"
+    json_attributes:
+      - battery
+      - moisture
+      - temperature
+      - brightness
+      - timestamp
+      - conductivity
+  - platform: template
+    sensors:
+      plant_lemon_verbena_battery:
+        friendly_name: "Lemon Verbena - Battery"
+        entity_id: sensor.plant_lemon_verbena
+        value_template: "{{ states.sensor.plant_lemon_verbena.attributes.battery }}"
+        device_class: battery
+        unit_of_measurement: '%'
+      plant_lemon_verbena_moisture:
+        friendly_name: "Lemon Verbena - Moisture"
+        entity_id: sensor.plant_lemon_verbena
+        unit_of_measurement: '%'
+        value_template: "{{ states.sensor.plant_lemon_verbena.attributes.moisture }}"
+      plant_lemon_verbena_temperature:
+        friendly_name: "Lemon Verbena - Temperature"
+        entity_id: sensor.plant_lemon_verbena
+        unit_of_measurement: '°F'
+        value_template: >
+          {{ ((float(state_attr('sensor.plant_lemon_verbena', 'temperature')) * 9 /5)+32)|round(1) }}
+      plant_lemon_verbena_brightness:
+        friendly_name: "Lemon Verbena - Brightness"
+        entity_id: sensor.plant_lemon_verbena
+        value_template: "{{ states.sensor.plant_lemon_verbena.attributes.brightness }}"
+      plant_lemon_verbena_conductivity:
+        friendly_name: "Lemon Verbena - Conductivity"
+        entity_id: sensor.plant_lemon_verbena
+        unit_of_measurement: 'µS/cm'
+        value_template: "{{ states.sensor.plant_lemon_verbena.attributes.conductivity }}"
+        
 plant:
   zebra_plant:
     sensors:
@@ -221,6 +262,19 @@ plant:
       temperature: sensor.plant_peace_lily_temperature
       conductivity: sensor.plant_peace_lily_conductivity
       brightness: sensor.plant_peace_lily_brightness
+    min_moisture: 20
+    max_moisture: 60
+    min_battery: 17
+    min_conductivity: 250
+    min_temperature: 15
+    max_temperature: 30
+  lemon_verbena:
+    sensors:
+      moisture: sensor.plant_lemon_verbena_moisture
+      battery: sensor.plant_lemon_verbena_battery
+      temperature: sensor.plant_lemon_verbena_temperature
+      conductivity: sensor.plant_lemon_verbena_conductivity
+      brightness: sensor.plant_lemon_verbena_brightness
     min_moisture: 20
     max_moisture: 60
     min_battery: 17
