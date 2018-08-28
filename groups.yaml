@@ -34,6 +34,7 @@ plants:
   name: Plants
   view: yes
   entities:
+    - history_graph.plant_moisture
     - plant.desert_rose
     - plant.zebra_plant
     - plant.peace_lily
