@@ -43,6 +43,11 @@ vera:
   exclude: []
   # Optional to import switches as lights - this is a list of vera device ids
   lights: [19,27]
+
+zwave:
+  usb_path: /dev/ttyACM0
+  config_path: /srv/homeassistant/lib/python3.5/site-packages/python_openzwave/ozw_config
+  network_key: !secret zwave_network_key
   
 nest:
   client_id: !secret nest_client_id
