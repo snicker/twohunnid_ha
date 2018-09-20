@@ -1,0 +1,34 @@
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+server {
+        listen 443;
+        server_name name.of.server.tld;
+        location / {
+            proxy_pass http://<ip_address_of_HASS>:8123/;
+            proxy_set_header                Host                    $host;
+            proxy_set_header                X-Real-IP               $remote_addr;
+            proxy_set_header                X-Forwarded-For             $proxy_add_x_forwarded_for;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+            proxy_cache off;
+        }
+        location /api/telegram_webhooks {
+                proxy_pass http://<ip_address_of_HASS>:8123/api/telegram_webhooks;
+                proxy_http_version 1.1;
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection $connection_upgrade;
+                allow 149.154.167.197/32;
+                allow 149.154.167.198/31;
+                allow 149.154.167.200/29;
+                allow 149.154.167.208/28;
+                allow 149.154.167.224/29;
+                allow 149.154.167.232/31;
+                deny all;
+        }
+}
