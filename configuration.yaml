@@ -318,3 +318,4 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 notify: !include notify.yaml
+alert: !include alerts.yaml
