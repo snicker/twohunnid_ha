@@ -29,6 +29,13 @@ map:
 
 sun:
 
+telegram_bot:
+  - platform: webhooks
+    api_key: !secret telegram_bot_key
+    parse_mode: html
+    allowed_chat_ids:
+      - !secret telegram_bot_chat_id_1
+
 tts:
   - platform: google
 
