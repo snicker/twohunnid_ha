@@ -1,0 +1,6 @@
+- platform: template
+  sensors:
+    garage_door:
+      friendly_name: "Garage Door"
+      device_class: garage_door
+      value_template: "{{ states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 }}"
