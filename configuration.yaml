@@ -248,59 +248,7 @@ sensor:
         unit_of_measurement: 'µS/cm'
         value_template: "{{ states.sensor.plant_lemon_verbena.attributes.conductivity }}"
         
-plant:
-  zebra_plant:
-    sensors:
-      moisture: sensor.plant_zebra_plant_moisture
-      battery: sensor.plant_zebra_plant_battery
-      temperature: sensor.plant_zebra_plant_temperature
-      conductivity: sensor.plant_zebra_plant_conductivity
-      brightness: sensor.plant_zebra_plant_brightness
-    min_moisture: 20
-    max_moisture: 60
-    min_battery: 17
-    min_conductivity: 250
-    min_temperature: 15
-    max_temperature: 30
-  desert_rose:
-    sensors:
-      moisture: sensor.plant_desert_rose_moisture
-      battery: sensor.plant_desert_rose_battery
-      temperature: sensor.plant_desert_rose_temperature
-      conductivity: sensor.plant_desert_rose_conductivity
-      brightness: sensor.plant_desert_rose_brightness
-    min_moisture: 20
-    max_moisture: 60
-    min_battery: 17
-    min_conductivity: 250
-    min_temperature: 15
-    max_temperature: 30
-  peace_lily:
-    sensors:
-      moisture: sensor.plant_peace_lily_moisture
-      battery: sensor.plant_peace_lily_battery
-      temperature: sensor.plant_peace_lily_temperature
-      conductivity: sensor.plant_peace_lily_conductivity
-      brightness: sensor.plant_peace_lily_brightness
-    min_moisture: 20
-    max_moisture: 60
-    min_battery: 17
-    min_conductivity: 250
-    min_temperature: 15
-    max_temperature: 30
-  lemon_verbena:
-    sensors:
-      moisture: sensor.plant_lemon_verbena_moisture
-      battery: sensor.plant_lemon_verbena_battery
-      temperature: sensor.plant_lemon_verbena_temperature
-      conductivity: sensor.plant_lemon_verbena_conductivity
-      brightness: sensor.plant_lemon_verbena_brightness
-    min_moisture: 20
-    max_moisture: 60
-    min_battery: 17
-    min_conductivity: 250
-    min_temperature: 15
-    max_temperature: 30
+plant: !include_dir_named configuration/plant/
 
 history_graph:
   plant_moisture:

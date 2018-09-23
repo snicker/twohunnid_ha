@@ -1,0 +1,12 @@
+sensors:
+  moisture: sensor.plant_zebra_plant_moisture
+  battery: sensor.plant_zebra_plant_battery
+  temperature: sensor.plant_zebra_plant_temperature
+  conductivity: sensor.plant_zebra_plant_conductivity
+  brightness: sensor.plant_zebra_plant_brightness
+min_moisture: 20
+max_moisture: 60
+min_battery: 17
+min_conductivity: 250
+min_temperature: 15
+max_temperature: 30

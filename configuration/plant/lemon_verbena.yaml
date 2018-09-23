@@ -1,0 +1,12 @@
+sensors:
+  moisture: sensor.plant_lemon_verbena_moisture
+  battery: sensor.plant_lemon_verbena_battery
+  temperature: sensor.plant_lemon_verbena_temperature
+  conductivity: sensor.plant_lemon_verbena_conductivity
+  brightness: sensor.plant_lemon_verbena_brightness
+min_moisture: 20
+max_moisture: 60
+min_battery: 17
+min_conductivity: 250
+min_temperature: 15
+max_temperature: 30

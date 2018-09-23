@@ -1,0 +1,12 @@
+sensors:
+  moisture: sensor.plant_desert_rose_moisture
+  battery: sensor.plant_desert_rose_battery
+  temperature: sensor.plant_desert_rose_temperature
+  conductivity: sensor.plant_desert_rose_conductivity
+  brightness: sensor.plant_desert_rose_brightness
+min_moisture: 20
+max_moisture: 60
+min_battery: 17
+min_conductivity: 250
+min_temperature: 15
+max_temperature: 30
