@@ -1,0 +1,7 @@
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /home
+    - type: memory_use_percent
+    - type: load_5m
+    - type: since_last_boot
