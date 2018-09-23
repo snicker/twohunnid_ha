@@ -1,4 +1,4 @@
-#### PLANTS - desert rose ####
+﻿#### PLANTS - desert rose ####
 
 - platform: mqtt
   state_topic: "twohunnidha/sensors/plants/desert_rose/"
@@ -28,7 +28,7 @@
     plant_desert_rose_temperature:
       friendly_name: "Desert Rose - Temperature"
       entity_id: sensor.plant_desert_rose
-      unit_of_measurement: 'F'
+      unit_of_measurement: '°F'
       value_template: >
         {{ ((float(state_attr('sensor.plant_desert_rose', 'temperature')) * 9 /5)+32)|round(1) }}
     plant_desert_rose_brightness:
@@ -38,6 +38,6 @@
     plant_desert_rose_conductivity:
       friendly_name: "Desert Rose - Conductivity"
       entity_id: sensor.plant_desert_rose
-      unit_of_measurement: '�S/cm'
+      unit_of_measurement: 'µS/cm'
       value_template: "{{ states.sensor.plant_desert_rose.attributes.conductivity }}"
       
