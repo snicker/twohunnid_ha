@@ -1,8 +1,8 @@
 garage_door:
   name: Garage is still open!
   done_message: Garage is closed.
-  entity_id: sensor.vision_zg8101_garage_door_detector_alarm_level
-  state: 255
+  entity_id: binary_sensor.garage_door
+  state: 'on'
   repeat: 5
   can_acknowledge: True
   skip_first: True
