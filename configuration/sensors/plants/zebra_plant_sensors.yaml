@@ -30,7 +30,7 @@
     plant_zebra_plant_temperature:
       friendly_name: "Zebra Plant - Temperature"
       entity_id: sensor.plant_zebra_plant
-      unit_of_measurement: '°F'
+      unit_of_measurement: 'F'
       value_template: >
         {{ ((float(state_attr('sensor.plant_zebra_plant', 'temperature')) * 9 /5)+32)|round(1) }}
     plant_zebra_plant_brightness:
