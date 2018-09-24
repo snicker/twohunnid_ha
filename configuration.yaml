@@ -3,7 +3,7 @@ homeassistant:
   latitude: !secret home_lat
   longitude: !secret home_long
   elevation: !secret home_elevation
-  unit_system: metric
+  unit_system: imperial
   time_zone: !secret home_time_zone
   customize: !include customize.yaml
 
