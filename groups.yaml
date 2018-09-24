@@ -46,23 +46,27 @@ plants:
 all_doors:
   name: Doors
   view: no
+  control: hidden
   entities:
     - binary_sensor.garage_door
     
 motion_backyard_north:
   name: Motion - Backyard (North)
+  control: hidden
   entities:
     - binary_sensor.motion_backyard_north
     - sensor.device_motion_backyard_north_battery
     
 motion_backyard:
   name: Motion - Backyard
+  control: hidden
   view: no
   entities:
     - group.motion_backyard_north
     
 all_motion_sensors:
   name: Motion Sensors - All
+  control: hidden
   view: no
   entities:
     - binary_sensor.motion_backyard_north
