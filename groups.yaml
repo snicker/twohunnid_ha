@@ -1,9 +1,11 @@
 default_view:
   view: yes
   name: Main
+  icon: mdi:home
   entities:
     - group.all_locks
     - group.all_lights
+    - group.all_doors
     - group.all_motion_sensors
 
 hahardware:
@@ -41,6 +43,12 @@ plants:
     - plant.peace_lily
     - plant.lemon_verbena
     
+all_doors:
+  name: Doors
+  view: no
+  entities:
+    - binary_sensor.garage_door
+    
 motion_backyard_north:
   name: Motion - Backyard (North)
   entities:
@@ -49,13 +57,13 @@ motion_backyard_north:
     
 motion_backyard:
   name: Motion - Backyard
-  view: yes
+  view: no
   entities:
     - group.motion_backyard_north
     
 all_motion_sensors:
   name: Motion Sensors - All
-  view: yes
+  view: no
   entities:
     - binary_sensor.motion_backyard_north
   
