@@ -4,6 +4,7 @@ default_view:
   entities:
     - group.all_locks
     - group.all_lights
+    - group.all_motion_sensors
 
 hahardware:
   name: HomeAssistant Hardware
@@ -52,7 +53,7 @@ motion_backyard:
   entities:
     - group.motion_backyard_north
     
-motion_all:
+all_motion_sensors:
   name: Motion Sensors - All
   view: yes
   entities:
