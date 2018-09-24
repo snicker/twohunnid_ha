@@ -39,3 +39,23 @@ plants:
     - plant.zebra_plant
     - plant.peace_lily
     - plant.lemon_verbena
+    
+motion_backyard_north:
+  name: Motion - Backyard (North)
+  entities:
+    - binary_sensor.motion_backyard_north
+    - sensor.device_motion_backyard_north_battery
+    
+motion_backyard:
+  name: Motion - Backyard
+  view: yes
+  entities:
+    - group.motion_backyard_north
+    
+motion_all:
+  name: Motion Sensors - All
+  view: yes
+  entities:
+    - binary_sensor.motion_backyard_north
+  
+  

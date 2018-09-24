@@ -1,6 +1,6 @@
 - platform: template
   sensors:
-    device_motion_backyard_north:
+    device_motion_backyard_north_battery:
       friendly_name: "Motion - Backyard (North) - Battery"
       entity_id: zwave.vision_zp3102_pir_motion_sensor
       device_class: battery
