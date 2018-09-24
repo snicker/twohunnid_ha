@@ -2,5 +2,6 @@
   sensors:
     motion_backyard_north:
       friendly_name: "Motion - Backyard (North)"
+      entity_id: sensor.vision_zp3102_pir_motion_sensor_alarm_level
       device_class: motion
       value_template: "{{ states('sensor.vision_zp3102_pir_motion_sensor_alarm_level')|int == 255 }}"
