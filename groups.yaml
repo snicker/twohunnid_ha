@@ -3,10 +3,17 @@ default_view:
   name: Main
   icon: mdi:home
   entities:
-    - group.all_locks
-    - group.all_lights
+    - alarm_control_panel.home_alarm
     - group.all_doors
     - group.all_motion_sensors
+    
+lights_and_locks:
+  view: yes
+  name: Devices
+  icon: mdi:light
+  entities:
+    - group.all_locks
+    - group.all_lights
 
 hahardware:
   name: HomeAssistant Hardware
