@@ -29,6 +29,8 @@ map:
 
 sun:
 
+alarm_control_panel: !include configuration/alarm.yaml
+
 telegram_bot:
   - platform: webhooks
     api_key: !secret telegram_bot_key
