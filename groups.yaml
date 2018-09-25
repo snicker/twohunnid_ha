@@ -14,9 +14,9 @@ alarm_arming:
   icon: mdi:lock
   entities:
     - alarm_control_panel.home_alarm
-    - script.arm_away
-    - script.arm_home
-    - script.arm_night
+    - script.alarm_arm_away
+    - script.alarm_arm_home
+    - script.alarm_arm_night
     
 lights_and_locks:
   view: yes
