@@ -10,7 +10,7 @@ default_view:
 lights_and_locks:
   view: yes
   name: Devices
-  icon: mdi:light
+  icon: mdi:lightbulb
   entities:
     - group.all_locks
     - group.all_lights
