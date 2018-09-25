@@ -1,24 +1,32 @@
 alarm_arm_night:
   alias: 'Alarm: Arm Night'
+  can_cancel: false
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
+      code: !secret alarm_panel_code
     service: alarm_control_panel.alarm_arm_night
 alarm_arm_away:
   alias: 'Alarm: Arm Away'
+  can_cancel: false
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
+      code: !secret alarm_panel_code
     service: alarm_control_panel.alarm_arm_away
 alarm_arm_home:
   alias: 'Alarm: Arm Home'
+  can_cancel: false
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
+      code: !secret alarm_panel_code
     service: alarm_control_panel.alarm_arm_home
 alarm_disarm:
   alias: 'Alarm: Disarm'
+  can_cancel: false
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
+      code: !secret alarm_panel_code
     service: alarm_control_panel.alarm_disarm
