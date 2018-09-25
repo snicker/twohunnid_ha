@@ -1,0 +1,24 @@
+alarm_arm_night:
+  alias: 'Alarm: Arm Night'
+  sequence:
+  - data:
+      entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_arm_night
+alarm_arm_away:
+  alias: 'Alarm: Arm Away'
+  sequence:
+  - data:
+      entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_arm_away
+alarm_arm_home:
+  alias: 'Alarm: Arm Home'
+  sequence:
+  - data:
+      entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_arm_home
+alarm_disarm:
+  alias: 'Alarm: Disarm'
+  sequence:
+  - data:
+      entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_disarm
