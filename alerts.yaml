@@ -5,6 +5,6 @@ garage_door:
   state: 'on'
   repeat: 5
   can_acknowledge: True
-  skip_first: False
+  skip_first: True
   notifiers:
     - !secret telegram_bot_chat_name_1
