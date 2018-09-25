@@ -1,0 +1,4 @@
+- platform: x10
+  devices:
+    - id: b2
+      name: String Lights
