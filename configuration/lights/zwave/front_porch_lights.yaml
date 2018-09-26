@@ -2,7 +2,7 @@
   lights:
     front_porch_lights:
       friendly_name: "Front Porch Lights"
-      level_template: '{{ 100 if is_state("switch.inovelli_nzw30_onoff_switch_switch", "on") else 0 }}' 
+      level_template: '{{ 255 if is_state("switch.inovelli_nzw30_onoff_switch_switch", "on") else 0 }}' 
       value_template: '{{ is_state("switch.inovelli_nzw30_onoff_switch_switch", "on") }}'
       turn_on:
         service: switch.turn_on
