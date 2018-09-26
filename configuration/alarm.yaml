@@ -9,3 +9,5 @@
   armed_home:
     pending_time: 0
     delay_time: 0
+  armed_night:
+    pending_time: 5
