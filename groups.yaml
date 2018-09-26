@@ -62,6 +62,13 @@ lights:
     - light.christmas_tree_27
     - light.patio_lights_19
     
+exterior_lights:
+  name: Exterior Lights
+  view: no
+  entities:
+    - light.string_lights
+    - light.front_porch_lights
+    
 all_doors:
   name: Doors
   view: no
