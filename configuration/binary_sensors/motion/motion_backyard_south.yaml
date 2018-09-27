@@ -1,6 +1,6 @@
 - platform: template
   sensors:
-    motion_backyard_north:
+    motion_backyard_south:
       friendly_name: "Motion - Backyard (South)"
       entity_id: sensor.vision_zp3102_pir_motion_sensor_alarm_level_2
       device_class: motion
