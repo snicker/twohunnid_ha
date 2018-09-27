@@ -1,0 +1,7 @@
+- platform: template
+  sensors:
+    motion_front_driveway:
+      friendly_name: "Motion - Front Driveway"
+      entity_id: sensor.vision_zp3102_pir_motion_sensor_alarm_level_4
+      device_class: motion
+      value_template: "{{ states('sensor.vision_zp3102_pir_motion_sensor_alarm_level_4')|int == 255 }}"
