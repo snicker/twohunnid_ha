@@ -1,0 +1,12 @@
+
+auto_start: False
+filter:
+  include_domains:
+    - alarm_control_panel
+    - light
+    - lock
+  exclude_entities:
+    - light.kitchen_light
+entity_config:
+  alarm_control_panel.home_alarm:
+    code: !secret alarm_panel_code

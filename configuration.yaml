@@ -33,6 +33,8 @@ sun:
 
 alarm_control_panel: !include configuration/alarm.yaml
 
+homekit: !include configuration/homekit.yaml
+
 telegram_bot:
   - platform: webhooks
     api_key: !secret telegram_bot_key
@@ -93,6 +95,7 @@ history_graph:
 #includes  
 group: !include groups.yaml
 automation: !include automations.yaml
+automation old: !include_dir_merge_list configuration/automations/
 script: !include scripts.yaml
 notify: !include notify.yaml
 alert: !include alerts.yaml
