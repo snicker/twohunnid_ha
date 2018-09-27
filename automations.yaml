@@ -1,5 +1,5 @@
 - id: '1534899458430'
-  alias: 'String Lights: On at Dusk'
+  alias: 'Exterior Lights: On at Dusk'
   trigger:
   - event: sunset
     offset: -00:10
@@ -7,18 +7,18 @@
   condition: []
   action:
   - data:
-      entity_id: ' light.string_lights'
-    service: light.turn_on
+      entity_id: group.exterior_landscape_lights
+    service: homeassistant.turn_on
 - id: '1534899747739'
-  alias: 'String Lights: Off at 10pm'
+  alias: 'Exterior Lights: Off at 10pm'
   trigger:
   - at: '22:00:00'
     platform: time
   condition: []
   action:
   - data:
-      entity_id: light.string_lights
-    service: light.turn_off
+      entity_id: group.exterior_lights
+    service: homeassistant.turn_off
 - id: '1534900268165'
   alias: 'Plants: Notify of Problems'
   trigger:
@@ -28,6 +28,84 @@
     to: problem
   condition: []
   action:
+  - data_template:
+      message: Plants just changed from {{ trigger.from_state.state }} to {{ trigger.to_state.state
+        }}
+    service: notify.nick
+- id: '1537420454578'
+  alias: 'HAStatus: Shutdown'
+  trigger:
+  - event: shutdown
+    platform: homeassistant
+  condition: []
+  action:
   - data:
-      message: plant problems!
-    service: persistent_notification.create
+      message: brb
+    service: notify.nick
+- id: '1537420502502'
+  alias: 'HAStatus: Start'
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition: []
+  action:
+  - data:
+      message: back
+    service: notify.nick
+- id: '1537421917666'
+  alias: 'Notification: Garage Door Open'
+  trigger:
+  - entity_id: sensor.vision_zg8101_garage_door_detector_alarm_level
+    from: '0'
+    platform: state
+    to: '255'
+  condition: []
+  action:
+  - data:
+      message: the garage is opening
+    service: notify.nick
+- id: '1537766581698'
+  alias: 'Motion Detected: Anywhere'
+  trigger:
+  - entity_id: group.all_motion_sensors
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: motion detected at the house!
+    service: notify.nick
+- id: '1537936842222'
+  alias: 'Alarm State: Armed, Run "Alarm State: Armed (Any)" Script'
+  trigger:
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: armed_night
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: armed_home
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: armed_away
+  condition: []
+  action:
+  - service: script.alarm_state_armed_any
+- id: '1537938020420'
+  alias: 'Alarm State: Disarmed, run Disarmed script'
+  trigger:
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: disarmed
+  condition: []
+  action:
+  - service: script.alarm_state_disarmed
+- id: '1538007620959'
+  alias: 'Alarm State: Armed Night, run "Armed Night" script'
+  trigger:
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: armed_night
+  condition: []
+  action:
+  - service: script.alarm_state_armed_night
