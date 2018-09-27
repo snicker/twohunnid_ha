@@ -30,7 +30,8 @@ alarm_state_armed_any:
   alias: 'Alarm State: Armed (any)'
   sequence:
   - data_template:
-      message: the alarm has been set to {{ states('alarm_control_panel.home_alarm')|replace('_',' ') }} mode
+      message: the alarm has been set to {{ states('alarm_control_panel.home_alarm')|replace('_','
+        ') }} mode
     service: notify.nick
   - service: lock.lock
 alarm_state_disarmed:
@@ -43,7 +44,7 @@ alarm_state_armed_night:
   alias: 'Alarm State: Armed Night'
   sequence:
   - data:
-      entity_id: group.exterior_lights
+      entity_id: group.all_exterior_lights
     service: homeassistant.turn_off
 siren_beep_beep:
   alias: 'Siren: beep beep'
@@ -55,7 +56,7 @@ siren_beep_beep:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_off
   - delay:
-      milliseconds: 200 
+      milliseconds: 200
   - data:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_on
@@ -63,4 +64,4 @@ siren_beep_beep:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_off
   - delay:
-      milliseconds: 200 
+      milliseconds: 200
