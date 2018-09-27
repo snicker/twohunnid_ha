@@ -64,3 +64,23 @@ siren_beep_beep:
     service: switch.turn_off
   - delay:
       milliseconds: 200 
+
+media_play_cops_outside:
+  alias: 'Media: Play Cops Outside'
+  sequence:
+  - data:
+      entity_id: light.outside_amplifier_28
+    service: homeassistant.turn_on
+  - data:
+      entity_id: media_player.spotify
+      source: Outside Dot
+    service: media_player.select_source
+  - data:
+      entity_id: media_player.spotify
+      volume_level: 1
+    service: media_player.volume_set
+  - data:
+      entity_id: media_player.spotify
+      media_content_id: spotify:user:1213704901:playlist:4nYFDBaNyyDWJZqZkCe5hX
+      media_content_type: playlist
+    service: media_player.play_media
