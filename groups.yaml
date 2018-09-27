@@ -97,6 +97,13 @@ motion_backyard_south:
     - binary_sensor.motion_backyard_south
     - sensor.device_motion_backyard_south_battery
     
+motion_backyard_south:
+  name: Motion - Front Yard (South)
+  control: hidden
+  entities:
+    - binary_sensor.motion_front_yard_south
+    - sensor.device_motion_front_yard_south_battery
+    
 motion_backyard:
   name: Motion - Backyard
   control: hidden
@@ -105,6 +112,13 @@ motion_backyard:
     - group.motion_backyard_north
     - group.motion_backyard_south
     
+motion_front_yard:
+  name: Motion - Front Yard
+  control: hidden
+  view: no
+  entities:
+    - group.motion_front_yard_south
+    
 all_motion_sensors:
   name: Motion Sensors - All
   control: hidden
@@ -112,5 +126,6 @@ all_motion_sensors:
   entities:
     - binary_sensor.motion_backyard_north
     - binary_sensor.motion_backyard_south
+    - binary_sensor.motion_front_yard_south
   
   
