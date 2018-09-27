@@ -97,7 +97,7 @@ motion_backyard_south:
     - binary_sensor.motion_backyard_south
     - sensor.device_motion_backyard_south_battery
     
-motion_backyard_south:
+motion_front_yard_south:
   name: Motion - Front Yard (South)
   control: hidden
   entities:
