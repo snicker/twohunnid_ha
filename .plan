@@ -6,8 +6,14 @@ presence detection
 edgerouter syslog monitor https://github.com/scadagenius/erxsyslog
 bluetooth device detection
 HA app on devices
+https://philhawthorne.com/making-home-assistants-presence-detection-not-so-binary/
 
-plants
+home security
 ===
-set up plantgateway on a pi zero https://github.com/ChristianKuehnel/plantgateway/blob/master/doc/overview.md
-add plantmonitor stuffs
+have backyard motion trigger playing cops on the backyard audio and beep beep the inside alarm and flash backyard lights if armed_night or armed away and night and send notifications
+	-if armed away, have motion detection inside sound the siren
+have cameras act as motion detection inside of homeassistant through mqtt
+
+cameras
+===
+set up cameras inside and outside
