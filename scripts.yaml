@@ -3,26 +3,65 @@ alarm_arm_night:
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
-      code: !secret alarm_panel_code
+      code: 7779
     service: alarm_control_panel.alarm_arm_night
 alarm_arm_away:
   alias: 'Alarm: Arm Away'
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
-      code: !secret alarm_panel_code
+      code: 7779
     service: alarm_control_panel.alarm_arm_away
 alarm_arm_home:
   alias: 'Alarm: Arm Home'
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
-      code: !secret alarm_panel_code
+      code: 7779
     service: alarm_control_panel.alarm_arm_home
 alarm_disarm:
   alias: 'Alarm: Disarm'
   sequence:
   - data:
       entity_id: alarm_control_panel.home_alarm
-      code: !secret alarm_panel_code
+      code: 7779
     service: alarm_control_panel.alarm_disarm
+alarm_state_armed_any:
+  alias: 'Alarm State: Armed (any)'
+  sequence:
+  - data_template:
+      message: the alarm has been set to {{ states('alarm_control_panel.home_alarm')|replace('_','
+        ') }} mode
+    service: notify.nick
+  - service: lock.lock
+alarm_state_disarmed:
+  alias: 'Alarm State: Disarmed'
+  sequence:
+  - data:
+      message: home alarm has been disarmed
+    service: notify.nick
+alarm_state_armed_night:
+  alias: 'Alarm State: Armed Night'
+  sequence:
+  - data:
+      entity_id: group.exterior_lights
+    service: homeassistant.turn_off
+siren_beep_beep:
+  alias: 'Siren: beep beep'
+  sequence:
+  - data:
+      entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+    service: switch.turn_on
+  - delay: '1'
+  - data:
+      entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+    service: switch.turn_off
+  - delay:
+      milliseconds: 200 
+  - data:
+      entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+    service: switch.turn_on
+  - delay: '1'
+  - data:
+      entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+    service: switch.turn_off
