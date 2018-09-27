@@ -51,8 +51,6 @@ siren_beep_beep:
   - data:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_on
-  - delay:
-      milliseconds: 200 
   - data:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_off
@@ -61,8 +59,6 @@ siren_beep_beep:
   - data:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_on
-  - delay:
-      milliseconds: 200 
   - data:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_off
