@@ -62,8 +62,15 @@ lights:
     - light.christmas_tree_27
     - light.patio_lights_19
     
-exterior_lights:
-  name: Exterior Lights
+all_exterior_lights:
+  name: All Exterior Lights
+  view: no
+  entities:
+    - group.exterior_landscape_lights
+    - light.backyard_flood_lights
+    
+exterior_landscape_lights:
+  name: Exterior Landscape Lights
   view: no
   entities:
     - light.string_lights
