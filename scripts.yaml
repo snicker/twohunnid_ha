@@ -105,7 +105,7 @@ exterior_lights_flash:
       data:
         entity_id: group.all_exterior_lights
     - delay:
-        seconds: 1
+        milliseconds: 500
     - alias: Exterior Lights Off
       service: homeassistant.turn_off
       data:
@@ -119,7 +119,7 @@ exterior_lights_flash_loop:
   alias: Exterior Lights Flash Loop
   sequence:
     - delay:
-        seconds: 1
+        milliseconds: 500
     - alias: exterior_lights_flash_loop
       service: script.turn_on
       data:
