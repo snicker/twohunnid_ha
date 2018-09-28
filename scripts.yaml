@@ -89,3 +89,8 @@ git_pull:
   sequence:
   - data: {}
     service: shell_command.git_pull
+homeassistant_restart:
+  alias: 'HomeAssistant: Restart'
+  sequence:
+  - data: {}
+    service: homeassistant.restart
