@@ -1,0 +1,19 @@
+- platform: template
+  sensors:
+    motion_all_active_sensors:
+      friendly_name: "Motion - All Activated EntityIDs"
+      entity_id: group.all_motion_sensors
+      value_template: >
+        {%- for entity_id in states.group.all_motion_sensors.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {% if states(entity_id) == 'on' %}{%- if loop.first %} {% elif loop.last %},{% else %},{% endif -%}{{ entity_id }}{% endif %}
+        {%- endfor %}
+    motion_all_active_sensors_friendly_names:
+      friendly_name: "Motion - All Activated"
+      entity_id: group.all_motion_sensors
+      value_template: >
+        {%- for entity_id in states.group.all_motion_sensors.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {% if states(entity_id) == 'on' %}{%- if loop.first %} {% elif loop.last %}, and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name|replace('Motion - ','') }}{% endif %}
+        {%- endfor %}
+        
