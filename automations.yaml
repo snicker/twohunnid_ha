@@ -64,18 +64,6 @@
   - data:
       message: the garage is opening
     service: notify.nick
-- id: '1537766581698'
-  alias: 'Motion Detected: Anywhere'
-  trigger:
-  - entity_id: group.all_motion_sensors
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition: []
-  action:
-  - data:
-      message: motion detected at the house!
-    service: notify.nick
 - id: '1537936842222'
   alias: 'Alarm State: Armed, Run "Alarm State: Armed (Any)" Script'
   trigger:

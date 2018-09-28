@@ -144,5 +144,6 @@ all_motion_sensors:
     - binary_sensor.motion_backyard_north
     - binary_sensor.motion_backyard_south
     - binary_sensor.motion_front_yard_south
+    - binary_sensor.motion_front_driveway
   
   
