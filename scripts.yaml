@@ -88,5 +88,5 @@ media_play_cops_outside:
   alias: test script
   sequence:
   - data:
-      message: test22222221
+      message: test222221
     service: notify.nick
