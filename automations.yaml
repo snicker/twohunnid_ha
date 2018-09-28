@@ -108,5 +108,8 @@
   - condition: state
     entity_id: alarm_control_panel.home_alarm
     state: armed_night
+  - condition: state
+    entity_id: group.motion_front_yard
+    state: 'on'
   action:
   - service: script.siren_beep_beep
