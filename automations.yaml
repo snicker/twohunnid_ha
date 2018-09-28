@@ -97,3 +97,16 @@
   condition: []
   action:
   - service: script.alarm_state_armed_night
+- id: '1538111242565'
+  alias: 'Security: Doop Doop when backyard motion and armed night'
+  trigger:
+  - entity_id: group.motion_backyard
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_night
+  action:
+  - service: script.siren_beep_beep
