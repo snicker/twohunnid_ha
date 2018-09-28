@@ -27,7 +27,7 @@ alarm_disarm:
       code: 7779
     service: alarm_control_panel.alarm_disarm
 alarm_state_armed_any:
-  alias: 'Alarm State: Armed (any)'
+  alias: 'Alarm State: Armed (Any)'
   sequence:
   - data_template:
       message: the alarm has been set to {{ states('alarm_control_panel.home_alarm')|replace('_','
@@ -64,8 +64,7 @@ siren_beep_beep:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: switch.turn_off
   - delay:
-      milliseconds: 200 
-
+      milliseconds: 200
 media_play_cops_outside:
   alias: 'Media: Play Cops Outside'
   sequence:
@@ -85,3 +84,9 @@ media_play_cops_outside:
       media_content_id: spotify:user:1213704901:playlist:4nYFDBaNyyDWJZqZkCe5hX
       media_content_type: playlist
     service: media_player.play_media
+'1538095173513':
+  alias: test script
+  sequence:
+  - data:
+      message: test22222221
+    service: notify.nick

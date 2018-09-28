@@ -273,3 +273,53 @@ sensor.vision_zp3102_pir_motion_sensor_alarm_level_3:
   name:
   platform: zwave
   unique_id: 9-72057594194968593
+binary_sensor.vision_zp3102_pir_motion_sensor_sensor_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594210680832
+zwave.vision_zp3102_pir_motion_sensor_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-10
+sensor.vision_zp3102_pir_motion_sensor_temperature_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594210697234
+sensor.vision_zp3102_pir_motion_sensor_sourcenodeid_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745825
+sensor.vision_zp3102_pir_motion_sensor_burglar_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745953
+sensor.vision_zp3102_pir_motion_sensor_power_management_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745969
+sensor.vision_zp3102_pir_motion_sensor_system_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745985
+sensor.vision_zp3102_pir_motion_sensor_emergency_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211746001
+sensor.vision_zp3102_pir_motion_sensor_alarm_type_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745793
+sensor.vision_zp3102_pir_motion_sensor_alarm_level_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745809
