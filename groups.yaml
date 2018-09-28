@@ -51,6 +51,7 @@ configuration:
   icon: mdi:cogs
   view: yes
   entities:
+    - group.home_settings
     - group.hahardware
     - group.ha_control
     
