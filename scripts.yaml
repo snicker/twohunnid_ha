@@ -94,7 +94,17 @@ homeassistant_restart:
   sequence:
   - data: {}
     service: homeassistant.restart
-    
+homeassistant_reload_without_restart:
+  alias: 'HomeAssistant: Reload Scripts/Automation/Groups/Core'
+  sequence:
+  - data: {}
+    service: script.reload
+  - data: {}
+    service: automation.reload
+  - data: {}
+    service: group.reload
+  - data: {}
+    service: homeassistant.reload_core_config
     
     
 exterior_lights_flash:
