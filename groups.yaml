@@ -61,6 +61,7 @@ ha_control:
   control: hidden
   entities:
     - script.git_pull
+    - script.homeassistant_reload_without_restart
     - script.homeassistant_restart
     
 home_settings:
