@@ -61,6 +61,13 @@ ha_control:
   entities:
     - script.git_pull
     - script.homeassistant_restart
+    
+home_settings:
+  name: Home Settings
+  view: no
+  control: hidden
+  entities:
+    - input_boolean.dogs_home
 
 lights:
   name: Lights
