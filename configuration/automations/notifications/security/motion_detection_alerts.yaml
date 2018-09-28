@@ -1,0 +1,16 @@
+- alias: 'Motion Detected: Anywhere'
+  trigger:
+  - entity_id: group.all_motion_sensors
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data_template:
+      message: >
+        motion detected at the house!
+        {%- for entity_id in states.group.all_motion_sensors.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {% if states(entity_id) == 'on' %}{%- if loop.first %} {% elif loop.last %}, and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name|replace('Motion - ','') }}{% endif %}
+        {%- endfor %}
+    service: notify.nick
