@@ -6,6 +6,8 @@ homeassistant:
   unit_system: imperial
   time_zone: !secret home_time_zone
   customize: !include customize.yaml
+  whitelist_external_dirs:
+    - /home/homeassistant/.homeassistant
 
 frontend:
 
@@ -75,7 +77,7 @@ nest:
   client_secret: !secret nest_client_secret
   
 folder_watcher:
-  - folder: /home/homeassistant/.homeassistant/
+  - folder: /home/homeassistant/.homeassistant
     patterns:
       - 'automations.yaml'
       - 'customize.yaml'
