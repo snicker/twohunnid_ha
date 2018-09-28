@@ -52,6 +52,7 @@ configuration:
   view: yes
   entities:
     - group.hahardware
+    - script.git_pull
 
 lights:
   name: Lights

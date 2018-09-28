@@ -84,7 +84,7 @@ media_play_cops_outside:
       media_content_id: spotify:user:1213704901:playlist:4nYFDBaNyyDWJZqZkCe5hX
       media_content_type: playlist
     service: media_player.play_media
-'1538095173513':
+git_pull:
   alias: 'Git: Pull'
   sequence:
   - data: {}
