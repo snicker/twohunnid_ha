@@ -4,9 +4,6 @@
     event_type: folder_watcher
     event_data:
       event_type: modified
-  condition:
-    condition: template
-    value_template: "{{ '.homeassistant' in trigger.event.data.folder and trigger.event.data.file in ('automations.yaml','customize.yaml','scripts.yaml','entity_registry.yaml') }}"
   action:
     service: notify.nick
     data_template:

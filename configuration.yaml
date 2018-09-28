@@ -79,10 +79,7 @@ nest:
 folder_watcher:
   - folder: /home/homeassistant/.homeassistant
     patterns:
-      - 'automations.yaml'
-      - 'customize.yaml'
-      - 'scripts.yaml'
-      - 'entity_registry.yaml'
+    - '*.yaml'
   
 light: !include_dir_merge_list configuration/lights/
 
