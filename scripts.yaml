@@ -87,6 +87,5 @@ media_play_cops_outside:
 '1538095173513':
   alias: 'Git: Pull'
   sequence:
-  - data:
-      message: test222221
+  - data: {}
     service: shell_command.git_pull
