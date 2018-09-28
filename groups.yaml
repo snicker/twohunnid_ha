@@ -52,7 +52,15 @@ configuration:
   view: yes
   entities:
     - group.hahardware
+    - group.ha_control
+    
+ha_control:
+  name: HA Control
+  view: no
+  control: hidden
+  entities:
     - script.git_pull
+    - script.homeassistant_restart
 
 lights:
   name: Lights
