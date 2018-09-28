@@ -80,6 +80,10 @@ folder_watcher:
   - folder: /home/homeassistant/.homeassistant
     patterns:
     - '*.yaml'
+    
+shell_command:
+  git_commit_all: 'git commit -a -m "automated commit for changes to local files while running"'
+  git_push: 'git push origin master'
   
 light: !include_dir_merge_list configuration/lights/
 

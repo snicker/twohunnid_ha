@@ -8,7 +8,9 @@
     condition: template
     value_template: "{{ trigger.event.data.file in ('automations.yaml','customize.yaml','scripts.yaml','entity_registry.yaml') }}"
   action:
-    service: notify.nick
-    data_template:
-      title: "A file was modified!"
-      message: "{{ trigger.event.data.file }} in {{ trigger.event.data.folder }}"
+    - service: logbook.log
+      data_template:
+        name: Git Commit
+        message: "{{ trigger.event.data.file }} in {{ trigger.event.data.folder }} was modified and committed"
+    - service: shell_command.git_commit_all
+    - service: shell_command.git_push
