@@ -323,3 +323,23 @@ sensor.vision_zp3102_pir_motion_sensor_alarm_level_4:
   name:
   platform: zwave
   unique_id: 10-72057594211745809
+sensor.kwikset_touchpad_electronic_deadbolt_alarm_type_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 11-72057594228523009
+sensor.kwikset_touchpad_electronic_deadbolt_alarm_level_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 11-72057594228523025
+zwave.kwikset_touchpad_electronic_deadbolt_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-11
+lock.kwikset_touchpad_electronic_deadbolt_locked_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 11-72057594228277248
