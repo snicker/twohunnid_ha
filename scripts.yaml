@@ -141,11 +141,11 @@ camera_snapshot:
     - service: camera.snapshot
       data:
         entity_id: camera.a_camera
-        filename: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+        filename: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
     - service: notify.nick
       data:
         message: camerasnap
         data:
           photo:
-            - file: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+            - file: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
               caption: Picture Title xy
