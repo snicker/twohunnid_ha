@@ -8,6 +8,7 @@ homeassistant:
   customize: !include customize.yaml
   whitelist_external_dirs:
     - /home/homeassistant/.homeassistant
+    - /tmp
 
 frontend:
 

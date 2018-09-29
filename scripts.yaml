@@ -134,3 +134,11 @@ exterior_lights_flash_loop:
       service: script.turn_on
       data:
         entity_id: script.exterior_lights_flash
+
+camera_snapshot:
+  alias: a camera snapshot
+  sequence:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.a_camera
+        filename: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
