@@ -1,0 +1,52 @@
+# Template for configuration file of the plant gateway
+# copy this file to your home directory and rename it to ".plantgw.yaml" (starting with a ".").
+
+# mqtt configuration, replace this with the configuration of your mqtt server
+mqtt:
+    #url of your mqtt server, madatory
+    server: 192.168.1.19
+
+    #prefix of the topic where the sensor data will be published, mandatory
+    prefix: twohunnidha/sensors/plants
+    #terminate topic with a trailing slash, optional as defaults to True
+    #trailing_slash: False
+
+    #port of the mqtt server, optional if using 8883
+    port: 1883
+    #client_id to use with the mqtt server, optional as defaults to unique numeric identifier
+    #client_id: PlantGateway
+
+    #credentials for the mqtt server, optional if you do not use authentication
+    #user:
+    #password:
+
+    #path to ssl/tls ca file
+    #ca_cert: /etc/ssl/certs/<my ca file.pem>
+
+    #format for timestamp string using strftime(), optional as defaults to ISO8601 format
+    #timestamp_format: "%d/%m/%y %H:%M:%S"
+
+# Select the bluetooth interface to be used.
+# If this parameter is not defined, interface 0 will be used.
+# 0 = /dev/hci0
+# 1 = /dev/hci1
+# ...
+# interface: 0
+
+# sensor configuration, replace this with the configuration of your sensors
+sensors:
+    - mac: C4:7C:8D:62:7A:BF
+      alias: desert_rose
+    - mac: C4:7C:8D:61:9E:1A
+      alias: zebra_plant
+      fail_silent:
+    - mac: C4:7C:8D:62:72:5C
+      alias: peace_lily
+    - mac: C4:7C:8D:62:73:0E
+      alias: lemon_verbena
+
+# path where log file shall be stored, optional
+#logfile: ~/plantgw.log
+
+# option for debug logging, optional
+#debug:
