@@ -113,3 +113,10 @@ automation old: !include_dir_merge_list configuration/automations/
 script: !include scripts.yaml
 notify: !include notify.yaml
 alert: !include alerts.yaml
+
+ffmpeg:
+
+camera:
+  - platform: ffmpeg
+    name: a camera
+    input: -rtsp_transport tcp -i rtsp://192.168.1.71:554/ch0_1.h264
