@@ -343,3 +343,8 @@ lock.kwikset_touchpad_electronic_deadbolt_locked_2:
   name:
   platform: zwave
   unique_id: 11-72057594228277248
+media_player.nexus_7_2012:
+  config_entry_id:
+  name:
+  platform: plex
+  unique_id: 7641d15bb4041115-com-plexapp-android
