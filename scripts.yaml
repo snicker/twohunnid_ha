@@ -145,9 +145,21 @@ camera_snapshot:
         photo:
         - file: /tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg
           caption: Picture Title xy
-'1538509975047':
+ifttt_piper_arm_stay:
   alias: 'IFTTT: Piper: Arm Stay'
   sequence:
   - data:
       event: piper_arm_stay
+    service: ifttt.trigger
+ifttt_piper_arm_away:
+  alias: 'IFTTT: Piper: Arm Away'
+  sequence:
+  - data:
+      event: piper_arm_away
+    service: ifttt.trigger
+ifttt_piper_disarm:
+  alias: 'IFTTT: Piper: Disarm'
+  sequence:
+  - data:
+      event: piper_disarm
     service: ifttt.trigger
