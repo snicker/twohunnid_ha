@@ -348,3 +348,13 @@ media_player.nexus_7_2012:
   name:
   platform: plex
   unique_id: 7641d15bb4041115-com-plexapp-android
+zwave.leviton_dzmx11lz_dimmer:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-12
+light.leviton_dzmx11lz_dimmer_level:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 12-72057594244071425
