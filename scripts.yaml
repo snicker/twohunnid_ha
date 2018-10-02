@@ -41,6 +41,7 @@ alarm_state_disarmed:
   - data:
       message: home alarm has been disarmed
     service: notify.nick
+  - service: script.ifttt_piper_disarm
 alarm_state_armed_night:
   alias: 'Alarm State: Armed Night'
   sequence:
