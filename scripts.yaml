@@ -105,47 +105,49 @@ homeassistant_reload_without_restart:
     service: group.reload
   - data: {}
     service: homeassistant.reload_core_config
-    
-    
 exterior_lights_flash:
   alias: Exterior Lights Flash
   sequence:
-    - alias: Exterior Lights On
-      service: homeassistant.turn_on
-      data:
-        entity_id: group.all_exterior_lights
-    - delay:
-        milliseconds: 500
-    - alias: Exterior Lights Off
-      service: homeassistant.turn_off
-      data:
-        entity_id: group.all_exterior_lights
-    - alias: exterior_lights_flash_loop
-      service: script.turn_on
-      data:
-        entity_id: script.exterior_lights_flash_loop
-
+  - alias: Exterior Lights On
+    service: homeassistant.turn_on
+    data:
+      entity_id: group.all_exterior_lights
+  - delay:
+      milliseconds: 500
+  - alias: Exterior Lights Off
+    service: homeassistant.turn_off
+    data:
+      entity_id: group.all_exterior_lights
+  - alias: exterior_lights_flash_loop
+    service: script.turn_on
+    data:
+      entity_id: script.exterior_lights_flash_loop
 exterior_lights_flash_loop:
   alias: Exterior Lights Flash Loop
   sequence:
-    - delay:
-        milliseconds: 500
-    - alias: exterior_lights_flash_loop
-      service: script.turn_on
-      data:
-        entity_id: script.exterior_lights_flash
-
+  - delay:
+      milliseconds: 500
+  - alias: exterior_lights_flash_loop
+    service: script.turn_on
+    data:
+      entity_id: script.exterior_lights_flash
 camera_snapshot:
   alias: a camera snapshot
   sequence:
-    - service: camera.snapshot
+  - service: camera.snapshot
+    data:
+      entity_id: camera.a_camera
+      filename: /tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg
+  - service: notify.nick
+    data:
+      message: camerasnap
       data:
-        entity_id: camera.a_camera
-        filename: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
-    - service: notify.nick
-      data:
-        message: camerasnap
-        data:
-          photo:
-            - file: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
-              caption: Picture Title xy
+        photo:
+        - file: /tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg
+          caption: Picture Title xy
+'1538509975047':
+  alias: 'IFTTT: Piper: Arm Stay'
+  sequence:
+  - data:
+      event: piper_arm_stay
+    service: ifttt.trigger
