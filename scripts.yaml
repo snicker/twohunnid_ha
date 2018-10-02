@@ -34,6 +34,7 @@ alarm_state_armed_any:
         ') }} mode
     service: notify.nick
   - service: lock.lock
+  - service: script.ifttt_piper_arm_stay
 alarm_state_disarmed:
   alias: 'Alarm State: Disarmed'
   sequence:
