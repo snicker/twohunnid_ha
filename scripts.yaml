@@ -34,7 +34,9 @@ alarm_state_armed_any:
         ') }} mode
     service: notify.nick
   - service: lock.lock
-  - service: script.ifttt_piper_arm_stay
+  - service: script.turn_on
+    data_template:
+      entity_id: {% if states('input_boolean.dogs_home') == 'off' and states('alarm_control_panel.home_alarm') != 'armed_home' %}script.ifttt_piper_armed_away{% else %}script.ifttt_piper_armed_stay{% endif %}
 alarm_state_disarmed:
   alias: 'Alarm State: Disarmed'
   sequence:
