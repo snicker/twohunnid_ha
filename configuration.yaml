@@ -6,6 +6,7 @@ homeassistant:
   unit_system: imperial
   time_zone: !secret home_time_zone
   customize: !include customize.yaml
+  packages: !include_dir_named configuration/packages
   whitelist_external_dirs:
     - /home/homeassistant/.homeassistant
     - /tmp
