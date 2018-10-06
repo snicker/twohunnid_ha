@@ -30,16 +30,25 @@ alarm_state_armed_any:
   alias: 'Alarm State: Armed (Any)'
   sequence:
   - data_template:
-      message: the alarm has been set to {{ states('alarm_control_panel.home_alarm')|replace('_','
-        ') }} mode
+      message: >
+        the alarm has been set to {{ states('alarm_control_panel.home_alarm')|replace('_',' ') }} mode
     service: notify.nick
   - service: lock.lock
+  - service: homeassistant.turn_on
+    data_template:
+      entity_id: >
+        {% if states('input_boolean.dogs_home') == 'off' and states('alarm_control_panel.home_alarm') != 'armed_home' %}
+          script.ifttt_piper_arm_away
+        {% else %}
+          script.ifttt_piper_arm_stay
+        {% endif %}
 alarm_state_disarmed:
   alias: 'Alarm State: Disarmed'
   sequence:
   - data:
       message: home alarm has been disarmed
     service: notify.nick
+  - service: script.ifttt_piper_disarm
 alarm_state_armed_night:
   alias: 'Alarm State: Armed Night'
   sequence:
@@ -105,47 +114,61 @@ homeassistant_reload_without_restart:
     service: group.reload
   - data: {}
     service: homeassistant.reload_core_config
-    
-    
 exterior_lights_flash:
   alias: Exterior Lights Flash
   sequence:
-    - alias: Exterior Lights On
-      service: homeassistant.turn_on
-      data:
-        entity_id: group.all_exterior_lights
-    - delay:
-        milliseconds: 500
-    - alias: Exterior Lights Off
-      service: homeassistant.turn_off
-      data:
-        entity_id: group.all_exterior_lights
-    - alias: exterior_lights_flash_loop
-      service: script.turn_on
-      data:
-        entity_id: script.exterior_lights_flash_loop
-
+  - alias: Exterior Lights On
+    service: homeassistant.turn_on
+    data:
+      entity_id: group.all_exterior_lights
+  - delay:
+      milliseconds: 500
+  - alias: Exterior Lights Off
+    service: homeassistant.turn_off
+    data:
+      entity_id: group.all_exterior_lights
+  - alias: exterior_lights_flash_loop
+    service: script.turn_on
+    data:
+      entity_id: script.exterior_lights_flash_loop
 exterior_lights_flash_loop:
   alias: Exterior Lights Flash Loop
   sequence:
-    - delay:
-        milliseconds: 500
-    - alias: exterior_lights_flash_loop
-      service: script.turn_on
-      data:
-        entity_id: script.exterior_lights_flash
-
+  - delay:
+      milliseconds: 500
+  - alias: exterior_lights_flash_loop
+    service: script.turn_on
+    data:
+      entity_id: script.exterior_lights_flash
 camera_snapshot:
   alias: a camera snapshot
   sequence:
-    - service: camera.snapshot
+  - service: camera.snapshot
+    data:
+      entity_id: camera.a_camera
+      filename: /tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg
+  - service: notify.nick
+    data:
+      message: camerasnap
       data:
-        entity_id: camera.a_camera
-        filename: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
-    - service: notify.nick
-      data:
-        message: camerasnap
-        data:
-          photo:
-            - file: '/tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
-              caption: Picture Title xy
+        photo:
+        - file: /tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg
+          caption: Picture Title xy
+ifttt_piper_arm_stay:
+  alias: 'IFTTT: Piper: Arm Stay'
+  sequence:
+  - data:
+      event: piper_arm_stay
+    service: ifttt.trigger
+ifttt_piper_arm_away:
+  alias: 'IFTTT: Piper: Arm Away'
+  sequence:
+  - data:
+      event: piper_arm_away
+    service: ifttt.trigger
+ifttt_piper_disarm:
+  alias: 'IFTTT: Piper: Disarm'
+  sequence:
+  - data:
+      event: piper_disarm
+    service: ifttt.trigger
