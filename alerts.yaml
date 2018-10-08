@@ -2,7 +2,6 @@ garage_door:
   name: Garage is still open!
   done_message: Garage is closed.
   entity_id: binary_sensor.garage_door
-  state: 'on'
   repeat: 5
   can_acknowledge: True
   skip_first: True
