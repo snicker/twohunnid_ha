@@ -1,4 +1,4 @@
-alarm_arm_night:
+﻿alarm_arm_night:
   alias: 'Alarm: Arm Night'
   sequence:
   - data:

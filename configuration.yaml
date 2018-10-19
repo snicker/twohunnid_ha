@@ -1,4 +1,4 @@
-homeassistant:
+﻿homeassistant:
   name: !secret home_name
   latitude: !secret home_lat
   longitude: !secret home_long
