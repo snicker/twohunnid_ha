@@ -135,6 +135,7 @@ motion_backyard:
   view: no
   entities:
     - group.motion_backyard_north
+    - binary_sensor.yi_camera_motion_backyard
     - group.motion_backyard_south
     
 motion_front_yard:
@@ -151,6 +152,7 @@ all_motion_sensors:
   view: no
   entities:
     - binary_sensor.motion_backyard_north
+    - binary_sensor.yi_camera_motion_backyard
     - binary_sensor.motion_backyard_south
     - binary_sensor.motion_front_yard_south
     - binary_sensor.motion_front_driveway

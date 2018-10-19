@@ -1,0 +1,48 @@
+################################################################
+## Packages / Backyard Camera
+################################################################
+
+################################################
+## Customize
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'backyard_camera'
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+    ################################################
+    ## Camera
+    ################################################
+    
+    camera.yi_home_camera_backyard_patio:
+      <<: *customize
+      friendly_name: "Backyard Patio Camera"
+      icon: mdi:cctv
+    
+    binary_sensor.backyard_patio_camera_motion:
+      <<: *customize
+      friendly_name: "Motion - Backyard Patio (Camera)"
+
+camera:
+  - platform: ffmpeg
+    name: yi_home_camera_backyard_patio
+    input: -rtsp_transport tcp -i rtsp://192.168.1.71:554/ch0_1.h264
+    
+binary_sensor:
+  - platform: template
+    sensors:
+      backyard_patio_camera_motion:
+        entity_id: sensor.yi_camera_motion_backyard
+        device_class: motion
+        value_template: "{{ states('sensor.sensor.yi_camera_motion_backyard')|int == 1 }}"

@@ -1,6 +1,11 @@
 - alias: 'Motion Detected: Anywhere'
   trigger:
-  - entity_id: group.all_motion_sensors
+  - entity_id: 
+      - binary_sensor.motion_backyard_north
+      - binary_sensor.yi_camera_motion_backyard
+      - binary_sensor.motion_backyard_south
+      - binary_sensor.motion_front_yard_south
+      - binary_sensor.motion_front_driveway
     from: 'off'
     platform: state
     to: 'on'
@@ -11,6 +16,6 @@
         motion detected at the house!
         {%- for entity_id in states.group.all_motion_sensors.attributes.entity_id -%}
           {% set parts = entity_id.split('.') -%}
-          {% if states(entity_id) == 'on' %}{%- if loop.first %} {% elif loop.last %}, and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name|replace('Motion - ','') }}{% endif %}
+          {% if states(entity_id) == 'on' %}{{ states[parts[0]][parts[1]].name|replace('Motion - ','') }},{% endif %}
         {%- endfor %}
     service: notify.nick
