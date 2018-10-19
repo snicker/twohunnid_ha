@@ -45,4 +45,4 @@ binary_sensor:
       backyard_patio_camera_motion:
         entity_id: sensor.yi_camera_motion_backyard
         device_class: motion
-        value_template: "{{ states('sensor.sensor.yi_camera_motion_backyard')|int == 1 }}"
+        value_template: "{{ states('sensor.yi_camera_motion_backyard')|int == 1 }}"
