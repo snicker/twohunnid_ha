@@ -1,0 +1,39 @@
+################################################################
+## Packages / Laundry Camera
+################################################################
+
+################################################
+## Customize
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'laundry_camera'
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+    ################################################
+    ## Camera
+    ################################################
+    
+    camera.dlink_camera_laundry:
+      <<: *customize
+      friendly_name: "Laundry Room Camera"
+      icon: mdi:cctv
+
+camera:
+  - platform: mjpeg
+    name: dlink_camera_laundry
+    mjpeg_url: http://192.168.1.176/mjpeg.cgi
+    still_image_url: http://192.168.1.176/image/jpeg.cgi
+    username: !secret dlink_camera_username
+    password: !secret dlink_camera_password
