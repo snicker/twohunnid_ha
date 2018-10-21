@@ -36,6 +36,20 @@ plants:
     - plant.zebra_plant
     - plant.peace_lily
     - plant.lemon_verbena
+    
+backyard_patio_camera:
+  name: Backyard Patio Cameras
+  view: no
+  entities:
+    - camera.yi_home_camera_backyard_patio
+    - binary_sensor.backyard_patio_camera_motion
+    
+cameras:
+  name: Cameras
+  view: yes
+  entities:
+    - camera.dlink_camera_laundry
+    - group.backyard_patio_camera
 
 hahardware:
   name: HomeAssistant Hardware
