@@ -80,12 +80,21 @@ ha_control:
     - script.homeassistant_reload_without_restart
     - script.homeassistant_restart
     
+holiday_modes:
+  name: Holiday Modes
+  view: no
+  control: hidden
+  entities:
+    - input_boolean.halloween_mode
+    - input_boolean.christmas_mode
+    
 home_settings:
   name: Home Settings
   view: no
   control: hidden
   entities:
     - input_boolean.dogs_home
+    - group.holiday_modes
 
 lights:
   name: Lights

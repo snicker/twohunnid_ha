@@ -1,0 +1,40 @@
+################################################################
+## Packages / Halloween Mode
+################################################################
+
+################################################
+## Customize
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'halloween_mode'
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+    ################################################
+    ## Input Boolean
+    ################################################
+    
+    input_boolean.halloween_mode:
+      <<: *customize
+      friendly_name: "Halloween Mode?"
+      icon: mdi:halloween
+      persistent: true
+
+################################################
+## Input Boolean
+################################################
+
+input_boolean:
+  halloween_mode:
+    initial: off

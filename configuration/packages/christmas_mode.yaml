@@ -1,0 +1,40 @@
+################################################################
+## Packages / Christmas Mode
+################################################################
+
+################################################
+## Customize
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'christmas_mode'
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+    ################################################
+    ## Input Boolean
+    ################################################
+    
+    input_boolean.christmas_mode:
+      <<: *customize
+      friendly_name: "Christmas Mode?"
+      icon: mdi:pine-tree
+      persistent: true
+
+################################################
+## Input Boolean
+################################################
+
+input_boolean:
+  christmas_mode:
+    initial: off
