@@ -50,8 +50,9 @@ cameras:
   view: yes
   entities:
     - camera.dlink_camera_laundry
+    - camera.front_door
     - group.backyard_patio_camera
-
+    
 hahardware:
   name: HomeAssistant Hardware
   view: no
