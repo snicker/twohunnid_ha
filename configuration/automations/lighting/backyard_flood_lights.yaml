@@ -26,25 +26,25 @@
   condition:
     condition: or
     conditions:
-      condition: and
-      conditions:
-      - condition: state
-        entity_id: light.backyard_flood_lights
-        state: 'on'
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: 'armed_night'
-      condition: and
-      conditions:
-      - condition: state
-        entity_id: light.backyard_flood_lights
-        state: 'on'
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: 'armed_stay'
-      - condition: sun
-        after: sunset
-        after_offset: "0:20:00"
-      - condition: sun
-        before: sunrise
-        before_offset: "-0:20:00"
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: light.backyard_flood_lights
+            state: 'on'
+          - condition: state
+            entity_id: alarm_control_panel.home_alarm
+            state: 'armed_night'
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: light.backyard_flood_lights
+            state: 'on'
+          - condition: state
+            entity_id: alarm_control_panel.home_alarm
+            state: 'armed_stay'
+          - condition: sun
+            after: sunset
+            after_offset: "0:20:00"
+          - condition: sun
+            before: sunrise
+            before_offset: "-0:20:00"
