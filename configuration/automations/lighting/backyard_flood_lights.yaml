@@ -1,0 +1,50 @@
+- alias: 'Backyard Flood Lights On When Motion Detected After Sundown'
+  trigger:
+  - entity_id: group.motion_backyard
+    platform: state
+    to: 'on'
+  condition:
+    condition: or
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "0:20:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "-0:20:00"
+  action:
+    - service: light.turn_on
+      entity_id:  light.backyard_flood_lights
+      
+- alias: 'Backyard Flood Lights Off When No Motion for 5 Minutes in Night Mode or away mode at night'
+  trigger:
+  - entity_id: group.motion_backyard
+    platform: state
+    to: 'off'
+    for:
+      minutes: 5
+  condition:
+    condition: or
+    conditions:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: light.backyard_flood_lights
+        state: 'on'
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: 'armed_night'
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: light.backyard_flood_lights
+        state: 'on'
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: 'armed_stay'
+      - condition: sun
+        after: sunset
+        after_offset: "0:20:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "-0:20:00"
