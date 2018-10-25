@@ -46,6 +46,7 @@ backyard_patio_camera:
     
 cameras:
   name: Cameras
+  icon: mdi:cctv
   view: yes
   entities:
     - camera.dlink_camera_laundry
