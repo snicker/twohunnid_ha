@@ -1,0 +1,23 @@
+- alias: 'Flash Patio Lights When Person Detected'
+  trigger:
+  - entity_id: binary_sensor.front_door_camera_person_detected
+    platform: state
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'input_boolean.halloween_mode'
+        state: 'on'
+      - condition: state
+        entity_id: 'light.front_porch_lights'
+        state: 'on'
+  action:
+    - service: light.toggle
+      entity_id:  light.front_porch_lights
+    - service: light.toggle
+      entity_id:  light.front_porch_lights
+    - service: light.toggle
+      entity_id:  light.front_porch_lights
+    - service: light.toggle
+      entity_id:  light.front_porch_lights
