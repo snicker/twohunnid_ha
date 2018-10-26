@@ -1,6 +1,6 @@
 - alias: 'Flash Patio Lights When Person Detected'
   trigger:
-  - entity_id: binary_sensor.front_door_camera_person_detected
+  - entity_id: binary_sensor.front_door_camera_motion_detected
     platform: state
     to: 'on'
   condition:
