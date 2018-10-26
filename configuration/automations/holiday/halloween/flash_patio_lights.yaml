@@ -13,11 +13,15 @@
         entity_id: 'light.front_porch_lights'
         state: 'on'
   action:
-    - service: light.toggle
+    - service: light.turn_off
       entity_id:  light.front_porch_lights
-    - service: light.toggle
+    - service: light.turn_on
       entity_id:  light.front_porch_lights
-    - service: light.toggle
+    - service: light.turn_off
       entity_id:  light.front_porch_lights
-    - service: light.toggle
+    - service: light.turn_on
+      entity_id:  light.front_porch_lights
+    - service: light.turn_off
+      entity_id:  light.front_porch_lights
+    - service: light.turn_on
       entity_id:  light.front_porch_lights
