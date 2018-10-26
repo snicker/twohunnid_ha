@@ -358,3 +358,13 @@ light.leviton_dzmx11lz_dimmer_level:
   name:
   platform: zwave
   unique_id: 12-72057594244071425
+zwave.linear_wo15z1_single_wall_outlet:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-14
+switch.linear_wo15z1_single_wall_outlet_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 14-72057594277609472
