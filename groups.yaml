@@ -95,15 +95,6 @@ home_settings:
   entities:
     - input_boolean.dogs_home
     - group.holiday_modes
-
-lights:
-  name: Lights
-  view: no
-  entities:
-    - light.string_lights
-    - light.basement_lamp_28
-    - light.christmas_tree_27
-    - light.patio_lights_19
     
 all_exterior_lights:
   name: All Exterior Lights
@@ -118,6 +109,7 @@ exterior_landscape_lights:
   entities:
     - light.string_lights
     - light.front_porch_lights
+    - light.front_landscape_lights
     
 all_doors:
   name: Doors
