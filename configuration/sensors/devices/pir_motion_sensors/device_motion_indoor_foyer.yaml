@@ -1,0 +1,8 @@
+- platform: template
+  sensors:
+    device_motion_front_yard_south_battery:
+      friendly_name: "Motion - Indoor Foyer - Battery"
+      entity_id: zwave.vision_zp3111_multisensor_4in1
+      device_class: battery
+      unit_of_measurement: '%'
+      value_template: "{{ states.zwave.vision_zp3111_multisensor_4in1.attributes.battery_level }}"
