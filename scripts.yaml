@@ -171,3 +171,9 @@ ifttt_piper_disarm:
   - data:
       event: piper_disarm
     service: ifttt.trigger
+halloween_scream:
+  alias: "Halloween! Scream over MQTT"
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: "halloween/scream"
