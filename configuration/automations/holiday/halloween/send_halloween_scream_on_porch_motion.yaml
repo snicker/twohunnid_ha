@@ -1,0 +1,14 @@
+- alias: 'Halloween! Scream on Porch Movement'
+  trigger:
+  - entity_id: binary_sensor.front_door_camera_motion_detected
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_indoor_foyer
+    platform: state
+    to: 'on'
+  condition:
+    - condition: state
+      entity_id: 'input_boolean.halloween_mode'
+      state: 'on'
+  action:
+    - service: script.halloween_scream
