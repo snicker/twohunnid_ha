@@ -33,6 +33,5 @@ homeassistant:
 media_player:
   - platform: samsungtv
     mac: 38:01:95:7b:a3:98
-    port: 8001
     name: living_room_television
     host: 192.168.1.109
