@@ -1,0 +1,38 @@
+################################################################
+## Packages / Living Room Television
+################################################################
+
+################################################
+## Customize
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'televisions'
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+    ################################################
+    ## Package Items
+    ################################################
+    
+    media_player.living_room_television:
+      <<: *customize
+      friendly_name: "Television - Living Room"
+      icon: mdi:television
+      
+media_player:
+  - platform: samsungtv
+    mac: 38:01:95:7b:a3:98
+    port: 8001
+    name: living_room_television
+    host: 192.168.1.109
