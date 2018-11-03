@@ -143,7 +143,7 @@ camera_snapshot:
   alias: snapshot from camera
   sequence:
   - data:
-      entity_id: {{ camera_entity_id }}
+      entity_id: "{{ camera_entity_id }}"
       filename: /tmp/{{ camera_entity_id }}_snapshot.jpg
     service: camera.snapshot
   - data:
