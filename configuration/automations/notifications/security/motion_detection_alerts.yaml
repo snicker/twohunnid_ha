@@ -26,4 +26,4 @@
     entity_id: script.camera_snapshot
     data_template:
       variables:
-        camera_entity_id: trigger.to_state.attributes.camera_entity_id
+        camera_entity_id: "{{ trigger.to_state.attributes.camera_entity_id }}"
