@@ -14,9 +14,17 @@
   action:
   - data_template:
       message: >
-        motion detected at the house! {{ trigger.to_state.attributes.camera_entity_id }}
+        motion detected at the house!
         {%- for entity_id in states.group.all_motion_sensors.attributes.entity_id -%}
           {% set parts = entity_id.split('.') -%}
           {% if states(entity_id) == 'on' %} {{ states[parts[0]][parts[1]].name|replace('Motion - ','') }},{% endif %}
         {%- endfor %}
     service: notify.nick
+  - condition:
+      condition: template
+      value_template: {{ 'camera_entity_id' in trigger.to_state.attributes }}
+  - service: script.turn_on
+    entity_id: script.camera_snapshot
+    data_template:
+      variables:
+        camera_entity_id: trigger.to_state.attributes.camera_entity_id
