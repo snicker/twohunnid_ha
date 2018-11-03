@@ -142,15 +142,15 @@ exterior_lights_flash_loop:
 camera_snapshot:
   alias: snapshot from camera
   sequence:
-  - data_template:
-      entity_id: "{{ camera_entity_id }}"
-      filename: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
+  - data:
+      entity_id: {{ camera_entity_id }}
+      filename: /tmp/{{ camera_entity_id }}_snapshot.jpg
     service: camera.snapshot
   - data:
       data:
         photo:
-        - caption: "Snapshot from {{ camera_entity_id }}"
-          file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
+        - caption: Snapshot from {{ camera_entity_id }}
+          file: /tmp/{{ camera_entity_id }}_snapshot.jpg
       message: camerasnap
     service: notify.nick
 ifttt_piper_arm_stay:
