@@ -146,8 +146,8 @@ camera_snapshot:
       entity_id: "camera.{{ camera_entity_id }}"
       filename: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
     service: camera.snapshot
-  - data:
-      data:
+  - data_template:
+      data_template:
         photo:
         - caption: "Snapshot from {{ camera_entity_id }}"
           file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
