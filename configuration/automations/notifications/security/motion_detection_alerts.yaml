@@ -22,7 +22,7 @@
     service: notify.nick
   - condition:
       condition: template
-      value_template: {{ 'camera_entity_id' in trigger.to_state.attributes }}
+      value_template: "{{ 'camera_entity_id' in trigger.to_state.attributes }}"
   - service: script.turn_on
     entity_id: script.camera_snapshot
     data_template:
