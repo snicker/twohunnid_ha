@@ -1,0 +1,24 @@
+################################################################
+## Packages / Doorbell Camera
+################################################################
+
+################################################
+## Customize
+################################################
+
+homeassistant:
+  customize:
+
+    package.node_anchors:
+      customize: &customize
+        package: 'doorbell_camera'
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+    binary_sensor.front_door_camera_motion_detected	:
+      <<: *customize
+      friendly_name: "Motion - Front Door (Camera)"
+      camera_entity_id: "front_door"

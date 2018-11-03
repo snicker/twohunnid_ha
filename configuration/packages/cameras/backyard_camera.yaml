@@ -33,6 +33,7 @@ homeassistant:
     binary_sensor.backyard_patio_camera_motion:
       <<: *customize
       friendly_name: "Motion - Backyard Patio (Camera)"
+      camera_entity_id: "yi_home_camera_backyard_patio"
 
 camera:
   - platform: ffmpeg
