@@ -140,17 +140,17 @@ exterior_lights_flash_loop:
     data:
       entity_id: script.exterior_lights_flash
 camera_snapshot:
-  alias: a camera snapshot
+  alias: snapshot from camera
   sequence:
-  - data:
-      entity_id: camera.yi_home_camera_backyard_patio
-      filename: /tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg
+  - data_template:
+      entity_id: {{ entity_id }}
+      filename: /tmp/{{ entity_id }}_snapshot.jpg
     service: camera.snapshot
   - data:
       data:
         photo:
-        - caption: Picture Title xy
-          file: /tmp/yourcamera_{{ now().strftime("%Y%m%d-%H%M") }}.jpg
+        - caption: Snapshot from {{ entity_id }}
+          file: /tmp/{{ entity_id }}_snapshot.jpg
       message: camerasnap
     service: notify.nick
 ifttt_piper_arm_stay:
