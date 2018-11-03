@@ -143,14 +143,14 @@ camera_snapshot:
   alias: snapshot from camera
   sequence:
   - data_template:
-      entity_id: {{ entity_id }}
-      filename: /tmp/{{ entity_id }}_snapshot.jpg
+      entity_id: "{{ entity_id }}"
+      filename: "/tmp/{{ entity_id }}_snapshot.jpg"
     service: camera.snapshot
   - data:
       data:
         photo:
-        - caption: Snapshot from {{ entity_id }}
-          file: /tmp/{{ entity_id }}_snapshot.jpg
+        - caption: "Snapshot from {{ entity_id }}"
+          file: "/tmp/{{ entity_id }}_snapshot.jpg"
       message: camerasnap
     service: notify.nick
 ifttt_piper_arm_stay:
