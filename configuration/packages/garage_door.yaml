@@ -41,13 +41,27 @@ switch:
         entity_id: light.x10_garage_door_relay
         value_template: "{{ false }}"
         turn_on:
-          service: light.turn_on
+          service: script.turn_on
           data:
-            entity_id: light.x10_garage_door_relay
+            entity_id: script.garage_door_button_turn_on
         turn_off:
-          service: light.turn_off
-          data:
-            entity_id: light.x10_garage_door_relay
+          service: logbook.log
+          data_template:
+            name: Garage Door Button
+            message: is turned off
+            entity_id: switch.garage_door_button
+            domain: switch
+            
+script:
+  garage_door_button_turn_on:
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.x10_garage_door_relay
+      - delay: '00:00:02'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.garage_door_button
             
 binary_sensor:
   - platform: template
