@@ -17,11 +17,13 @@ homeassistant:
       friendly_name: "Garage Door X10 Relay"
       hidden: true
       icon: mdi:light-switch
+      homebridge_hidden: true
       
     switch.garage_door_button:
       <<: *customize
       friendly_name: "Garage Door"
       icon: mdi:light-switch
+      homebridge_hidden: false
       
     binary_sensor.garage_door:
       <<: *customize
