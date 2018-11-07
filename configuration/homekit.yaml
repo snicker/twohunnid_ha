@@ -5,10 +5,12 @@ filter:
     - alarm_control_panel
     - light
     - lock
-    - switch
   exclude_entities:
     - light.christmas_tree_27
     - light.patio_lights_19
+    - light.x10_garage_door_relay
+  include_entities:
+    - switch.garage_door_button
 entity_config:
   alarm_control_panel.home_alarm:
     code: !secret alarm_panel_code
