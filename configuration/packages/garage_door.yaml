@@ -20,10 +20,9 @@ homeassistant:
       homebridge_hidden: true
       
     switch.garage_door_button:
-      <<: *customize
+      <<: *expose
       friendly_name: "Garage Door"
       icon: mdi:light-switch
-      homebridge_hidden: false
       
     binary_sensor.garage_door:
       <<: *customize

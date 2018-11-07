@@ -5,6 +5,7 @@ filter:
     - alarm_control_panel
     - light
     - lock
+    - switch
   exclude_entities:
     - light.christmas_tree_27
     - light.patio_lights_19
