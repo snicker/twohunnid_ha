@@ -16,12 +16,12 @@ homeassistant:
       <<: *customize
       friendly_name: "Garage Door X10 Relay"
       hidden: true
-      icon: mdi:switch
+      icon: mdi:light-switch
       
     switch.garage_door_button:
       <<: *customize
       friendly_name: "Garage Door"
-      icon: mdi:switch
+      icon: mdi:light-switch
       
     binary_sensor.garage_door:
       <<: *customize
