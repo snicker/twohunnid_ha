@@ -6,13 +6,14 @@ only the CM17 "firecracker". Heyu already supports this; just needs to be
 called with `fon/off` rather  than `on/off`
 """
 import logging
+from subprocess import CalledProcessError
 
 import voluptuous as vol
 
 from homeassistant.const import (CONF_NAME, CONF_ID, CONF_DEVICES)
 from homeassistant.components.light import (
     PLATFORM_SCHEMA)
-from homeassistant.components.light.x10 import X10Light
+from homeassistant.components.light.x10 import X10Light, x10_command
 import homeassistant.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
