@@ -23,6 +23,11 @@ homeassistant:
       friendly_name: "Garage Door"
       icon: mdi:light-switch
       
+    script.garage_door_button_turn_on:
+      <<: *expose
+      friendly_name: "Garage Door"
+      icon: mdi:light-switch
+      
     binary_sensor.garage_door:
       <<: *customize
       friendly_name: "Garage Door Open?"
