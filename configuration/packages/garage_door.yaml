@@ -38,6 +38,7 @@ switch:
   - platform: template
     switches:
       garage_door_button:
+        entity_id: light.x10_garage_door_relay
         value_template: "{{ false }}"
         turn_on:
           service: light.turn_on
