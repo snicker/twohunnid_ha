@@ -1,0 +1,57 @@
+################################################################
+## Packages / Garage Door
+################################################################
+
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'garage_door'
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+        
+    light.x10_garage_door_relay:
+      <<: *customize
+      friendly_name: "Garage Door X10 Relay"
+      hidden: true
+      icon: mdi:switch
+      
+    switch.garage_door_button:
+      <<: *customize
+      friendly_name: "Garage Door"
+      icon: mdi:switch
+      
+    binary_sensor.garage_door:
+      <<: *customize
+      friendly_name: "Garage Door Open?"
+      
+
+light:
+  - platform: x10rf
+    devices:
+      - id: b3
+        name: x10_garage_door_relay
+        
+switch:
+  - platform: template
+    switches:
+      garage_door_button:
+        value_template: "{{ false }}"
+        turn_on:
+          service: light.turn_on
+          data:
+            entity_id: light.x10_garage_door_relay
+        turn_off:
+          service: light.turn_off
+          data:
+            entity_id: light.x10_garage_door_relay
+            
+binary_sensor:
+  - platform: template
+    sensors:
+      garage_door:
+        friendly_name: "Garage Door"
+        device_class: garage_door
+        value_template: "{{ states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 }}"
