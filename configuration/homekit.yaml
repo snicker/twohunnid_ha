@@ -11,6 +11,7 @@ filter:
     - light.x10_garage_door_relay
   include_entities:
     - switch.garage_door_button
+    - binary_sensor.garage_door
 entity_config:
   alarm_control_panel.home_alarm:
     code: !secret alarm_panel_code
