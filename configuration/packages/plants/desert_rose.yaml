@@ -1,0 +1,109 @@
+################################################################
+## Packages / desert_rose
+################################################################
+
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'plant_desert_rose'
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+        
+    plant.desert_rose:
+      <<: *customize
+      friendly_name: Desert Rose
+      
+    sensor.plant_desert_rose:
+      <<: *customize
+      friendly_name: Desert Rose MQTT Sensor
+      
+    sensor.plant_desert_rose_battery:
+      <<: *customize
+      friendly_name: "Desert Rose - Battery"
+      device_class: battery
+      unit_of_measurement: '%'
+      
+    sensor.plant_desert_rose_moisture:
+      <<: *customize
+      friendly_name: "Desert Rose - Moisture"
+      unit_of_measurement: '%'
+      
+    sensor.plant_desert_rose_temperature:
+      <<: *customize
+      friendly_name: "Desert Rose - Temperature"
+      unit_of_measurement: '°F'
+        
+    sensor.plant_desert_rose_brightness:
+      <<: *customize
+      friendly_name: "Desert Rose - Brightness"
+      unit_of_measurement: 'lux'
+      
+    sensor.plant_desert_rose_conductivity:
+      <<: *customize
+      friendly_name: "Desert Rose - Conductivity"
+      unit_of_measurement: 'µS/cm'
+    
+        
+        
+plant:
+  desert_rose:
+    sensors:
+      moisture: sensor.plant_desert_rose_moisture
+      battery: sensor.plant_desert_rose_battery
+      temperature: sensor.plant_desert_rose_temperature
+      conductivity: sensor.plant_desert_rose_conductivity
+      brightness: sensor.plant_desert_rose_brightness
+    min_moisture: 25
+    max_moisture: 80
+    min_battery: 15
+    min_conductivity: 250
+    min_temperature: 40
+    max_temperature: 90
+
+sensor:
+  - platform: mqtt
+    state_topic: "twohunnidha/sensors/plants/desert_rose/"
+    name: plant_desert_rose
+    value_template: "{{ value_json.moisture }}"
+    json_attributes:
+      - battery
+      - moisture
+      - temperature
+      - brightness
+      - timestamp
+      - conductivity
+  - platform: template
+    sensors:
+      plant_desert_rose_battery:
+        entity_id: sensor.plant_desert_rose
+        value_template: "{{ states.sensor.plant_desert_rose.attributes.battery }}"
+      plant_desert_rose_moisture:
+        entity_id: sensor.plant_desert_rose
+        value_template: "{{ states.sensor.plant_desert_rose.attributes.moisture }}"
+      plant_desert_rose_temperature:
+        entity_id: sensor.plant_desert_rose
+        value_template: >
+          {{ ((float(state_attr('sensor.plant_desert_rose', 'temperature')) * 9 /5)+32)|round(1) }}
+      plant_desert_rose_brightness:
+        entity_id: sensor.plant_desert_rose
+        value_template: "{{ float(states.sensor.plant_desert_rose.attributes.brightness) }}"
+      plant_desert_rose_conductivity:
+        entity_id: sensor.plant_desert_rose
+        value_template: "{{ float(states.sensor.plant_desert_rose.attributes.conductivity) }}"
+        
+automation:
+  - id: desert_rose_notify_problems
+    alias: 'Desert Rose Notify of Problems'
+    trigger:
+    - entity_id: plant.desert_rose
+      from: ok
+      platform: state
+      to: problem
+    condition: []
+    action:
+    - data_template:
+        message: "Desert Rose has an issue: {{ trigger.to_state.state.attributes.problem }}. Moisture: {{ trigger.to_state.state.attributes.moisture }}% Temp: {{ trigger.to_state.state.attributes.temperature }} Conductivity: {{ trigger.to_state.state.attributes.conductivity }}"
+      service: notify.nick

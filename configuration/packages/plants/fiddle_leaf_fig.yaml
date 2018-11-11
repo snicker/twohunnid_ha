@@ -1,0 +1,109 @@
+################################################################
+## Packages / fiddle_leaf_fig
+################################################################
+
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'plant_fiddle_leaf_fig'
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+        
+    plant.fiddle_leaf_fig:
+      <<: *customize
+      friendly_name: Fiddle Leaf Fig
+      
+    sensor.plant_fiddle_leaf_fig:
+      <<: *customize
+      friendly_name: Fiddle Leaf Fig MQTT Sensor
+      
+    sensor.plant_fiddle_leaf_fig_battery:
+      <<: *customize
+      friendly_name: "Fiddle Leaf Fig - Battery"
+      device_class: battery
+      unit_of_measurement: '%'
+      
+    sensor.plant_fiddle_leaf_fig_moisture:
+      <<: *customize
+      friendly_name: "Fiddle Leaf Fig - Moisture"
+      unit_of_measurement: '%'
+      
+    sensor.plant_fiddle_leaf_fig_temperature:
+      <<: *customize
+      friendly_name: "Fiddle Leaf Fig - Temperature"
+      unit_of_measurement: '°F'
+        
+    sensor.plant_fiddle_leaf_fig_brightness:
+      <<: *customize
+      friendly_name: "Fiddle Leaf Fig - Brightness"
+      unit_of_measurement: 'lux'
+      
+    sensor.plant_fiddle_leaf_fig_conductivity:
+      <<: *customize
+      friendly_name: "Fiddle Leaf Fig - Conductivity"
+      unit_of_measurement: 'µS/cm'
+    
+        
+        
+plant:
+  fiddle_leaf_fig:
+    sensors:
+      moisture: sensor.plant_fiddle_leaf_fig_moisture
+      battery: sensor.plant_fiddle_leaf_fig_battery
+      temperature: sensor.plant_fiddle_leaf_fig_temperature
+      conductivity: sensor.plant_fiddle_leaf_fig_conductivity
+      brightness: sensor.plant_fiddle_leaf_fig_brightness
+    min_moisture: 25
+    max_moisture: 80
+    min_battery: 15
+    min_conductivity: 250
+    min_temperature: 40
+    max_temperature: 90
+
+sensor:
+  - platform: mqtt
+    state_topic: "twohunnidha/sensors/plants/fiddle_leaf_fig/"
+    name: plant_fiddle_leaf_fig
+    value_template: "{{ value_json.moisture }}"
+    json_attributes:
+      - battery
+      - moisture
+      - temperature
+      - brightness
+      - timestamp
+      - conductivity
+  - platform: template
+    sensors:
+      plant_fiddle_leaf_fig_battery:
+        entity_id: sensor.plant_fiddle_leaf_fig
+        value_template: "{{ states.sensor.plant_fiddle_leaf_fig.attributes.battery }}"
+      plant_fiddle_leaf_fig_moisture:
+        entity_id: sensor.plant_fiddle_leaf_fig
+        value_template: "{{ states.sensor.plant_fiddle_leaf_fig.attributes.moisture }}"
+      plant_fiddle_leaf_fig_temperature:
+        entity_id: sensor.plant_fiddle_leaf_fig
+        value_template: >
+          {{ ((float(state_attr('sensor.plant_fiddle_leaf_fig', 'temperature')) * 9 /5)+32)|round(1) }}
+      plant_fiddle_leaf_fig_brightness:
+        entity_id: sensor.plant_fiddle_leaf_fig
+        value_template: "{{ float(states.sensor.plant_fiddle_leaf_fig.attributes.brightness) }}"
+      plant_fiddle_leaf_fig_conductivity:
+        entity_id: sensor.plant_fiddle_leaf_fig
+        value_template: "{{ float(states.sensor.plant_fiddle_leaf_fig.attributes.conductivity) }}"
+        
+automation:
+  - id: fiddle_leaf_fig_notify_problems
+    alias: 'Fiddle Leaf Fig Notify of Problems'
+    trigger:
+    - entity_id: plant.fiddle_leaf_fig
+      from: ok
+      platform: state
+      to: problem
+    condition: []
+    action:
+    - data_template:
+        message: "Fiddle Leaf Fig has an issue: {{ trigger.to_state.state.attributes.problem }}. Moisture: {{ trigger.to_state.state.attributes.moisture }}% Temp: {{ trigger.to_state.state.attributes.temperature }} Conductivity: {{ trigger.to_state.state.attributes.conductivity }}"
+      service: notify.nick
