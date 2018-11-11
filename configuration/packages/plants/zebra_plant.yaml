@@ -104,5 +104,5 @@ automation:
     condition: []
     action:
     - data_template:
-        message: "Zebra Plant has an issue: {{ trigger.to_state.state.attributes.problem }}. Moisture: {{ trigger.to_state.state.attributes.moisture }}% Temp: {{ trigger.to_state.state.attributes.temperature }} Conductivity: {{ trigger.to_state.state.attributes.conductivity }}"
+        message: "Zebra Plant has an issue: {{ trigger.to_state.attributes.problem }}. Moisture: {{ trigger.to_state.attributes.moisture }}% Temp: {{ trigger.to_state.attributes.temperature }} Conductivity: {{ trigger.to_state.attributes.conductivity }}"
       service: notify.nick
