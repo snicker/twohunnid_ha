@@ -27,16 +27,6 @@ lights_and_locks:
     - group.all_locks
     - group.all_lights
     
-plants:
-  name: Plants
-  view: yes
-  entities:
-    - history_graph.plant_moisture
-    - plant.desert_rose
-    - plant.zebra_plant
-    - plant.peace_lily
-    - plant.lemon_verbena
-    
 backyard_patio_camera:
   name: Backyard Patio Cameras
   view: no

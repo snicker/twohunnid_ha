@@ -2,16 +2,6 @@ group.all_lights:
   hidden: false
 group.all_locks:
   hidden: false
-plant.desert_rose:
-  friendly_name: Desert Rose
-plant.zebra_plant:
-  friendly_name: Zebra Plant
-plant.peace_lily:
-  friendly_name: Peace Lily
-group.plants:
-  icon: mdi:flower
-plant.lemon_verbena:
-  friendly_name: Lemon Verbena
 lock.kwikset_door_lock_4:
   friendly_name: Front Door Lock
 lock.kwikset_touchpad_electronic_deadbolt_locked:

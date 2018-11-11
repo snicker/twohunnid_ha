@@ -99,17 +99,6 @@ media_player: !include_dir_merge_list configuration/media_players/
 
 plant: !include_dir_named configuration/plant/
 input_boolean: !include_dir_named configuration/input_boolean/
-
-history_graph:
-  plant_moisture:
-    name: Plant Moisture
-    entities:
-      - sensor.plant_zebra_plant_moisture
-      - sensor.plant_desert_rose_moisture
-      - sensor.plant_peace_lily_moisture
-      - sensor.plant_lemon_verbena_moisture
-    hours_to_show: 120
-    refresh: 60
       
 #includes  
 group: !include groups.yaml

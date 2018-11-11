@@ -1,0 +1,46 @@
+################################################################
+## Packages / plant_ui
+################################################################
+
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'plant_ui'
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+     
+    group.plants:
+      <<: *customize
+      friendly_name: Plants
+      icon: mdi:flower
+     
+    history_graph.plant_moisture:
+      <<: *customize
+      friendly_name: Plants - Moisture
+    
+    
+group:
+  plants:
+    name: Plants
+    view: yes
+    entities:
+      - history_graph.plant_moisture
+      - plant.desert_rose
+      - plant.zebra_plant
+      - plant.peace_lily
+      - plant.fiddle_leaf_fig
+      - plant.tiny_ivy
+    
+history_graph:
+  plant_moisture:
+    entities:
+      - sensor.plant_zebra_plant_moisture
+      - sensor.plant_desert_rose_moisture
+      - sensor.plant_peace_lily_moisture
+      - sensor.plant_fiddle_leaf_fig_moisture
+      - sensor.plant_tiny_ivy_moisture
+    hours_to_show: 120
+    refresh: 60
