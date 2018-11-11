@@ -37,15 +37,19 @@ mqtt:
 sensors:
     - mac: C4:7C:8D:62:7A:BF
       alias: desert_rose
+      fail_silent:
     - mac: C4:7C:8D:61:9E:1A
       alias: zebra_plant
       fail_silent:
     - mac: C4:7C:8D:62:72:5C
       alias: peace_lily
+      fail_silent:
     - mac: C4:7C:8D:62:73:0E
       alias: fiddle_leaf_fig
+      fail_silent:
     - mac: C4:7C:8D:60:E4:AA
       alias: tiny_ivy
+      fail_silent:
 
 # path where log file shall be stored, optional
 #logfile: ~/plantgw.log
