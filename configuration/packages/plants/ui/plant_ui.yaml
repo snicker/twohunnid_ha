@@ -26,6 +26,10 @@ homeassistant:
       friendly_name: Force Plantgateway Update
       alias: Force Plantgateway Update
     
+    automation.local_plant_gateway:
+      <<: *customize
+      friendly_name: Execute local Plantgateway every 15 minutes
+      alias: Execute local Plantgateway every 15 minutes
     
 group:
   plants:
@@ -57,3 +61,15 @@ script:
     - service: mqtt.publish
       data:
         topic: "twohunnidha/sensors/plantgateway/update"
+    - service: shell_command.plantgateway
+    
+automation:
+- id: local_plant_gateway_scheduler
+  trigger: 
+    platform: time
+    minutes: '/15'
+    seconds: 0
+  condition: []
+  action:
+  - delay: 00:05:00
+  - service: shell_command.plantgateway
