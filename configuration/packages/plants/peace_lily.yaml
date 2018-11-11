@@ -99,7 +99,6 @@ automation:
     alias: 'Peace Lily Notify of Problems'
     trigger:
     - entity_id: plant.peace_lily
-      from: ok
       platform: state
       to: problem
     condition: []

@@ -99,7 +99,6 @@ automation:
     alias: 'Fiddle Leaf Fig Notify of Problems'
     trigger:
     - entity_id: plant.fiddle_leaf_fig
-      from: ok
       platform: state
       to: problem
     condition: []
