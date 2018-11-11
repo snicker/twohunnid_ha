@@ -29,7 +29,6 @@ homeassistant:
     automation.local_plant_gateway:
       <<: *customize
       friendly_name: Execute local Plantgateway every 15 minutes
-      alias: Execute local Plantgateway every 15 minutes
     
 group:
   plants:
@@ -64,7 +63,8 @@ script:
     - service: shell_command.plantgateway
     
 automation:
-- id: local_plant_gateway_scheduler
+- alias: local_plant_gateway_scheduler
+  id: local_plant_gateway_scheduler
   trigger: 
     platform: time
     minutes: '/15'
