@@ -20,6 +20,11 @@ homeassistant:
     history_graph.plant_moisture:
       <<: *customize
       friendly_name: Plants - Moisture
+      
+    script.plantgateway_update:
+      <<: *customize
+      friendly_name: Force Plantgateway Update
+      alias: Force Plantgateway Update
     
     
 group:
@@ -28,6 +33,7 @@ group:
     view: yes
     entities:
       - history_graph.plant_moisture
+      - script.plantgateway_update
       - plant.desert_rose
       - plant.zebra_plant
       - plant.peace_lily
@@ -44,3 +50,10 @@ history_graph:
       - sensor.plant_tiny_ivy_moisture
     hours_to_show: 120
     refresh: 60
+    
+script:
+  plantgateway_update:
+    sequence:
+    - service: mqtt.publish
+      data:
+        topic: "twohunnidha/sensors/plantgateway/update"
