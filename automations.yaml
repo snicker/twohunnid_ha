@@ -19,19 +19,6 @@
   - data:
       entity_id: group.all_exterior_lights
     service: homeassistant.turn_off
-- id: '1534900268165'
-  alias: 'Plants: Notify of Problems'
-  trigger:
-  - entity_id: group.all_plants
-    from: ok
-    platform: state
-    to: problem
-  condition: []
-  action:
-  - data_template:
-      message: Plants just changed from {{ trigger.from_state.state }} to {{ trigger.to_state.state
-        }}
-    service: notify.nick
 - id: '1537420454578'
   alias: 'HAStatus: Shutdown'
   trigger:
