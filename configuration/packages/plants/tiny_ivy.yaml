@@ -16,10 +16,6 @@ homeassistant:
       <<: *customize
       friendly_name: Tiny Ivy
       
-    sensor.plant_tiny_ivy:
-      <<: *customize
-      friendly_name: Tiny Ivy MQTT Sensor
-      
     sensor.plant_tiny_ivy_battery:
       <<: *customize
       friendly_name: "Tiny Ivy - Battery"
@@ -63,37 +59,6 @@ plant:
     min_temperature: 40
     max_temperature: 90
 
-sensor:
-  - platform: mqtt
-    state_topic: "twohunnidha/sensors/plants/tiny_ivy/"
-    name: plant_tiny_ivy
-    value_template: "{{ value_json.moisture }}"
-    json_attributes:
-      - battery
-      - moisture
-      - temperature
-      - brightness
-      - timestamp
-      - conductivity
-  - platform: template
-    sensors:
-      plant_tiny_ivy_battery:
-        entity_id: sensor.plant_tiny_ivy
-        value_template: "{{ states.sensor.plant_tiny_ivy.attributes.battery }}"
-      plant_tiny_ivy_moisture:
-        entity_id: sensor.plant_tiny_ivy
-        value_template: "{{ states.sensor.plant_tiny_ivy.attributes.moisture }}"
-      plant_tiny_ivy_temperature:
-        entity_id: sensor.plant_tiny_ivy
-        value_template: >
-          {{ ((float(state_attr('sensor.plant_tiny_ivy', 'temperature')) * 9 /5)+32)|round(1) }}
-      plant_tiny_ivy_brightness:
-        entity_id: sensor.plant_tiny_ivy
-        value_template: "{{ float(states.sensor.plant_tiny_ivy.attributes.brightness) }}"
-      plant_tiny_ivy_conductivity:
-        entity_id: sensor.plant_tiny_ivy
-        value_template: "{{ float(states.sensor.plant_tiny_ivy.attributes.conductivity) }}"
-        
 automation:
   - id: tiny_ivy_notify_problems
     alias: 'Tiny Ivy Notify of Problems'

@@ -16,10 +16,6 @@ homeassistant:
       <<: *customize
       friendly_name: Zebra Plant
       
-    sensor.plant_zebra_plant:
-      <<: *customize
-      friendly_name: Zebra Plant MQTT Sensor
-      
     sensor.plant_zebra_plant_battery:
       <<: *customize
       friendly_name: "Zebra Plant - Battery"
@@ -62,37 +58,6 @@ plant:
     min_conductivity: 250
     min_temperature: 40
     max_temperature: 90
-
-sensor:
-  - platform: mqtt
-    state_topic: "twohunnidha/sensors/plants/zebra_plant/"
-    name: plant_zebra_plant
-    value_template: "{{ value_json.moisture }}"
-    json_attributes:
-      - battery
-      - moisture
-      - temperature
-      - brightness
-      - timestamp
-      - conductivity
-  - platform: template
-    sensors:
-      plant_zebra_plant_battery:
-        entity_id: sensor.plant_zebra_plant
-        value_template: "{{ states.sensor.plant_zebra_plant.attributes.battery }}"
-      plant_zebra_plant_moisture:
-        entity_id: sensor.plant_zebra_plant
-        value_template: "{{ states.sensor.plant_zebra_plant.attributes.moisture }}"
-      plant_zebra_plant_temperature:
-        entity_id: sensor.plant_zebra_plant
-        value_template: >
-          {{ ((float(state_attr('sensor.plant_zebra_plant', 'temperature')) * 9 /5)+32)|round(1) }}
-      plant_zebra_plant_brightness:
-        entity_id: sensor.plant_zebra_plant
-        value_template: "{{ float(states.sensor.plant_zebra_plant.attributes.brightness) }}"
-      plant_zebra_plant_conductivity:
-        entity_id: sensor.plant_zebra_plant
-        value_template: "{{ float(states.sensor.plant_zebra_plant.attributes.conductivity) }}"
         
 automation:
   - id: zebra_plant_notify_problems
