@@ -9,14 +9,8 @@ edgerouter syslog monitor https://github.com/scadagenius/erxsyslog
 bluetooth device detection
 HA app on devices
 https://philhawthorne.com/making-home-assistants-presence-detection-not-so-binary/
+https://community.home-assistant.io/t/monitor-reliable-multi-user-distributed-bt-occupancy-presence-detection/68505
 
-home security
+firetv
 ===
-have backyard motion trigger playing cops on the backyard audio and beep beep the inside alarm and flash backyard lights if armed_night or armed away and night and send notifications
-	-if armed away, have motion detection inside sound the siren
-have cameras act as motion detection inside of homeassistant through mqtt
-	https://github.com/raphaelcohn/bish-bosh -> lightweight mqtt client
-
-cameras
-===
-set up cameras inside and outside
+https://github.com/JeffLIrion/homeassistant_native_firetv
