@@ -19,28 +19,22 @@ homeassistant:
     sensor.plant_fiddle_leaf_fig_battery:
       <<: *customize
       friendly_name: "Fiddle Leaf Fig - Battery"
-      device_class: battery
-      unit_of_measurement: '%'
       
     sensor.plant_fiddle_leaf_fig_moisture:
       <<: *customize
       friendly_name: "Fiddle Leaf Fig - Moisture"
-      unit_of_measurement: '%'
       
     sensor.plant_fiddle_leaf_fig_temperature:
       <<: *customize
       friendly_name: "Fiddle Leaf Fig - Temperature"
-      unit_of_measurement: '°F'
         
     sensor.plant_fiddle_leaf_fig_brightness:
       <<: *customize
       friendly_name: "Fiddle Leaf Fig - Brightness"
-      unit_of_measurement: 'lux'
       
     sensor.plant_fiddle_leaf_fig_conductivity:
       <<: *customize
       friendly_name: "Fiddle Leaf Fig - Conductivity"
-      unit_of_measurement: 'µS/cm'
     
         
         

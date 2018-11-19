@@ -19,28 +19,22 @@ homeassistant:
     sensor.plant_tiny_ivy_battery:
       <<: *customize
       friendly_name: "Tiny Ivy - Battery"
-      device_class: battery
-      unit_of_measurement: '%'
       
     sensor.plant_tiny_ivy_moisture:
       <<: *customize
       friendly_name: "Tiny Ivy - Moisture"
-      unit_of_measurement: '%'
       
     sensor.plant_tiny_ivy_temperature:
       <<: *customize
       friendly_name: "Tiny Ivy - Temperature"
-      unit_of_measurement: '°F'
         
     sensor.plant_tiny_ivy_brightness:
       <<: *customize
       friendly_name: "Tiny Ivy - Brightness"
-      unit_of_measurement: 'lux'
       
     sensor.plant_tiny_ivy_conductivity:
       <<: *customize
       friendly_name: "Tiny Ivy - Conductivity"
-      unit_of_measurement: 'µS/cm'
     
         
         

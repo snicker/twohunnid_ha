@@ -19,28 +19,22 @@ homeassistant:
     sensor.plant_zebra_plant_battery:
       <<: *customize
       friendly_name: "Zebra Plant - Battery"
-      device_class: battery
-      unit_of_measurement: '%'
       
     sensor.plant_zebra_plant_moisture:
       <<: *customize
       friendly_name: "Zebra Plant - Moisture"
-      unit_of_measurement: '%'
       
     sensor.plant_zebra_plant_temperature:
       <<: *customize
       friendly_name: "Zebra Plant - Temperature"
-      unit_of_measurement: '°F'
         
     sensor.plant_zebra_plant_brightness:
       <<: *customize
       friendly_name: "Zebra Plant - Brightness"
-      unit_of_measurement: 'lux'
       
     sensor.plant_zebra_plant_conductivity:
       <<: *customize
       friendly_name: "Zebra Plant - Conductivity"
-      unit_of_measurement: 'µS/cm'
     
         
         

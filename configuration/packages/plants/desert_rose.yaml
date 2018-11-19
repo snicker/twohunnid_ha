@@ -19,28 +19,22 @@ homeassistant:
     sensor.plant_desert_rose_battery:
       <<: *customize
       friendly_name: "Desert Rose - Battery"
-      device_class: battery
-      unit_of_measurement: '%'
       
     sensor.plant_desert_rose_moisture:
       <<: *customize
       friendly_name: "Desert Rose - Moisture"
-      unit_of_measurement: '%'
       
     sensor.plant_desert_rose_temperature:
       <<: *customize
       friendly_name: "Desert Rose - Temperature"
-      unit_of_measurement: '°F'
         
     sensor.plant_desert_rose_brightness:
       <<: *customize
       friendly_name: "Desert Rose - Brightness"
-      unit_of_measurement: 'lux'
       
     sensor.plant_desert_rose_conductivity:
       <<: *customize
       friendly_name: "Desert Rose - Conductivity"
-      unit_of_measurement: 'µS/cm'
     
         
         

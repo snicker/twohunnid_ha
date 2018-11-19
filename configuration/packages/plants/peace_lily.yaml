@@ -19,28 +19,22 @@ homeassistant:
     sensor.plant_peace_lily_battery:
       <<: *customize
       friendly_name: "Peace Lily - Battery"
-      device_class: battery
-      unit_of_measurement: '%'
       
     sensor.plant_peace_lily_moisture:
       <<: *customize
       friendly_name: "Peace Lily - Moisture"
-      unit_of_measurement: '%'
       
     sensor.plant_peace_lily_temperature:
       <<: *customize
       friendly_name: "Peace Lily - Temperature"
-      unit_of_measurement: '°F'
         
     sensor.plant_peace_lily_brightness:
       <<: *customize
       friendly_name: "Peace Lily - Brightness"
-      unit_of_measurement: 'lux'
       
     sensor.plant_peace_lily_conductivity:
       <<: *customize
       friendly_name: "Peace Lily - Conductivity"
-      unit_of_measurement: 'µS/cm'
     
         
         
