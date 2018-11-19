@@ -36,7 +36,6 @@ group:
     view: yes
     entities:
       - history_graph.plant_moisture
-      - script.plantgateway_update
       - plant.desert_rose
       - plant.zebra_plant
       - plant.peace_lily
@@ -53,23 +52,3 @@ history_graph:
       - sensor.plant_tiny_ivy_moisture
     hours_to_show: 120
     refresh: 60
-    
-script:
-  plantgateway_update:
-    sequence:
-    - service: mqtt.publish
-      data:
-        topic: "twohunnidha/sensors/plantgateway/update"
-    - service: shell_command.plantgateway
-    
-automation:
-- alias: local_plant_gateway_scheduler
-  id: local_plant_gateway_scheduler
-  trigger: 
-    platform: time
-    minutes: '/15'
-    seconds: 0
-  condition: []
-  action:
-  - delay: 00:05:00
-  - service: shell_command.plantgateway
