@@ -28,7 +28,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Desert Rose - Temperature"
         
-    sensor.plant_desert_rose_brightness:
+    sensor.plant_desert_rose_light:
       <<: *customize
       friendly_name: "Desert Rose - Brightness"
       
@@ -45,7 +45,7 @@ plant:
       battery: sensor.plant_desert_rose_battery
       temperature: sensor.plant_desert_rose_temperature
       conductivity: sensor.plant_desert_rose_conductivity
-      brightness: sensor.plant_desert_rose_brightness
+      brightness: sensor.plant_desert_rose_light
     min_moisture: 25
     max_moisture: 80
     min_battery: 15

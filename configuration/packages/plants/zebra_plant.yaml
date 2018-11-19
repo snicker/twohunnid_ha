@@ -28,7 +28,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Zebra Plant - Temperature"
         
-    sensor.plant_zebra_plant_brightness:
+    sensor.plant_zebra_plant_light:
       <<: *customize
       friendly_name: "Zebra Plant - Brightness"
       
@@ -45,7 +45,7 @@ plant:
       battery: sensor.plant_zebra_plant_battery
       temperature: sensor.plant_zebra_plant_temperature
       conductivity: sensor.plant_zebra_plant_conductivity
-      brightness: sensor.plant_zebra_plant_brightness
+      brightness: sensor.plant_zebra_plant_light
     min_moisture: 25
     max_moisture: 80
     min_battery: 15

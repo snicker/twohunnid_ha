@@ -28,7 +28,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Tiny Ivy - Temperature"
         
-    sensor.plant_tiny_ivy_brightness:
+    sensor.plant_tiny_ivy_light:
       <<: *customize
       friendly_name: "Tiny Ivy - Brightness"
       
@@ -45,7 +45,7 @@ plant:
       battery: sensor.plant_tiny_ivy_battery
       temperature: sensor.plant_tiny_ivy_temperature
       conductivity: sensor.plant_tiny_ivy_conductivity
-      brightness: sensor.plant_tiny_ivy_brightness
+      brightness: sensor.plant_tiny_ivy_light
     min_moisture: 25
     max_moisture: 80
     min_battery: 15

@@ -28,7 +28,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Fiddle Leaf Fig - Temperature"
         
-    sensor.plant_fiddle_leaf_fig_brightness:
+    sensor.plant_fiddle_leaf_fig_light:
       <<: *customize
       friendly_name: "Fiddle Leaf Fig - Brightness"
       
@@ -45,7 +45,7 @@ plant:
       battery: sensor.plant_fiddle_leaf_fig_battery
       temperature: sensor.plant_fiddle_leaf_fig_temperature
       conductivity: sensor.plant_fiddle_leaf_fig_conductivity
-      brightness: sensor.plant_fiddle_leaf_fig_brightness
+      brightness: sensor.plant_fiddle_leaf_fig_light
     min_moisture: 25
     max_moisture: 80
     min_battery: 15

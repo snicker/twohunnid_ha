@@ -28,7 +28,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Peace Lily - Temperature"
         
-    sensor.plant_peace_lily_brightness:
+    sensor.plant_peace_lily_light:
       <<: *customize
       friendly_name: "Peace Lily - Brightness"
       
@@ -45,7 +45,7 @@ plant:
       battery: sensor.plant_peace_lily_battery
       temperature: sensor.plant_peace_lily_temperature
       conductivity: sensor.plant_peace_lily_conductivity
-      brightness: sensor.plant_peace_lily_brightness
+      brightness: sensor.plant_peace_lily_light
     min_moisture: 25
     max_moisture: 80
     min_battery: 15
