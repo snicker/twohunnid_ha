@@ -41,11 +41,11 @@ binary_sensor:
       piper_sensor_motion:
         entity_id: input_boolean.piper_virtual_sensor_motion
         device_class: motion
-        value_template: "{{ states('input_boolean.piper_virtual_sensor_motion') == "on" }}"
+        value_template: "{{ states('input_boolean.piper_virtual_sensor_motion') == 'on' }}"
       piper_sensor_sound:
         entity_id: input_boolean.piper_virtual_sensor_sound
         device_class: sound
-        value_template: "{{ states('input_boolean.piper_virtual_sensor_sound') == "on" }}"
+        value_template: "{{ states('input_boolean.piper_virtual_sensor_sound') == 'on' }}"
 
 input_boolean:
   piper_virtual_sensor_motion:
