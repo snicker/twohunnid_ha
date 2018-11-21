@@ -1,0 +1,64 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'piper_camera'
+
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+    
+    binary_sensor.piper_sensor_motion:
+      <<: *customize
+      friendly_name: "Motion - Piper Camera"
+    
+    binary_sensor.piper_sensor_sound:
+      <<: *customize
+      friendly_name: "Sound - Piper Camera"
+      
+    input_boolean.piper_virtual_sensor_motion:
+      <<: *customize
+      friendly_name: "Piper Virtual Sensor - Motion"
+      persistent: true
+      
+    input_boolean.piper_virtual_sensor_sound:
+      <<: *customize
+      friendly_name: "Piper Virtual Sensor - Sound"
+      persistent: true
+      
+group:
+  piper_sensors:
+    name: Piper Sensors
+    view: no
+    entities:
+      - binary_sensor.piper_sensor_motion
+      - binary_sensor.piper_sensor_sound
+    
+binary_sensor:
+  - platform: template
+    sensors:
+      piper_sensor_motion:
+        entity_id: input_boolean.piper_virtual_sensor_motion
+        device_class: motion
+        value_template: "{{ states('input_boolean.piper_virtual_sensor_motion')|int == 1 }}"
+      piper_sensor_sound:
+        entity_id: input_boolean.piper_virtual_sensor_sound
+        device_class: sound
+        value_template: "{{ states('input_boolean.piper_virtual_sensor_sound')|int == 1 }}"
+        
+automation:
+  - id: piper_sensor_detected
+    trigger:
+      platform: event
+      event_type: ifttt_webhook_received
+      event_data:
+        event: piper_sensor
+    action:
+      - service: input_boolean.turn_on
+        data_template:
+          entity_id: 'input_boolean.piper_virtual_sensor_{{ trigger.event.data.sensor_name }}'
+      - delay: '00:01:00'
+      - service: input_boolean.turn_off
+        data_template:
+          entity_id: 'input_boolean.piper_virtual_sensor_{{ trigger.event.data.sensor_name }}'
