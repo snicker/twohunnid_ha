@@ -46,9 +46,14 @@ binary_sensor:
         entity_id: input_boolean.piper_virtual_sensor_sound
         device_class: sound
         value_template: "{{ states('input_boolean.piper_virtual_sensor_sound')|int == 1 }}"
+
+input_boolean:
+  piper_virtual_sensor_motion:
+  piper_virtual_sensor_sound:
         
 automation:
   - id: piper_sensor_detected
+    alias: 'Piper - Sensor IFTTT Event'
     trigger:
       platform: event
       event_type: ifttt_webhook_received
