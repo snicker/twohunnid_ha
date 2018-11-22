@@ -52,28 +52,35 @@ input_boolean:
   piper_virtual_sensor_sound:
         
 automation:
-  - id: piper_sensor_detected
-    alias: 'Piper - Sensor IFTTT Event'
+  - id: piper_sensor_motion_detected
+    alias: 'Piper - Motion Sensor IFTTT Event'
     trigger:
       platform: event
       event_type: ifttt_webhook_received
       event_data:
         event: piper_sensor
+    condition:
+      - condition: template
+        value_template: '{{ "Motion" in trigger.event.data.sensor_name }}'
     action:
       - service: input_boolean.turn_on
-        data_template:
-          entity_id: >
-            {% if 'Motion' in trigger.event.data.sensor_name %}
-              input_boolean.piper_virtual_sensor_motion
-            {% elif 'Sound' in trigger.event.data.sensor_name %}
-              input_boolean.piper_virtual_sensor_sound
-            {% endif %}
+        entity_id: input_boolean.piper_virtual_sensor_motion
       - delay: '00:01:00'
       - service: input_boolean.turn_off
-        data_template:
-          entity_id: >
-            {% if 'Motion' in trigger.event.data.sensor_name %}
-              input_boolean.piper_virtual_sensor_motion
-            {% elif 'Sound' in trigger.event.data.sensor_name %}
-              input_boolean.piper_virtual_sensor_sound
-            {% endif %}
+        entity_id: input_boolean.piper_virtual_sensor_motion
+  - id: piper_sensor_sound_detected
+    alias: 'Piper - Sound Sensor IFTTT Event'
+    trigger:
+      platform: event
+      event_type: ifttt_webhook_received
+      event_data:
+        event: piper_sensor
+    condition:
+      - condition: template
+        value_template: '{{ "Sound" in trigger.event.data.sensor_name }}'
+    action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.piper_virtual_sensor_sound
+      - delay: '00:01:00'
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.piper_virtual_sensor_sound
