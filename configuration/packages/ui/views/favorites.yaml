@@ -14,6 +14,7 @@ group:
       - group.favorite_lights
       
   favorite_locks:
+    control: hidden
     icon: mdi:lock
     name: Doors & Locks
     entities:
@@ -22,6 +23,7 @@ group:
       - script.garage_door_button_turn_on
   
   favorite_lights:
+    control: hidden
     icon: mdi:lightbulb
     name: Lights
     entities:
