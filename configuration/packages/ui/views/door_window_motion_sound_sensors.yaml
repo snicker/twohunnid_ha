@@ -1,0 +1,15 @@
+homeassistant:
+  customize:
+    group.door_window_motion_sound_sensors:
+      order: 3
+      
+group:
+  door_window_motion_sound_sensors:
+    view: yes
+    name: Doors, Windows, Motion and Sound
+    icon: mdi:eye
+    entities:
+      - group.all_exterior_motion_sensors
+      - group.all_interior_motion_sensors
+      - binary_sensor.piper_sensor_sound
+      - binary_sensor.garage_door
