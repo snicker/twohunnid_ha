@@ -1,0 +1,15 @@
+sensor:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    monitored_conditions:
+      - summary
+      - icon
+      - nearest_storm_distance
+      - temperature
+      - precip_type
+      - precip_probability
+      - wind_speed
+      - wind_gust
+      - humidity
+      - temperature_high
+      - temperature_low
