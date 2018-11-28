@@ -1,7 +1,3 @@
-group.all_lights:
-  hidden: false
-group.all_locks:
-  hidden: false
 lock.kwikset_door_lock_4:
   friendly_name: Front Door Lock
 lock.kwikset_touchpad_electronic_deadbolt_locked:

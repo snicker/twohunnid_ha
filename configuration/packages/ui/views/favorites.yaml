@@ -12,6 +12,7 @@ group:
       - group.alarm_arming
       - group.favorite_locks
       - group.favorite_lights
+      - group.favorite_switches
       
   favorite_locks:
     control: hidden
@@ -20,7 +21,6 @@ group:
     entities:
       - lock.kwikset_touchpad_electronic_deadbolt_locked
       - lock.kwikset_touchpad_electronic_deadbolt_locked_2
-      - script.garage_door_button_turn_on
   
   favorite_lights:
     control: hidden
