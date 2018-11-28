@@ -18,6 +18,6 @@ history_graph:
     entities:
       - sensor.dining_room_thermostat_temperature
       - sensor.hallway_thermostat_temperature
-      - sensor.darksky_temperature
+      - sensor.dark_sky_temperature
     hours_to_show: 120
     refresh: 60
