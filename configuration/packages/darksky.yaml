@@ -9,7 +9,6 @@ sensor:
       - precip_type
       - precip_probability
       - wind_speed
-      - wind_gust
       - humidity
       - temperature_high
       - temperature_low
