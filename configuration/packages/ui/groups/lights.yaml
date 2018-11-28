@@ -1,0 +1,11 @@
+group:
+  lights:
+    icon: mdi:lightbulb
+    name: All Lights
+    entities: 
+    - light.string_lights
+    - light.backyard_flood_lights
+    - light.front_landscape_lights
+    - light.front_porch_lights
+    - light.leviton_dzmx11lz_dimmer_level
+    - light.christmas_tree_27

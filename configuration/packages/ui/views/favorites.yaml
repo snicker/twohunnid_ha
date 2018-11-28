@@ -27,6 +27,14 @@ group:
     icon: mdi:lightbulb
     name: Lights
     entities:
-      - group.all_lights
+      - group.lights
       - light.leviton_dzmx11lz_dimmer_level
       - light.string_lights
+      
+  favorite_switches:
+    control: hidden
+    icon: mdi:switch
+    name: Switches
+    entities:
+      - group.switches
+      - switch.garage_door_button

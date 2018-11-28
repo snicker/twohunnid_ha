@@ -1,0 +1,8 @@
+group:
+  switches:
+    icon: mdi:switch
+    control: hidden
+    name: All Switches
+    entities: 
+      - light.outside_amplifier_28
+      - switch.garage_door_button
