@@ -1,0 +1,16 @@
+homeassistant:
+  customize:
+    group.lights_and_locks:
+      order: 2
+    group.all_locks:
+      hidden: false
+      
+group:
+  lights_and_locks:
+    view: yes
+    name: Lights, Locks, and Switches
+    icon: mdi:lightbulb
+    entities:
+      - group.lights
+      - group.switches
+      - group.all_locks

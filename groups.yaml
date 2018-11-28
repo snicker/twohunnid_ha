@@ -9,14 +9,6 @@ alarm_arming:
     - script.alarm_arm_home
     - script.alarm_arm_night
     
-lights_and_locks:
-  view: yes
-  name: Devices
-  icon: mdi:lightbulb
-  entities:
-    - group.all_locks
-    - group.all_lights
-    
 backyard_patio_camera:
   name: Backyard Patio Cameras
   view: no
