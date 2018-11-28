@@ -1,0 +1,26 @@
+group:
+  default_view:
+    icon: mdi:heart
+    view: yes
+    name: Favorites
+    order: 1
+    entities:
+      - group.alarm_arming
+      - group.favorite_locks
+      - group.favorite_lights
+      
+  favorite_locks:
+    icon: mdi:lock
+    name: Doors & Locks
+    entities:
+      - lock.kwikset_touchpad_electronic_deadbolt_locked
+      - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - script.garage_door_button_turn_on
+  
+  favorite_lights:
+    icon: mdi:lightbulb
+    name: Lights
+    entities:
+      - group.all_lights
+      - light.leviton_dzmx11lz_dimmer_level
+      - light.string_lights

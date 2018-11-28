@@ -1,13 +1,3 @@
-default_view:
-  view: yes
-  name: Main
-  icon: mdi:home
-  entities:
-    - alarm_control_panel.home_alarm
-    - group.alarm_arming
-    - group.all_doors
-    - group.all_motion_sensors
-    
 alarm_arming:
   view: no
   name: Alarm
