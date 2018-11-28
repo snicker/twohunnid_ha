@@ -1,9 +1,13 @@
+homeassistant:
+  customize:
+    group.default_view:
+      order: 10
+      
 group:
   climate:
     view: yes
     name: Climate & Temperature
     icon: mdi:thermostat
-    order: 10
     entities:
       - history_graph.temperature
       - climate.dining_room

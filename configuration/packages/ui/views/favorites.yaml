@@ -1,9 +1,13 @@
+homeassistant:
+  customize:
+    group.default_view:
+      order: 1
+
 group:
   default_view:
     icon: mdi:heart
     view: yes
     name: Favorites
-    order: 1
     entities:
       - group.alarm_arming
       - group.favorite_locks
