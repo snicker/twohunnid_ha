@@ -6,7 +6,6 @@ filter:
     - light
     - lock
   exclude_entities:
-    - light.christmas_tree_27
     - light.patio_lights_19
     - light.x10_garage_door_relay
   include_entities:
