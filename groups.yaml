@@ -9,20 +9,6 @@ alarm_arming:
     - script.alarm_arm_home
     - script.alarm_arm_night
     
-backyard_patio_camera:
-  name: Backyard Patio Camera
-  view: no
-  entities:
-    - camera.yi_home_camera_backyard_patio
-    - binary_sensor.backyard_patio_camera_motion
-    
-garage_camera:
-  name: Garage Camera
-  view: no
-  entities:
-    - camera.yi_home_camera_garage
-    - binary_sensor.garage_camera_motion
-    
 cameras:
   name: Cameras
   icon: mdi:cctv
@@ -30,8 +16,8 @@ cameras:
   entities:
     - camera.dlink_camera_laundry
     - camera.front_door
-    - group.backyard_patio_camera
-    - group.garage_camera
+    - camera.yi_home_camera_backyard_patio
+    - camera.yi_home_camera_garage
     
 hahardware:
   name: HomeAssistant Hardware
