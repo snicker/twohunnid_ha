@@ -5,6 +5,7 @@ filter:
     - alarm_control_panel
     - light
     - lock
+    - climate
   exclude_entities:
     - light.patio_lights_19
     - light.x10_garage_door_relay
