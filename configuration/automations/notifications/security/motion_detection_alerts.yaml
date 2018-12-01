@@ -38,7 +38,7 @@
     platform: state
     to: 'on'
   condition:
-  - condition: or
+    condition: or
     conditions:
     - condition: state
       entity_id: alarm_control_panel.home_alarm
