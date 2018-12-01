@@ -1,4 +1,4 @@
-- alias: 'Motion Detected: Anywhere'
+- alias: 'Motion Detected: Exterior'
   trigger:
   - entity_id: 
       - binary_sensor.motion_backyard_north
@@ -14,8 +14,43 @@
   action:
   - data_template:
       message: >
-        motion detected at the house!
-        {%- for entity_id in states.group.all_motion_sensors.attributes.entity_id -%}
+        motion detected outside the house!
+        {%- for entity_id in states.group.all_exterior_motion_sensors.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {% if states(entity_id) == 'on' %} {{ states[parts[0]][parts[1]].name|replace('Motion - ','') }},{% endif %}
+        {%- endfor %}
+    service: notify.nick
+  - condition: template
+    value_template: "{{ 'camera_entity_id' in trigger.to_state.attributes }}"
+  - service: script.turn_on
+    entity_id: script.camera_snapshot
+    data_template:
+      variables:
+        camera_entity_id: "{{ trigger.to_state.attributes.camera_entity_id }}"
+        
+- alias: 'Motion Detected: Interior'
+  trigger:
+  - entity_id: 
+      - binary_sensor.piper_sensor_motion
+      - binary_sensor.motion_indoor_foyer
+      - binary_sensor.garage_camera_motion
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_night
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_away
+  action:
+  - data_template:
+      message: >
+        motion detected inside the house!
+        {%- for entity_id in states.group.all_interior_motion_sensors.attributes.entity_id -%}
           {% set parts = entity_id.split('.') -%}
           {% if states(entity_id) == 'on' %} {{ states[parts[0]][parts[1]].name|replace('Motion - ','') }},{% endif %}
         {%- endfor %}
