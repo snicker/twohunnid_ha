@@ -33,6 +33,7 @@ homeassistant:
       friendly_name: "Garage Door Open?"
       
 
+
 light:
   - platform: x10rf
     devices:
@@ -75,3 +76,21 @@ binary_sensor:
         friendly_name: "Garage Door"
         device_class: garage_door
         value_template: "{{ states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 }}"
+        
+sensor:
+  - platform: template
+    sensors:
+      garage_door_status:
+        friendly_name: "Garage Door Status"
+        device_class: garage_door
+        value_template: >-
+          {% if states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 2 %}
+            opening
+          {% elif states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 0 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 254 %}
+            closing
+          {% elif states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 0 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 2 %}
+            closed
+          {% elif states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 254 %}
+            open
+          {% endif %}
+          
