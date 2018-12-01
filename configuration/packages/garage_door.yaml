@@ -32,7 +32,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Garage Door Open?"
       
-    cover.garage_door
+    cover.garage_door:
       <<: *customize
       friendly_name: "Garage Door"
       device_class: garage
