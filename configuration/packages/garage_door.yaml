@@ -92,4 +92,14 @@ sensor:
           {% elif states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 254 %}
             open
           {% endif %}
+      garage_door_position:
+        friendly_name: "Garage Door Position"
+        value_template: >-
+          {% if states('sensor.garage_door_status') == 'open' %}
+            100
+          {% elif states('sensor.garage_door_status') == 'closed' %}
+            0
+          {% else %}
+            50
+          {% endif %}
           
