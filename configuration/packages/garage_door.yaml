@@ -32,6 +32,11 @@ homeassistant:
       <<: *customize
       friendly_name: "Garage Door Open?"
       
+    cover.garage_door
+      <<: *customize
+      friendly_name: "Garage Door"
+      device_class: garage
+      
 
 
 light:
@@ -108,7 +113,6 @@ cover:
     covers:
       garage_door:
         friendly_name: "Garage Door"
-        device_class: garage
         position_template: "{{ states('sensor.garage_door_position')|float }}"
         open_cover:
           service: switch.turn_on
