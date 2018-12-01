@@ -82,7 +82,6 @@ sensor:
     sensors:
       garage_door_status:
         friendly_name: "Garage Door Status"
-        device_class: garage_door
         value_template: >-
           {% if states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 2 %}
             opening
