@@ -11,6 +11,7 @@ filter:
   include_entities:
     - script.garage_door_button_turn_on
     - binary_sensor.garage_door
+    - cover.garage_door
 entity_config:
   alarm_control_panel.home_alarm:
     code: !secret alarm_panel_code
