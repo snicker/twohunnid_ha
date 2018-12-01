@@ -9,6 +9,7 @@ group:
       - binary_sensor.motion_backyard_south
       - binary_sensor.motion_front_yard_south
       - binary_sensor.motion_front_driveway
+      - binary_sensor.garage_camera_motion
       - binary_sensor.front_door_camera_motion_detected
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
@@ -32,6 +33,7 @@ group:
     entities:
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
+      - binary_sensor.garage_camera_motion
       
   motion_backyard_north:
     name: Motion - Backyard (North)
