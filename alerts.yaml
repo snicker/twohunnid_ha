@@ -2,8 +2,11 @@ garage_door:
   name: Garage is still open!
   done_message: Garage is closed.
   entity_id: binary_sensor.garage_door
-  repeat: 5
-  can_acknowledge: True
-  skip_first: True
+  repeat:
+    - 5
+    - 15
+    - 30
+  can_acknowledge: true
+  skip_first: true
   notifiers:
     - !secret telegram_bot_chat_name_1
