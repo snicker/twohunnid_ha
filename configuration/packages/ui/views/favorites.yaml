@@ -21,6 +21,7 @@ group:
     entities:
       - lock.kwikset_touchpad_electronic_deadbolt_locked
       - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - cover.garage_door
   
   favorite_lights:
     control: hidden
