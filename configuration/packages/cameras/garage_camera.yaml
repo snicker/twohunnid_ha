@@ -38,7 +38,7 @@ homeassistant:
 camera:
   - platform: ffmpeg
     name: yi_home_camera_garage
-    input: -analyzeduration 2147483647 -probesize 2147483647 -rtsp_transport tcp -i rtsp://192.168.1.72:554/ch0_1.h264
+    input: -rtsp_transport tcp -i rtsp://192.168.1.72:554/ch0_1.h264
     
 binary_sensor:
   - platform: template
