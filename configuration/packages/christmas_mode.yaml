@@ -48,8 +48,8 @@ group:
     entities: 
     - automation.christmas_tree_on_at_dusk
     - automation.christmas_tree_off_at_10pm
-    - automation.christmas_tree_on_when_exit_night_mode
-    - automation.christmas_tree_off_night_mode
+    - automation.christmas_tree_on_when_night_mode_off
+    - automation.christmas_tree_off_if_night_mode
     
 automation:
   - id: enable_christmas_automations
@@ -76,7 +76,7 @@ automation:
       data:
         entity_id: group.christmas_automations
 
-  - id: christmas_tree_on_when_exit_night_mode
+  - id: christmas_tree_on_when_night_mode_off
     alias: Christmas Tree On When Night Mode Off
     trigger:
     - platform: state
@@ -123,8 +123,8 @@ automation:
         entity_id: light.christmas_tree_27
       service: homeassistant.turn_off
         
-  - id: christmas_tree_off_night_mode
-    alias: Christmas Tree Off if Night Mode
+  - id: christmas_tree_off_if_night_mode
+    alias: Christmas Tree Off If Night Mode
     trigger:
     - platform: state
       entity_id: alarm_control_panel.home_alarm
