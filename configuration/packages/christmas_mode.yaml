@@ -30,6 +30,9 @@ homeassistant:
       friendly_name: "Christmas Mode?"
       icon: mdi:pine-tree
       persistent: true
+      
+    group.christmas_automations:
+      <<: *customize
 
 ################################################
 ## Input Boolean
@@ -38,3 +41,100 @@ homeassistant:
 input_boolean:
   christmas_mode:
     initial: off
+    
+group:
+  christmas_automations:
+    name: Christmas Automations
+    entities: 
+    - automation.christmas_tree_on_at_dusk
+    - automation.christmas_tree_off_at_10pm
+    - automation.christmas_tree_on_when_exit_night_mode
+    - automation.christmas_tree_off_night_mode
+    
+automation:
+  - id: enable_christmas_automations
+    alias: Enable Christmas Automations when Christmas Mode On
+    trigger:
+    - platform: state
+      entity_id: input_boolean.christmas_mode
+      to: 'on'
+    condition: []
+    action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: group.christmas_automations
+        
+  - id: disable_christmas_automations
+    alias: Disable Christmas Automations when Christmas Mode Off
+    trigger:
+    - platform: state
+      entity_id: input_boolean.christmas_mode
+      to: 'off'
+    condition: []
+    action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: group.christmas_automations
+
+  - id: christmas_tree_on_when_exit_night_mode
+    alias: Christmas Tree On When Night Mode Off
+    trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: armed_night
+    condition:
+    - condition: state
+      entity_id: input_boolean.christmas_mode
+      state: 'on'
+    - condition: sun
+      after: sunrise
+      after_offset: "-00:30:00"
+    action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: light.christmas_tree_27
+        
+  - id: christmas_tree_on_at_dusk
+    alias: Christmas Tree On At Dusk
+    trigger:
+    - event: sunset
+      offset: -00:10
+      platform: sun
+    condition: 
+    - condition: state
+      entity_id: input_boolean.christmas_mode
+      state: 'on'
+    action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: light.christmas_tree_27
+        
+  - id: christmas_tree_off_at_10pm
+    alias: Christmas Tree Off at 10pm
+    trigger:
+    - at: '22:00:00'
+      platform: time
+    condition: 
+    - condition: state
+      entity_id: input_boolean.christmas_mode
+      state: 'on'
+    action:
+    - data:
+        entity_id: light.christmas_tree_27
+      service: homeassistant.turn_off
+        
+  - id: christmas_tree_off_night_mode
+    alias: Christmas Tree Off if Night Mode
+    trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      to: armed_night
+    condition: 
+    - condition: state
+      entity_id: input_boolean.christmas_mode
+      state: 'on'
+    action:
+    - data:
+        entity_id: light.christmas_tree_27
+      service: homeassistant.turn_off
+      
