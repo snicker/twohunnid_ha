@@ -100,3 +100,21 @@
     state: 'on'
   action:
   - service: script.siren_beep_beep
+- id: '1543987024277'
+  alias: 'Backyard Floodlights On When Back Door Unlocked '
+  trigger:
+  - entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked
+    from: locked
+    platform: state
+    to: unlocked
+  condition:
+  - condition: state
+    entity_id: light.backyard_flood_lights
+    state: 'off'
+  - after: sunset
+    after_offset: 00:30:00
+    condition: sun
+  action:
+  - data:
+      entity_id: light.backyard_flood_lights
+    service: homeassistant.turn_on
