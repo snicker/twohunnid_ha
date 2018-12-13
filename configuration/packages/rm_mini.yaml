@@ -1,0 +1,5 @@
+switch:
+  - platform: broadlink
+    host: 192.168.1.199
+    mac: '78:0f:77:18:5f:ae'
+    type: rm_mini
