@@ -3,3 +3,9 @@ switch:
     host: 192.168.1.199
     mac: '78:0f:77:18:5f:ae'
     type: rm_mini
+    switches:
+      copper_wire_string_lights:
+        command_on: "JgBgAAABLJMUEhMSExIUEhMTEhMTEhMTEjYUNhM3EzUXMhU3EzYUNhM2FRETNhQSExMSExMyFxMTEhM2FBITNhM3EzYUEhM2FQAFHQABLUcUAAxSAAEtRxMADFMAASxHFQANBQAAAAAAAAAA"
+        command_off: "JgBiAAABLJIYDxQSExIVEBYQFRAWEBYPEzYUNhY0FjMUNhM3FjMWNBM2FzMVNRUQFhAVEBM2Fw8WDxcPFg8VNBczFjQVEBczFgAFGwABLEkU1QsAC3IAAS5GFAAMUwABKkkUAA0FAAAAAAAA"
+        friendly_name: "Copper Wire String Lights"
+        
