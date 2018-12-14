@@ -133,12 +133,12 @@ script:
   rm_mini_copper_wire_string_lights_button_off:
     sequence:
       - service: homeassistant.turn_off
-        entity_id: rm_mini_copper_wire_string_lights
+        entity_id: switch.rm_mini_copper_wire_string_lights
       - service: homeassistant.turn_off
-        entity_id: rm_mini_copper_wire_string_lights
+        entity_id: switch.rm_mini_copper_wire_string_lights
   rm_mini_copper_wire_string_lights_button_on:
     sequence:
       - service: homeassistant.turn_on
-        entity_id: rm_mini_copper_wire_string_lights
+        entity_id: switch.rm_mini_copper_wire_string_lights
       - service: homeassistant.turn_on
-        entity_id: rm_mini_copper_wire_string_lights
+        entity_id: switch.rm_mini_copper_wire_string_lights
