@@ -33,6 +33,9 @@ homeassistant:
       
     group.christmas_automations:
       <<: *customize
+      
+    group.interior_christmas_lights:
+      <<: *customize
 
 ################################################
 ## Input Boolean
@@ -50,6 +53,11 @@ group:
     - automation.christmas_tree_off_at_10pm
     - automation.christmas_tree_on_when_night_mode_off
     - automation.christmas_tree_off_if_night_mode
+  interior_christmas_lights:
+    name: Christmas Lights (inside)
+    entities:
+    - switch.copper_wire_string_lights
+    - light.christmas_tree_27
     
 automation:
   - id: enable_christmas_automations
@@ -92,7 +100,7 @@ automation:
     action:
     - service: homeassistant.turn_on
       data:
-        entity_id: light.christmas_tree_27
+        entity_id: group.interior_christmas_lights
         
   - id: christmas_tree_on_at_dusk
     alias: Christmas Tree On At Dusk
@@ -107,7 +115,7 @@ automation:
     action:
     - service: homeassistant.turn_on
       data:
-        entity_id: light.christmas_tree_27
+        entity_id: group.interior_christmas_lights
         
   - id: christmas_tree_off_at_10pm
     alias: Christmas Tree Off at 10pm
@@ -120,7 +128,7 @@ automation:
       state: 'on'
     action:
     - data:
-        entity_id: light.christmas_tree_27
+        entity_id: group.interior_christmas_lights
       service: homeassistant.turn_off
         
   - id: christmas_tree_off_if_night_mode
@@ -135,6 +143,6 @@ automation:
       state: 'on'
     action:
     - data:
-        entity_id: light.christmas_tree_27
+        entity_id: group.interior_christmas_lights
       service: homeassistant.turn_off
       
