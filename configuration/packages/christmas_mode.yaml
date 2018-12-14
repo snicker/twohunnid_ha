@@ -56,7 +56,7 @@ group:
   interior_christmas_lights:
     name: Christmas Lights (inside)
     entities:
-    - switch.copper_wire_string_lights
+    - light.copper_wire_string_lights
     - light.christmas_tree_27
     
 automation:
