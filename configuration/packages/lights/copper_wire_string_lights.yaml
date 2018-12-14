@@ -76,11 +76,8 @@ light:
           service: switch.turn_on
           entity_id: switch.rm_mini_copper_wire_string_lights
         turn_off:
-          sequence:
-            - service: switch.turn_off
-              entity_id: switch.rm_mini_copper_wire_string_lights
-            - service: switch.turn_off
-              entity_id: switch.rm_mini_copper_wire_string_lights
+          service: script.turn_on
+          entity_id: script.rm_mini_copper_wire_string_lights_button_off
         
 script:
   rm_mini_copper_wire_string_lights_button_1:
@@ -133,3 +130,15 @@ script:
       - service: switch.broadlink_send_packet_192_168_1_199
         data:
           packet: "JgBYAAABLZIUEhQRFBEVERQRFBEVERMSFDYTNhQ2FDYUNRQ2FDYUNRURFBEUERU1FBEVERMSFREUNRU1FDYUERU1FDYUNRU1FAAFHQABLUgVAAxRAAEsSBQADQU="
+  rm_mini_copper_wire_string_lights_button_off:
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: rm_mini_copper_wire_string_lights
+      - service: homeassistant.turn_off
+        entity_id: rm_mini_copper_wire_string_lights
+  rm_mini_copper_wire_string_lights_button_on:
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: rm_mini_copper_wire_string_lights
+      - service: homeassistant.turn_on
+        entity_id: rm_mini_copper_wire_string_lights
