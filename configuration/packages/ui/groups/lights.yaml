@@ -9,4 +9,4 @@ group:
     - light.front_porch_lights
     - light.leviton_dzmx11lz_dimmer_level
     - light.christmas_tree_27
-    - light.copper_wire_string_lights
+    - group.copper_wire_string_lights_settings
