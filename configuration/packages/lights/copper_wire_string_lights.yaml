@@ -38,7 +38,7 @@ group:
       - input_select.copper_wire_string_lights_mode
       
 automation:
-  copper_wire_string_lights_mode_changed:
+  - alias: Copper Wire String Lights Mode Changed
     trigger:
       platform: state
       entity_id: input_select.copper_wire_string_lights_mode
