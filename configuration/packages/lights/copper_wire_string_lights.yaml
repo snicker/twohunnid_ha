@@ -76,8 +76,11 @@ light:
           service: switch.turn_on
           entity_id: switch.rm_mini_copper_wire_string_lights
         turn_off:
-          service: switch.turn_off
-          entity_id: switch.rm_mini_copper_wire_string_lights
+          sequence:
+            - service: switch.turn_off
+              entity_id: switch.rm_mini_copper_wire_string_lights
+            - service: switch.turn_off
+              entity_id: switch.rm_mini_copper_wire_string_lights
         
 script:
   rm_mini_copper_wire_string_lights_button_1:
