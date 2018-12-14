@@ -43,28 +43,30 @@ automation:
       platform: state
       entity_id: input_select.copper_wire_string_lights_mode
     action:
-      service: script.turn_on
-      data_template:
-        entity_id: >
-          {% if is_state("input_select.copper_wire_string_lights_mode", "Combination") %}
-          script.rm_mini_copper_wire_string_lights_button_1
-          {% elif is_state("input_select.copper_wire_string_lights_mode", "In wave") %}
-          script.rm_mini_copper_wire_string_lights_button_2
-          {% elif is_state("input_select.copper_wire_string_lights_mode", "Sequential") %}
-          script.rm_mini_copper_wire_string_lights_button_3
-          {% elif is_state("input_select.copper_wire_string_lights_mode", "Slo glo") %}
-          script.rm_mini_copper_wire_string_lights_button_4
-          {% elif is_state("input_select.copper_wire_string_lights_mode", "Chasing flash") %}
-          script.rm_mini_copper_wire_string_lights_button_5
-          {% elif is_state("input_select.copper_wire_string_lights_mode", "Slow Fade") %}
-          script.rm_mini_copper_wire_string_lights_button_6
-          {% elif is_state("input_select.copper_wire_string_lights_mode", "Twinkle/Flash") %}
-          script.rm_mini_copper_wire_string_lights_button_7
-          {% elif is_state("input_select.copper_wire_string_lights_mode", "Steady on") %}
-          script.rm_mini_copper_wire_string_lights_button_8
-          {% else %}
-          none
-          {% endif %}
+      - service: homeassistant.turn_on
+        entity_id: light.copper_wire_string_lights
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state("input_select.copper_wire_string_lights_mode", "Combination") %}
+            script.rm_mini_copper_wire_string_lights_button_1
+            {% elif is_state("input_select.copper_wire_string_lights_mode", "In wave") %}
+            script.rm_mini_copper_wire_string_lights_button_2
+            {% elif is_state("input_select.copper_wire_string_lights_mode", "Sequential") %}
+            script.rm_mini_copper_wire_string_lights_button_3
+            {% elif is_state("input_select.copper_wire_string_lights_mode", "Slo glo") %}
+            script.rm_mini_copper_wire_string_lights_button_4
+            {% elif is_state("input_select.copper_wire_string_lights_mode", "Chasing flash") %}
+            script.rm_mini_copper_wire_string_lights_button_5
+            {% elif is_state("input_select.copper_wire_string_lights_mode", "Slow Fade") %}
+            script.rm_mini_copper_wire_string_lights_button_6
+            {% elif is_state("input_select.copper_wire_string_lights_mode", "Twinkle/Flash") %}
+            script.rm_mini_copper_wire_string_lights_button_7
+            {% elif is_state("input_select.copper_wire_string_lights_mode", "Steady on") %}
+            script.rm_mini_copper_wire_string_lights_button_8
+            {% else %}
+            none
+            {% endif %}
 
         
 light:
