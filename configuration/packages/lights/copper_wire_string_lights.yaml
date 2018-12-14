@@ -28,3 +28,55 @@ light:
         turn_off:
           service: switch.turn_off
           entity_id: switch.rm_mini_copper_wire_string_lights
+        
+script:
+  rm_mini_copper_wire_string_lights_button_1:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABKpQTEhMTFRAUERMTFBISExISEzcUNhM2EjcUNhM3FDYSNxUSEhEUNxMSEhMTExI3ExIUNhM2ExMSNxM3EzYUEhQ1EwAFHgABKkoSAAxUAAErShIADQU="
+  rm_mini_copper_wire_string_lights_button_2:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBQAAABLJIVERQRFBEVERQRFBEVERQRFDUVNRQ2FDUVNRQ2FDUUNhQ1FTUUERURFBEUERU1FBEUERQSFDUUNhU1FDUUEhQ1FQAFHQABKkoUAA0FAAAAAAAAAAA="
+  rm_mini_copper_wire_string_lights_button_3:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLJIVERMSFBEVEhISExIVERMSEzcUNRM3FDYUNRU1EzcVNBQ2FDYTNhURFBEUERURExIUERQSFRATNxQ1FDYTNxQ1FAAFHgABLEkTAAxTAAEsSRQADQU="
+  rm_mini_copper_wire_string_lights_button_4:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLJIVERQRFBIUERQRFBIUERQREzcUNRU1FDYUNRQ2FDYUNRQ2FBEUERU1FBEVERQRFBEVERM2FTUUERU1FDYUNRQ2FAAFHgABLEgUAAxSAAEsSBUADQU="
+  rm_mini_copper_wire_string_lights_button_5:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLJMUERQSFBEUERQRFRETEhQRFTUUNhQ1FTUVNRQ1FTUUNhQRFDYUNRURFDUUEhQRFBEVNRQRFBEVNRQRFDYUNRU1FAAFHgABK0gUAAxTAAEsSBQADQU="
+  rm_mini_copper_wire_string_lights_button_6:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLJMUERQRExMUERQRFBIUERQRFTUUNRQ2FDUVNRQ2FDUUNhQ1FRETNhQ2ExIUERURFBEUERQ2FBEUERU1FDYUNRQ2FAAFHQABLEgUAAxSAAErSBUADQU="
+  rm_mini_copper_wire_string_lights_button_7:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLZIUERURFRAUERYQExIWEBUQEzcUNRQ2FDYVNBQ2FDUVNRURFBEUNhQ1FREVEBURFRATNxQ1FBIUERM3EzYUNhQ2FAAFHQABK0kWAAxQAAEsSBUADQU="
+  rm_mini_copper_wire_string_lights_button_8:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLJMUERQSFBEUERQSFBEVEBURFDUVNRQ2FDUVNRQ2FDQWNRQSFDUVNRQ2FDUVERU1FBEVNRQRFREUERUQFTUUEhQ1FQAFHQABLUgVAAxRAAErSRQADQU="
+  rm_mini_copper_wire_string_lights_button_dim_up:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLpMVERQRFREUERURFBEVERQRFTUUNRU1FDYUNhQ1FTUVNRQSFDUUEhQ1FTUVERQ1FREUNhQRFTUUERURFDYUERU1FAAFHgABLUkUAAxSAAEsRxQADQU="
+  rm_mini_copper_wire_string_lights_button_dim_down:
+    sequence:
+      - service: switch.broadlink_send_packet_192_168_1_199
+        data:
+          packet: "JgBYAAABLZIUEhQRFBEVERQRFBEVERMSFDYTNhQ2FDYUNRQ2FDYUNRURFBEUERU1FBEVERMSFREUNRU1FDYUERU1FDYUNRU1FAAFHQABLUgVAAxRAAEsSBQADQU="
