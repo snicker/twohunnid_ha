@@ -11,6 +11,6 @@ HA app on devices
 https://philhawthorne.com/making-home-assistants-presence-detection-not-so-binary/
 https://community.home-assistant.io/t/monitor-reliable-multi-user-distributed-bt-occupancy-presence-detection/68505
 
-firetv
+RMLink Media Player (for living room TV
 ===
-https://github.com/JeffLIrion/homeassistant_native_firetv
+custom component https://github.com/vpnmaster/homeassistant-custom-components
