@@ -1,0 +1,35 @@
+
+################################################
+## this file is used to eliminate the autocreation of some sensors 
+## in the battery_alert.yaml (since they may be created already) 
+## as well as eliminate some devices from alerts
+################################################
+## examples:
+##         sensor.sensor_with_battery_attibute:
+##           battery_sensor_creation_disabled: true
+##         sensor.sensor_name_to_ignore_battery:
+##           battery_alert_disabled: true
+################################################
+homeassistant:
+  customize:
+    device_tracker.nickcell:
+      battery_sensor_creation_disabled: true
+      
+    sensor.spacecell_battery_level_2:
+      battery_alert_disabled: true
+      
+    zwave.vision_zp3102_pir_motion_sensor:
+      battery_sensor_creation_disabled: true
+      
+    zwave.vision_zp3102_pir_motion_sensor_2:
+      battery_sensor_creation_disabled: true
+      
+    zwave.vision_zp3102_pir_motion_sensor_3:
+      battery_sensor_creation_disabled: true
+      
+    zwave.vision_zp3102_pir_motion_sensor_4:
+      battery_sensor_creation_disabled: true
+      
+    zwave.vision_zp3111_multisensor_4in1:
+      battery_sensor_creation_disabled: true
+    
