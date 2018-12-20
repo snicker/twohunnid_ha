@@ -1,6 +1,6 @@
 - platform: template
   sensors:
-    device_motion_front_yard_south_battery:
+    device_motion_indoor_foyer_battery:
       friendly_name: "Motion - Indoor Foyer - Battery"
       entity_id: zwave.vision_zp3111_multisensor_4in1
       device_class: battery

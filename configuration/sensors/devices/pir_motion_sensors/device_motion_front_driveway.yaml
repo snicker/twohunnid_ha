@@ -1,6 +1,6 @@
 - platform: template
   sensors:
-    device_motion_front_yard_south_battery:
+    device_motion_front_driveway_battery:
       friendly_name: "Motion - Front Driveway (Battery)"
       entity_id: zwave.vision_zp3102_pir_motion_sensor_4
       device_class: battery
