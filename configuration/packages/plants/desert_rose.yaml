@@ -15,6 +15,7 @@ homeassistant:
     plant.desert_rose:
       <<: *customize
       friendly_name: Desert Rose
+      battery_sensor_creation_disabled: true
       
     sensor.plant_desert_rose_battery:
       <<: *customize

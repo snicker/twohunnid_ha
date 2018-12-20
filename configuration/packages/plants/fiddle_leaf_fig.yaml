@@ -15,6 +15,7 @@ homeassistant:
     plant.fiddle_leaf_fig:
       <<: *customize
       friendly_name: Fiddle Leaf Fig
+      battery_sensor_creation_disabled: true
       
     sensor.plant_fiddle_leaf_fig_battery:
       <<: *customize

@@ -15,6 +15,7 @@ homeassistant:
     plant.peace_lily:
       <<: *customize
       friendly_name: Peace Lily
+      battery_sensor_creation_disabled: true
       
     sensor.plant_peace_lily_battery:
       <<: *customize
