@@ -1,3 +1,6 @@
 [submodule "lib/Home-AssistantConfig"]
 	path = lib/Home-AssistantConfig
 	url = https://github.com/notoriousbdg/Home-AssistantConfig.git
+[submodule "lib/vpnmaster/homeassistant-custom-components"]
+	path = lib/vpnmaster/homeassistant-custom-components
+	url = https://github.com/vpnmaster/homeassistant-custom-components
