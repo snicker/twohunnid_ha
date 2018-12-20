@@ -31,7 +31,10 @@ homeassistant:
       icon: mdi:television
       
 media_player:
-  - platform: samsungtv
-    mac: 38:01:95:7b:a3:98
+  - platform: broadlink
+    host: 192.168.1.199
+    mac: '78:0f:77:18:5f:ae'
     name: living_room_television
-    host: 192.168.1.109
+    ping_host: 192.168.1.109
+    ircodes_ini: 'lib/vpnmaster/homeassistant-custom-components/broadlink_media_codes/samsung.ini'
+    timeout: 10
