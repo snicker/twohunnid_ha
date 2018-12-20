@@ -1,0 +1,6 @@
+homeassistant:
+  customize:
+    zwave.kwikset_touchpad_electronic_deadbolt:
+      friendly_name: "Back Door Lock"
+    lock.kwikset_touchpad_electronic_deadbolt_locked:
+      friendly_name: "Back Door Lock"
