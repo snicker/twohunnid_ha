@@ -26,7 +26,7 @@ hahardware:
     - sensor.disk_use_percent_home
     - sensor.memory_use_percent
     - sensor.load_5m
-    - sensor.since_last_boot
+    - sensor.last_boot
 
 configuration:
   name: Config
