@@ -1,0 +1,6 @@
+homeassistant:
+  customize:
+    zwave.kwikset_touchpad_electronic_deadbolt_2:
+      friendly_name: "Front Door Lock"
+    lock.kwikset_touchpad_electronic_deadbolt_locked_2:
+      friendly_name: "Front Door Lock"
