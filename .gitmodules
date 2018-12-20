@@ -1,0 +1,3 @@
+[submodule "lib/Home-AssistantConfig"]
+	path = lib/Home-AssistantConfig
+	url = https://github.com/notoriousbdg/Home-AssistantConfig.git
