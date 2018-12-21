@@ -1,7 +1,0 @@
-- platform: template
-  sensors:
-    motion_backyard_south:
-      friendly_name: "Motion - Backyard (South)"
-      entity_id: sensor.vision_zp3102_pir_motion_sensor_alarm_level_2
-      device_class: motion
-      value_template: "{{ states('sensor.vision_zp3102_pir_motion_sensor_alarm_level_2')|int == 255 }}"

@@ -1,8 +1,0 @@
-- platform: template
-  sensors:
-    device_motion_backyard_south_battery:
-      friendly_name: "Motion - Backyard (South) - Battery"
-      entity_id: zwave.vision_zp3102_pir_motion_sensor_2
-      device_class: battery
-      unit_of_measurement: '%'
-      value_template: "{{ states.zwave.vision_zp3102_pir_motion_sensor_2.attributes.battery_level }}"
