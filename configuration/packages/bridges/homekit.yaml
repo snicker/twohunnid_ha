@@ -23,4 +23,3 @@ homekit:
       feature_list:
         - feature: on_off
         - feature: play_pause
-        
