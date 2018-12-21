@@ -12,6 +12,8 @@ homeassistant:
         - light.x10_garage_door_relay
       include_entities:
         - cover.garage_door
+        - media_player.living_room_television
+        - media_player.master_bedroom_fire_tv
     entity_config:
       alarm_control_panel.home_alarm:
         code: !secret alarm_panel_code
