@@ -31,13 +31,13 @@ homeassistant:
 binary_sensor:
   - platform: template
     sensors:
-      motion_backyard_north:
+      motion_backyard_south:
         entity_id: sensor.vision_zp3102_pir_motion_sensor_alarm_level_2
         value_template: "{{ states('sensor.vision_zp3102_pir_motion_sensor_alarm_level_2')|int == 255 }}"
         
 sensor:
   - platform: template
     sensors:
-      device_motion_backyard_north_battery:
+      device_motion_backyard_south_battery:
         entity_id: zwave.vision_zp3102_pir_motion_sensor_2
         value_template: "{{ state_attr('zwave.vision_zp3102_pir_motion_sensor_2','battery_level') }}"
