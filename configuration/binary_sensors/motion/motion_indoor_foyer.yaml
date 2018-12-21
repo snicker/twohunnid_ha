@@ -1,7 +1,0 @@
-- platform: template
-  sensors:
-    motion_indoor_foyer:
-      friendly_name: "Motion - Indoor Foyer"
-      entity_id: sensor.vision_zp3111_multisensor_4in1_alarm_level
-      device_class: motion
-      value_template: "{{ states('sensor.vision_zp3111_multisensor_4in1_alarm_level')|int == 255 }}"
