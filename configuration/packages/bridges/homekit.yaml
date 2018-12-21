@@ -1,0 +1,17 @@
+homeassistant:
+  homekit:
+    auto_start: False
+    filter:
+      include_domains:
+        - alarm_control_panel
+        - light
+        - lock
+        - climate
+      exclude_entities:
+        - light.patio_lights_19
+        - light.x10_garage_door_relay
+      include_entities:
+        - cover.garage_door
+    entity_config:
+      alarm_control_panel.home_alarm:
+        code: !secret alarm_panel_code
