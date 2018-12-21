@@ -7,7 +7,6 @@ homekit:
       - lock
       - climate
     exclude_entities:
-      - light.patio_lights_19
       - light.x10_garage_door_relay
     include_entities:
       - cover.garage_door
@@ -16,3 +15,12 @@ homekit:
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
+    media_player.living_room_television:
+      feature_list:
+        - feature: on_off
+        - feature: mute
+    media_player.master_bedroom_fire_tv:
+      feature_list:
+        - feature: on_off
+        - feature: play_pause
+        
