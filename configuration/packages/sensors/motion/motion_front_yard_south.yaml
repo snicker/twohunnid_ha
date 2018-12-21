@@ -1,0 +1,43 @@
+- platform: template
+  sensors:
+    motion_front_yard_south:
+      friendly_name: "Motion - Front Yard (South)"
+      entity_id: sensor.vision_zp3102_pir_motion_sensor_alarm_level_3
+      device_class: motion
+      value_template: "{{ states('sensor.vision_zp3102_pir_motion_sensor_alarm_level_3')|int == 255 }}"
+      
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'motion_front_yard_south'
+    
+    binary_sensor.motion_front_yard_south:
+      <<: *customize
+      friendly_name: "Motion - Front Yard (South)"
+      device_class: motion
+      
+    sensor.device_motion_front_yard_south_battery:
+      <<: *customize
+      friendly_name: "Motion - Front Yard (South) - Battery"
+      device_class: battery
+      unit_of_measurement: '%'
+      
+     
+binary_sensor:
+  - platform: template
+    sensors:
+      motion_front_yard_south:
+        entity_id: sensor.vision_zp3102_pir_motion_sensor_alarm_level_3
+        value_template: "{{ states('sensor.vision_zp3102_pir_motion_sensor_alarm_level_3')|int == 255 }}"
+        
+sensor:
+  - platform: template
+    sensors:
+      device_motion_front_yard_south_battery:
+        entity_id: zwave.vision_zp3102_pir_motion_sensor_3
+        value_template: "{{ state_attr('zwave.vision_zp3102_pir_motion_sensor_3','battery_level') }}"
