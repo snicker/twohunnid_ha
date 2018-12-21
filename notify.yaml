@@ -1,7 +1,0 @@
-- name: !secret telegram_bot_chat_name_1
-  platform: telegram
-  chat_id: !secret telegram_bot_chat_id_1
-- name: telegram
-  platform: group
-  services:
-    - service: !secret telegram_bot_chat_name_1

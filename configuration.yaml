@@ -40,21 +40,6 @@ sun:
 
 alarm_control_panel: !include configuration/alarm.yaml
 
-telegram_bot:
-  - platform: webhooks
-    api_key: !secret telegram_bot_key
-    parse_mode: html
-    trusted_networks:
-      - 149.154.167.197/32
-      - 149.154.167.198/31
-      - 149.154.167.200/29
-      - 149.154.167.208/28
-      - 149.154.167.224/29
-      - 149.154.167.232/31
-      - !secret http_reverse_proxy_ip
-    allowed_chat_ids:
-      - !secret telegram_bot_chat_id_1
-
 tts:
   - platform: google
 
@@ -105,7 +90,6 @@ group: !include groups.yaml
 automation: !include automations.yaml
 automation old: !include_dir_merge_list configuration/automations/
 script: !include scripts.yaml
-notify: !include notify.yaml
 alert: !include alerts.yaml
 
 ffmpeg:
