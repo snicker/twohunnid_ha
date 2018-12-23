@@ -32,3 +32,10 @@ Note : The settings.js file exports a JavaScript object. To configure Node-RED y
    },
 
 The feature relies on having the git and ssh-keygen command line tools available. Node-RED will check for them on start-up and let you know if they are missing.
+
+add the twohunnid project
+===
+
+open a project from here : https://github.com/snicker/twohunnid_ha_nodered.git
+
+will probably have to update git credentials for this to work
