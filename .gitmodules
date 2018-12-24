@@ -7,6 +7,3 @@
 [submodule "lib/andrewjfreyer/monitor-appdaemon"]
 	path = lib/andrewjfreyer/monitor-appdaemon
 	url = https://github.com/andrewjfreyer/monitor.git
-[submodule "lib/andrewjfreyer/monitor"]
-	path = lib/andrewjfreyer/monitor
-	url = https://github.com/andrewjfreyer/monitor.git
