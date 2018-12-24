@@ -1,0 +1,15 @@
+homeassistant:
+  customize:
+    group.media_players:
+      order: 3
+      
+group:
+  media_players:
+    view: yes
+    name: Media Players
+    icon: mdi:movie
+    entities:
+      - media_player.living_room_television
+      - media_player.aftmm
+      - media_player.spotify
+      - media_player.master_bedroom_fire_tv
