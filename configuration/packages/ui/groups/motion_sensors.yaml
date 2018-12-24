@@ -13,6 +13,7 @@ group:
       - binary_sensor.front_door_camera_motion_detected
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
+      - binary_sensor.modetftp_motion_laundry
       
   all_exterior_motion_sensors:
     name: Motion Sensors - Exterior
@@ -34,6 +35,7 @@ group:
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
       - binary_sensor.garage_camera_motion
+      - binary_sensor.modetftp_motion_laundry
       
   motion_backyard_north:
     name: Motion - Backyard (North)
