@@ -3,7 +3,7 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'universal_media_player_living_room'
-    media_player.living_room_television:
+    media_player.universal_media_player_living_room:
       <<: *customize
       friendly_name: "Television - Living Room"
       icon: mdi:television
