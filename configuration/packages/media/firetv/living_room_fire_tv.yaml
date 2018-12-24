@@ -1,0 +1,16 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'living_room_firetv'
+
+    media_player.living_room_fire_tv:
+      <<: *customize
+      friendly_name: "Fire TV - Living Room"
+      icon: mdi:television
+      
+media_player:
+  - platform: firetv
+    name: living_room_fire_tv
+    host: 192.168.1.194
+    adbkey: "~/.android/adbkey"
