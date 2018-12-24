@@ -12,4 +12,5 @@ group:
       - media_player.living_room_television
       - media_player.aftmm
       - media_player.spotify
+      - media_player.living_room_fire_tv
       - media_player.master_bedroom_fire_tv
