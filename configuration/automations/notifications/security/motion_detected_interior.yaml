@@ -4,6 +4,7 @@
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
       - binary_sensor.garage_camera_motion
+      - binary_sensor.modetftp_motion_laundry
     from: 'off'
     platform: state
     to: 'on'
