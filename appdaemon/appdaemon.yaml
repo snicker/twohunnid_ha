@@ -1,10 +1,16 @@
-secrets: ../secrets.yaml
-AppDaemon:
-  logfile: STDOUT
-  errorfile: STDERR
+secrets: /home/homeassistant/.homeassistant/
+log:
+  accessfile: /home/homeassistant/.homeassistant/appdaemon_access.log
+  errorfile: /home/homeassistant/.homeassistant/appdaemon_error.log
+  logfile: /home/homeassistant/.homeassistant/appdaemon_appdaemon.log
   log_generations: 3
+  log_size: 1000000
+appdaemon:
   threads: 10
-HASS:
-  type: hass
-  ha_url: http://127.0.0.1:8123
-  token: !secret appdaemon_hass_access_token
+  time_zone: !secret home_time_zone
+  api_port: 5000
+  plugins:
+    HASS:
+      type: hass
+      ha_url: http://127.0.0.1:8123
+      token: !secret appdaemon_hass_access_token
