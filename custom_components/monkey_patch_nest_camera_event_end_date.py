@@ -1,4 +1,5 @@
 DOMAIN = 'monkey_patch_nest_camera_event_end_date'
+import logging
 _LOGGER = logging.getLogger(__name__)
 
 from nest.nest import CameraEvent
