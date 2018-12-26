@@ -14,10 +14,14 @@ media_player:
     state_template: >
       {% if is_state('media_player.living_room_television', 'off') %}
         off
-      {% elif not is_state('media_player.aftmm','unavailable') %}
-        {{ states('media_player.aftmm') }}
-      {% elif is_state_attr('media_player.spotify','source','Living Room Fire TV') %}
-        {{ states('media_player.spotify') }}
+      {% else %}
+        {% if not is_state('media_player.aftmm','unavailable') %}
+          {{ states('media_player.aftmm') }}
+        {% elif is_state_attr('media_player.spotify','source','Living Room Fire TV') %}
+          {{ states('media_player.spotify') }}
+        {% else %}
+          {{ states('media_player.living_room_television') }}
+        {% endif %}
       {% endif %}
     children:
       - media_player.living_room_fire_tv
