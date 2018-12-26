@@ -15,7 +15,7 @@ media_player:
       {% if is_state('media_player.living_room_television', 'off') %}
         off
       {% else %}
-        {% if not is_state('media_player.aftmm','unavailable') %}
+        {% if states('media_player.aftmm') not in ('unavailable','unknown') %}
           {{ states('media_player.aftmm') }}
         {% elif is_state_attr('media_player.spotify','source','Living Room Fire TV') %}
           {{ states('media_player.spotify') }}
