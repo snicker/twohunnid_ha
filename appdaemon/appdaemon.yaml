@@ -14,3 +14,6 @@ appdaemon:
       type: hass
       ha_url: http://127.0.0.1:8123
       token: !secret appdaemon_hass_access_token
+    MQTT:
+      type: mqtt
+      client_host: 192.168.1.19
