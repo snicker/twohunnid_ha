@@ -11,6 +11,14 @@ homeassistant:
 media_player:
   - platform: universal
     name: universal_media_player_living_room
+    state_template: >
+      {% if is_state('media_player.living_room_television', 'off') %}
+        off
+      {% elseif not is_state('media_player.aftmm','unavailable') %}
+        {{ states('media_player.aftmm') }}
+      {% elseif is_state_attr('media_player.spotify','source','Living Room Fire TV') %}
+        {{ states('media_player.spotify') }}
+      {% endif %}
     children:
       - media_player.living_room_fire_tv
       - media_player.aftmm
