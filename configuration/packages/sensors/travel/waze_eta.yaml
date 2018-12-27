@@ -15,15 +15,16 @@ homeassistant:
       
 
 automation:
-  - alias: nest_eta_from_waze_eta_destination_home
+  - id: nest_eta_from_waze_eta_destination_home
+    alias: nest_eta_from_waze_eta_destination_home
     trigger:
       platform: state
       entity_id: sensor.waze_eta_nick
     condition:
-      - condition: template
-        value_template: {{ 'home' in trigger.to_state.attributes.destination.lower() }}
+    - condition: template
+      value_template: "{{ 'home' in trigger.to_state.attributes.destination.lower() }}"
     action:
-      - service: nest.set_eta
-        data_template:
-          eta: {{ trigger.to_state.attributes.hms }}
-          trip_id: "{{ trigger.to_state.attributes.from }} - {{ trigger.to_state.attributes.destination }}"
+    - service: nest.set_eta
+      data_template:
+        eta: "{{ trigger.to_state.attributes.hms }}"
+        trip_id: "{{ trigger.to_state.attributes.from }} - {{ trigger.to_state.attributes.destination }}"
