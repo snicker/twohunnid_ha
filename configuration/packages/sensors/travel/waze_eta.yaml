@@ -1,0 +1,29 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'waze_eta'
+  
+    # sensors below come from a node-red flow 
+    # auto populated by discoverable MQTT messages
+    sensor.waze_eta_nick:
+      <<: *customize
+      
+    automation.nest_eta_from_waze_eta_destination_home:
+      <<: *customize
+      friendly_name: "Set Nest ETA whenever Waze ETA Sensors have a destination of Home"
+      
+
+automation:
+  - alias: nest_eta_from_waze_eta_destination_home
+    trigger:
+      platform: state
+      entity_id: sensor.waze_eta_nick
+    condition:
+      - condition: template
+        value_template: {{ 'home' in trigger.to_state.attributes.destination.lower() }}
+    action:
+      - service: nest.set_eta
+        data_template:
+          eta: {{ trigger.to_state.attributes.hms }}
+          trip_id: "{{ trigger.to_state.attributes.from }} - {{ trigger.to_state.attributes.destination }}"
