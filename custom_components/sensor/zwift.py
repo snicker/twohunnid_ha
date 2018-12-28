@@ -57,7 +57,7 @@ SENSOR_TYPES = {
     'speed': {'name': 'Speed', 'unit': 'mph', 'unit_metric': 'kmh'},
     'cadence': {'name': 'Cadence', 'unit': 'Hz'},
     'power': {'name': 'Power', 'unit': 'W'},
-    'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'}
+    # 'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'}
 }
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
