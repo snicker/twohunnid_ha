@@ -54,10 +54,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 SENSOR_TYPES = {
     'online': {'name': 'Online', 'binary': True, 'device_class': 'connectivity'},
     'hr': {'name': 'Heart Rate', 'unit': 'bpm'},
-    'speed': {'name': 'Speed'},
+    'speed': {'name': 'Speed', 'unit': 'mph', 'unit_metric': 'kmh'},
     'cadence': {'name': 'Cadence', 'unit': 'Hz'},
     'power': {'name': 'Power', 'unit': 'W'},
-    'altitude': {'name': 'Altitude'}
+    'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'}
 }
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
@@ -140,6 +140,7 @@ class ZwiftPlayerData:
     def __init__(self, player_id):
         self._player_id = player_id
         self.data = {}
+        self.player_profile = {}
         
     @property
     def player_id(self):
@@ -211,6 +212,7 @@ class ZwiftData:
                         'speed': player_data.speed / 1000000.0,
                         'altitude': float(player_data.altitude)
                     }
+                    self.players[player_id].player_profile = online_player
                 self.players[player_id].data = data
                 _LOGGER.debug("dispatching zwift data update for player {}".format(player_id))
                 dispatcher_send(self.hass, SIGNAL_ZWIFT_UPDATE.format(player_id=player_id))
