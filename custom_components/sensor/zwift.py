@@ -110,6 +110,8 @@ class ZwiftSensorDevice(Entity):
     @property
     def unit_of_measurement(self):
         """Return the unit this state is expressed in."""
+        if self._zwift_data.is_metric
+            return SENSOR_TYPES[self._type].get('unit_metric') or SENSOR_TYPES[self._type].get('unit')
         return SENSOR_TYPES[self._type].get('unit')
 
     def update(self):
@@ -178,6 +180,7 @@ class ZwiftData:
         self.password = password
         self.hass = hass
         self.players = {player: ZwiftPlayerData(player) for player in players}
+        self._profile = None
         self.update = Throttle(update_interval)(self._update)
 
     def check_zwift_auth(self, client):
@@ -185,12 +188,19 @@ class ZwiftData:
         if 'error' in token:
             raise Exception("Zwift authorization failed: {}".format(token))
         return True
+    
+    @property
+    def is_metric(self):
+        if self._profile:
+            return self._profile.get('useMetric',False)
+        return False
         
     def _connect(self):
         from zwift import Client as ZwiftClient
         client = ZwiftClient(self.username,self.password)
         if self.check_zwift_auth(client):
             self._client = client
+            self._profile = self._client.get_profile().profile
             return self._client
 
     def _update(self):
