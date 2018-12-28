@@ -40,6 +40,8 @@ DATA_ZWIFT = 'zwift'
 
 DEFAULT_NAME = 'Zwift'
 
+SIGNAL_ZWIFT_UPDATE = 'zwift_update_{player_id}'
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_USERNAME): cv.string,
     vol.Required(CONF_PASSWORD): cv.string,
@@ -68,7 +70,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     update_interval = config.get(CONF_UPDATE_INTERVAL)
     
     
-    zwift_data = ZwiftData(update_interval, username, password, players)
+    zwift_data = ZwiftData(update_interval, username, password, players, hass)
     try:
         zwift_data._connect()
     except:
@@ -114,6 +116,14 @@ class ZwiftSensorDevice(Entity):
         """Get the latest data from the sensor."""
         self._zwift_data.update()
         self._state = getattr(self._player,self._type)
+        
+    async def async_added_to_hass(self):
+        """Register update signal handler."""
+        async def async_update_state():
+            """Update sensor state."""
+            await self.async_update_ha_state(True)
+
+        async_dispatcher_connect(self.hass, SIGNAL_ZWIFT_UPDATE.format(player_id=player_id), async_update_state)
         
 class ZwiftBinarySensorDevice(ZwiftSensorDevice, BinarySensorDevice):
     @property
@@ -161,10 +171,11 @@ class ZwiftPlayerData:
     
 class ZwiftData:
     """Representation of a Zwift client data collection object."""
-    def __init__(self, update_interval, username, password, players):
+    def __init__(self, update_interval, username, password, players, hass):
         self._client = None
         self.username = username
         self.password = password
+        self.hass = hass
         self.players = {player: ZwiftPlayerData(player) for player in players}
         self.update = Throttle(update_interval)(self._update)
 
@@ -201,5 +212,7 @@ class ZwiftData:
                         'altitude': float(player_data.altitude)
                     }
                 self.players[player_id].data = data
+                _LOGGER.debug("dispatching zwift data update for player {}".format(player_id))
+                dispatcher_send(self.hass, SIGNAL_ZWIFT_UPDATE.format(player_id=player_id))
             
             
