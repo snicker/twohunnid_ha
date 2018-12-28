@@ -123,7 +123,7 @@ class ZwiftSensorDevice(Entity):
             """Update sensor state."""
             await self.async_update_ha_state(True)
 
-        async_dispatcher_connect(self.hass, SIGNAL_ZWIFT_UPDATE.format(player_id=player_id), async_update_state)
+        async_dispatcher_connect(self.hass, SIGNAL_ZWIFT_UPDATE.format(player_id=self._player.player_id), async_update_state)
         
 class ZwiftBinarySensorDevice(ZwiftSensorDevice, BinarySensorDevice):
     @property
