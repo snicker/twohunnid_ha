@@ -4,6 +4,24 @@ homeassistant:
       customize: &customize
         package: 'zwift'
         
+    sensor.zwift_heartrate_803962:
+      <<: *customize
+      
+    sensor.zwift_online_803962:
+      <<: *customize
+      
+    sensor.zwift_speed_803962:
+      <<: *customize
+      
+    sensor.zwift_cadence_803962:
+      <<: *customize
+      
+    sensor.zwift_power_803962:
+      <<: *customize
+      
+    sensor.zwift_altitude_803962:
+      <<: *customize
+        
 sensor:
   - platform: zwift
     username: !secret zwift_username
