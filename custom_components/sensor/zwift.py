@@ -110,7 +110,7 @@ class ZwiftSensorDevice(Entity):
     @property
     def unit_of_measurement(self):
         """Return the unit this state is expressed in."""
-        if self._zwift_data.is_metric
+        if self._zwift_data.is_metric:
             return SENSOR_TYPES[self._type].get('unit_metric') or SENSOR_TYPES[self._type].get('unit')
         return SENSOR_TYPES[self._type].get('unit')
 
