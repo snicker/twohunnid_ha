@@ -35,6 +35,7 @@ from homeassistant.helpers.dispatcher import dispatcher_send, \
     
 CONF_UPDATE_INTERVAL = 'update_interval'
 CONF_PLAYERS = 'players'
+CONF_INCLUDE_SELF = 'include_self'
 
 DATA_ZWIFT = 'zwift'
 
@@ -46,6 +47,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_USERNAME): cv.string,
     vol.Required(CONF_PASSWORD): cv.string,
     vol.Required(CONF_PLAYERS): vol.All(cv.ensure_list, [cv.string]),
+    vol.Optional(CONF_INCLUDE_SELF, default=True): cv.boolean,
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     vol.Optional(CONF_UPDATE_INTERVAL, default=timedelta(seconds=15)): (
         vol.All(cv.time_period, cv.positive_timedelta)),
@@ -68,6 +70,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     players = config.get(CONF_PLAYERS)
     name = config.get(CONF_NAME)
     update_interval = config.get(CONF_UPDATE_INTERVAL)
+    include_self = config.get(CONF_INCLUDE_SELF)
     
     
     zwift_data = ZwiftData(update_interval, username, password, players, hass)
@@ -76,6 +79,9 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     except:
         _LOGGER.exception("Could not create Zwift sensor named '{}'!".format(name))
         return
+        
+    if include_self:
+        zwift_data.add_tracked_player(zwift_data._profile.get('id'))
         
     dev = []
     for player_id in zwift_data.players:
@@ -179,9 +185,15 @@ class ZwiftData:
         self.username = username
         self.password = password
         self.hass = hass
-        self.players = {player: ZwiftPlayerData(player) for player in players}
+        self.players = {}
         self._profile = None
         self.update = Throttle(update_interval)(self._update)
+        for player_id in players:
+            self.add_tracked_player(player_id)
+        
+    def add_tracked_player(self, player_id):
+        if player_id:
+            self.players[player_id] = ZwiftPlayerData(player_id)
 
     def check_zwift_auth(self, client):
         token = client.auth_token.fetch_token_data()
