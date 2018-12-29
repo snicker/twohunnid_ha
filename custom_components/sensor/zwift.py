@@ -55,7 +55,7 @@ SENSOR_TYPES = {
     'online': {'name': 'Online', 'binary': True, 'device_class': 'connectivity'},
     'hr': {'name': 'Heart Rate', 'unit': 'bpm'},
     'speed': {'name': 'Speed', 'unit': 'mph', 'unit_metric': 'kmh'},
-    'cadence': {'name': 'Cadence', 'unit': 'Hz'},
+    'cadence': {'name': 'Cadence', 'unit': 'rpm'},
     'power': {'name': 'Power', 'unit': 'W'},
     # 'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'}
 }
