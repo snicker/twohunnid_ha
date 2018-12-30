@@ -233,9 +233,9 @@ class ZwiftData:
                     player_data = world.player_status(player_id)
                     data = {
                         'online': True,
-                        'heartrate': float(player_data.heartrate),
-                        'cadence': float(player_data.cadence),
-                        'power': float(player_data.power),
+                        'heartrate': int(float(player_data.heartrate)),
+                        'cadence': int(float(player_data.cadence)),
+                        'power': int(float(player_data.power)),
                         'speed': player_data.speed / 1000000.0,
                         'altitude': float(player_data.altitude)
                     }
