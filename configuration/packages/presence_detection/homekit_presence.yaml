@@ -1,0 +1,19 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'homekit_presence'
+        
+    input_boolean.presence_brittany_homekit:
+      <<: *customize
+      friendly_name: "Presence - Brittany (Homekit)"
+      persistent: true
+      
+    input_boolean.presence_nick_homekit:
+      <<: *customize
+      friendly_name: "Presence - Nick (Homekit)"
+      persistent: true
+
+input_boolean:
+  presence_brittany_homekit:
+  presence_nick_homekit:
