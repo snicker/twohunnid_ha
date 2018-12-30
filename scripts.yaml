@@ -77,7 +77,7 @@ media_play_cops_outside:
   alias: 'Media: Play Cops Outside'
   sequence:
   - data:
-      entity_id: light.outside_amplifier_28
+      entity_id: switch.backyard_amplifier
     service: homeassistant.turn_on
   - data:
       entity_id: media_player.spotify

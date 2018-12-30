@@ -4,5 +4,5 @@ group:
     control: hidden
     name: All Switches
     entities: 
-      - light.outside_amplifier_28
+      - switch.backyard_amplifier
       - switch.garage_door_button
