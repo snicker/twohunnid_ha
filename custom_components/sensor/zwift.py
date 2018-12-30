@@ -54,11 +54,11 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 SENSOR_TYPES = {
-    'online': {'name': 'Online', 'binary': True, 'device_class': 'connectivity'},
-    'hr': {'name': 'Heart Rate', 'unit': 'bpm'},
-    'speed': {'name': 'Speed', 'unit': 'mph', 'unit_metric': 'kmh'},
-    'cadence': {'name': 'Cadence', 'unit': 'rpm'},
-    'power': {'name': 'Power', 'unit': 'W'},
+    'online': {'name': 'Online', 'binary': True, 'device_class': 'connectivity', 'icon': 'mdi:radio-tower'},
+    'hr': {'name': 'Heart Rate', 'unit': 'bpm',  'icon': 'mdi:heart-pulse'},
+    'speed': {'name': 'Speed', 'unit': 'mph', 'unit_metric': 'kmh', 'icon': 'mdi:speedometer'},
+    'cadence': {'name': 'Cadence', 'unit': 'rpm', 'icon': 'mdi:rotate-right'},
+    'power': {'name': 'Power', 'unit': 'W', 'icon': 'mdi:flash'},
     # 'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'}
 }
 
@@ -119,6 +119,10 @@ class ZwiftSensorDevice(Entity):
         if self._zwift_data.is_metric:
             return SENSOR_TYPES[self._type].get('unit_metric') or SENSOR_TYPES[self._type].get('unit')
         return SENSOR_TYPES[self._type].get('unit')
+        
+    @property
+    def icon(self):
+        return SENSOR_TYPES[self._type].get('icon')
 
     def update(self):
         """Get the latest data from the sensor."""
