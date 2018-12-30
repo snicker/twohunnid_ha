@@ -8,6 +8,7 @@ cloud:
       include_entities:
         - switch.backyard_amplifier
         - script.alarm_arm_away
+        - script.alarm_arm_night
         - group.all_exterior_lights
         - group.all_interior_lights
         - group.all_lights
@@ -20,7 +21,10 @@ cloud:
     entity_config:
       script.alarm_arm_away:
         name: Home Security
-        description: Arm Home Security
+        description: Arm Home Security for Away Mode
+      script.alarm_arm_night:
+        name: Night Security
+        description: Arm Home Security for Night Mode
       media_player.universal_media_player_living_room:
         name: TV
         description: Living room television
