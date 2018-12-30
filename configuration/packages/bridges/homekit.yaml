@@ -12,6 +12,8 @@ homekit:
       - cover.garage_door
       - media_player.living_room_television
       - media_player.master_bedroom_fire_tv
+      - input_boolean.presence_nick_homekit
+      - input_boolean.presence_brittany_homekit
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
