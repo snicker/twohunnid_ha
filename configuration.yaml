@@ -43,8 +43,6 @@ alarm_control_panel: !include configuration/alarm.yaml
 tts:
   - platform: google
 
-cloud:
-
 mqtt:
   broker: 192.168.1.19
   discovery: true
