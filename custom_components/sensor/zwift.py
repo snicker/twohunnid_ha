@@ -192,8 +192,9 @@ class ZwiftData:
         self.players = {}
         self._profile = None
         self.update = Throttle(update_interval)(self._update)
-        for player_id in players:
-            self.add_tracked_player(player_id)
+        if players:
+            for player_id in players:
+                self.add_tracked_player(player_id)
         
     def add_tracked_player(self, player_id):
         if player_id:
