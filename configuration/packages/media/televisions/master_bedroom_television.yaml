@@ -1,0 +1,18 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'master_bedroom_television'
+
+    media_player.master_bedroom_television:
+      <<: *customize
+      friendly_name: "Television - Master Bedroom"
+      icon: mdi:television
+      
+media_player:
+  - platform: broadlink
+    host: 192.168.1.205
+    mac: '78:0f:77:06:ef:75'
+    name: master_bedroom_television
+    ircodes_ini: 'configuration/packages/media/televisions/sharp_aquos_ir_codes.ini'
+    timeout: 10
