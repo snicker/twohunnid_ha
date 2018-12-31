@@ -14,7 +14,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Turn On Master Bedroom TV if Fire TV Stick is On"
       
-    automation.turn_off_master_bedroom_tv_if_fire_tv_stick_is_on:
+    automation.turn_off_master_bedroom_tv_if_fire_tv_stick_is_off:
       <<: *customize
       friendly_name: "Turn Off Master Bedroom TV if Fire TV Stick is Off"
       
@@ -32,26 +32,30 @@ automation:
     trigger: 
     - platform: state
       entity_id: media_player.master_bedroom_fire_tv
-      from: 'Standby'
+      from: 'standby'
     - platform: state
       entity_id: media_player.master_bedroom_fire_tv
-      from: 'Off'
+      from: 'off'
     condition:
     - condition: template
       value_template: "{{ trigger.to_state.state.lower() not in ('off','standby') }}"
     action:
     - service: homeassistant.turn_on
       entity_id: media_player.master_bedroom_television
+    - delay: 00:00:03
+    - service: media_player.select_source
+      entity_id: media_player.master_bedroom_television
+      source: "Input 4"
       
-  - alias: turn_off_master_bedroom_tv_if_fire_tv_stick_is_on
-    id: turn_off_master_bedroom_tv_if_fire_tv_stick_is_on
+  - alias: turn_off_master_bedroom_tv_if_fire_tv_stick_is_off
+    id: turn_off_master_bedroom_tv_if_fire_tv_stick_is_off
     trigger: 
     - platform: state
       entity_id: media_player.master_bedroom_fire_tv
-      to: 'Standby'
+      to: 'standby'
     - platform: state
       entity_id: media_player.master_bedroom_fire_tv
-      to: 'Off'
+      to: 'off'
     condition:
     - condition: template
       value_template: "{{ trigger.to_state.state.lower() in ('off','standby') }}"
