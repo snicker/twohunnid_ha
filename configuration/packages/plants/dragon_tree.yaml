@@ -1,0 +1,68 @@
+################################################################
+## Packages / dragon_tree
+################################################################
+
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'plant_dragon_tree'
+      expose: &expose
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+        
+    plant.dragon_tree:
+      <<: *customize
+      friendly_name: Dragon Tree
+      battery_sensor_creation_disabled: true
+      
+    sensor.plant_dragon_tree_battery:
+      <<: *customize
+      friendly_name: "Dragon Tree - Battery"
+      
+    sensor.plant_dragon_tree_moisture:
+      <<: *customize
+      friendly_name: "Dragon Tree - Moisture"
+      
+    sensor.plant_dragon_tree_temperature:
+      <<: *customize
+      friendly_name: "Dragon Tree - Temperature"
+        
+    sensor.plant_dragon_tree_light:
+      <<: *customize
+      friendly_name: "Dragon Tree - Brightness"
+      
+    sensor.plant_dragon_tree_conductivity:
+      <<: *customize
+      friendly_name: "Dragon Tree - Conductivity"
+    
+        
+        
+plant:
+  dragon_tree:
+    sensors:
+      moisture: sensor.plant_dragon_tree_moisture
+      battery: sensor.plant_dragon_tree_battery
+      temperature: sensor.plant_dragon_tree_temperature
+      conductivity: sensor.plant_dragon_tree_conductivity
+      brightness: sensor.plant_dragon_tree_light
+    min_moisture: 25
+    max_moisture: 80
+    min_battery: 15
+    min_conductivity: 250
+    min_temperature: 40
+    max_temperature: 90
+
+automation:
+  - id: dragon_tree_notify_problems
+    alias: 'Dragon Tree Notify of Problems'
+    trigger:
+    - entity_id: plant.dragon_tree
+      platform: state
+      to: problem
+    condition: []
+    action:
+    - data_template:
+        message: "Dragon Tree has an issue: {{ trigger.to_state.attributes.problem }}. Moisture: {{ trigger.to_state.attributes.moisture }}% Temp: {{ trigger.to_state.attributes.temperature }} Conductivity: {{ trigger.to_state.attributes.conductivity }}"
+      service: notify.nick

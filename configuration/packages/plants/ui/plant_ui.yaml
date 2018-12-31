@@ -40,7 +40,7 @@ group:
       - plant.zebra_plant
       - plant.peace_lily
       - plant.fiddle_leaf_fig
-      - plant.tiny_ivy
+      - plant.dragon_tree
     
 history_graph:
   plant_moisture:
@@ -49,6 +49,6 @@ history_graph:
       - sensor.plant_desert_rose_moisture
       - sensor.plant_peace_lily_moisture
       - sensor.plant_fiddle_leaf_fig_moisture
-      - sensor.plant_tiny_ivy_moisture
+      - sensor.plant_dragon_tree_moisture
     hours_to_show: 120
     refresh: 60
