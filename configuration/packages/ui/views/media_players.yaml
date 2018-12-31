@@ -13,3 +13,4 @@ group:
       - media_player.living_room_fire_tv
       - media_player.spotify
       - media_player.master_bedroom_fire_tv
+      - media_player.master_bedroom_television

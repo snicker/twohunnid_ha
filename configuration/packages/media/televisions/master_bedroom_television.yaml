@@ -10,6 +10,14 @@ homeassistant:
       ir_codes_source: http://www.remotecentral.com/cgi-bin/mboard/rc-discrete/thread.cgi?7222
       icon: mdi:television
       
+    automation.turn_on_master_bedroom_tv_if_fire_tv_stick_is_on:
+      <<: *customize
+      friendly_name: "Turn On Master Bedroom TV if Fire TV Stick is On"
+      
+    automation.turn_off_master_bedroom_tv_if_fire_tv_stick_is_on:
+      <<: *customize
+      friendly_name: "Turn Off Master Bedroom TV if Fire TV Stick is Off"
+      
 media_player:
   - platform: broadlink
     host: 192.168.1.205
@@ -17,3 +25,36 @@ media_player:
     name: master_bedroom_television
     ircodes_ini: 'configuration/packages/media/televisions/sharp_aquos_ir_codes.ini'
     timeout: 10
+
+automation:
+  - alias: turn_on_master_bedroom_tv_if_fire_tv_stick_is_on
+    id: turn_on_master_bedroom_tv_if_fire_tv_stick_is_on
+    trigger: 
+    - platform: state
+      entity_id: media_player.master_bedroom_fire_tv
+      from: 'Standby'
+    - platform: state
+      entity_id: media_player.master_bedroom_fire_tv
+      from: 'Off'
+    condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state.lower() not in ('off','standby') }}"
+    action:
+    - service: homeassistant.turn_on
+      entity_id: media_player.master_bedroom_television
+      
+  - alias: turn_off_master_bedroom_tv_if_fire_tv_stick_is_on
+    id: turn_off_master_bedroom_tv_if_fire_tv_stick_is_on
+    trigger: 
+    - platform: state
+      entity_id: media_player.master_bedroom_fire_tv
+      to: 'Standby'
+    - platform: state
+      entity_id: media_player.master_bedroom_fire_tv
+      to: 'Off'
+    condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state.lower() in ('off','standby') }}"
+    action:
+    - service: homeassistant.turn_off
+      entity_id: media_player.master_bedroom_television
