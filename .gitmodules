@@ -10,3 +10,7 @@
 [submodule "lib/andrewjfreyer/monitor"]
 	path = lib/andrewjfreyer/monitor
 	url = https://github.com/andrewjfreyer/monitor.git
+[submodule "lib/JeffLIrion/homeassistant_native_firetv"]
+	path = lib/JeffLIrion/homeassistant_native_firetv
+	url = https://github.com/JeffLIrion/homeassistant_native_firetv.git
+	branch = pure-python-adb
