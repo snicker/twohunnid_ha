@@ -11,6 +11,11 @@
     - /home/homeassistant/.homeassistant
     - /tmp
 
+logger:
+  default: info
+  logs:
+    custom_components.media_player.firetv: critical
+    
 frontend:
 
 config:
