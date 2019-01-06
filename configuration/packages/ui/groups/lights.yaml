@@ -8,5 +8,6 @@ group:
     - light.front_landscape_lights
     - light.front_porch_lights
     - light.leviton_dzmx11lz_dimmer_level
+    - light.z_wave_products_inc_wd100_level
     - light.christmas_tree_27
     - group.copper_wire_string_lights_settings
