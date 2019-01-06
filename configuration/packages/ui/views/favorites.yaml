@@ -29,6 +29,7 @@ group:
     name: Lights
     entities:
       - light.leviton_dzmx11lz_dimmer_level
+      - light.z_wave_products_inc_wd100_level
       - light.string_lights
       
   favorite_switches:
