@@ -11,3 +11,5 @@ group:
     - light.z_wave_products_inc_wd100_level
     - light.christmas_tree_27
     - group.copper_wire_string_lights_settings
+    - light.z_wave_products_inc_wd100_level_2
+    - light.z_wave_products_inc_wd100_level_3

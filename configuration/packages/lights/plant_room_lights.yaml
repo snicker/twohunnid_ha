@@ -1,0 +1,10 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'plant_room_lights'
+    
+    light.z_wave_products_inc_wd100_level_2:
+      <<: *customize
+      friendly_name: "Plant Room Lights"
+        

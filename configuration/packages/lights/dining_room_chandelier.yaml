@@ -3,9 +3,6 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'dining_room_chandelier'
-        
-    switch.rm_mini_copper_wire_string_lights:
-      hidden: true
     
     light.z_wave_products_inc_wd100_level:
       <<: *customize
