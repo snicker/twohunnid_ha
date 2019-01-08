@@ -2,14 +2,34 @@ group:
   lights:
     icon: mdi:lightbulb
     name: All Lights
+    entities:
+    - group.exterior_lights
+    - group.interior_lights
+      
+  exterior_landscape_lights:
+    name: Exterior Landscape Lights
+    entities:
+      - light.string_lights
+      - light.front_porch_lights
+      - light.front_landscape_lights
+    
+  exterior_lights:
+    icon: mdi:lightbulb
+    name: Exterior Lighting
     entities: 
     - light.string_lights
     - light.backyard_flood_lights
     - light.front_landscape_lights
     - light.front_porch_lights
+    
+  interior_lights:
+    icon: mdi:lightbulb
+    name: Interior Lighting
+    entities:
     - light.leviton_dzmx11lz_dimmer_level
     - light.z_wave_products_inc_wd100_level
     - light.christmas_tree_27
     - group.copper_wire_string_lights_settings
     - light.z_wave_products_inc_wd100_level_2
     - light.z_wave_products_inc_wd100_level_3
+      

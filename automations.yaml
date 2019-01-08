@@ -17,7 +17,7 @@
   condition: []
   action:
   - data:
-      entity_id: group.all_exterior_lights
+      entity_id: group.exterior_lights
     service: homeassistant.turn_off
 - id: '1537420454578'
   alias: 'HAStatus: Shutdown'

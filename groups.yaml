@@ -62,21 +62,6 @@ home_settings:
     - input_boolean.dogs_home
     - group.holiday_modes
     
-all_exterior_lights:
-  name: All Exterior Lights
-  view: no
-  entities:
-    - group.exterior_landscape_lights
-    - light.backyard_flood_lights
-    
-exterior_landscape_lights:
-  name: Exterior Landscape Lights
-  view: no
-  entities:
-    - light.string_lights
-    - light.front_porch_lights
-    - light.front_landscape_lights
-    
 all_doors:
   name: Doors
   view: no

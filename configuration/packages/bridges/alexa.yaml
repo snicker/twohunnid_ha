@@ -9,8 +9,8 @@ cloud:
         - switch.backyard_amplifier
         - script.alarm_arm_away
         - script.alarm_arm_night
-        - group.all_exterior_lights
-        - group.all_interior_lights
+        - group.exterior_lights
+        - group.interior_lights
         - group.all_lights
         - group.all_locks
         - group.interior_christmas_lights
