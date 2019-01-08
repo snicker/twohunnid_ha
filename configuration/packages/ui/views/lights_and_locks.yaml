@@ -11,6 +11,7 @@ group:
     name: Lights, Locks, and Switches
     icon: mdi:lightbulb
     entities:
-      - group.lights
+      - group.interior_lights
+      - group.exterior_lights
       - group.switches
       - group.all_locks

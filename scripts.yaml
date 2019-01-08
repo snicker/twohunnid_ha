@@ -52,7 +52,7 @@ alarm_state_armed_night:
   alias: 'Alarm State: Armed Night'
   sequence:
   - data:
-      entity_id: group.all_exterior_lights
+      entity_id: group.exterior_lights
     service: homeassistant.turn_off
 siren_beep_beep:
   alias: 'Siren: beep beep'
@@ -119,13 +119,13 @@ exterior_lights_flash:
   - alias: Exterior Lights On
     service: homeassistant.turn_on
     data:
-      entity_id: group.all_exterior_lights
+      entity_id: group.exterior_lights
   - delay:
       milliseconds: 500
   - alias: Exterior Lights Off
     service: homeassistant.turn_off
     data:
-      entity_id: group.all_exterior_lights
+      entity_id: group.exterior_lights
   - alias: exterior_lights_flash_loop
     service: script.turn_on
     data:
