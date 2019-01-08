@@ -1,0 +1,10 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'ballet_studio_lights'
+    
+    light.z_wave_products_inc_wd100_level_3:
+      <<: *customize
+      friendly_name: "Ballet Studio Lights"
+        
