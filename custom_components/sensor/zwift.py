@@ -17,6 +17,7 @@ sensor:
 
 import logging
 import threading
+import time
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -92,7 +93,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             else:
                 dev.append(ZwiftSensorDevice(name, zwift_data, zwift_data.players[player_id], variable))
                 
-    def update_thread(hass):
+    def update_thread(hass, zwift_data):
         _LOGGER.warning("ZwiftSensor update thread started")
         while hass.is_running:
             zwift_data.update()
@@ -103,7 +104,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     threading.Thread(
         name='ZwiftSensor (name:{}) update thread'.format(name),
         target=update_thread,
-        args=(hass)
+        args=(hass, zwift_data)
     ).start()
     
     async_add_entities(dev, True)
