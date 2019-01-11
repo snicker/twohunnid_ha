@@ -102,7 +102,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     _LOGGER.warning("starting thread and adding all device entities")
     threading.Thread(
         name='ZwiftSensor (name:{}) update thread'.format(name),
-        target=zwift_data._update_thread,
+        target=update_thread,
         args=(hass)
     ).start()
     
