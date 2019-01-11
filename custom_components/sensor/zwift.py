@@ -88,7 +88,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
         while hass.is_running:
             zwift_data.update()
             time.sleep(1)
-        _LOGGER.warning("ZwiftSensor update thread ended
+        _LOGGER.warning("ZwiftSensor update thread ended")
         
     @callback
     def start_up(event):
