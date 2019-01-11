@@ -26,12 +26,11 @@ import voluptuous as vol
 from datetime import timedelta
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.components.binary_sensor import BinarySensorDevice
-from homeassistant.const import CONF_NAME, CONF_USERNAME, CONF_PASSWORD, EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STOP
+from homeassistant.const import CONF_NAME, CONF_USERNAME, CONF_PASSWORD
 from homeassistant.helpers.aiohttp_client import SERVER_SOFTWARE
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
-from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import dispatcher_send, \
     async_dispatcher_connect
     
@@ -82,17 +81,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
         _LOGGER.exception("Could not create Zwift sensor named '{}'!".format(name))
         return
         
-    @callback
-    def start_up(event):
-        """Start Zwift update thread."""
-        threading.Thread(
-            name='ZwiftSensor (name:{}) update thread'.format(name),
-            target=zwift_data._update_thread,
-            args=(hass)
-        ).start()
-
-    hass.bus.async_listen_once(EVENT_HOMEASSISTANT_START, start_up)
-        
     if include_self:
         zwift_data.add_tracked_player(zwift_data._profile.get('id'))
         
@@ -106,7 +94,12 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     async_add_entities(dev, True)
     
-
+    threading.Thread(
+        name='ZwiftSensor (name:{}) update thread'.format(name),
+        target=zwift_data._update_thread,
+        args=(hass)
+    ).start()
+    
 class ZwiftSensorDevice(Entity):
     def __init__(self, name, zwift_data, player, sensor_type):
         """Initialize the sensor."""
