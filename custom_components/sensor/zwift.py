@@ -30,6 +30,7 @@ from homeassistant.helpers.aiohttp_client import SERVER_SOFTWARE
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
+from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import dispatcher_send, \
     async_dispatcher_connect
     
