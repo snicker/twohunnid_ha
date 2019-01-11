@@ -92,13 +92,13 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             else:
                 dev.append(ZwiftSensorDevice(name, zwift_data, zwift_data.players[player_id], variable))
 
-    async_add_entities(dev, True)
-    
     threading.Thread(
         name='ZwiftSensor (name:{}) update thread'.format(name),
         target=zwift_data._update_thread,
         args=(hass)
     ).start()
+    
+    async_add_entities(dev, True)
     
 class ZwiftSensorDevice(Entity):
     def __init__(self, name, zwift_data, player, sensor_type):
@@ -227,6 +227,7 @@ class ZwiftData:
             
     def _update_thread(self, hass):
         _LOGGER.debug("ZwiftSensor update thread started")
+        logging.debug("Started ZwiftSensor")
         while hass.is_running:
             self.update()
             time.sleep(1)
