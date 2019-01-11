@@ -16,6 +16,7 @@ sensor:
 """
 
 import logging
+import threading
 
 _LOGGER = logging.getLogger(__name__)
 
