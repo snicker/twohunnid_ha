@@ -91,6 +91,13 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 dev.append(ZwiftBinarySensorDevice(name, zwift_data, zwift_data.players[player_id], variable))
             else:
                 dev.append(ZwiftSensorDevice(name, zwift_data, zwift_data.players[player_id], variable))
+                
+    def update_thread(hass):
+        _LOGGER.warning("ZwiftSensor update thread started")
+        while hass.is_running:
+            zwift_data.update()
+            time.sleep(1)
+        _LOGGER.warning("ZwiftSensor update thread terminated")
 
     _LOGGER.warning("starting thread and adding all device entities")
     threading.Thread(
@@ -225,13 +232,6 @@ class ZwiftData:
             self._client = client
             self._profile = self._client.get_profile().profile
             return self._client
-            
-    def _update_thread(self, hass):
-        _LOGGER.warning("ZwiftSensor update thread started")
-        while hass.is_running:
-            self.update()
-            time.sleep(1)
-        _LOGGER.warning("ZwiftSensor update thread terminated")
 
     def _update(self):
         if self._client is None:
