@@ -226,9 +226,11 @@ class ZwiftData:
             return self._client
             
     def _update_thread(self, hass):
+        _LOGGER.debug("ZwiftSensor update thread started")
         while hass.is_running:
             self.update()
             time.sleep(1)
+        _LOGGER.debug("ZwiftSensor update thread terminated")
 
     def _update(self):
         if self._client is None:
