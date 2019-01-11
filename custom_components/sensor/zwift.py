@@ -238,7 +238,7 @@ class ZwiftData:
         if self.check_zwift_auth(client):
             self._client = client
             self._profile = self._client.get_profile().profile
-            return self._client")
+            return self._client
 
     def _update(self):
         if self._client is None:
