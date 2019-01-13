@@ -100,7 +100,7 @@
     state: 'on'
   action:
   - service: script.siren_beep_beep
-- id: 'backyard_flood_lights_on_when_back_door_unlocked'
+- id: backyard_flood_lights_on_when_back_door_unlocked
   alias: 'Backyard Floodlights On When Back Door Unlocked '
   trigger:
   - entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked
@@ -118,7 +118,7 @@
   - data:
       entity_id: light.backyard_flood_lights
     service: homeassistant.turn_on
-- id: 'backyard_flood_lights_off_when_back_door_locked'
+- id: backyard_flood_lights_off_when_back_door_locked
   alias: 'Backyard Floodlights Off When Back Door Locked '
   trigger:
   - entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked
@@ -136,3 +136,13 @@
   - data:
       entity_id: light.backyard_flood_lights
     service: homeassistant.turn_off
+- id: '1547347950847'
+  alias: Zwift Level Up
+  trigger:
+  - entity_id: sensor.zwift_level_803962
+    platform: state
+  condition: []
+  action:
+  - data:
+      message: congrats on your zwift level!
+    service: notify.nick
