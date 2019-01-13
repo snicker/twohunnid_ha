@@ -46,6 +46,10 @@ DEFAULT_NAME = 'Zwift'
 
 SIGNAL_ZWIFT_UPDATE = 'zwift_update_{player_id}'
 
+ZWIFT_PLATFORM_INFO = {
+    'XP_PER_LEVEL': [0, 1000, 2000, 3000, 4000, 5000, 7000, 10000, 13000, 16000, 19000, 23000, 28000, 33000, 38000, 44000, 50000, 56000, 62000, 70000, 78000, 88000, 94000, 100000, 110000, 121000, 130000, 140000, 150000, 170000, 180000, 190000, 200000, 220000, 230000, 250000, 260000, 280000, 290000, 310000, 330000, 340000, 360000, 380000, 400000, 420000, 440000, 460000, 480000, 500000]
+}
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_USERNAME): cv.string,
     vol.Required(CONF_PASSWORD): cv.string,
@@ -250,14 +254,15 @@ class ZwiftData:
                 data = {}
                 online_player = next((player for player in online_players if str(player['playerId']) == str(player_id)),None)
                 if online_player:
-                    player_data = world.player_status(player_id)
+                    player_state = world.player_status(player_id)
                     data = {
                         'online': True,
-                        'heartrate': int(float(player_data.heartrate)),
-                        'cadence': int(float(player_data.cadence)),
-                        'power': int(float(player_data.power)),
-                        'speed': player_data.speed / 1000000.0,
-                        'altitude': float(player_data.altitude)
+                        'heartrate': int(float(player_state.heartrate)),
+                        'cadence': int(float(player_state.cadence)),
+                        'power': int(float(player_state.power)),
+                        'speed': player_state.speed / 1000000.0,
+                        'altitude': float(player_state.altitude),
+                        '
                     }
                     self.players[player_id].player_profile = online_player
                 self.players[player_id].data = data
