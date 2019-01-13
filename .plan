@@ -1,7 +1,5 @@
 two hunnid ha plan
 ===
-build things into packages like this guy
-https://github.com/dale3h/homeassistant-config
 
 presence detection
 ===
@@ -11,6 +9,7 @@ HA app on devices
 https://philhawthorne.com/making-home-assistants-presence-detection-not-so-binary/
 https://community.home-assistant.io/t/monitor-reliable-multi-user-distributed-bt-occupancy-presence-detection/68505
 
-RMLink Media Player (for living room TV
+
+Locks!
 ===
-custom component https://github.com/vpnmaster/homeassistant-custom-components
+Manager for codes etc: https://community.home-assistant.io/t/zwave-lock-manager/79252
