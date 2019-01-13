@@ -214,6 +214,10 @@ class ZwiftPlayerData:
     @property
     def altitude(self):
         return self.data.get('altitude',0.0)
+        
+    @property
+    def level(self):
+        return self.data.get('level',0)
     
 class ZwiftData:
     """Representation of a Zwift client data collection object."""
