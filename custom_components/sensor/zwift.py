@@ -217,7 +217,7 @@ class ZwiftPlayerData:
         
     @property
     def level(self):
-        return self.data.get('level',0)
+        return self.player_profile.get('playerLevel',0)
     
 class ZwiftData:
     """Representation of a Zwift client data collection object."""
