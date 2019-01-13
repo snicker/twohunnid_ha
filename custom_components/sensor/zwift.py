@@ -152,6 +152,8 @@ class ZwiftSensorDevice(Entity):
     def update(self):
         """Get the latest data from the sensor."""
         self._state = getattr(self._player,self._type)
+        if self._type == 'online':
+            self._attrs.update(self._player.player_profile)
         
     async def async_added_to_hass(self):
         """Register update signal handler."""
@@ -255,6 +257,10 @@ class ZwiftData:
                 online_player = next((player for player in online_players if str(player['playerId']) == str(player_id)),None)
                 if online_player:
                     player_state = world.player_status(player_id)
+                    player_profile = self._client.get_profile(player_id) or {}
+                    online_player.update(player_profile)
+                    total_experience = int(player_profile.get('totalExperiencePoints'))
+                    player_profile['playerLevel'] = sum(total_experience >= total_experience_per_level for total_experience_per_level in ZWIFT_PLATFORM_INFO['XP_PER_LEVEL'])
                     data = {
                         'online': True,
                         'heartrate': int(float(player_state.heartrate)),
@@ -262,7 +268,8 @@ class ZwiftData:
                         'power': int(float(player_state.power)),
                         'speed': player_state.speed / 1000000.0,
                         'altitude': float(player_state.altitude),
-                        '
+                        'total_experience': total_experience,
+                        'level': player_profile['playerLevel']
                     }
                     self.players[player_id].player_profile = online_player
                 self.players[player_id].data = data
