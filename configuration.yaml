@@ -12,7 +12,7 @@
     - /tmp
 
 logger:
-  default: info 
+  default: warning 
   logs:
     custom_components.media_player.firetv: critical
     custom_components.sensor.zwift: debug
