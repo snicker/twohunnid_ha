@@ -263,7 +263,7 @@ class ZwiftData:
                 online_player = next((player for player in online_players if str(player['playerId']) == str(player_id)),None)
                 if online_player:
                     player_state = world.player_status(player_id)
-                    player_profile = self._client.get_profile(player_id) or {}
+                    player_profile = self._client.get_profile(player_id).profile or {}
                     online_player.update(player_profile)
                     total_experience = int(player_profile.get('totalExperiencePoints'))
                     player_profile['playerLevel'] = sum(total_experience >= total_experience_per_level for total_experience_per_level in ZWIFT_PLATFORM_INFO['XP_PER_LEVEL'])
