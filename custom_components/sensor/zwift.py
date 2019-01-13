@@ -66,7 +66,8 @@ SENSOR_TYPES = {
     'speed': {'name': 'Speed', 'unit': 'mph', 'unit_metric': 'kmh', 'icon': 'mdi:speedometer'},
     'cadence': {'name': 'Cadence', 'unit': 'rpm', 'icon': 'mdi:rotate-right'},
     'power': {'name': 'Power', 'unit': 'W', 'icon': 'mdi:flash'},
-    # 'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'}
+    # 'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'},
+    'level': {'name': 'Level', 'icon': 'mdi:stairs'}
 }
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
@@ -264,9 +265,9 @@ class ZwiftData:
                 if online_player:
                     player_state = world.player_status(player_id)
                     player_profile = self._client.get_profile(player_id).profile or {}
-                    online_player.update(player_profile)
                     total_experience = int(player_profile.get('totalExperiencePoints'))
                     player_profile['playerLevel'] = sum(total_experience >= total_experience_per_level for total_experience_per_level in ZWIFT_PLATFORM_INFO['XP_PER_LEVEL'])
+                    online_player.update(player_profile)
                     data = {
                         'online': True,
                         'heartrate': int(float(player_state.heartrate)),
