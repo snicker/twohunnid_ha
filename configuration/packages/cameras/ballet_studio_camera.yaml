@@ -13,7 +13,7 @@ homeassistant:
     binary_sensor.ballet_studio_camera_motion:
       <<: *customize
       friendly_name: "Motion - Ballet Studio (Camera)"
-      camera_entity_id: "yi_home_camera_ballet_studio_camera"
+      camera_entity_id: "yi_home_camera_ballet_studio"
       
     binary_sensor.ballet_studio_camera_status:
       <<: *customize
@@ -22,7 +22,7 @@ homeassistant:
 
 camera:
   - platform: ffmpeg
-    name: yi_home_camera_ballet_studio_camera
+    name: yi_home_camera_ballet_studio
     input: -rtsp_transport tcp -i rtsp://192.168.1.73:554/ch0_1.h264
     
 binary_sensor:
