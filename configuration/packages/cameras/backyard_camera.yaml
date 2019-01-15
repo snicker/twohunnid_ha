@@ -1,29 +1,8 @@
-################################################################
-## Packages / Backyard Camera
-################################################################
-
-################################################
-## Customize
-################################################
-
 homeassistant:
   customize:
-    ################################################
-    ## Node Anchors
-    ################################################
-
     package.node_anchors:
       customize: &customize
         package: 'backyard_camera'
-
-      expose: &expose
-        <<: *customize
-        haaska_hidden: false
-        homebridge_hidden: false
-
-    ################################################
-    ## Camera
-    ################################################
     
     camera.yi_home_camera_backyard_patio:
       <<: *customize
@@ -34,6 +13,11 @@ homeassistant:
       <<: *customize
       friendly_name: "Motion - Backyard Patio (Camera)"
       camera_entity_id: "yi_home_camera_backyard_patio"
+      
+    binary_sensor.backyard_patio_camera_status:
+      <<: *customize
+      friendly_name: "Backyard Patio Camera Status"
+      device_class: connectivity
 
 camera:
   - platform: ffmpeg
@@ -47,3 +31,8 @@ binary_sensor:
         entity_id: sensor.yi_camera_motion_backyard
         device_class: motion
         value_template: "{{ states('sensor.yi_camera_motion_backyard')|int == 1 }}"
+  - platform: ping
+    name: backyard_patio_camera_status
+    host: 192.168.1.71
+    count: 3
+    scan_interval: 60

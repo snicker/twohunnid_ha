@@ -1,30 +1,9 @@
-################################################################
-## Packages / Backyard Camera
-################################################################
-
-################################################
-## Customize
-################################################
-
 homeassistant:
   customize:
-    ################################################
-    ## Node Anchors
-    ################################################
-
     package.node_anchors:
       customize: &customize
         package: 'garage_camera'
-
-      expose: &expose
-        <<: *customize
-        haaska_hidden: false
-        homebridge_hidden: false
-
-    ################################################
-    ## Camera
-    ################################################
-    
+        
     camera.yi_home_camera_garage:
       <<: *customize
       friendly_name: "Garage Camera"
@@ -34,6 +13,12 @@ homeassistant:
       <<: *customize
       friendly_name: "Motion - Garage (Camera)"
       camera_entity_id: "yi_home_camera_garage"
+      
+    binary_sensor.garage_camera_status:
+      <<: *customize
+      friendly_name: "Garage Camera Status"
+      device_class: connectivity
+
 
 camera:
   - platform: ffmpeg
@@ -47,3 +32,8 @@ binary_sensor:
         entity_id: sensor.yi_camera_motion_garage
         device_class: motion
         value_template: "{{ states('sensor.yi_camera_motion_garage')|int == 1 }}"
+  - platform: ping
+    name: garage_camera_status
+    host: 192.168.1.72
+    count: 3
+    scan_interval: 60
