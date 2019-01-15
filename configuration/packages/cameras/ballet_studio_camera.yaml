@@ -34,6 +34,6 @@ binary_sensor:
         value_template: "{{ states('sensor.yi_camera_motion_ballet')|int == 1 }}"
   - platform: ping
     name: ballet_studio_camera_status
-    host: 192.168.1.173
+    host: 192.168.1.73
     count: 3
     scan_interval: 60
