@@ -1,0 +1,26 @@
+homeassistant:
+  customize:
+    group.cameras:
+      order: 2
+      
+group:
+  cameras:
+    name: Cameras
+    icon: mdi:cctv
+    view: yes
+    entities:
+      - camera.dlink_camera_laundry
+      - camera.front_door
+      - camera.yi_home_camera_backyard_patio
+      - camera.yi_home_camera_garage
+      - camera.yi_home_ballet_studio
+      - group.camera_status
+  camera_status:
+    view: no
+    icon: mdi:cctv
+    entities:
+      - binary_sensor.laundry_camera_status
+      - binary_sensor.front_door_camera_online
+      - binary_sensor.backyard_patio_camera_status
+      - binary_sensor.garage_camera_status
+      - binary_sensor.ballet_studio_camera_status
