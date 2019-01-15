@@ -5,6 +5,7 @@
       - binary_sensor.motion_indoor_foyer
       - binary_sensor.garage_camera_motion
       - binary_sensor.modetftp_motion_laundry
+      - binary_sensor.ballet_studio_camera_motion
     from: 'off'
     platform: state
     to: 'on'
