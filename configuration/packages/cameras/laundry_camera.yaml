@@ -34,6 +34,11 @@ homeassistant:
       <<: *customize
       friendly_name: "Motion - Laundry Room (Camera)"
       camera_entity_id: "dlink_camera_laundry"
+      
+    binary_sensor.laundry_camera_status:
+      <<: *customize
+      friendly_name: "Laundry Room Camera Status"
+      device_class: connectivity
 
 camera:
   - platform: mjpeg
@@ -42,3 +47,8 @@ camera:
     still_image_url: http://192.168.1.176/image/jpeg.cgi
     username: !secret dlink_camera_username
     password: !secret dlink_camera_password
+  - platform: ping
+    name: laundry_camera_status
+    host: 192.168.1.176
+    count: 3
+    scan_interval: 60
