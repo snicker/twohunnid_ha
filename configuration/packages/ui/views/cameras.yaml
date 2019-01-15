@@ -13,9 +13,10 @@ group:
       - camera.front_door
       - camera.yi_home_camera_backyard_patio
       - camera.yi_home_camera_garage
-      - camera.yi_home_ballet_studio
+      - camera.yi_home_camera_ballet_studio
       - group.camera_status
   camera_status:
+    name: Cameras Online
     view: no
     icon: mdi:cctv
     entities:

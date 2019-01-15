@@ -47,6 +47,8 @@ camera:
     still_image_url: http://192.168.1.176/image/jpeg.cgi
     username: !secret dlink_camera_username
     password: !secret dlink_camera_password
+
+binary_sensor:
   - platform: ping
     name: laundry_camera_status
     host: 192.168.1.176
