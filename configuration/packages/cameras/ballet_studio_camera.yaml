@@ -5,7 +5,7 @@ homeassistant:
       customize: &customize
         package: 'ballet_studio_camera'
     
-    camera.yi_home_camera_ballet_studio_camera:
+    camera.yi_home_camera_ballet_studio:
       <<: *customize
       friendly_name: "Ballet Studio Camera"
       icon: mdi:cctv
