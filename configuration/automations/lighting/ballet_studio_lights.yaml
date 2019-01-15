@@ -1,0 +1,18 @@
+- alias: 'Ballet Studio Lights on When Motion detected after Sunset'
+  trigger:
+  - entity_id: binary_sensor.ballet_studio_camera_motion
+    platform: state
+    to: 'on'
+  condition:
+    condition: or
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-0:20:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "-0:20:00"
+  action:
+    - service: light.turn_on
+      entity_id: light.z_wave_products_inc_wd100_level_3
+      
