@@ -15,7 +15,7 @@ logger:
   default: warning 
   logs:
     custom_components.media_player.firetv: critical
-    custom_components.sensor.zwift: debug
+    custom_components.sensor.zwift: warning
     
 frontend:
 
