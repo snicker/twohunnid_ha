@@ -18,6 +18,10 @@ group:
   vacation_automations:
     name: Vacation Automations
     entities: 
+    - automation.turn_off_interior_lights_randomly_around_10
+  vacation_scripts:
+    name: Vacation Scripts
+    entities:
     - script.turn_off_all_interior_lights_with_random_delay
     
 script:
