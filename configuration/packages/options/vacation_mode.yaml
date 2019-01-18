@@ -30,11 +30,11 @@ script:
       - service: homeassistant.turn_off
         data_template: 
           entity_id: >-
-            {% set random = range(0,100) | random %}
+            {% set random = range(1,100) | random  %}
             {% for eid in states.group.interior_lights.attributes.entity_id if states(eid) == 'on' %}
             {% if (random % loop.length) + 1 == loop.index %}{{ eid }}{% endif %}
             {% endfor %}
-      - delay: '00:0{{ range(0,0) | random | int }}:{{ range(10,59) | random | int }}'
+      - delay: '00:0{{ range(0,1) | random | int }}:{{ range(10,60) | random | int }}'
       - service: script.turn_on
         entity_id: script.turn_off_all_interior_lights_with_random_delay_callback
         
