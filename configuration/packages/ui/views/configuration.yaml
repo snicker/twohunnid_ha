@@ -19,6 +19,7 @@ group:
     control: hidden
     entities:
       - input_boolean.dogs_home
+      - input_boolean.vacation_mode
       - group.holiday_modes
       
   holiday_modes:
