@@ -1,0 +1,48 @@
+homeassistant:
+  customize:
+    group.configuration:
+      order: 15
+      
+group:
+  configuration:
+    name: Config
+    icon: mdi:cogs
+    view: yes
+    entities:
+      - group.home_settings
+      - group.hahardware
+      - group.ha_control
+      
+  home_settings:
+    name: Home Settings
+    view: no
+    control: hidden
+    entities:
+      - input_boolean.dogs_home
+      - group.holiday_modes
+      
+  holiday_modes:
+    name: Holiday Modes
+    view: no
+    control: hidden
+    entities:
+      - input_boolean.halloween_mode
+      - input_boolean.christmas_mode
+      
+  hahardware:
+    name: HomeAssistant Hardware
+    view: no
+    entities:
+      - sensor.disk_use_percent_home
+      - sensor.memory_use_percent
+      - sensor.load_5m
+      - sensor.last_boot
+      
+  ha_control:
+    name: HA Control
+    view: no
+    control: hidden
+    entities:
+      - script.git_pull
+      - script.homeassistant_reload_without_restart
+      - script.homeassistant_restart
