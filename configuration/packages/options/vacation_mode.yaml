@@ -1,0 +1,73 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'vacation_mode'
+
+    input_boolean.vacation_mode:
+      <<: *customize
+      friendly_name: "Vacation Mode?"
+      icon: mdi:airplane-takeoff
+      persistent: true
+      
+input_boolean:
+  vacation_mode:
+    initial: off
+    
+group:
+  vacation_automations:
+    name: Vacation Automations
+    entities: 
+    - script.turn_off_all_interior_lights_with_random_delay
+    
+script:
+  turn_off_all_interior_lights_with_random_delay:
+    alias: "Turn off all interior lights with random delay"
+    sequence:
+      - condition: state
+        entity_id: group.interior_lights
+        state: 'on'
+      - service: homeassistant.turn_off
+        data_template: 
+          entity_id: >-
+            {% set random = range(0,100) | random %}
+            {% for eid in states.group.interior_lights.attributes.entity_id if states(eid) == 'on' %}
+            {% if (random % loop.length) + 1 == loop.index %}{{ eid }}{% endif %}
+            {% endfor %}
+      - delay: '00:0{{ range(0,0) | random | int }}:{{ range(10,59) | random | int }}'
+      - service: script.turn_on
+        entity_id: script.turn_off_all_interior_lights_with_random_delay_callback
+        
+  turn_off_all_interior_lights_with_random_delay_callback:
+    alias: "Turn off all interior lights with random delay (callback)"
+    sequence:
+      - service: script.turn_on
+        entity_id: script.turn_off_all_interior_lights_with_random_delay
+        
+    
+automation:
+  - id: enable_vacation_automations
+    alias: Enable Vacation Automations when Vacation Mode On
+    trigger:
+    - platform: state
+      entity_id: input_boolean.vacation_automations
+      to: 'on'
+    condition: []
+    action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: group.vacation_automations
+        
+  - id: disable_vacation_automations
+    alias: Disable Vacation Automations when Vacation Mode Off
+    trigger:
+    - platform: state
+      entity_id: input_boolean.vacation_automations
+      to: 'off'
+    condition: []
+    action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: group.vacation_automations
+
+      
