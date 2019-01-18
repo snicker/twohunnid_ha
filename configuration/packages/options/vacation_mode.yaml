@@ -35,7 +35,7 @@ script:
             {% set length = loop.length %}{% if length == 2 %}{% set length = 1 %}{% endif %}
             {% if (random % length) + 1 == loop.index %}{{ eid }}{% endif %} 
             {% endfor %} 
-      - delay: '00:0{{ range(0,1) | random | int }}:{{ range(10,60) | random | int }}'
+      - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
       - service: script.turn_on
         entity_id: script.turn_off_all_interior_lights_with_random_delay_callback
         
@@ -70,5 +70,20 @@ automation:
     - service: homeassistant.turn_off
       data:
         entity_id: group.vacation_automations
+        
+  - id: turn_off_interior_lights_randomly_around_10
+    alias: turn_off_interior_lights_randomly_around_10
+    trigger:
+    - at: '22:00:00'
+      platform: time
+    condition:
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: 'on'
+    action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: script.turn_off_all_interior_lights_with_random_delay
+    
 
       
