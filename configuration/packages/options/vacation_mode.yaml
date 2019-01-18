@@ -32,8 +32,9 @@ script:
           entity_id: >-
             {% set random = range(0,100) | random  %}
             {% for eid in states.group.interior_lights.attributes.entity_id if states(eid) == 'on' %}
-            {% if (random % loop.length - 1) + 1 == loop.index %}{{ eid }}{% endif %}
-            {% endfor %}
+            {% set length = loop.length %}{% if length == 2 %}{% set length = 1 %}{% endif %}
+            {% if (random % length) + 1 == loop.index %}{{ eid }}{% endif %} 
+            {% endfor %} 
       - delay: '00:0{{ range(0,1) | random | int }}:{{ range(10,60) | random | int }}'
       - service: script.turn_on
         entity_id: script.turn_off_all_interior_lights_with_random_delay_callback
