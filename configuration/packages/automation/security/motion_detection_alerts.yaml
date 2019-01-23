@@ -89,7 +89,7 @@ script:
         filename: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
     - service: notify.nick
       data_template:
-        message: *motion_detected_message 
         data:
           photo:
+            caption: *motion_detected_message
             file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
