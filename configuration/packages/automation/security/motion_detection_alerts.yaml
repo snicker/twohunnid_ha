@@ -41,8 +41,8 @@ automation:
     action:
     - service: script.turn_on
       data_template:
-        entity_id: >
-          motion_detection_alert{% if 'camera_entity_id' in trigger.to_state.attributes %}_camera{% endif  %}
+        entity_id: &script_entity_id >
+          script.motion_detection_alert{% if 'camera_entity_id' in trigger.to_state.attributes %}_camera{% endif  %}
         variables:
           camera_entity_id: "{{ trigger.to_state.attributes.camera_entity_id }}"
           motion_group: "group.all_interior_motion_sensors"
@@ -63,8 +63,7 @@ automation:
     action:
     - service: script.turn_on
       data_template:
-        entity_id: >
-          motion_detection_alert{% if 'camera_entity_id' in trigger.to_state.attributes %}_camera{% endif  %}
+        entity_id: *script_entity_id 
         variables:
           camera_entity_id: "{{ trigger.to_state.attributes.camera_entity_id }}"
           motion_group: "group.all_exterior_motion_sensors"
