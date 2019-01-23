@@ -92,5 +92,4 @@ script:
         message: *motion_detected_message 
         data:
           photo:
-          - caption: "Snapshot from {{ state_attr('camera.'+camera_entity_id, 'friendly_name') }}"
             file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
