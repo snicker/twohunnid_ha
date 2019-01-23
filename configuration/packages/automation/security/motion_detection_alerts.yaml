@@ -1,0 +1,97 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'motion_detection_alerts'
+        
+    automation.motion_detected_interior:
+      <<: *customize
+        
+    automation.motion_detected_exterior:
+      <<: *customize
+        
+    script.motion_detection_alert:
+      <<: *customize
+        
+    script.motion_detection_alert_camera:
+      <<: *customize
+
+automation:
+
+  - alias: 'Motion Detected: Interior'
+    trigger:
+    - entity_id: 
+      - binary_sensor.piper_sensor_motion
+      - binary_sensor.motion_indoor_foyer
+      - binary_sensor.garage_camera_motion
+      - binary_sensor.modetftp_motion_laundry
+      - binary_sensor.ballet_studio_camera_motion
+      from: 'off'
+      platform: state
+      to: 'on'
+    condition:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_night
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+    action:
+    - service: script.turn_on
+      data_template:
+        entity_id: >
+          motion_detection_alert{% if 'camera_entity_id' in trigger.to_state.attributes %}_camera{% endif  %}
+        variables:
+          camera_entity_id: "{{ trigger.to_state.attributes.camera_entity_id }}"
+          motion_group: "group.all_interior_motion_sensors"
+          
+  - alias: 'Motion Detected: Exterior'
+    trigger:
+    - entity_id: 
+        - binary_sensor.motion_backyard_north
+        - binary_sensor.backyard_patio_camera_motion
+        - binary_sensor.motion_backyard_south
+        - binary_sensor.motion_front_yard_south
+        - binary_sensor.motion_front_driveway
+        - binary_sensor.front_door_camera_motion_detected
+      from: 'off'
+      platform: state
+      to: 'on'
+    condition: []
+    action:
+    - service: script.turn_on
+      data_template:
+        entity_id: >
+          motion_detection_alert{% if 'camera_entity_id' in trigger.to_state.attributes %}_camera{% endif  %}
+        variables:
+          camera_entity_id: "{{ trigger.to_state.attributes.camera_entity_id }}"
+          motion_group: "group.all_exterior_motion_sensors"
+          
+          
+script:
+
+  motion_detection_alert:
+    alias: Motion Detection Alert
+    sequence:
+    - service: notify.nick
+      data_template:
+        message: &motion_detected_message >
+          Motion detected: {{ state_attr(motion_group,'friendly_name')|replace('Motion Sensors - ','') }}
+          {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr(motion_group,'entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|replace('Motion - ','') }} ({{ (now() - obj.last_updated).total_seconds()|int }}s ago){% if loop.index < loop.length %}, {% endif %}{% endfor %}
+            
+  motion_detection_alert_camera:
+    alias: Motion Detection Alert (from Camera)
+    sequence:
+    - service: camera.snapshot
+      data_template:
+        entity_id: "camera.{{ camera_entity_id }}"
+        filename: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
+    - service: notify.nick
+      data_template:
+        message: *motion_detected_message 
+        data:
+          photo:
+          - caption: "Snapshot from {{ state_attr('camera.'+camera_entity_id, 'friendly_name') }}"
+            file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
