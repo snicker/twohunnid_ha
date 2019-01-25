@@ -228,7 +228,10 @@ class ZwiftData:
         self.hass = hass
         self.players = {}
         self._profile = None
-        self.update = Throttle(update_interval)(self._update)
+        self.update_interval = update_interval
+        self.online_update_interval = timedelta(seconds=2)
+        self.throttle = Throttle(self.update_interval)
+        self.update = self.throttle(self._update)
         if players:
             for player_id in players:
                 self.add_tracked_player(player_id)
@@ -263,10 +266,12 @@ class ZwiftData:
         if self._client:
             world = self._client.get_world(1)
             online_players = world.players['friendsInWorld']
+            throttle_interval = self.update_interval
             for player_id in self.players:
                 data = {}
                 online_player = next((player for player in online_players if str(player['playerId']) == str(player_id)),None)
                 if online_player:
+                    throttle_interval = self.online_update_interval
                     player_state = world.player_status(player_id)
                     player_profile = self._client.get_profile(player_id).profile or {}
                     total_experience = int(player_profile.get('totalExperiencePoints'))
@@ -286,5 +291,6 @@ class ZwiftData:
                 self.players[player_id].data = data
                 _LOGGER.debug("dispatching zwift data update for player {}".format(player_id))
                 dispatcher_send(self.hass, SIGNAL_ZWIFT_UPDATE.format(player_id=player_id))
+            self.throttle.min_time = throttle_interval
             
             
