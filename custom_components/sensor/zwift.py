@@ -239,7 +239,7 @@ class ZwiftData:
         self.players = {}
         self._profile = None
         self.update_interval = update_interval
-        self.online_update_interval = timedelta(seconds=2)
+        self.online_update_interval = timedelta(seconds=1)
         self.throttle = Throttle(self.update_interval)
         self.update = self.throttle(self._update)
         if players:
