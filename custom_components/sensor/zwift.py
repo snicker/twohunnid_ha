@@ -135,7 +135,7 @@ class ZwiftSensorDevice(Entity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return "{} {} ({})".format(self._base_name,SENSOR_TYPES[self._type].get('name'),self._player.player_id)
+        return "{} {} ({})".format(self._base_name,SENSOR_TYPES[self._type].get('name'),self._player.friendly_player_id)
 
     @property
     def device_state_attributes(self):
@@ -192,6 +192,10 @@ class ZwiftPlayerData:
     @property
     def player_id(self):
         return self._player_id
+        
+    @property
+    def friendly_player_id(self):
+        return self.player_profile.get('firstName') or self.player_id
         
     @property
     def online(self):
