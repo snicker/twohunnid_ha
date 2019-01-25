@@ -66,7 +66,9 @@ SENSOR_TYPES = {
     'speed': {'name': 'Speed', 'unit': 'mph', 'unit_metric': 'kmh', 'icon': 'mdi:speedometer'},
     'cadence': {'name': 'Cadence', 'unit': 'rpm', 'icon': 'mdi:rotate-right'},
     'power': {'name': 'Power', 'unit': 'W', 'icon': 'mdi:flash'},
-    # 'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'},
+    'altitude': {'name': 'Altitude', 'unit': 'ft', 'unit_metric': 'm'},
+    'distance': {'name': 'Distance', 'unit': 'miles', 'unit_metric': 'km'},
+    'gradient': {'name': 'Gradient', 'unit': '%'},
     'level': {'name': 'Level', 'icon': 'mdi:stairs'}
 }
 
@@ -216,6 +218,14 @@ class ZwiftPlayerData:
         return self.data.get('altitude',0.0)
         
     @property
+    def distance(self):
+        return self.data.get('distance',0.0)
+        
+    @property
+    def gradient(self):
+        return self.data.get('gradient',0.0)
+        
+    @property
     def level(self):
         return self.player_profile.get('playerLevel',0)
     
@@ -275,6 +285,14 @@ class ZwiftData:
                     player_state = world.player_status(player_id)
                     player_profile = self._client.get_profile(player_id).profile or {}
                     total_experience = int(player_profile.get('totalExperiencePoints'))
+                    altitude = (float(player_state.altitude) - 9000) / 2 # [TODO] is this correct regardless of metric/imperial? Correct regardless of world?
+                    distance = float(player_state.distance)
+                    gradient = self.players[player_id].data.get('gradient')
+                    if gradient is not None:
+                        delta_distance = distance - self.players[player_id].data.get('distance',0)
+                        delta_altitude = altitude - self.players[player_id].data.get('altitude',0)
+                        if delta_distance > 0 and delta_altitude > 0:
+                            gradient = delta_altitude / delta_distance
                     player_profile['playerLevel'] = sum(total_experience >= total_experience_per_level for total_experience_per_level in ZWIFT_PLATFORM_INFO['XP_PER_LEVEL'])
                     online_player.update(player_profile)
                     data = {
@@ -283,7 +301,9 @@ class ZwiftData:
                         'cadence': int(float(player_state.cadence)),
                         'power': int(float(player_state.power)),
                         'speed': player_state.speed / 1000000.0,
-                        'altitude': float(player_state.altitude),
+                        'altitude': altitude,
+                        'distance': distance,
+                        'gradient': gradient,
                         'total_experience': total_experience,
                         'level': player_profile['playerLevel']
                     }
