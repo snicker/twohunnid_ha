@@ -289,7 +289,7 @@ class ZwiftData:
                         altitude = (float(player_state.altitude) - 9000) / 2 # [TODO] is this correct regardless of metric/imperial? Correct regardless of world?
                         distance = float(player_state.distance)
                         gradient = self.players[player_id].data.get('gradient')
-                        if gradient is not None and self.players[player_id].data.get('distance') > 0:
+                        if self.players[player_id].data.get('distance',0) > 0:
                             delta_distance = distance - self.players[player_id].data.get('distance',0)
                             delta_altitude = altitude - self.players[player_id].data.get('altitude',0)
                             if delta_distance > 0 and delta_altitude > 0:
