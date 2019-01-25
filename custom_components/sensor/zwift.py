@@ -292,7 +292,7 @@ class ZwiftData:
                         if self.players[player_id].data.get('distance',0) > 0:
                             delta_distance = distance - self.players[player_id].data.get('distance',0)
                             delta_altitude = altitude - self.players[player_id].data.get('altitude',0)
-                            if delta_distance > 0 and delta_altitude > 0:
+                            if delta_distance > 0:
                                 gradient = delta_altitude / delta_distance
                         player_profile['playerLevel'] = sum(total_experience >= total_experience_per_level for total_experience_per_level in ZWIFT_PLATFORM_INFO['XP_PER_LEVEL'])
                         online_player.update(player_profile)
