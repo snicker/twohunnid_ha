@@ -7,6 +7,10 @@ homeassistant:
     proximity.nick_home:
       <<: *customize
       friendly_name: "Proximity: Nick to Home"
+      
+    sensor.travel_time_nick_to_home
+      <<: *customize
+      friendly_name: "Travel Time: Nick to Home"
         
 proximity:
   nick_home:
@@ -15,4 +19,11 @@ proximity:
       - device_tracker.nickcell
     tolerance: 50
     unit_of_measurement: mi
+
+sensor:    
+  - platform: waze_travel_time
+    name: travel_time_nick_to_home
+    origin: device_tracker.nickcell
+    destination: zone.home
+    region: 'US'
   
