@@ -5,7 +5,7 @@ homeassistant:
 
 group:
   default_view:
-    icon: mdi:heart
+    icon: mdi:home-heart
     view: yes
     name: Favorites
     entities:
