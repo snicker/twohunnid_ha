@@ -1,0 +1,32 @@
+homeassistant:
+  customize:
+    group.health:
+      order: 13
+
+group:
+  default_view:
+    icon: mdi:heart-pulse
+    view: yes
+    name: Health
+    entities:
+      - group.health_zwift
+      - group.health_nick
+      
+  health_zwift:
+    control: hidden
+    icon: mdi:bike
+    name: Zwift - Nick
+    entities:
+      - sensor.zwift_online_803962
+      - sensor.zwift_heart_rate_803962
+      - sensor.zwift_speed_803962
+      - sensor.zwift_power_803962
+      - sensor.zwift_cadence_803962
+      - sensor.zwift_gradient_803962
+      
+  health_nick:
+    control: hidden
+    icon: mdi:account
+    name: Health - Nick
+    entities:
+      - sensor.weightgurus_nick
