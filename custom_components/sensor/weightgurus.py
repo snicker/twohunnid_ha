@@ -88,6 +88,7 @@ class WeightGurusConnector:
         data = {"email": self.username, "password": self.password}
         login_response = requests.post("https://api.weightgurus.com/v3/account/login", data=data)
         login_json = login_response.json()
+        _LOGGER.debug('weightgurus login response: {}'.format(login_json))
         self._account = login_json['account']
         self._token = login_json["accessToken"]
         return self._token
@@ -95,10 +96,10 @@ class WeightGurusConnector:
     def _update(self):
         try:
             import requests
-            no_throttle = False
             if self._token is None:
-                no_throttle = True
-            self._token = self.connect(no_throttle=no_throttle)
+                self._token = self.connect(no_throttle=True)
+            else:
+                self._token = self.connect()
             op_url = "https://api.weightgurus.com/v3/operation/?start={}Z".format(self.last_update.isoformat())
             data_response = requests.get(
                 op_url,
@@ -107,7 +108,9 @@ class WeightGurusConnector:
                     "Accept": "application/json, text/plain, */*",
                 },
             )
-            operations = data_response.json().get('operations',[])
+            response_json = data_response.json()
+            _LOGGER.debug('weightgurus update response: {}'.format(response_json))
+            operations = response_json.get('operations',[])
             if len(operations) > 0:
                 self._most_recent_operation = next(iter(operations[-1:0]),{})
             self.last_update = datetime.utcnow()
