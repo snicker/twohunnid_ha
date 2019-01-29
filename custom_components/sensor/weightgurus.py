@@ -45,7 +45,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     
     weightgurus_connector = WeightGurusConnector(username, password)
     try:
-        weightgurus_connector.connect()
+        weightgurus_connector._connect()
         weightgurus_connector.update()
     except:
         _LOGGER.exception("Could not create WeightGurus sensor for '{}'!".format(username))
@@ -61,7 +61,6 @@ class WeightGurusConnector:
         self.password = password
         self.update_interval = update_interval
         self.update = Throttle(self.update_interval)(self._update)
-        self.connect = Throttle(timedelta(minutes=30))(self._connect)
         self.default_unit = 'lb'
         self.last_update = datetime.utcnow() - timedelta(days=7)
         
@@ -96,10 +95,7 @@ class WeightGurusConnector:
     def _update(self):
         try:
             import requests
-            if self._token is None:
-                self._token = self.connect(no_throttle=True)
-            else:
-                self._token = self.connect()
+            self._token = self._connect()
             op_url = "https://api.weightgurus.com/v3/operation/?start={}Z".format(self.last_update.isoformat())
             data_response = requests.get(
                 op_url,
