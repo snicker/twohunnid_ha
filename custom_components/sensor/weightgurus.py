@@ -56,7 +56,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     async_add_entities(dev, True)
     
 class WeightGurusConnector:
-    def __init__(self, username, password, update_interval = timedelta(seconds=10))
+    def __init__(self, username, password, update_interval = timedelta(seconds=10)):
         self.username = username
         self.password = password
         self.update_interval = update_interval
