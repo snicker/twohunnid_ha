@@ -1,0 +1,16 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'weight'
+        
+    sensor.weightgurus_nick:
+      <<: *customize
+      friendly_name: "Weight: Nick"
+        
+sensor:
+  - platform: weightgurus
+    name: weightgurus_nick
+    username: !secret weightgurus_username
+    password: !secret weightgurus_password
+  
