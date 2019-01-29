@@ -8,7 +8,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Proximity: Nick to Home"
       
-    sensor.travel_time_nick_to_home
+    sensor.travel_time_nick_to_home:
       <<: *customize
       friendly_name: "Travel Time: Nick to Home"
         
