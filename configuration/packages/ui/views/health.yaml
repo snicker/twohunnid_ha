@@ -4,7 +4,7 @@ homeassistant:
       order: 13
 
 group:
-  default_view:
+  health:
     icon: mdi:heart-pulse
     view: yes
     name: Health
