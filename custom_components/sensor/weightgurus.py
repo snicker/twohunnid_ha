@@ -93,6 +93,7 @@ class WeightGurusConnector:
         
     def _update(self):
         try:
+            import requests
             no_throttle = False
             if self._token is None:
                 no_throttle = True
