@@ -1,0 +1,18 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'proximity_nick'
+        
+    proximity.nick_home:
+      <<: *customize
+      friendly_name: "Proximity: Nick to Home"
+        
+proximity:
+  nick_home:
+    zone: home
+    devices:
+      - device_tracker.nickcell
+    tolerance: 50
+    unit_of_measurement: mi
+  
