@@ -108,7 +108,7 @@ class WeightGurusConnector:
             _LOGGER.debug('weightgurus update response: {}'.format(response_json))
             operations = response_json.get('operations',[])
             if len(operations) > 0:
-                self._most_recent_operation = next(iter(operations[-1:0]),{})
+                self._most_recent_operation = next(iter(operations[-1:]),{})
             self.last_update = datetime.utcnow()
         except:
             self._token = None
