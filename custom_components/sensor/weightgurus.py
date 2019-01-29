@@ -40,7 +40,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     """Set up the WeightGurus sensor."""
 
     username = config.get(CONF_USERNAME)
-    password = config.get(CONF_PASSWORD)]
+    password = config.get(CONF_PASSWORD)
     name = config.get(CONF_NAME)
     
     weightgurus_connector = WeightGurusConnector(username, password)
