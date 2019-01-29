@@ -79,6 +79,7 @@ class WeightGurusConnector:
     def most_recent_operation(self):
         return self._most_recent_operation
         
+    @property
     def weight(self):
         return self.most_recent_operation.get('weight',0) / 10.0
         
