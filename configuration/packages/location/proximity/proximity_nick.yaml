@@ -17,13 +17,14 @@ proximity:
     zone: home
     devices:
       - device_tracker.nickcell
+      - device_tracker.life360_nick
     tolerance: 50
     unit_of_measurement: mi
 
 sensor:    
   - platform: waze_travel_time
     name: travel_time_nick_to_home
-    origin: device_tracker.nickcell
+    origin: device_tracker.life360_nick
     destination: zone.home
     region: 'US'
   

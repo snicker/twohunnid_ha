@@ -4,6 +4,11 @@ homeassistant:
       customize: &customize
         package: 'life360'
         
+    device_tracker.life360_nick:
+      <<: *customize
+      friendly_name: "Nick (Life360)"
+      battery_alert_disabled: true
+        
 device_tracker:
   - platform: life360
     username: !secret life360_username
