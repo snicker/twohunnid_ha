@@ -11,6 +11,10 @@ homeassistant:
     sensor.travel_time_nick_to_home:
       <<: *customize
       friendly_name: "Travel Time: Nick to Home"
+      
+    sensor.travel_time_nick_to_home_eta:
+      <<: *customize
+      friendly_name: "Travel Time: Nick to Home ETA"
         
 proximity:
   nick_home:
@@ -27,4 +31,9 @@ sensor:
     origin: device_tracker.life360_nick
     destination: zone.home
     region: 'US'
-  
+  - platform: template
+    sensors:
+      travel_time_nick_to_home_eta:
+        entity_id: states.sensor.travel_time_nick_to_home
+        value_template: >-
+          {{ (as_timestamp(states.sensor.travel_time_nick_to_home.last_updated) + states.sensor.travel_time_nick_to_home.attributes.duration * 60) | timestamp_custom() }}
