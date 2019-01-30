@@ -14,3 +14,6 @@
 	path = lib/JeffLIrion/homeassistant_native_firetv
 	url = https://github.com/JeffLIrion/homeassistant_native_firetv.git
 	branch = pure-python-adb
+[submodule "lib/pnbruckner/homeassistant-config"]
+	path = lib/pnbruckner/homeassistant-config
+	url = https://github.com/pnbruckner/homeassistant-config.git
