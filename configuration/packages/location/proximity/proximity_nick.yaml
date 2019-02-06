@@ -38,7 +38,7 @@ sensor:
   - platform: template
     sensors:
       travel_time_nick_to_home_eta:
-        entity_id: states.sensor.travel_time_nick_to_home
+        entity_id: sensor.travel_time_nick_to_home
         value_template: >-
           {{ (as_timestamp(states.sensor.travel_time_nick_to_home.last_updated) + states.sensor.travel_time_nick_to_home.attributes.duration * 60) | timestamp_custom() }}
       nick_home_dir_of_travel:
