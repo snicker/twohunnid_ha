@@ -93,7 +93,10 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     def update_thread(zwift_data, hass):
         _LOGGER.debug("ZwiftSensor update thread started")
         while hass.is_running:
-            zwift_data.update()
+            try:
+                zwift_data.update()
+            except:
+                _LOGGER.exception('exception in zwift sensor data update thread')
             time.sleep(1)
         _LOGGER.debug("ZwiftSensor update thread ended")
         
