@@ -116,7 +116,7 @@ script:
   snooze_interior_detection_alerts:
     alias: Snooze Interior Detection Alerts for 30 minutes
     sequence:
-      - service: notify.nick:
+      - service: notify.nick
         data_template:
           message: "Interior motion detection alerts have been snoozed for 30 minutes."
       - service: homeassistant.turn_off
@@ -127,7 +127,7 @@ script:
   snooze_exterior_detection_alerts:
     alias: Snooze Exterior Detection Alerts for 30 minutes
     sequence:
-      - service: notify.nick:
+      - service: notify.nick
         data_template:
           message: "Exterior motion detection alerts have been snoozed for 30 minutes."
       - service: homeassistant.turn_off
