@@ -15,6 +15,12 @@ homeassistant:
       
     automation.reactivate_interior_motion_detection_alerts_after_30_minutes:
       <<: *customize
+      
+    automation.telegram_command_snooze_all_exterior_motion_sensors_alerts:
+      <<: *customize
+      
+    automation.telegram_command_snooze_all_interior_motion_sensors_alerts:
+      <<: *customize
         
     script.motion_detection_alert:
       <<: *customize
@@ -107,6 +113,28 @@ automation:
         entity_id: automation.motion_detected_interior
       - service: homeassistant.turn_off
         entity_id: automation.reactivate_interior_motion_detection_alerts_after_30_minutes
+        
+  - alias: 'Telegram Command: snooze_all_exterior_motion_sensors_alerts'
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: telegram_callback
+      event_data:
+        data: '/snooze_all_exterior_motion_sensors_alerts'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: sensor.snooze_exterior_detection_alerts
+        
+  - alias: 'Telegram Command: snooze_all_exterior_motion_sensors_alerts'
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: telegram_callback
+      event_data:
+        data: '/snooze_all_interior_motion_sensors_alerts'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: sensor.snooze_interior_detection_alerts
      
     
           
@@ -151,7 +179,10 @@ script:
         message: &motion_detected_message >
           Motion detected: {{ state_attr(motion_group,'friendly_name')|replace('Motion Sensors - ','') }}
           {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr(motion_group,'entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|replace('Motion - ','') }} ({{ (now() - obj.last_updated).total_seconds()|int }}s ago){% if loop.index < loop.length %}, {% endif %}{% endfor %}
-            
+        data:
+          inline_keyboard: 
+            - "Snooze?/snooze_{{motion_group|replace('group.','')}}_alerts"
+             
   motion_detection_alert_camera:
     alias: Motion Detection Alert (from Camera)
     sequence:
@@ -166,3 +197,5 @@ script:
           photo:
             caption: *motion_detected_message
             file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
+          inline_keyboard: 
+            - "Snooze?/snooze_{{motion_group|replace('group.','')}}_alerts"
