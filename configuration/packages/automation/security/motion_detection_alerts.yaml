@@ -125,7 +125,7 @@ automation:
       - service: homeassistant.turn_on
         entity_id: sensor.snooze_exterior_detection_alerts
         
-  - alias: 'Telegram Command: snooze_all_exterior_motion_sensors_alerts'
+  - alias: 'Telegram Command: snooze_all_interior_motion_sensors_alerts'
     hide_entity: true
     trigger:
       platform: event
