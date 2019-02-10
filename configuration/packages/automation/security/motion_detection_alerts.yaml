@@ -9,11 +9,23 @@ homeassistant:
         
     automation.motion_detected_exterior:
       <<: *customize
+      
+    automation.reactivate_exterior_motion_detection_alerts_after_30_minutes:
+      <<: *customize
+      
+    automation.reactivate_interior_motion_detection_alerts_after_30_minutes:
+      <<: *customize
         
     script.motion_detection_alert:
       <<: *customize
         
     script.motion_detection_alert_camera:
+      <<: *customize
+      
+    script.snooze_interior_detection_alerts:
+      <<: *customize
+      
+    script.snooze_exterior_detection_alerts:
       <<: *customize
 
 automation:
@@ -68,8 +80,62 @@ automation:
           camera_entity_id: "{{ trigger.to_state.attributes.camera_entity_id }}"
           motion_group: "group.all_exterior_motion_sensors"
           
+  - alias: 'Reactivate Exterior Motion Detection Alerts After 30 minutes'
+    trigger:
+    - platform: state
+      entity_id:
+        - automation.motion_detected_exterior
+      to: 'off'
+      for: '00:30:00'
+    condition: []
+    action:
+      - service: homeassistant.turn_on
+        entity_id: automation.motion_detected_exterior
+      - service: homeassistant.turn_off
+        entity_id: automation.reactivate_exterior_motion_detection_alerts_after_30_minutes
+          
+  - alias: 'Reactivate Interior Motion Detection Alerts After 30 minutes'
+    trigger:
+    - platform: state
+      entity_id:
+        - automation.motion_detected_interior
+      to: 'off'
+      for: '00:30:00'
+    condition: []
+    action:
+      - service: homeassistant.turn_on
+        entity_id: automation.motion_detected_interior
+      - service: homeassistant.turn_off
+        entity_id: automation.reactivate_interior_motion_detection_alerts_after_30_minutes
+     
+    
+          
           
 script:
+
+  snooze_interior_detection_alerts:
+    alias: Snooze Interior Detection Alerts for 30 minutes
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: automation.motion_detected_interior
+      - service: homeassistant.turn_on
+        entity_id: automation.reactivate_interior_motion_detection_alerts_after_30_minutes
+
+  snooze_exterior_detection_alerts:
+    alias: Snooze Exterior Detection Alerts for 30 minutes
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: automation.motion_detected_exterior
+      - service: homeassistant.turn_on
+        entity_id: automation.reactivate_exterior_motion_detection_alerts_after_30_minutes
+
+  snooze_all_detection_alerts:
+    alias: Snooze All Detection Alerts for 30 minutes
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: script.snooze_exterior_detection_alerts
+      - service: homeassistant.turn_on
+        entity_id: script.snooze_interior_detection_alerts
 
   motion_detection_alert:
     alias: Motion Detection Alert
