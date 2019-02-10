@@ -123,7 +123,7 @@ automation:
         data: '/snooze_all_exterior_motion_sensors_alerts'
     action:
       - service: homeassistant.turn_on
-        entity_id: sensor.snooze_exterior_detection_alerts
+        entity_id: script.snooze_exterior_detection_alerts
         
   - alias: 'Telegram Command: snooze_all_interior_motion_sensors_alerts'
     hide_entity: true
@@ -134,7 +134,7 @@ automation:
         data: '/snooze_all_interior_motion_sensors_alerts'
     action:
       - service: homeassistant.turn_on
-        entity_id: sensor.snooze_interior_detection_alerts
+        entity_id: script.snooze_interior_detection_alerts
      
     
           
