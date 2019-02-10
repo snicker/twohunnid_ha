@@ -39,6 +39,15 @@ group:
       - binary_sensor.garage_camera_motion
       - binary_sensor.modetftp_motion_laundry
       
+  motion_sensor_scripts:
+    name: Motion Sensor Scripts
+    view: no
+    control: hidden
+    entities:
+      - script.snooze_interior_detection_alerts
+      - script.snooze_exterior_detection_alerts
+      - script.snooze_all_detection_alerts
+      
   motion_backyard_north:
     name: Motion - Backyard (North)
     control: hidden
