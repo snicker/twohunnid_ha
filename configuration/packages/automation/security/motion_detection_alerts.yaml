@@ -181,7 +181,7 @@ script:
           {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr(motion_group,'entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|replace('Motion - ','') }} ({{ (now() - obj.last_updated).total_seconds()|int }}s ago){% if loop.index < loop.length %}, {% endif %}{% endfor %}
         data:
           inline_keyboard: 
-            - "Snooze?/snooze_{{motion_group|replace('group.','')}}_alerts"
+            - "Snooze?:/snooze_{{motion_group|replace('group.','')}}_alerts"
              
   motion_detection_alert_camera:
     alias: Motion Detection Alert (from Camera)
@@ -198,4 +198,4 @@ script:
             caption: *motion_detected_message
             file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
           inline_keyboard: 
-            - "Snooze?/snooze_{{motion_group|replace('group.','')}}_alerts"
+            - "Snooze?:/snooze_{{motion_group|replace('group.','')}}_alerts"
