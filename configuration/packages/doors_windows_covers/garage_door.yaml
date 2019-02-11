@@ -144,9 +144,9 @@ alert:
       - 30
     can_acknowledge: true
     skip_first: false
-    #data:
-    #  inline_keyboard:
-    #    - 'Close garage:/close_garage'
+    data:
+      inline_keyboard:
+        - 'Close garage:/close_garage'
     notifiers:
       - nick
       
