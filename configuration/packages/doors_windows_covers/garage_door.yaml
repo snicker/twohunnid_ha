@@ -136,25 +136,48 @@ cover:
           {% else %}
             mdi:garage
           {% endif %}
-
-alert:         
-  garage_door:
-    name: "Garage has been open for {{ relative_time(states.cover.garage_door.last_changed) }}"
-    entity_id: cover.garage_door
-    state: 'open'
-    repeat:
-      - 5
-      - 15
-      - 30
-    can_acknowledge: true
-    skip_first: false
-    data:
-      inline_keyboard:
-        - 'Close garage:/close_garage'
-    notifiers:
-      - nick
       
 automation:
+
+  - alias: "Garage Door Still Open"
+    hide_entity: true
+    trigger:
+      - platform: state
+        entity_id:
+          - cover.garage_door
+        to: 'open'
+        for: '00:00:10'
+      - platform: state
+        entity_id:
+          - cover.garage_door
+        to: 'open'
+        for: '00:05:00'
+      - platform: state
+        entity_id:
+          - cover.garage_door
+        to: 'open'
+        for: '00:15:00'
+      - platform: state
+        entity_id:
+          - cover.garage_door
+        to: 'open'
+        for: '00:30:00'
+    action:
+      - service: camera.snapshot
+        data_template:
+          entity_id: "camera.yi_home_camera_garage"
+          filename: "/tmp/yi_home_camera_garage_snapshot.jpg"
+      - service: notify.nick
+        data_template:
+          message: "Garage door has been open for {{ relative_time(states.cover.garage_door.last_changed) }}"
+          data:
+            photo:
+              caption: "Garage door has been open for {{ relative_time(states.cover.garage_door.last_changed) }}"
+              file: "/tmp/yi_home_camera_garage_snapshot.jpg"
+            inline_keyboard: 
+              - 'Close garage:/close_garage'
+      
+
   - alias: 'Telegram Command: close_garage'
     hide_entity: true
     trigger:
