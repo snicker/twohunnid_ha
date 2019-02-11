@@ -36,19 +36,8 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         _LOGGER.error(err.output)
         return False
 
-    add_entities(X10RFLight(light) for light in config[CONF_DEVICES])
+    add_entities(X10RFLight(light, False) for light in config[CONF_DEVICES])
 
 
 class X10RFLight(X10Light):
     """Representation of an X10 RF Light."""
-
-    def turn_on(self, **kwargs):
-        """Instruct the light to turn on."""
-        x10_command('fon ' + self._id)
-        self._brightness = kwargs.get(ATTR_BRIGHTNESS, 255)
-        self._state = True
-
-    def turn_off(self, **kwargs):
-        """Instruct the light to turn off."""
-        x10_command('foff ' + self._id)
-        self._state = False
