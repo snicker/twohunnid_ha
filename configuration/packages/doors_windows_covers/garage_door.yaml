@@ -37,6 +37,10 @@ homeassistant:
       friendly_name: "Garage Door"
       device_class: garage
       
+    alert.garage_door:
+      <<: *customize
+      friendly_name: "Garage Door Open Alert"
+      
 
 
 light:
