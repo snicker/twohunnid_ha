@@ -132,4 +132,37 @@ cover:
           {% else %}
             mdi:garage
           {% endif %}
+
+alert:         
+  garage_door:
+    name: "Garage has been open for {{ relative_time(states.cover.garage_door.last_changed) }}"
+    entity_id: cover.garage_door
+    state: 'open'
+    repeat:
+      - 5
+      - 15
+      - 30
+    can_acknowledge: true
+    skip_first: false
+    data:
+      inline_keyboard:
+        - 'Close garage:/close_garage'
+    notifiers:
+      - nick
+      
+automation:
+  - alias: 'Telegram Command: close_garage'
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: telegram_callback
+      event_data:
+        data: '/close_garage'
+    action:
+      - service: telegram_bot.answer_callback_query
+        data_template:
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: 'closing...'
+      - service: cover.close_cover
+        entity_id: cover.garage_door
           
