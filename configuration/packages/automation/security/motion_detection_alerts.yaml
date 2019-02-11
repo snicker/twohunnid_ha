@@ -127,7 +127,7 @@ automation:
           callback_query_id: '{{ trigger.event.data.id }}'
           message: 'OK!'
       - service: homeassistant.turn_on
-        entity_id: script.snooze_exterior_detection_alerts'
+        entity_id: script.snooze_exterior_detection_alerts
         
   - alias: 'Telegram Command: snooze_all_interior_motion_sensors_alerts'
     hide_entity: true
