@@ -155,6 +155,7 @@
     to: 'on'
   condition: []
   action:
-  - service: lock.unlock
+  - data: {}
+    service: lock.unlock
   - data: {}
     service: script.alarm_disarm
