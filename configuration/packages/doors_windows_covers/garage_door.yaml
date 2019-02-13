@@ -80,21 +80,21 @@ script:
   garage_door_open_cover:
     sequence:
       - condition: template
-        value_template: "{{ state('sensor.garage_door_status') in ('closed','closing','stopped') }}"
+        value_template: "{{ states('sensor.garage_door_status') in ('closed','closing','stopped') }}"
       - service: switch.turn_on
         data:
           entity_id: switch.garage_door_button
   garage_door_stop_cover:
     sequence:
       - condition: template
-        value_template: "{{ state('sensor.garage_door_position') not in ('0','100') }}"
+        value_template: "{{ states('sensor.garage_door_position') not in ('0','100') }}"
       - service: switch.turn_on
         data:
           entity_id: switch.garage_door_button
   garage_door_close_cover:
     sequence:
       - condition: template
-        value_template: "{{ state('sensor.garage_door_status') in ('open','opening','stopped') }}"
+        value_template: "{{ states('sensor.garage_door_status') in ('open','opening','stopped') }}"
       - service: switch.turn_on
         data:
           entity_id: switch.garage_door_button
