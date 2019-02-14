@@ -1,0 +1,54 @@
+esphome:
+  name: kitchen_sconces
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: 'OUTER SPACE'
+  password: 'MrPuppy2015'
+
+# Enable logging
+logger:
+
+mqtt:
+  broker: 192.168.1.19
+  
+output:
+  - platform: esp8266_pwm
+    id: basic_green_led
+    pin:
+      number: GPIO13
+      inverted: True
+
+light:
+  - platform: monochromatic
+    name: "Sonoff Basic Green LED"
+    output: basic_green_led
+
+switch:
+  - platform: gpio
+    pin: GPIO12
+    name: "Kitchen Sconces"
+    id: kitchen_sconces
+    
+binary_sensor:
+  - platform: gpio
+    pin: 
+      number: GPIO2
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Kitchen Sconce Physical Switch"
+    on_press:
+      then:
+        - switch.toggle: kitchen_sconces
+    on_release:
+      then:
+        - switch.toggle: kitchen_sconces
+        
+# Enable Home Assistant API
+api:
+  password: 'espme'
+
+ota:
+  password: 'espme'
