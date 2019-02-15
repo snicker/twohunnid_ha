@@ -32,4 +32,5 @@ group:
     - group.copper_wire_string_lights_settings
     - light.z_wave_products_inc_wd100_level_2
     - light.z_wave_products_inc_wd100_level_3
+    - light.kitchen_sconces
       
