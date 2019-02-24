@@ -1,0 +1,26 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'homeassistant_hardware'
+        
+    sensor.disk_use_percent_home:
+      <<: *customize
+      
+    sensor.memory_use_percent:
+      <<: *customize
+      
+    sensor.load_5m:
+      <<: *customize
+      
+    sensor.last_boot:
+      <<: *customize
+      
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_use_percent
+      - type: load_5m
+      - type: last_boot
