@@ -11,7 +11,17 @@ group:
     entities:
       - group.home_settings
       - group.hahardware
+      - group.hardware_freenas
       - group.ha_control
+
+  hardware_freenas:
+    view: no
+    entities:
+      - sensor.freenas_version
+      - sensor.freenas_alert_level
+      - sensor.freenas_alert_message
+      - sensor.freenas_tank_report
+      - sensor.freenas_tank_pct_used
       
   home_settings:
     name: Home Settings

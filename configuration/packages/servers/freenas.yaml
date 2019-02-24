@@ -1,0 +1,73 @@
+alias:
+  freenas_rest_sensor: &freenas_rest_sensor
+    username: !secret freenas_username
+    password: !secret freenas_password
+    authentication: basic
+    headers:
+      Content-Type: application/json
+  
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'freenas'
+    
+    sensor.freenas_tank_report:
+      <<: *customize
+      friendly_name: FreeNAS - Volume Status - Tank
+      
+    sensor.freenas_tank_pct_used:
+      <<: *customize
+      friendly_name: FreeNAS - Volume % Free - Tank
+      
+    sensor.freenas_alert_level:
+      <<: *customize
+      friendly_name: FreeNAS - Alert Level
+
+    sensor.freenas_alert_message:
+      <<: *customize
+      friendly_name: FreeNAS - Alert Message
+
+    sensor.freenas_version:
+      <<: *customize
+      friendly_name: FreeNAS - Version
+      
+sensor:
+  - platform: rest
+    <<: *freenas_rest_sensor
+    name: freenas_tank_report
+    json_attributes:
+      - name
+      - status
+      - used_pct
+      - is_decrypted
+    resource: http://freenas.local/api/v1.0/storage/volume/tank/?format=json
+    value_template: '{{ value_json.status }}'
+
+  - platform: template
+    sensors:
+      freenas_tank_pct_used:
+        value_template: '{{ states.sensor.fn_trunk_report.attributes["used_pct"].title() }}'
+        entity_id: sensor.freenas_tank_report
+      
+  - platform: rest
+    <<: *freenas_rest_sensor
+    name: freenas_alert_level
+    resource: http://freenas.local/api/v1.0/system/alert/?format=json
+    value_template: '{{ value_json[0].level }}'
+  
+  - platform: rest
+    <<: *freenas_rest_sensor
+    name: freenas_alert_message
+    resource: http://freenas.local/api/v1.0/system/alert/?format=json
+    value_template: '{{ value_json[0].message }}'
+  
+  - platform: rest
+    <<: *freenas_rest_sensor
+    name: freenas_version
+    json_attributes:
+      - fullversion
+      - name
+      - version
+    resource: http://freenas.local/api/v1.0/system/version/?format=json
+    value_template: '{{ value_json.fullversion }}'
