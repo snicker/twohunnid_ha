@@ -205,7 +205,7 @@ automation:
       - service: telegram_bot.answer_callback_query
         data_template:
           callback_query_id: '{{ trigger.event.data.id }}'
-          message: {% if states('cover.garage_door') == 'closed' %} already closed! {% else %} closing... {% endif %}
+          message: "{% if states('cover.garage_door') == 'closed' %} already closed! {% else %} closing... {% endif %}"
       - service: cover.close_cover
         entity_id: cover.garage_door
           
