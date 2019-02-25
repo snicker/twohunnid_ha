@@ -155,7 +155,8 @@
     to: 'on'
   condition: []
   action:
-  - data: {}
+  - data:
+      entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked_2
     service: lock.unlock
   - data: {}
     service: script.alarm_disarm
