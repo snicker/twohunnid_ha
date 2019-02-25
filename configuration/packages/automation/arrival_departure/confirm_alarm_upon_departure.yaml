@@ -1,0 +1,53 @@
+
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'confirm_alarm_upon_departure'
+    
+    automation.lock_all_doors_and_confirm_alarm_arming_when_nick_leaves:
+      <<: *customize
+      
+    automation.telegram_command_arm_away:
+      <<: *customize
+      
+      
+automation:
+
+  - alias: "Lock All Doors And Confirm Alarm Arming When Nick Leaves"
+    trigger:
+    - entity_id: input_boolean.presence_nick_homekit
+      from: 'on'
+      platform: state
+      to: 'off'
+      for: 00:00:30
+    condition: []
+    action:
+    - service: lock.lock
+      data:
+        entity_id: all
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: disarmed
+    - service: notify.nick
+      data_template:
+        message: "Alarm has not been armed. Arm now?"
+        data:
+          inline_keyboard: 
+            - 'Arm away:/arm_away'
+      
+
+  - alias: 'Telegram Command: arm_away'
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: telegram_callback
+      event_data:
+        data: '/arm_away'
+    action:
+      - service: telegram_bot.answer_callback_query
+        data_template:
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: "Arming..."
+      - service: script.alarm_arm_away
+          
