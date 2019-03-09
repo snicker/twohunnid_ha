@@ -12,6 +12,7 @@ group:
       - light.string_lights
       - light.front_porch_lights
       - light.front_landscape_lights
+      - light.pool_light
     
   exterior_lights:
     icon: mdi:lightbulb
@@ -20,6 +21,7 @@ group:
     - light.string_lights
     - light.backyard_flood_lights
     - light.front_landscape_lights
+    - light.pool_light
     - light.front_porch_lights
     
   interior_lights:
