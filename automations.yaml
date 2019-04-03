@@ -160,3 +160,15 @@
     service: lock.unlock
   - data: {}
     service: script.alarm_disarm
+- id: '1551828897602'
+  alias: HA Server Overload
+  trigger:
+  - above: '1'
+    entity_id: sensor.load_5m
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      message: Homeassistant load has been over 1.00 for the 5m average... might want
+        to look into it
+    service: notify.nick
