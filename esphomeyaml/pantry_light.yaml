@@ -1,0 +1,75 @@
+esphome:
+  name: pantry_light
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  reboot_timeout: 0s
+  domain: .twohunnid
+  fast_connect: true
+
+# Enable logging
+logger:
+  
+output:
+  - platform: gpio
+    pin: GPIO12
+    id: main_relay
+    
+switch:
+  - platform: restart
+    name: "Reboot Pantry Light Sonoff"
+    id: pantry_light_restart
+
+light:
+  - platform: binary
+    name: "Pantry Light"
+    id: pantry_light
+    output: main_relay
+    
+binary_sensor:
+  - platform: gpio
+    device_class: door
+    pin: 
+      number: GPIO2
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Pantry Door Sensor"
+    on_press:
+      then:
+        - light.turn_on: pantry_light
+    on_release:
+      then:
+        - light.turn_off: pantry_light
+  - platform: gpio
+    name: "Pantry Light Touch Pad"
+    internal: true
+    pin:
+      number: GPIO0
+      inverted: True
+    on_click:
+      then:
+        - light.toggle: pantry_light
+    on_multi_click:
+    - timing:
+        - ON for at most 0.5s
+        - OFF for at most 0.5s
+        - ON for at most 0.5s
+        - OFF for at most 0.5s
+        - ON for at most 0.5s
+        - OFF for at most 0.5s
+        - ON for at most 0.5s
+        - OFF for at least 0.2s
+      then:
+        - switch.turn_on: pantry_light_restart
+        
+# Enable Home Assistant API
+api:
+  password: !secret ota_api_password
+  reboot_timeout: 0s
+
+ota:
+  password: !secret ota_api_password
