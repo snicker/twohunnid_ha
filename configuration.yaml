@@ -32,8 +32,6 @@ updater:
 
 discovery:
 
-ios:
-
 system_health:
 
 conversation:
