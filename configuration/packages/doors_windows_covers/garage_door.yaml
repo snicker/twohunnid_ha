@@ -12,18 +12,7 @@ homeassistant:
         haaska_hidden: false
         homebridge_hidden: false
         
-    light.x10_garage_door_relay:
-      <<: *customize
-      friendly_name: "Garage Door X10 Relay"
-      hidden: true
-      icon: mdi:light-switch
-      
-    switch.garage_door_button:
-      <<: *expose
-      friendly_name: "Garage Door"
-      icon: mdi:light-switch
-      
-    script.garage_door_button_turn_on:
+    switch.garage_door_relay:
       <<: *expose
       friendly_name: "Garage Door"
       icon: mdi:light-switch
@@ -40,64 +29,29 @@ homeassistant:
     automation.garage_door_still_open:
       <<: *customize
       friendly_name: "Garage Door Open Alert"
-      
-
-
-light:
-  - platform: x10rf
-    devices:
-      - id: b3
-        name: x10_garage_door_relay
-        
-switch:
-  - platform: template
-    switches:
-      garage_door_button:
-        entity_id: light.x10_garage_door_relay
-        value_template: "{{ false }}"
-        turn_on:
-          service: script.turn_on
-          data:
-            entity_id: script.garage_door_button_turn_on
-        turn_off:
-          service: logbook.log
-          data_template:
-            name: Garage Door Button
-            message: is turned off
-            entity_id: switch.garage_door_button
-            domain: switch
             
 script:
-  garage_door_button_turn_on:
-    sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.x10_garage_door_relay
-      - delay: '00:00:02'
-      - service: homeassistant.turn_off
-        data:
-          entity_id: switch.garage_door_button
   garage_door_open_cover:
     sequence:
       - condition: template
         value_template: "{{ states('sensor.garage_door_status') in ('closed','closing','stopped') }}"
       - service: switch.turn_on
         data:
-          entity_id: switch.garage_door_button
+          entity_id: switch.garage_door_relay
   garage_door_stop_cover:
     sequence:
       - condition: template
         value_template: "{{ states('sensor.garage_door_position') not in ('0','100') }}"
       - service: switch.turn_on
         data:
-          entity_id: switch.garage_door_button
+          entity_id: switch.garage_door_relay
   garage_door_close_cover:
     sequence:
       - condition: template
         value_template: "{{ states('sensor.garage_door_status') in ('open','opening','stopped') }}"
       - service: switch.turn_on
         data:
-          entity_id: switch.garage_door_button
+          entity_id: switch.garage_door_relay
         
             
 binary_sensor:

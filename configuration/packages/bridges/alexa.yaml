@@ -16,7 +16,7 @@ cloud:
         - group.interior_christmas_lights
         - media_player.universal_media_player_living_room
       exclude_entities:
-        - light.x10_garage_door_relay
+        - switch.garage_door_relay
         - light.outside_amplifier_28
     entity_config:
       script.alarm_arm_away:

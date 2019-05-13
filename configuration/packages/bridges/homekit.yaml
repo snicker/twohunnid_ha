@@ -7,7 +7,7 @@ homekit:
       - lock
       - climate
     exclude_entities:
-      - light.x10_garage_door_relay
+      - switch.garage_door_relay
     include_entities:
       - cover.garage_door
       - media_player.living_room_television
