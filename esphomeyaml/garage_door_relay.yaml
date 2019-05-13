@@ -1,0 +1,55 @@
+esphome:
+  name: garage_door_relay
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  reboot_timeout: 0s
+  domain: .twohunnid
+  fast_connect: true
+
+# Enable logging
+logger:
+
+binary_sensor:
+  - platform: gpio
+    name: "Garage Door Relay Button"
+    internal: true
+    pin:
+      number: GPIO0
+      inverted: True
+    on_click:
+      then:
+        - switch.toggle: garage_door_relay
+      
+switch:
+  - platform: restart
+    name: "Reboot Garage Door Relay"
+    id: garage_door_relay_restart
+  - platform: gpio
+    restore_mode: ALWAYS_OFF
+    pin: 
+      number: GPIO12
+      inverted: False
+    name: "Garage Door Relay Internal Switch"
+    id: internal_relay_switch
+    internal: True
+  - platform: template
+    name: "Garage Door Relay"
+    id: garage_door_relay
+    turn_on_action:
+      - switch.turn_on: internal_relay_switch
+      - delay: 250ms
+      - switch.turn_off: internal_relay_switch
+      - switch.turn_off: garage_door_relay
+
+# Enable Home Assistant API
+api:
+  password: !secret ota_api_password
+  reboot_timeout: 0s
+
+ota:
+  password: !secret ota_api_password

@@ -1,1 +1,20 @@
 ios:
+  push:
+    categories:
+      - name: Garage Door
+        identifier: 'garage_door'
+        actions:
+          - identifier: 'CLOSE_GARAGE'
+            title: 'Close the Garage'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: true
+            behavior: 'default'
+          - identifier: 'OPEN_GARAGE'
+            title: 'Silence Alarm'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: false
+            behavior: 'textInput'
+            textInputButtonTitle: 'Silencio!'
+            textInputPlaceholder: 'Placeholder'
