@@ -22,7 +22,11 @@ homekit:
       feature_list:
         - feature: on_off
         - feature: toggle_mute
+        - feature: play_pause
+        - feature: play_stop
     media_player.master_bedroom_fire_tv:
       feature_list:
         - feature: on_off
+        - feature: toggle_mute
         - feature: play_pause
+        - feature: play_stop
