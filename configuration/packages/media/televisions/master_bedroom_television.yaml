@@ -9,6 +9,7 @@ homeassistant:
       friendly_name: "Television - Master Bedroom"
       ir_codes_source: http://www.remotecentral.com/cgi-bin/mboard/rc-discrete/thread.cgi?7222
       icon: mdi:television
+      device_class: tv
       
     automation.turn_on_master_bedroom_tv_if_fire_tv_stick_is_on:
       <<: *customize

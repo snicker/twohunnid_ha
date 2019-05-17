@@ -7,6 +7,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Television - Living Room"
       icon: mdi:television
+      device_class: tv
       
 media_player:
   - platform: universal
