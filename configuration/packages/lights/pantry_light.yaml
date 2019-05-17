@@ -25,12 +25,15 @@ homeassistant:
 script:
   pantry_light_on_only_if_door_open:
     sequence:
-      - condition: state
-        entity_id: 'binary_sensor.pantry_door_sensor'
-        state: 'on'
+      - service_template: "script.pantry_light_door_{{ 'open' if is_state('binary_sensor.pantry_door_sensor','on') else 'closed'}}"
+  pantry_light_door_closed:
+    sequence:
+      - service: light.turn_off
+        entity_id: light.pantry_light_conditional
+  pantry_light_door_open:
+    sequence:
       - service: light.turn_on
-        data:
-          entity_id: light.pantry_light
+        entity_id: light.pantry_light
 
 light:
   - platform: template
