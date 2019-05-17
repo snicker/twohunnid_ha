@@ -25,13 +25,14 @@ light:
       pantry_light_conditional:
         value_template: "{{ states.light.pantry_light.state }}"
         turn_on:
-          - condition: state
-            entity_id: binary_sensor.pantry_door_sensor
-            state: on
-          - service: light.turn_on
-            data:
-              entity_id: light.pantry_light
+          sequence:
+            - condition: state
+              entity_id: binary_sensor.pantry_door_sensor
+              state: on
+            - service: light.turn_on
+              data:
+                entity_id: light.pantry_light
         turn_off:
-          - service: light.turn_off
-            data:
-              entity_id: light.pantry_light
+          service: light.turn_off
+          data:
+            entity_id: light.pantry_light
