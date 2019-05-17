@@ -35,5 +35,5 @@ group:
     - light.z_wave_products_inc_wd100_level_2
     - light.z_wave_products_inc_wd100_level_3
     - light.kitchen_sconces
-    - light.pantry_light
+    - light.pantry_light_conditional
       
