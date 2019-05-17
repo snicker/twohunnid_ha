@@ -11,20 +11,20 @@ homekit:
       - light.pantry_light
     include_entities:
       - cover.garage_door
-      - media_player.living_room_television
-      - media_player.master_bedroom_fire_tv
+      - media_player.universal_media_player_living_room
+      - media_player.master_bedroom_television
       - input_boolean.presence_nick_homekit
       - input_boolean.presence_brittany_homekit
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
-    media_player.living_room_television:
+    media_player.universal_media_player_living_room:
       feature_list:
         - feature: on_off
         - feature: toggle_mute
         - feature: play_pause
         - feature: play_stop
-    media_player.master_bedroom_fire_tv:
+    media_player.master_bedroom_television:
       feature_list:
         - feature: on_off
         - feature: toggle_mute
