@@ -1,0 +1,37 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'pantry_light'
+    
+    light.pantry_light:
+      <<: *customize
+      hidden: true
+      friendly_name: "Pantry Light (Actual)"
+      
+    switch.reboot_pantry_light_sonoff:
+      <<: *customize
+      
+    binary_sensor.pantry_door_sensor:
+      <<: *customize
+      
+    light.pantry_light_conditional:
+      <<: *customize
+      friendly_name: "Pantry Light"
+      
+light:
+  - platform: template
+    lights:
+      pantry_light_conditional:
+        value_template: "{{ states.light.pantry_light.state }}"
+        turn_on:
+          - condition: state
+            entity_id: binary_sensor.pantry_door_sensor
+            state: on
+          - service: light.turn_on
+            data:
+              entity_id: light.pantry_light
+        turn_off:
+          - service: light.turn_off
+            data:
+              entity_id: light.pantry_light
