@@ -26,8 +26,8 @@ script:
   pantry_light_on_only_if_door_open:
     sequence:
       - condition: state
-        entity_id: binary_sensor.pantry_door_sensor
-        state: on
+        entity_id: 'binary_sensor.pantry_door_sensor'
+        state: 'on'
       - service: light.turn_on
         data:
           entity_id: light.pantry_light
