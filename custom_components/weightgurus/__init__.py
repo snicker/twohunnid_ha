@@ -1,0 +1,1 @@
+"""The weightgurus sensor component."""
