@@ -13,7 +13,7 @@ import voluptuous as vol
 from homeassistant.const import (CONF_NAME, CONF_ID, CONF_DEVICES)
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS, PLATFORM_SCHEMA)
-from homeassistant.components.light.x10 import X10Light, x10_command
+from homeassistant.components.x10.light import X10Light, x10_command
 import homeassistant.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
