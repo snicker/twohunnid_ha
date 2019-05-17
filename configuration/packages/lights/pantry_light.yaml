@@ -19,19 +19,26 @@ homeassistant:
       <<: *customize
       friendly_name: "Pantry Light"
       
+    script.pantry_light_on_only_if_door_open:
+      <<: *customize
+      
+script:
+  pantry_light_on_only_if_door_open:
+    sequence:
+      - condition: state
+        entity_id: binary_sensor.pantry_door_sensor
+        state: on
+      - service: light.turn_on
+        data:
+          entity_id: light.pantry_light
+
 light:
   - platform: template
     lights:
       pantry_light_conditional:
         value_template: "{{ states.light.pantry_light.state }}"
         turn_on:
-          sequence:
-            - condition: state
-              entity_id: binary_sensor.pantry_door_sensor
-              state: on
-            - service: light.turn_on
-              data:
-                entity_id: light.pantry_light
+          service: script.pantry_light_on_only_if_door_open
         turn_off:
           service: light.turn_off
           data:
