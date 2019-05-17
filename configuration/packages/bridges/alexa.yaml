@@ -18,6 +18,7 @@ cloud:
       exclude_entities:
         - switch.garage_door_relay
         - light.outside_amplifier_28
+        - light.pantry_light
     entity_config:
       script.alarm_arm_away:
         name: Home Security

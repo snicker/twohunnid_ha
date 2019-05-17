@@ -8,6 +8,7 @@ homekit:
       - climate
     exclude_entities:
       - switch.garage_door_relay
+      - light.pantry_light
     include_entities:
       - cover.garage_door
       - media_player.living_room_television
