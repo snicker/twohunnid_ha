@@ -172,3 +172,14 @@
       message: Homeassistant load has been over 1.00 for the 5m average... might want
         to look into it
     service: notify.nick
+- id: '1558144520212'
+  alias: turn off pool lights when you turn them on
+  trigger:
+  - entity_id: light.pool_light
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: light.pool_light
+    service: light.turn_off
