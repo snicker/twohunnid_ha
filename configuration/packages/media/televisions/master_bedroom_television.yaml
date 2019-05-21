@@ -6,7 +6,7 @@ homeassistant:
 
     media_player.master_bedroom_television:
       <<: *customize
-      friendly_name: "Television - Master Bedroom"
+      friendly_name: "Master Bedroom Television"
       ir_codes_source: http://www.remotecentral.com/cgi-bin/mboard/rc-discrete/thread.cgi?7222
       icon: mdi:television
       device_class: tv
