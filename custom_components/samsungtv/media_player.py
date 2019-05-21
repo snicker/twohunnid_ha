@@ -91,9 +91,9 @@ class SamsungTVDevice(MediaPlayerDevice):
 
     def __init__(self, host, port, name, timeout, mac, uuid, encrypted_config):
         """Initialize the Samsung device."""
-        from custom_components.samsungctl.samsungctl import exceptions
-        from custom_components.samsungctl.samsungctl import Remote
-        from custom_components.samsungctl.samsungctl import Config as SamsungConfig
+        from samsungctl import exceptions
+        from samsungctl import Remote
+        from samsungctl import Config as SamsungConfig
         import wakeonlan
         # Save a reference to the imported classes
         self._exceptions_class = exceptions
