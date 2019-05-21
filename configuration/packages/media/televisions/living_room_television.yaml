@@ -48,4 +48,4 @@ media_player:
     port: 8002
     mac: 38:01:95:7B:A3:98
     name: living_room_television_samsungtv
-    encrypted_config: samsungtv.config
+    encrypted_config: ~/.homeassistant/samsungtv.config
