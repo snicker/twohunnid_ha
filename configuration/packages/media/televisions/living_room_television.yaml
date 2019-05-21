@@ -46,4 +46,5 @@ media_player:
   - platform: samsungtv
     host: 192.168.1.109
     port: 8002
+    mac: 38:01:95:7B:A3:98
     name: living_room_television_samsungtv
