@@ -132,7 +132,7 @@ class SamsungTVDevice(MediaPlayerDevice):
                 self._config['method'] = 'websocket'
             else:
                 self._config['method'] = 'legacy'
-            self._config = SamsungConfig(self._config)
+            self._config = SamsungConfig(**self._config)
             
 
     def update(self):
