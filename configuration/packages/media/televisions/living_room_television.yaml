@@ -43,9 +43,3 @@ media_player:
     ping_host: 192.168.1.109
     ircodes_ini: 'lib/vpnmaster/homeassistant-custom-components/broadlink_media_codes/samsung.ini'
     timeout: 10
-  - platform: samsungtv
-    host: 192.168.1.109
-    port: 8002
-    mac: 38:01:95:7B:A3:98
-    name: living_room_television_samsungtv
-    encrypted_config: /home/homeassistant/.homeassistant/samsungtv.config
