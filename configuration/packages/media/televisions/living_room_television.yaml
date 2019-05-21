@@ -45,5 +45,4 @@ media_player:
     timeout: 10
   - platform: samsungtv
     host: 192.168.1.109
-    port: 8002
     name: living_room_television_samsungtv
