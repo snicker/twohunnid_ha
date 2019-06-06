@@ -30,7 +30,8 @@ ifttt:
 
 updater:
 
-discovery:
+zeroconf:
+ssdp:
 
 system_health:
 
