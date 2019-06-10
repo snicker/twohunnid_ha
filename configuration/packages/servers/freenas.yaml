@@ -58,7 +58,7 @@ sensor:
   - platform: template
     sensors:
       freenas_resilver_etc:
-        value_template: '{{ (now().strftime('%s') | int + (states('sensor.freenas_resilver_time_remaining') | int)) | timestamp_custom("%m/%d/%y %H:%M") }}'
+        value_template: '{{ (now().strftime("%s") | int + (states("sensor.freenas_resilver_time_remaining") | int)) | timestamp_custom("%m/%d/%y %H:%M") }}'
         entity_id: sensor.freenas_resilver_time_remaining
       
   - platform: rest
