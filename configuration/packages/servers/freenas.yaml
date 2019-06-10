@@ -30,6 +30,13 @@ homeassistant:
       <<: *customize
       friendly_name: FreeNAS - Version
       
+    sensor.freenas_resilver_time_remaining:
+      <<: *customize
+      
+    sensor.freenas_resilver_etc:
+      <<: *customize
+      friendly_name: FreeNAS - Resilver Estimated Time To Completion
+      
 sensor:
   - platform: rest
     <<: *freenas_rest_sensor
@@ -47,6 +54,12 @@ sensor:
       freenas_tank_pct_used:
         value_template: '{{ states.sensor.fn_trunk_report.attributes["used_pct"].title() }}'
         entity_id: sensor.freenas_tank_report
+
+  - platform: template
+    sensors:
+      freenas_resilver_etc:
+        value_template: '{{ (now().strftime('%s') | int + (states('sensor.freenas_resilver_time_remaining') | int)) | timestamp_custom("%m/%d/%y %H:%M") }}'
+        entity_id: sensor.freenas_resilver_time_remaining
       
   - platform: rest
     <<: *freenas_rest_sensor

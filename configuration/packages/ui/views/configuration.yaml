@@ -22,6 +22,8 @@ group:
       - sensor.freenas_alert_message
       - sensor.freenas_tank_report
       - sensor.freenas_tank_pct_used
+      - sensor.freenas_resilver_time_remaining
+      - sensor.freenas_resilver_etc
       
   home_settings:
     name: Home Settings
