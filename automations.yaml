@@ -183,3 +183,12 @@
   - data:
       entity_id: light.pool_light
     service: light.turn_off
+- id: '1561093920492'
+  alias: flood lights off automatically
+  trigger:
+  - entity_id: light.backyard_flood_lights
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
