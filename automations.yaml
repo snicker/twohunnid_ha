@@ -192,3 +192,5 @@
   condition: []
   action:
   - service: light.turn_off
+    data:
+      entity_id: light.backyard_flood_lights
