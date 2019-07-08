@@ -13,6 +13,7 @@ group:
       - group.favorite_locks
       - group.favorite_lights
       - group.favorite_switches
+      - group.pool
       
   favorite_locks:
     control: hidden
@@ -37,4 +38,4 @@ group:
     icon: mdi:switch
     name: Switches
     entities:
-      - switch.garage_door_relay
+      - switch.pool_pump
