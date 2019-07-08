@@ -1,0 +1,7 @@
+group:
+  pool:
+    icon: mdi:pool
+    name: Pool
+    entities:
+    - light.pool_light
+    - switch.pool_pump
