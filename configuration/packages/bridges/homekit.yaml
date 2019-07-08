@@ -15,6 +15,7 @@ homekit:
       - media_player.master_bedroom_television
       - input_boolean.presence_nick_homekit
       - input_boolean.presence_brittany_homekit
+      - switch.pool_pump
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code

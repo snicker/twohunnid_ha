@@ -15,6 +15,7 @@ cloud:
         - group.all_locks
         - group.interior_christmas_lights
         - media_player.universal_media_player_living_room
+        - switch.pool_pump
       exclude_entities:
         - switch.garage_door_relay
         - light.outside_amplifier_28
