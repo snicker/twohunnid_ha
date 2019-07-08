@@ -1,0 +1,9 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'pool_pump'
+        
+    switch.pool_pump:
+      <<: *customize
+      icon: mdi:pool
