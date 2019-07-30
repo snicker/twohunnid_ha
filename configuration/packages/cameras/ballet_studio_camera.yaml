@@ -10,7 +10,7 @@ homeassistant:
       friendly_name: "Ballet Studio Camera"
       icon: mdi:cctv
     
-    binary_sensor.ballet_studio_camera_motion:
+    binary_sensor.ballet_studio_camera_motion_sensor:
       <<: *customize
       friendly_name: "Motion - Ballet Studio (Camera)"
       camera_entity_id: "yi_home_camera_ballet_studio"
@@ -23,17 +23,33 @@ homeassistant:
 camera:
   - platform: ffmpeg
     name: yi_home_camera_ballet_studio
-    input: -rtsp_transport tcp -i rtsp://192.168.1.73:554/ch0_1.h264
+    input: -rtsp_transport tcp -i rtsp://192.168.1.237:8554/unicast
     
 binary_sensor:
-  - platform: template
-    sensors:
-      ballet_studio_camera_motion:
-        entity_id: sensor.yi_camera_motion_ballet
-        device_class: motion
-        value_template: "{{ states('sensor.yi_camera_motion_ballet')|int == 1 }}"
   - platform: ping
     name: ballet_studio_camera_status
-    host: 192.168.1.73
+    host: 192.168.1.237
     count: 3
     scan_interval: 60
+    
+group:
+  ballet_studio_camera:
+    name: "Ballet Studio Camera Settings"
+    control: hidden
+    view: no
+    entities:
+    - camera.yi_home_camera_ballet_studio
+    - switch.ballet_studio_camera_h264_rtsp_server
+    - switch.ballet_studio_camera_mjpeg_rtsp_server
+    - sensor.ballet_studio_camera_status
+    - sensor.ballet_studio_camera_light_sensor
+    - switch.ballet_studio_camera_ir_filter
+    - switch.ballet_studio_camera_ir_led
+    - switch.ballet_studio_camera_night_mode
+    - switch.ballet_studio_camera_night_mode_auto
+    - switch.ballet_studio_camera_blue_led
+    - switch.ballet_studio_camera_yellow_led
+    - switch.ballet_studio_camera_motion_detection
+    - switch.ballet_studio_camera_motion_tracking
+    - camera.ballet_studio_camera_motion_snapshot
+    - binary_sensor.ballet_studio_camera_motion_sensor
