@@ -1,0 +1,91 @@
+esphome:
+  name: pool_pump
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  reboot_timeout: 0s
+  domain: .twohunnid
+  fast_connect: true
+
+# Enable logging
+logger:
+  
+output:
+
+  - platform: esp8266_pwm
+    id: basic_green_led
+    pin:
+      number: GPIO13
+      inverted: True
+      
+  - platform: gpio
+    pin: GPIO12
+    id: main_relay
+    
+    
+light:
+  - platform: monochromatic
+    id: green_status_light
+    internal: true
+    output: basic_green_led
+
+switch:
+  - platform: restart
+    name: "Reboot Pool Pump Sonoff"
+    id: pool_pump_restart
+    
+  - platform: output
+    name: "Pool Pump"
+    id: pool_pump
+    output: main_relay
+    on_turn_on:
+      then:
+        - light.turn_on: green_status_light
+    on_turn_off:
+      then:
+        - light.turn_off: green_status_light
+        
+    
+binary_sensor:
+
+  - platform: gpio
+    pin: 
+      number: GPIO2
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Pool Pump Timer Physical Timer"
+    on_press:
+      then:
+        - switch.turn_on: pool_pump
+    on_release:
+      then:
+        - switch.turn_off: pool_pump
+        
+  - platform: gpio
+    internal: true
+    id: sonoff_button
+    pin: 
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    on_release:
+      then:
+        - switch.toggle: pool_pump
+    on_multi_click:
+    - timing:
+        - ON for at least 10s
+        - OFF for at most 0.5s
+      then:
+        - switch.turn_on: pool_pump_restart
+        
+# Enable Home Assistant API
+api:
+  password: !secret ota_api_password
+  reboot_timeout: 0s
+
+ota:
+  password: !secret ota_api_password
