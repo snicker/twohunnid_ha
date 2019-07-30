@@ -5,7 +5,7 @@ homeassistant:
       customize: &customize
         package: 'living_room_camera'
     
-    camera.yi_home_camera_ballet_studio:
+    camera.living_room_camera:
       <<: *customize
       friendly_name: "Living Room Camera"
       icon: mdi:cctv
