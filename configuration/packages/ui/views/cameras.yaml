@@ -14,6 +14,7 @@ group:
       - camera.yi_home_camera_backyard_patio
       - camera.yi_home_camera_garage
       - camera.yi_home_camera_ballet_studio
+      - camera.living_room_camera
       - group.camera_status
   camera_status:
     name: Cameras Online
@@ -25,3 +26,4 @@ group:
       - binary_sensor.backyard_patio_camera_status
       - binary_sensor.garage_camera_status
       - binary_sensor.ballet_studio_camera_status
+      - binary_sensor.living_room_camera_status
