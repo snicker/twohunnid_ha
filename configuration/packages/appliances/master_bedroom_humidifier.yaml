@@ -4,7 +4,7 @@ homeassistant:
       customize: &customize
         package: 'master_bedroom_humidifier'
         
-    switch.25048234840d8ebe0e6e:
+    switch.25048234840d8ebe0e2f:
       <<: *customize
       hidden: true
     
