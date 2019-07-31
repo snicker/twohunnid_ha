@@ -194,3 +194,23 @@
   - service: light.turn_off
     data:
       entity_id: light.backyard_flood_lights
+- id: '1564508234534'
+  alias: 'Pool Pump : On in the morning'
+  trigger:
+  - at: '8:30'
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: switch.pool_pump
+    service: switch.turn_on
+- id: '1564508283934'
+  alias: 'Pool Pump: Off at night'
+  trigger:
+  - at: '19:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: switch.pool_pump
+    service: switch.turn_off
