@@ -36,4 +36,5 @@ group:
     - light.z_wave_products_inc_wd100_level_3
     - light.kitchen_sconces
     - light.pantry_light_conditional
+    - light.office_desk_lamp
       

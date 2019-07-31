@@ -6,3 +6,5 @@ group:
     entities: 
       - switch.backyard_amplifier
       - switch.garage_door_relay
+      - switch.coffee_grinder
+      - switch.master_bedroom_humidifier
