@@ -15,7 +15,7 @@ homeassistant:
 switch:
   - platform: template
     switches:
-      backyard_amplifier:
+      coffee_grinder:
         value_template: "{{ is_state('switch.25048234840d8ebe0e6e', 'on') }}"
         turn_on:
           service: switch.turn_on
