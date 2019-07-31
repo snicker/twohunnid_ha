@@ -16,6 +16,7 @@ homekit:
       - input_boolean.presence_nick_homekit
       - input_boolean.presence_brittany_homekit
       - switch.pool_pump
+      - switch.coffee_grinder
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
