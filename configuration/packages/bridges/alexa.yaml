@@ -17,6 +17,7 @@ cloud:
         - media_player.universal_media_player_living_room
         - switch.pool_pump
         - switch.coffee_grinder
+        - switch.master_bedroom_humidifier
       exclude_entities:
         - switch.garage_door_relay
         - light.outside_amplifier_28

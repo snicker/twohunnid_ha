@@ -17,6 +17,7 @@ homekit:
       - input_boolean.presence_brittany_homekit
       - switch.pool_pump
       - switch.coffee_grinder
+      - switch.master_bedroom_humidifier
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
