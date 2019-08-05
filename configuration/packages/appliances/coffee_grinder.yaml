@@ -73,6 +73,8 @@ automation:
         value_template: "{{ states('input_number.coffee_grinder_shutoff_timer') | int > 0 }}"
     action:
       - service: script.turn_off
-        data: script.shutoff_coffee_grinder
+        data: 
+          entity_id: script.shutoff_coffee_grinder
       - service: script.turn_on
-        data: script.shutoff_coffee_grinder
+        data: 
+          entity_id: script.shutoff_coffee_grinder
