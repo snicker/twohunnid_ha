@@ -16,6 +16,7 @@ homeassistant:
       <<: *customize
       friendly_name: Plants
       icon: mdi:flower
+      order: 75
      
     history_graph.plant_moisture:
       <<: *customize
