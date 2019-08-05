@@ -11,6 +11,24 @@ homeassistant:
     switch.coffee_grinder:
       <<: *customize
       friendly_name: "Coffee Grinder"
+      icon: mdi:axis-z-rotate-counterclockwise
+
+    script.shutoff_coffee_grinder:
+      <<: *customize
+
+    input_number.coffee_grinder_shutoff_timer:
+      <<: *customize
+
+    automation.coffee_grinder_automatic_shutoff:
+      <<: *customize
+      friendly_name: "Coffee Grinder Automatic Shutoff"
+      
+group:
+  coffee_grinder:
+    name: Coffee Grinder
+    entities:
+      - switch.coffee_grinder
+      - input_number.coffee_grinder_shutoff_timer
 
 switch:
   - platform: template
@@ -25,3 +43,36 @@ switch:
           service: switch.turn_off
           data:
             entity_id: switch.25048234840d8ebe0e6e
+
+input_number:
+  coffee_grinder_shutoff_timer:
+    name: Coffee Grinder Shutoff Timer
+    icon: mdi:clock-alert-outline
+    unit_of_measurement: "seconds"
+    mode: slider
+    step: 5
+    min: 0
+    max: 90
+    
+script:
+  shutoff_coffee_grinder:
+    sequence:
+      - delay: "00:{{ states('input_number.coffee_grinder_shutoff_timer') | int }}:00"
+      - service: switch.turn_off
+        data:
+          entity_id: switch.coffee_grinder
+          
+automation:
+  - alias: coffee_grinder_automatic_shutoff
+    trigger: 
+      platform: state
+      entity_id: switch.coffee_grinder
+      to: on
+    condition:
+      condition: template
+      value_template: "{{ states('input_number.coffee_grinder_shutoff_timer') | int > 0 }}"
+    action:
+      - service: script.turn_off
+        data: script.shutoff_coffee_grinder
+      - service: script.turn_on
+        data: script.shutoff_coffee_grinder
