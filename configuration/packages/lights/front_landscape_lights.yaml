@@ -32,7 +32,7 @@ light:
   - platform: group
     name: front_landscape_lights
     entities:
-      - light.front_landscape_light_power
+      - light.front_landscape_lights_power
       - light.all_front_landscape_lights
       
 automation:
