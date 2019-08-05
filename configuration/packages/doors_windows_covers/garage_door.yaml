@@ -29,6 +29,14 @@ homeassistant:
     automation.garage_door_still_open:
       <<: *customize
       friendly_name: "Garage Door Open Alert"
+      
+group:
+  garage_door:
+    name: Garage Door
+    entities:
+      - cover.garage_door
+      - sensor.garage_door_status
+      - sensor.garage_door_position
             
 script:
   garage_door_open_cover:
