@@ -1,0 +1,27 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'plant_room_lamp'
+        
+    switch.25048234840d8ebe302f:
+      <<: *customize
+      hidden: true
+    
+    light.plant_room_lamp:
+      <<: *customize
+      friendly_name: "Plant Room Lamp"
+
+light:
+  - platform: template
+    lights:
+      plant_room_lamp:
+        value_template: "{{ is_state('switch.25048234840d8ebe302f', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.25048234840d8ebe302f
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.25048234840d8ebe302f
