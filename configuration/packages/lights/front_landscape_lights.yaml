@@ -37,10 +37,7 @@ light:
     name: front_landscape_lights
     entities:
       - light.front_landscape_light_power
-      - light.north_pine_landscape_light
-      - light.front_pine_landscape_light
-      - light.ash_landscape_light
-      - light.olive_landscape_light
+      - light.all_front_landscape_lights
       
 automation:
   - alias: landscape_lights_on_when_zwave_switch_on
