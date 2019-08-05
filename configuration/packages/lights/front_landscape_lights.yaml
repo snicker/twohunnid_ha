@@ -1,15 +1,56 @@
-- platform: template
-  lights:
-    front_landscape_lights:
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'front_landscape_lights'
+        
+    light.front_landscape_lights_power:
+      <<: *customize
+      hidden: true
+    
+    light.front_landscape_lights:
+      <<: *customize
       friendly_name: "Front Landscape Lights"
-      level_template: '{{ 255 if is_state("switch.linear_wo15z1_single_wall_outlet_switch", "on") else 0 }}' 
-      value_template: '{{ is_state("switch.linear_wo15z1_single_wall_outlet_switch", "on") }}'
-      turn_on:
-        service: switch.turn_on
-        entity_id: switch.linear_wo15z1_single_wall_outlet_switch
-      turn_off:
-        service: switch.turn_off
-        entity_id: switch.linear_wo15z1_single_wall_outlet_switch
-      set_level:
-        service_template: switch.turn_'{{ "off" if brightness == 0 else "on" }}'
-        entity_id: switch.linear_wo15z1_single_wall_outlet_switch
+      
+    automation.landscape_lights_on_when_zwave_switch_on:
+      <<: *customize
+      friendly_name: "Turn on front landscape MiLights when switch is powered"
+
+light:
+  - platform: template
+    lights:
+      front_landscape_lights_power:
+        friendly_name: "Front Landscape Lights Power"
+        level_template: '{{ 255 if is_state("switch.linear_wo15z1_single_wall_outlet_switch", "on") else 0 }}' 
+        value_template: '{{ is_state("switch.linear_wo15z1_single_wall_outlet_switch", "on") }}'
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.linear_wo15z1_single_wall_outlet_switch
+        turn_off:
+          service: switch.turn_off
+          entity_id: switch.linear_wo15z1_single_wall_outlet_switch
+        set_level:
+          service_template: switch.turn_'{{ "off" if brightness == 0 else "on" }}'
+          entity_id: switch.linear_wo15z1_single_wall_outlet_switch
+          
+  - platform: group
+    name: front_landscape_lights
+    entities:
+      - light.front_landscape_light_power
+      - light.north_pine_landscape_light
+      - light.front_pine_landscape_light
+      - light.ash_landscape_light
+      - light.olive_landscape_light
+      
+automation:
+  - alias: landscape_lights_on_when_zwave_switch_on
+    trigger:
+      platform: state
+      entity_id: light.front_landscape_lights_power
+      from: 'off'
+      to: 'on'
+    action:
+      - delay: "00:00:01"
+      - service: light.turn_on
+        data:
+          entity_id: light.front_landscape_lights

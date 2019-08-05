@@ -22,6 +22,11 @@ cloud:
         - switch.garage_door_relay
         - light.outside_amplifier_28
         - light.pantry_light
+        - light.front_landscape_lights_power
+        - light.north_pine_landscape_light
+        - light.front_pine_landscape_light
+        - light.ash_landscape_light
+        - light.olive_landscape_light
     entity_config:
       script.alarm_arm_away:
         name: Home Security

@@ -9,6 +9,11 @@ homekit:
     exclude_entities:
       - switch.garage_door_relay
       - light.pantry_light
+      - light.front_landscape_lights_power
+      - light.north_pine_landscape_light
+      - light.front_pine_landscape_light
+      - light.ash_landscape_light
+      - light.olive_landscape_light
     include_entities:
       - cover.garage_door
       - media_player.universal_media_player_living_room
