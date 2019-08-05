@@ -21,16 +21,12 @@ light:
     lights:
       front_landscape_lights_power:
         friendly_name: "Front Landscape Lights Power"
-        level_template: '{{ 255 if is_state("switch.linear_wo15z1_single_wall_outlet_switch", "on") else 0 }}' 
         value_template: '{{ is_state("switch.linear_wo15z1_single_wall_outlet_switch", "on") }}'
         turn_on:
           service: switch.turn_on
           entity_id: switch.linear_wo15z1_single_wall_outlet_switch
         turn_off:
           service: switch.turn_off
-          entity_id: switch.linear_wo15z1_single_wall_outlet_switch
-        set_level:
-          service_template: switch.turn_'{{ "off" if brightness == 0 else "on" }}'
           entity_id: switch.linear_wo15z1_single_wall_outlet_switch
           
   - platform: group
@@ -43,7 +39,7 @@ automation:
   - alias: landscape_lights_on_when_zwave_switch_on
     trigger:
       platform: state
-      entity_id: light.front_landscape_lights_power
+      entity_id: switch.linear_wo15z1_single_wall_outlet_switch
       from: 'off'
       to: 'on'
     action:
