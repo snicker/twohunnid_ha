@@ -13,6 +13,7 @@ group:
       - group.hahardware
       - group.hardware_freenas
       - group.ha_control
+      - group.battery_status
 
   hardware_freenas:
     view: no
