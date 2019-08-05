@@ -1,7 +1,7 @@
 homeassistant:
   customize:
-    group.default_view:
-      order: 10
+    group.climate:
+      order: 40
       
 group:
   climate:

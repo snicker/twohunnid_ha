@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     group.default_view:
-      order: 1
+      order: 10
 
 group:
   default_view:

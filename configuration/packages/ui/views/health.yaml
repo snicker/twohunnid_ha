@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     group.health:
-      order: 13
+      order: 80
 
 group:
   health:

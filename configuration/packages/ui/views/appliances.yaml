@@ -1,0 +1,21 @@
+homeassistant:
+  customize:
+    group.appliances:
+      order: 30
+
+group:
+  appliances:
+    icon: mdi:home-heart
+    view: yes
+    name: Appliances
+    entities:
+      - group.coffee_grinder
+      - group.misc_appliances
+      - group.pool
+      - group.garage_door
+      
+  misc_appliances:
+    name: Miscellaneous Appliances
+    entities:
+      - switch.backyard_amplifier
+      - switch.master_bedroom_humidifier

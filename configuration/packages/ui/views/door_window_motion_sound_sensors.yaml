@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     group.door_window_motion_sound_sensors:
-      order: 3
+      order: 70
       
 group:
   door_window_motion_sound_sensors:

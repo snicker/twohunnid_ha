@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     group.configuration:
-      order: 15
+      order: 90
       
 group:
   configuration:

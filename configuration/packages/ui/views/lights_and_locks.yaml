@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     group.lights_and_locks:
-      order: 2
+      order: 20
     group.all_locks:
       hidden: false
       

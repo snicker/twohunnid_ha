@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     group.media_players:
-      order: 3
+      order: 50
       
 group:
   media_players:
