@@ -65,12 +65,12 @@ script:
 automation:
   - alias: coffee_grinder_automatic_shutoff
     trigger: 
-      platform: state
-      entity_id: switch.coffee_grinder
-      to: on
+      - platform: state
+        entity_id: switch.coffee_grinder
+        to: 'on'
     condition:
-      condition: template
-      value_template: "{{ states('input_number.coffee_grinder_shutoff_timer') | int > 0 }}"
+      - condition: template
+        value_template: "{{ states('input_number.coffee_grinder_shutoff_timer') | int > 0 }}"
     action:
       - service: script.turn_off
         data: script.shutoff_coffee_grinder
