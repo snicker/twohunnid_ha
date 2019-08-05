@@ -15,4 +15,6 @@ light:
         - number: 4
           name: olive_landscape_light
           type: rgbww
-    
+        - number: 0
+          name: all_front_landscape_lights
+          type: rgbww
