@@ -5,7 +5,7 @@ homeassistant:
 
 group:
   appliances:
-    icon: mdi:home-heart
+    icon: mdi:alpha-a-circle-outline
     view: yes
     name: Appliances
     entities:
