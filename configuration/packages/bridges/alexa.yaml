@@ -37,3 +37,9 @@ cloud:
       media_player.universal_media_player_living_room:
         name: TV
         description: Living room television
+
+alexa_media:
+  accounts:
+    - email: !secret amazon_user
+      password: !secret amazon_password
+      url: amazon.com
