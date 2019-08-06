@@ -1,0 +1,64 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'alexa_guard'
+      
+    alarm_control_panel.alexa_guard_c6e58:
+      <<: *customize
+      friendly_name: "Alexa Guard"
+      
+automation:
+
+  - alias: alexa_guard_away_when_home_alarm_away
+    trigger: 
+      - platform: state
+        entity_id:
+          - alarm_control_panel.home_alarm
+        to: 'armed_away'
+    action:
+    - service: alarm_control_panel.alarm_arm_away
+      data:
+        entity_id: alarm_control_panel.alexa_guard_c6e58
+        
+  - alias: alexa_guard_home_when_home_alarm_home
+    trigger: 
+      - platform: state
+        entity_id:
+          - alarm_control_panel.home_alarm
+        to: 'armed_home'
+      - platform: state
+        entity_id:
+          - alarm_control_panel.home_alarm
+        to: 'disarmed'
+    action:
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.alexa_guard_c6e58
+
+  - alias: alexa_guard_home_alarm_away_when_guard_away
+    trigger: 
+      - platform: state
+        entity_id:
+          - alarm_control_panel.alexa_guard_c6e58
+        to: 'armed_away'
+    action:
+    - service: script.turn_on
+      data:
+        entity_id: script.alarm_arm_away
+        
+  - alias: alexa_guard_home_alarm_home_when_guard_home
+    trigger: 
+      - platform: state
+        entity_id:
+          - alarm_control_panel.alexa_guard_c6e58
+        to: 'armed_home'
+      - platform: state
+        entity_id:
+          - alarm_control_panel.alexa_guard_c6e58
+        to: 'disarmed'
+    action:
+    - service: script.turn_on
+      data:
+        entity_id: script.alarm_disarm
+          
