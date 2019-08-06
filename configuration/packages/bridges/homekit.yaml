@@ -2,7 +2,6 @@ homekit:
   auto_start: False
   filter:
     include_domains:
-      - alarm_control_panel
       - light
       - lock
       - climate
@@ -23,6 +22,7 @@ homekit:
       - switch.pool_pump
       - switch.coffee_grinder
       - switch.master_bedroom_humidifier
+      - alarm_control_panel.home_alarm
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
