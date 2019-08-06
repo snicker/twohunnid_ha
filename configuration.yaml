@@ -64,7 +64,7 @@ vera:
 zwave:
   usb_path: /dev/ttyACM0
   #udev rule: SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", ATTRS{serial}=="3f980000.usb", SYMLINK+="zwave"
-  config_path: /srv/homeassistant/lib/python3.5/site-packages/python_openzwave/ozw_config
+  config_path: /srv/homeassistant/lib/python3.7/site-packages/python_openzwave/ozw_config
   network_key: !secret zwave_network_key
   
 nest:
