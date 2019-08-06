@@ -13,6 +13,7 @@ homekit:
       - light.front_pine_landscape_light
       - light.ash_landscape_light
       - light.olive_landscape_light
+      - light.all_front_landscape_lights
     include_entities:
       - cover.garage_door
       - media_player.universal_media_player_living_room
