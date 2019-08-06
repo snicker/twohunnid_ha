@@ -17,3 +17,6 @@
 [submodule "lib/pnbruckner/homeassistant-config"]
 	path = lib/pnbruckner/homeassistant-config
 	url = https://github.com/pnbruckner/homeassistant-config.git
+[submodule "lib/HACS"]
+	path = lib/HACS
+	url = https://github.com/custom-components/hacs.git
