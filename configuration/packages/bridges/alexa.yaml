@@ -48,3 +48,18 @@ alexa_media:
 notify:
   - platform: alexa_media
     name: alexa_media
+    
+sensor:
+  - platform: template
+    sensors:
+      last_alexa:
+        entity_id:
+          - media_player.backyard_dot
+          - media_player.kitchen_dot
+          - media_player.master_bedroom_dot
+          - media_player.plant_room_dot
+          - media_player.master_bed_fire_tv
+          - media_player.living_room_fire_tv
+          - media_player.ballet_studio_fire_tv
+        value_template: >
+          {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
