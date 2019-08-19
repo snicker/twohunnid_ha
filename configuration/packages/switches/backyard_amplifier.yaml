@@ -39,8 +39,7 @@ automation:
     condition: []
     action:
       - service: switch.turn_on
-        data:
-          entity_id: switch.backyard_amplifier
+        entity_id: switch.backyard_amplifier
   - alias: backyard_amplifier_auto_on
     trigger:
       - platform: state
@@ -57,5 +56,4 @@ automation:
     condition: []
     action:
       - service: switch.turn_off
-        data:
-          entity_id: switch.backyard_amplifier
+        entity_id: switch.backyard_amplifier
