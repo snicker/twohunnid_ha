@@ -12,6 +12,14 @@ homeassistant:
       <<: *customize
       friendly_name: "Backyard Amplifier"
       comm_protocol: "infrared"
+      
+    automation.backyard_amplifier_auto_on:
+      <<: *customize
+      friendly_name: "Backyard Amplifier: Auto On"
+      
+    automation.backyard_amplifier_auto_off:
+      <<: *customize
+      friendly_name: "Backyard Amplifier: Auto Off"
 
 switch:
   - platform: template
