@@ -40,7 +40,8 @@ automation:
         to: "media_player.backyard_dot"
     action:
       - service: switch.turn_on
-        entity_id: switch.backyard_amplifier
+        data:
+          entity_id: switch.backyard_amplifier
         
   - alias: "Backyard Amplifier: Auto Off"
     trigger:
@@ -60,4 +61,5 @@ automation:
         for: "00:05:00"
     action:
       - service: switch.turn_off
-        entity_id: switch.backyard_amplifier
+        data:
+          entity_id: switch.backyard_amplifier
