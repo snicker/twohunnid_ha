@@ -28,7 +28,7 @@ switch:
             entity_id: light.outside_amplifier_28
             
 automation:
-  - alias: "Backyard Amplifier: Auto On"
+  - alias: backyard_amplifier_auto_on
     trigger:
       - platform: state
         entity_id:
@@ -43,7 +43,7 @@ automation:
       - service: switch.turn_on
         data:
           entity_id: switch.backyard_amplifier
-  - alias: "Backyard Amplifier: Auto Off"
+  - alias: backyard_amplifier_auto_on
     trigger:
       - platform: state
         entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked
