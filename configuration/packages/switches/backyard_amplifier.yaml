@@ -28,7 +28,7 @@ switch:
             entity_id: light.outside_amplifier_28
             
 automation:
-  - alias: Backyard Amplifier: Auto On
+  - alias: "Backyard Amplifier: Auto On"
     trigger:
       - platform: state
         entity_id:
@@ -42,7 +42,7 @@ automation:
       - service: switch.turn_on
         entity_id: switch.backyard_amplifier
         
-  - alias: Backyard Amplifier: Auto Off
+  - alias: "Backyard Amplifier: Auto Off"
     trigger:
       - platform: state
         entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked
@@ -58,7 +58,6 @@ automation:
           - media_player.backyard_dot
         value_template: "{{ states('sensor.last_alexa') != 'media_player.backyard_dot' and states('media_player.backyard_dot') != 'playing' }}"
         for: "00:05:00"
-    condition: []
     action:
       - service: switch.turn_off
         entity_id: switch.backyard_amplifier
