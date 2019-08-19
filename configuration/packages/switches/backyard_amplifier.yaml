@@ -30,30 +30,32 @@ switch:
 automation:
   - alias: backyard_amplifier_auto_on
     trigger:
-      - platform: state
-        entity_id: media_player.backyard_dot
-        to: "playing"
-      - platform: state
-        entity_id: sensor.last_alexa
-        to: "media_player.backyard_dot"
+    - platform: state
+      entity_id: media_player.backyard_dot
+      to: playing
+    - platform: state
+      entity_id: sensor.last_alexa
+      to: media_player.backyard_dot
     condition: []
     action:
-      - service: switch.turn_on
+    - service: switch.turn_on
+      data:
         entity_id: switch.backyard_amplifier
   - alias: backyard_amplifier_auto_on
     trigger:
-      - platform: state
-        entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked
-        to: "locked"
-      - platform: template
-        entity_id: media_player.backyard_dot
-        value_template: "{{ states('media_player.backyard_dot') != 'playing' }}"
-        for: "00:05:00"
-      - platform: template
-        entity_id: sensor.last_alexa, media_player.backyard_dot
-        value_template: "{{ states('sensor.last_alexa') != 'media_player.backyard_dot' and states('media_player.backyard_dot') != 'playing' }}"
-        for: "00:05:00"
+    - platform: state
+      entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked
+      to: locked
+    - platform: template
+      entity_id: media_player.backyard_dot
+      value_template: "{{ states('media_player.backyard_dot') != 'playing' }}"
+      for: "00:05:00"
+    - platform: template
+      entity_id: sensor.last_alexa, media_player.backyard_dot
+      value_template: "{{ states('sensor.last_alexa') != 'media_player.backyard_dot' and states('media_player.backyard_dot') != 'playing' }}"
+      for: "00:05:00"
     condition: []
     action:
-      - service: switch.turn_off
+    - service: switch.turn_off
+      data:
         entity_id: switch.backyard_amplifier
