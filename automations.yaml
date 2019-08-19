@@ -214,17 +214,3 @@
   - data:
       entity_id: switch.pool_pump
     service: switch.turn_off
-- id: '1566189731935'
-  alias: BackyardAmpAutoOn
-  trigger:
-  - entity_id: media_player.backyard_dot
-    platform: state
-    to: playing
-  - entity_id: sensor.last_alexa
-    platform: state
-    to: media_player.backyard_dot
-  condition: []
-  action:
-  - data:
-      entity_id: switch.backyard_amplifier
-    service: switch.turn_on
