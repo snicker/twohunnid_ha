@@ -66,4 +66,4 @@ automation:
     action:
     - data:
         entity_id: switch.backyard_amplifier
-      service: switch.turn_on
+      service: switch.turn_off

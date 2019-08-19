@@ -1,3 +1,13 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'xiaomi_vacuum'
+        
+    vacuum.xiaomi_vacuum_cleaner:
+      <<: *customize
+      friendly_name: "Fabrizzio the Vacuum"
+      
 vacuum:
   - platform: xiaomi_miio
     host: 192.168.1.165

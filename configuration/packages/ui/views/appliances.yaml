@@ -19,3 +19,4 @@ group:
     entities:
       - switch.backyard_amplifier
       - switch.master_bedroom_humidifier
+      - vacuum.xiaomi_vacuum_cleaner
