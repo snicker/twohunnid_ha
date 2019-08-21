@@ -12,6 +12,9 @@ homeassistant:
     
     binary_sensor.ballet_studio_camera_motion_sensor:
       <<: *customize
+    
+    binary_sensor.ballet_studio_camera_motion_sensor_debounced:
+      <<: *customize
       friendly_name: "Motion - Ballet Studio (Camera)"
       camera_entity_id: "yi_home_camera_ballet_studio"
       
@@ -31,6 +34,12 @@ binary_sensor:
     host: 192.168.1.237
     count: 3
     scan_interval: 60
+  - platform: template
+    sensors:
+      ballet_studio_camera_motion_sensor_debounced:
+        value_template: "{{ is_state('binary_sensor.ballet_studio_camera_motion_sensor','on') }}"
+        device_class: motion
+        delay_off: "00:00:10"
     
 group:
   ballet_studio_camera:
