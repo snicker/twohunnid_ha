@@ -14,7 +14,7 @@ group:
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
       - binary_sensor.ballet_studio_camera_motion_sensor
-      - binary_sensor.living_room_camera_motion_sensor
+      - binary_sensor.living_room_camera_motion_sensor_debounced
       - binary_sensor.modetftp_motion_laundry
       
   all_exterior_motion_sensors:
@@ -37,7 +37,7 @@ group:
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
       - binary_sensor.ballet_studio_camera_motion_sensor
-      - binary_sensor.living_room_camera_motion_sensor
+      - binary_sensor.living_room_camera_motion_sensor_debounced
       - binary_sensor.garage_camera_motion
       - binary_sensor.modetftp_motion_laundry
       
