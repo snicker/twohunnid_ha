@@ -11,10 +11,21 @@ ios:
             destructive: true
             behavior: 'default'
           - identifier: 'OPEN_GARAGE'
-            title: 'Silence Alarm'
+            title: 'Open the Garage'
             activationMode: 'background'
             authenticationRequired: true
             destructive: false
-            behavior: 'textInput'
-            textInputButtonTitle: 'Silencio!'
-            textInputPlaceholder: 'Placeholder'
+      - name: Alarm
+        identifier: 'alarm'
+        actions:
+          - identifier: 'ARM_AWAY'
+            title: 'Arm Away'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: true
+            behavior: 'default'
+          - identifier: 'ARM_DISARM'
+            title: 'Disarm'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: false
