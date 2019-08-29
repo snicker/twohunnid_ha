@@ -35,19 +35,14 @@ automation:
         data:
           inline_keyboard: 
             - 'Arm away:/arm_away'
-      
-
-  - alias: 'Telegram Command: arm_away'
-    hide_entity: true
-    trigger:
-      platform: event
-      event_type: telegram_callback
-      event_data:
-        data: '/arm_away'
-    action:
-      - service: telegram_bot.answer_callback_query
-        data_template:
-          callback_query_id: '{{ trigger.event.data.id }}'
-          message: "Arming..."
-      - service: script.alarm_arm_away
+    - service: notify.ios_nickcell
+      data_template:
+        message: "Alarm has not been armed. Arm now?"
+        data:
+          attachment:
+            content-type: "jpeg"
+          push:
+            category: yesno
+          action_data:
+            yes_script: "script.garage_door_close_ios_response_yes"
           

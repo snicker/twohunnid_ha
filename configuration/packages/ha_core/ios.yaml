@@ -4,12 +4,25 @@ ios:
       - name: Camera
         identifier: 'camera'
         actions:
-          - identifier: 'IOS_CAMERA_YES'
+          - identifier: 'IOS_YES'
             title: 'Yes'
             activationMode: 'background'
             authenticationRequired: true
             destructive: no
-          - identifier: 'IOS_CAMERA_NO'
+          - identifier: 'IOS_NO'
+            title: 'No'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: true
+      - name: Yes or No
+        identifier: 'yesno'
+        actions:
+          - identifier: 'IOS_YES'
+            title: 'Yes'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: no
+          - identifier: 'IOS_NO'
             title: 'No'
             activationMode: 'background'
             authenticationRequired: true
@@ -45,26 +58,26 @@ ios:
             destructive: false
 
 automation:
-  - alias: ios_camera_yes_pressed
-    id: ios_camera_yes_pressed
+  - alias: ios_yes_pressed
+    id: ios_yes_pressed
     trigger: 
       platform: event
       event_type: ios.notification_action_fired
       event_data:
-        actionName: IOS_CAMERA_YES
+        actionName: IOS_YES
     action:
       - condition: template
         value_template: "{{ states(trigger.event.data['action_data']['yes_script']) != 'unknown' }}"
       - service: script.turn_on
         data_template:
           entity_id: "{{ trigger.event.data['action_data']['yes_script'] }}"
-  - alias: ios_camera_no_pressed
-    id: ios_camera_no_pressed
+  - alias: ios_no_pressed
+    id: ios_no_pressed
     trigger: 
       platform: event
       event_type: ios.notification_action_fired
       event_data:
-        actionName: IOS_CAMERA_NO
+        actionName: IOS_NO
     action:
       - condition: template
         value_template: "{{ states(trigger.event.data['action_data']['no_script']) != 'unknown' }}"
