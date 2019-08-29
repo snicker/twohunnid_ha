@@ -10,6 +10,8 @@
   whitelist_external_dirs:
     - /home/homeassistant/.homeassistant
     - /tmp
+  auth_providers:
+   - type: homeassistant
 
 logger:
   default: warning 
