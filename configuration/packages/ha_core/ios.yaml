@@ -1,6 +1,20 @@
 ios:
   push:
     categories:
+      - name: Camera
+        identifier: 'camera'
+        actions:
+          - identifier: 'IOS_CAMERA_YES'
+            title: 'Yes'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: no
+          - identifier: 'IOS_CAMERA_NO'
+            title: 'Yes'
+            activationMode: 'background'
+            authenticationRequired: true
+            destructive: true
+            
       - name: Garage Door
         identifier: 'garage_door'
         actions:
@@ -29,3 +43,31 @@ ios:
             activationMode: 'background'
             authenticationRequired: true
             destructive: false
+
+automation:
+  - alias: ios_camera_yes_pressed
+    id: ios_camera_yes_pressed
+    trigger: 
+      - platform: event
+        event_type: ios.notification_action_fired
+        event_data:
+          actionName: IOS_CAMERA_YES
+    action:
+      - condition: template
+        value_template: "{{ states(trigger.event.data['actiondata']['yes_script']) != 'unknown' }}"
+      - service: sctipt.turn_on
+        data_template:
+          entity_id: "{{ trigger.event.data['actiondata']['yes_script'] }}"
+  - alias: ios_camera_no_pressed
+    id: ios_camera_no_pressed
+    trigger: 
+      - platform: event
+        event_type: ios.notification_action_fired
+        event_data:
+          actionName: IOS_CAMERA_NO
+    action:
+      - condition: template
+        value_template: "{{ states(trigger.event.data['actiondata']['no_script']) != 'unknown' }}"
+      - service: sctipt.turn_on
+        data_template:
+          entity_id: "{{ trigger.event.data['actiondata']['no_script'] }}"

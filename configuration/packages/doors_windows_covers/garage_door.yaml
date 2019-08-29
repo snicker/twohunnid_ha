@@ -60,6 +60,10 @@ script:
       - service: switch.turn_on
         data:
           entity_id: switch.garage_door_relay
+  garage_door_close_ios_response_yes:
+    sequence:
+      - service: cover.close_cover
+        entity_id: cover.garage_door
         
             
 binary_sensor:
@@ -154,6 +158,17 @@ automation:
               file: "/tmp/yi_home_camera_garage_snapshot.jpg"
             inline_keyboard: 
               - 'Close garage:/close_garage'
+      - service: notify.ios_nickcell
+        data_template:
+          message: "Garage door's been open for {{ relative_time(states.cover.garage_door.last_changed) }}. Close it?"
+          data:
+            attachment:
+              content-type: "jpeg"
+            push:
+              category: camera
+            entity_id: camera.yi_home_camera_garage
+            action_data:
+              yes_script: "script.garage_door_close_ios_response_yes"
       
 
   - alias: 'Telegram Command: close_garage'
