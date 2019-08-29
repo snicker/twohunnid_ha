@@ -168,6 +168,7 @@ automation:
               category: camera
             entity_id: camera.yi_home_camera_garage
             action_data:
+              entity_id: camera.yi_home_camera_garage
               yes_script: "script.garage_door_close_ios_response_yes"
       
 
