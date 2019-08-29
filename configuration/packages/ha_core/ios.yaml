@@ -48,10 +48,10 @@ automation:
   - alias: ios_camera_yes_pressed
     id: ios_camera_yes_pressed
     trigger: 
-      - platform: event
-        event_type: ios.notification_action_fired
-        event_data:
-          actionName: IOS_CAMERA_YES
+      platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: IOS_CAMERA_YES
     action:
       - service: notify.nick
         data_template:
@@ -64,10 +64,10 @@ automation:
   - alias: ios_camera_no_pressed
     id: ios_camera_no_pressed
     trigger: 
-      - platform: event
-        event_type: ios.notification_action_fired
-        event_data:
-          actionName: IOS_CAMERA_NO
+      platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: IOS_CAMERA_NO
     action:
       - service: notify.nick
         data_template:
