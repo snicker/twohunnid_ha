@@ -53,14 +53,11 @@ automation:
       event_data:
         actionName: IOS_CAMERA_YES
     action:
-      - service: notify.nick
-        data_template:
-          message: "{{ trigger.event.data }}"
       - condition: template
-        value_template: "{{ states(trigger.event.data['actiondata']['yes_script']) != 'unknown' }}"
+        value_template: "{{ states(trigger.event.data['action_data']['yes_script']) != 'unknown' }}"
       - service: script.turn_on
         data_template:
-          entity_id: "{{ trigger.event.data['actiondata']['yes_script'] }}"
+          entity_id: "{{ trigger.event.data['action_data']['yes_script'] }}"
   - alias: ios_camera_no_pressed
     id: ios_camera_no_pressed
     trigger: 
@@ -69,11 +66,8 @@ automation:
       event_data:
         actionName: IOS_CAMERA_NO
     action:
-      - service: notify.nick
-        data_template:
-          message: "{{ trigger.event.data }}"
       - condition: template
-        value_template: "{{ states(trigger.event.data['actiondata']['no_script']) != 'unknown' }}"
+        value_template: "{{ states(trigger.event.data['action_data']['no_script']) != 'unknown' }}"
       - service: script.turn_on
         data_template:
-          entity_id: "{{ trigger.event.data['actiondata']['no_script'] }}"
+          entity_id: "{{ trigger.event.data['action_data']['no_script'] }}"
