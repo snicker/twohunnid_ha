@@ -36,6 +36,8 @@ alarm_state_armed_any:
         '
     service: notify.nick
   - service: lock.lock
+    data:
+      entity_id: all
   - service: homeassistant.turn_on
     data_template:
       entity_id: "{% if states('input_boolean.dogs_home') == 'off' and states('alarm_control_panel.home_alarm')\
