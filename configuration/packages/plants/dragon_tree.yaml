@@ -58,7 +58,7 @@ automation:
   - id: dragon_tree_notify_problems
     alias: 'Dragon Tree Notify of Problems'
     trigger:
-    - platform: time
+    - platform: time_pattern
       minutes: '/60'
       seconds: 00
     - entity_id: plant.dragon_tree

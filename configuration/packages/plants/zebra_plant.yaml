@@ -58,7 +58,7 @@ automation:
   - id: zebra_plant_notify_problems
     alias: 'Zebra Plant Notify of Problems'
     trigger:
-    - platform: time
+    - platform: time_pattern
       minutes: '/60'
       seconds: 00
     - entity_id: plant.zebra_plant

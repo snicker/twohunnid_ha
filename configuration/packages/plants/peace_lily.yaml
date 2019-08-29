@@ -58,7 +58,7 @@ automation:
   - id: peace_lily_notify_problems
     alias: 'Peace Lily Notify of Problems'
     trigger:
-    - platform: time
+    - platform: time_pattern
       minutes: '/60'
       seconds: 00
     - entity_id: plant.peace_lily

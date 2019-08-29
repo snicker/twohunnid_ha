@@ -58,7 +58,7 @@ automation:
   - id: desert_rose_notify_problems
     alias: 'Desert Rose Notify of Problems'
     trigger:
-    - platform: time
+    - platform: time_pattern
       minutes: '/60'
       seconds: 00
     - entity_id: plant.desert_rose
