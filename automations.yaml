@@ -214,3 +214,15 @@
   - data:
       entity_id: switch.pool_pump
     service: switch.turn_off
+- id: '1567051911910'
+  alias: Pantry Light Off After 5 Mins
+  trigger:
+  - entity_id: light.pantry_light
+    for: 00:05:00
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: light.pantry_light
+    service: light.turn_off
