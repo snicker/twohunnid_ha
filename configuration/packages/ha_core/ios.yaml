@@ -55,7 +55,7 @@ automation:
     action:
       - condition: template
         value_template: "{{ states(trigger.event.data['actiondata']['yes_script']) != 'unknown' }}"
-      - service: sctipt.turn_on
+      - service: script.turn_on
         data_template:
           entity_id: "{{ trigger.event.data['actiondata']['yes_script'] }}"
   - alias: ios_camera_no_pressed
@@ -68,6 +68,6 @@ automation:
     action:
       - condition: template
         value_template: "{{ states(trigger.event.data['actiondata']['no_script']) != 'unknown' }}"
-      - service: sctipt.turn_on
+      - service: script.turn_on
         data_template:
           entity_id: "{{ trigger.event.data['actiondata']['no_script'] }}"
