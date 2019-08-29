@@ -67,7 +67,7 @@ automation:
     condition: []
     action:
     - condition: template
-      value_template: "{{ trigger.to_state.attributes.problem != 'none' }}"
+      value_template: "{{ state_attr('plant.peace_lily','problem') != 'none' }}"
     - data_template:
-        message: "Peace Lily has an issue: {{ trigger.to_state.attributes.problem }}. Moisture: {{ trigger.to_state.attributes.moisture }}% Temp: {{ trigger.to_state.attributes.temperature }} Conductivity: {{ trigger.to_state.attributes.conductivity }}"
+        message: "{% set plant = 'plant.peace_lily' %}{{ state_attr(plant,'friendly_name') has an issue: {{ state_attr(plant,'problem') }}. Moisture: {{ state_attr(plant,'moisture') }}% Temp: {{ state_attr(plant,'temperature') }} Conductivity: {{ state_attr(plant,'conductivity') }}"
       service: notify.nick
