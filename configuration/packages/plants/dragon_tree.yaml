@@ -69,5 +69,5 @@ automation:
     - condition: template
       value_template: "{{ state_attr('plant.dragon_tree','problem') != 'none' }}"
     - data_template:
-        message: "{% set plant = 'plant.dragon_tree' %}{{ state_attr(plant,'friendly_name') has an issue: {{ state_attr(plant,'problem') }}. Moisture: {{ state_attr(plant,'moisture') }}% Temp: {{ state_attr(plant,'temperature') }} Conductivity: {{ state_attr(plant,'conductivity') }}"
+        message: "{% set plant = 'plant.dragon_tree' %}{{ state_attr(plant,'friendly_name') }} has an issue: {{ state_attr(plant,'problem') }}. Moisture: {{ state_attr(plant,'moisture') }}% Temp: {{ state_attr(plant,'temperature') }} Conductivity: {{ state_attr(plant,'conductivity') }}"
       service: notify.nick
