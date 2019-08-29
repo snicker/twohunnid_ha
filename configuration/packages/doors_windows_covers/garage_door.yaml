@@ -145,19 +145,6 @@ automation:
         to: 'open'
         for: '00:30:00'
     action:
-      - service: camera.snapshot
-        data_template:
-          entity_id: "camera.yi_home_camera_garage"
-          filename: "/tmp/yi_home_camera_garage_snapshot.jpg"
-      - service: notify.nick
-        data_template:
-          message: "Garage door has been open for {{ relative_time(states.cover.garage_door.last_changed) }}"
-          data:
-            photo:
-              caption: "Garage door has been open for {{ relative_time(states.cover.garage_door.last_changed) }}"
-              file: "/tmp/yi_home_camera_garage_snapshot.jpg"
-            inline_keyboard: 
-              - 'Close garage:/close_garage'
       - service: notify.ios_nickcell
         data_template:
           message: "Garage door's been open for {{ relative_time(states.cover.garage_door.last_changed) }}. Close it?"
@@ -170,20 +157,4 @@ automation:
             action_data:
               entity_id: camera.yi_home_camera_garage
               yes_script: "script.garage_door_close_ios_response_yes"
-      
-
-  - alias: 'Telegram Command: close_garage'
-    hide_entity: true
-    trigger:
-      platform: event
-      event_type: telegram_callback
-      event_data:
-        data: '/close_garage'
-    action:
-      - service: telegram_bot.answer_callback_query
-        data_template:
-          callback_query_id: '{{ trigger.event.data.id }}'
-          message: "{% if states('cover.garage_door') == 'closed' %} already closed! {% else %} closing... {% endif %}"
-      - service: cover.close_cover
-        entity_id: cover.garage_door
           
