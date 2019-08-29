@@ -10,7 +10,7 @@ ios:
             authenticationRequired: true
             destructive: no
           - identifier: 'IOS_CAMERA_NO'
-            title: 'Yes'
+            title: 'No'
             activationMode: 'background'
             authenticationRequired: true
             destructive: true
