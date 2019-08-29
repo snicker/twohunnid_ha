@@ -58,11 +58,16 @@ automation:
   - id: fiddle_leaf_fig_notify_problems
     alias: 'Fiddle Leaf Fig Notify of Problems'
     trigger:
+    - platform: time
+      minutes: '/60'
+      seconds: 00
     - entity_id: plant.fiddle_leaf_fig
       platform: state
       to: problem
     condition: []
     action:
+    - condition: template
+      value_template: "{{ trigger.to_state.attributes.problem != 'none' }}"
     - data_template:
         message: "Fiddle Leaf Fig has an issue: {{ trigger.to_state.attributes.problem }}. Moisture: {{ trigger.to_state.attributes.moisture }}% Temp: {{ trigger.to_state.attributes.temperature }} Conductivity: {{ trigger.to_state.attributes.conductivity }}"
       service: notify.nick

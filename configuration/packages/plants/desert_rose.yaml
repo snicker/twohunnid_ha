@@ -58,11 +58,16 @@ automation:
   - id: desert_rose_notify_problems
     alias: 'Desert Rose Notify of Problems'
     trigger:
+    - platform: time
+      minutes: '/60'
+      seconds: 00
     - entity_id: plant.desert_rose
       platform: state
       to: problem
     condition: []
     action:
+    - condition: template
+      value_template: "{{ trigger.to_state.attributes.problem != 'none' }}"
     - data_template:
         message: "Desert Rose has an issue: {{ trigger.to_state.attributes.problem }}. Moisture: {{ trigger.to_state.attributes.moisture }}% Temp: {{ trigger.to_state.attributes.temperature }} Conductivity: {{ trigger.to_state.attributes.conductivity }}"
       service: notify.nick

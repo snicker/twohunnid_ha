@@ -58,11 +58,16 @@ automation:
   - id: zebra_plant_notify_problems
     alias: 'Zebra Plant Notify of Problems'
     trigger:
+    - platform: time
+      minutes: '/60'
+      seconds: 00
     - entity_id: plant.zebra_plant
       platform: state
       to: problem
     condition: []
     action:
+    - condition: template
+      value_template: "{{ trigger.to_state.attributes.problem != 'none' }}"
     - data_template:
         message: "Zebra Plant has an issue: {{ trigger.to_state.attributes.problem }}. Moisture: {{ trigger.to_state.attributes.moisture }}% Temp: {{ trigger.to_state.attributes.temperature }} Conductivity: {{ trigger.to_state.attributes.conductivity }}"
       service: notify.nick

@@ -58,11 +58,16 @@ automation:
   - id: peace_lily_notify_problems
     alias: 'Peace Lily Notify of Problems'
     trigger:
+    - platform: time
+      minutes: '/60'
+      seconds: 00
     - entity_id: plant.peace_lily
       platform: state
       to: problem
     condition: []
     action:
+    - condition: template
+      value_template: "{{ trigger.to_state.attributes.problem != 'none' }}"
     - data_template:
         message: "Peace Lily has an issue: {{ trigger.to_state.attributes.problem }}. Moisture: {{ trigger.to_state.attributes.moisture }}% Temp: {{ trigger.to_state.attributes.temperature }} Conductivity: {{ trigger.to_state.attributes.conductivity }}"
       service: notify.nick
