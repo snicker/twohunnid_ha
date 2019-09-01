@@ -3,12 +3,12 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'freenas'
-    freenas_rest_sensor: &freenas_rest_sensor
-      username: !secret freenas_username
-      password: !secret freenas_password
-      authentication: basic
-      headers:
-        Content-Type: application/json
+      freenas_rest_sensor: &freenas_rest_sensor
+        username: !secret freenas_username
+        password: !secret freenas_password
+        authentication: basic
+        headers:
+          Content-Type: application/json
     
     sensor.freenas_tank_report:
       <<: *customize
