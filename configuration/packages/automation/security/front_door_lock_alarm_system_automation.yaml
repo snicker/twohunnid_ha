@@ -1,0 +1,39 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'front_door_lock_alarm_system_automation'
+        
+    automation.arm_alarm_when_front_door_locked_from_outside:
+      <<: *customize
+      friendly_name: "Security: Arm Alarm When Front Door Locked From Outside"
+
+    automation.disarm_alarm_when_user_code_entered:
+      <<: *customize
+      friendly_name: "Security: Disarm Alarm When User Code Entered"
+                
+automation:
+  - id: arm_alarm_when_front_door_locked_from_outside
+    alias: arm_alarm_when_front_door_locked_from_outside
+    trigger:
+      platform: template
+      value_template: "{% set lock = 'lock.kwikset_touchpad_electronic_deadbolt_locked_2'%}{% if not states(lock) == 'unknown' %}{{state_attr(lock,'lock_status') == 'Locked with Keypad by user 0'}}{%endif%}"
+    condition: []
+    action:
+      - service: script.turn_on
+        data:
+          entity_id: script.alarm_arm_away
+          
+    #future improvement: add input text to specify which user codes disarm
+  - id: disarm_alarm_when_user_code_entered
+    alias: disarm_alarm_when_user_code_entered
+    trigger:
+      platform: state
+      entity_id: sensor.front_door_unlocked_by_user_code
+      to: 1
+    condition: []
+    action:
+      - service: script.turn_on
+        data:
+          entity_id: script.alarm_disarm
+      
