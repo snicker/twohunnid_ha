@@ -36,13 +36,13 @@ homeassistant:
       
     binary_sensor.side_door:
       <<: *customize
+      friendly_name: "Side Door"
 
 binary_sensor:
   - platform: template
     sensors:
       side_door:
         device_class: door
-        name: "Side Door"
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_2')|int == 255 }}"
       
 group:

@@ -36,13 +36,13 @@ homeassistant:
       
     binary_sensor.garage_interior_door:
       <<: *customize
+      friendly_name: "Garage Interior Door"
 
 binary_sensor:
   - platform: template
     sensors:
       garage_interior_door:
         device_class: door
-        name: "Garage Interior Door"
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_3')|int == 255 }}"
       
 group:

@@ -36,6 +36,7 @@ homeassistant:
       
     binary_sensor.front_door:
       <<: *customize
+      friendly_name: "Front Door"
 
     lock.kwikset_touchpad_electronic_deadbolt_locked_2:
       <<: *customize
@@ -46,7 +47,6 @@ binary_sensor:
     sensors:
       front_door:
         device_class: door
-        name: "Front Door"
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4')|int == 255 }}"
       
 group:
