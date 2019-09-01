@@ -3,36 +3,9 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'garage_interior_door'
-      hidden: &hidden
-        <<: *customize
-        hidden: true
-
-    binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_3:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_3:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_3:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type_3:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance_3:
-      <<: *hidden
-
+        
     sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery_3:
       <<: *customize
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar_3:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_clock_3:
-      <<: *hidden
-
-    zwave.vision_security_zd2105us_5_recessed_door_window_sensor_3:
-      <<: *hidden
       
     binary_sensor.garage_interior_door:
       <<: *customize

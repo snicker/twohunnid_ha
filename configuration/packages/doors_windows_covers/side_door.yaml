@@ -3,36 +3,9 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'side_door'
-      hidden: &hidden
-        <<: *customize
-        hidden: true
-
-    binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_2:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_2:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_2:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type_2:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance_2:
-      <<: *hidden
-
+        
     sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery_2:
       <<: *customize
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar_2:
-      <<: *hidden
-
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_clock_2:
-      <<: *hidden
-
-    zwave.vision_security_zd2105us_5_recessed_door_window_sensor_2:
-      <<: *hidden
       
     binary_sensor.side_door:
       <<: *customize
