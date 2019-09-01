@@ -7,6 +7,9 @@ group:
       - binary_sensor.garage_door
       - binary_sensor.pantry_door_sensor
       - binary_sensor.back_door
+      - binary_sensor.side_door
+      - binary_sensor.garage_interior_door
+      - binary_sensor.front_door
       
   exterior_doors:
     name: "Exterior Doors"
@@ -14,6 +17,9 @@ group:
     control: hidden
     entities:
       - binary_sensor.back_door
+      - binary_sensor.side_door
+      - binary_sensor.garage_interior_door
+      - binary_sensor.front_door
       
   interior_doors:
     name: "Interior Doors"

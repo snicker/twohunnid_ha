@@ -1,0 +1,68 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'front_door'
+      hidden: &hidden
+        <<: *customize
+        hidden: true
+
+    binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_4:
+      <<: *hidden
+
+    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_4:
+      <<: *hidden
+
+    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4:
+      <<: *hidden
+
+    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type_4:
+      <<: *hidden
+
+    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance_4:
+      <<: *hidden
+
+    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery_4:
+      <<: *customize
+
+    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar_4:
+      <<: *hidden
+
+    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_clock_4:
+      <<: *hidden
+
+    zwave.vision_security_zd2105us_5_recessed_door_window_sensor_4:
+      <<: *hidden
+      
+    binary_sensor.front_door:
+      <<: *customize
+
+    lock.kwikset_touchpad_electronic_deadbolt_locked_2:
+      <<: *customize
+      friendly_name: "Front Door Lock"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      front_door:
+        device_class: door
+        name: "Front Door"
+        value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4')|int == 255 }}"
+      
+group:
+  front_door_sensors:
+    name: "Front Door Sensors"
+    control: hidden
+    view: no
+    entities:
+      - binary_sensor.front_door
+      - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_4
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_4
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type_4
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance_4
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery_4
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar_4
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_clock_4
+      - zwave.vision_security_zd2105us_5_recessed_door_window_sensor_4
