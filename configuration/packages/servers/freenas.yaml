@@ -21,11 +21,11 @@ homeassistant:
     sensor.freenas_alert_level:
       <<: *customize
       friendly_name: FreeNAS - Alert Level
-
+      
     sensor.freenas_alert_message:
       <<: *customize
       friendly_name: FreeNAS - Alert Message
-
+      
     sensor.freenas_version:
       <<: *customize
       friendly_name: FreeNAS - Version
