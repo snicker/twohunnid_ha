@@ -30,7 +30,7 @@ automation:
     trigger:
       platform: state
       entity_id: sensor.front_door_unlocked_by_user_code
-      to: 1
+      to: "1"
     condition: []
     action:
       - service: script.turn_on
