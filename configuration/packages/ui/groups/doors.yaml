@@ -1,0 +1,24 @@
+group:
+  all_doors:
+    name: "All Doors"
+    view: no
+    control: hidden
+    entities:
+      - binary_sensor.garage_door
+      - binary_sensor.pantry_door_sensor
+      - binary_sensor.back_door
+      
+  exterior_doors:
+    name: "Exterior Doors"
+    view: no
+    control: hidden
+    entities:
+      - binary_sensor.back_door
+      
+  interior_doors:
+    name: "Interior Doors"
+    view: no
+    control: hidden
+    entities:
+      - binary_sensor.pantry_door_sensor
+      

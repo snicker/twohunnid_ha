@@ -11,7 +11,5 @@ group:
     entities:
       - group.all_exterior_motion_sensors
       - group.all_interior_motion_sensors
+      - group.all_doors
       - group.motion_sensor_scripts
-      - binary_sensor.piper_sensor_sound
-      - binary_sensor.garage_door
-      - binary_sensor.pantry_door_sensor
