@@ -10,6 +10,10 @@ homeassistant:
     binary_sensor.front_door:
       <<: *customize
       friendly_name: "Front Door"
+      
+    sensor.front_door_unlocked_by_user_code:
+      <<: *customize
+      friendly_name: "Front door unlocked by user"
 
     lock.kwikset_touchpad_electronic_deadbolt_locked_2:
       <<: *customize
@@ -21,6 +25,12 @@ binary_sensor:
       front_door:
         device_class: door
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4')|int == 255 }}"
+        
+sensor:
+  - platform: template
+    sensors:
+      front_door_unlocked_by_user_code:
+        value_template: "{%if 'Unlocked with Keypad' in state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') %}{{ state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') | replace('Unlocked with Keypad by user','') | int }}{% endif %}"
       
 group:
   front_door_sensors:
@@ -30,6 +40,7 @@ group:
     entities:
       - binary_sensor.front_door
       - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - sensor.front_door_unlocked_by_user_code
       - binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_4
       - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_4
       - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4
