@@ -30,7 +30,7 @@ sensor:
   - platform: template
     sensors:
       front_door_unlocked_by_user_code:
-        value_template: "{%if 'Unlocked with Keypad' in state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') %}{{ state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') | replace('Unlocked with Keypad by user','') | int }}{% endif %}"
+        value_template: "{%if 'Unlocked with Keypad' in (state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') or '') %}{{ state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') | replace('Unlocked with Keypad by user','') | int }}{% endif %}"
       
 group:
   front_door_sensors:
