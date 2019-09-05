@@ -240,3 +240,17 @@
   - data:
       entity_id: alarm_control_panel.home_alarm
     service: alarm_control_panel.alarm_trigger
+- id: '1567707885188'
+  alias: Alarm triggered
+  trigger:
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: triggered
+  condition: []
+  action:
+  - data:
+      message: alarm has been triggered!!!
+    service: notify.ios_nickcell
+  - data:
+      message: alarm has been triggered!!
+    service: notify.nick
