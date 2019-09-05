@@ -226,3 +226,17 @@
   - data:
       entity_id: light.pantry_light
     service: light.turn_off
+- id: '1567707738302'
+  alias: Alarm trigger when doors open
+  trigger:
+  - entity_id: group.interior_doors
+    platform: state
+    to: 'On'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_away
+  action:
+  - data:
+      entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_trigger
