@@ -254,3 +254,14 @@
   - data:
       message: alarm has been triggered!!
     service: notify.nick
+- id: '1567707958845'
+  alias: Alarm triggered stop
+  trigger:
+  - entity_id: alarm_control_panel.home_alarm
+    from: triggered
+    platform: state
+  condition: []
+  action:
+  - data:
+      entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+    service: homeassistant.turn_off
