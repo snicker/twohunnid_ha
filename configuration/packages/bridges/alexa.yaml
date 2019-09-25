@@ -70,32 +70,23 @@ group:
     
 script:
   alexa_announcement_all:
-    alias: alexa_announcement_all
-    id: alexa_announcement_all
+    alias: "Send announcement to all Alexas"
     sequence:
     - service: script.notify_alexa
       data_template: 
         message: "{{ message }}"
         title: "{{ title }}"
-        target: group.alexa_all_media_players
-        data:
-          type: announce
-          method: all
+        alexa: group.alexa_all_media_players
   alexa_announcement:
-    alias: alexa_announcement
-    id: alexa_announcement
+    alias: "Send announcement to main Alexas"
     sequence:
     - service: script.notify_alexa
       data_template: 
         message: "{{ message }}"
         title: "{{ title }}"
-        target: group.alexa_notification_media_players
-        data:
-          type: announce
-          method: all
+        alexa: group.alexa_notification_media_players
   notify_alexa:
-    alias: notify_alexa
-    id: notify_alexa
+    alias: "Notify one Alexa"
     sequence:
     - service: notify.alexa_media
       data_template: 
