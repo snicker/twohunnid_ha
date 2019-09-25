@@ -1,0 +1,48 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'door_open_alerts'
+        
+    automation.exterior_doors_open:
+      <<: *customize
+        
+    script.door_open_alert:
+      <<: *customize
+
+automation:
+
+  - alias: 'Exterior Doors Open'
+    trigger:
+    - entity_id: 
+      - group.exterior_doors
+      from: 'off'
+      platform: state
+      to: 'on'
+    - platform: time_pattern
+      minutes: '/1'
+      seconds: 00
+    condition: []
+    action:
+    - condition: template
+      value_template: "{{ is_state('group.exterior_doors', 'on') }}"
+    - service: script.turn_on
+      data_template:
+        entity_id: script.door_open_alert
+        variables:
+          door_group: "group.exterior_doors"
+     
+    
+          
+          
+script:
+  door_open_alert:
+    alias: Door Open Alert
+    sequence:
+    - service: notify.nick
+      data_template:
+        message: &door_open_message >
+          The {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr(door_group,'entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name }}{% if loop.index < loop.length and loop.length > 1 %} and {% endif %}{% if loop.index == loop.length %}{%if loop.length > 1 %} are {% else %} is {% endif %}{%endif%}{% endfor %}open
+    - service: script.alexa_announcement
+      data_template:
+        message: *door_open_message
