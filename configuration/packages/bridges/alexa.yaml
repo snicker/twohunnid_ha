@@ -3,7 +3,6 @@ cloud:
     filter:
       include_domains:
         - light
-        - cover
         - lock
       include_entities:
         - switch.backyard_amplifier
@@ -18,6 +17,9 @@ cloud:
         - switch.pool_pump
         - switch.coffee_grinder
         - switch.master_bedroom_humidifier
+        - script.garage_door_open_cover
+        - script.garage_door_close_cover
+        - sensor.garage_door_status
       exclude_entities:
         - switch.garage_door_relay
         - light.outside_amplifier_28
