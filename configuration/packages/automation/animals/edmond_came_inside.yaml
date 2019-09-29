@@ -4,15 +4,32 @@ homeassistant:
       customize: &customize
         package: 'edmond_came_inside'
         
-    automation.edmond_is_outside:
+    automation.edmond_came_inside_alert:
       <<: *customize
         
-    script.door_open_alert:
+    automation.disable_edmond_came_inside_alert:
       <<: *customize
+        
+    switch.edmond_is_outside:
+      <<: *customize
+      
+switch:
+  - platform: template
+    switches:
+      edmond_is_outside:
+        value_template: "{{ is_state('automation.edmond_came_inside_alert', 'on') }}"
+        turn_on:
+          service: homeassistant.turn_on
+          data:
+            entity_id: automation.edmond_came_inside_alert
+        turn_off:
+          service: homeassistant.turn_off
+          data:
+            entity_id: automation.edmond_came_inside_alert
 
 automation:
 
-  - alias: 'Edmond is Outside'
+  - alias: 'edmond_came_inside_alert'
     trigger:
     - entity_id: 
       - binary_sensor.back_door
@@ -26,11 +43,15 @@ automation:
     action:
     - condition: template
       value_template: "{{ is_state('binary_sensor.back_door', 'on') }}"
-    - service: script.turn_on
-      data:
-        entity_id: script.edmond_came_inside
+    - service: notify.nick
+      data_template:
+        message: &door_open_message >
+          Edmond came inside! Close the back door!
+    - service: script.alexa_announcement
+      data_template:
+        message: *door_open_message
         
-  - alias: 'Disable "Edmond is Outside" alert when door is closed'
+  - alias: 'disable_edmond_came_inside_alert'
     trigger:
     - entity_id:
       - binary_sensor.back_door
@@ -41,19 +62,4 @@ automation:
     action:
     - service: homeassistant.turn_off
       data:
-        entity_id: automation.edmond_is_outside
-     
-    
-          
-          
-script:
-  edmond_came_inside:
-    alias: Edmond Came Inside
-    sequence:
-    - service: notify.nick
-      data_template:
-        message: &door_open_message >
-          Edmond came inside! Close the back door!
-    - service: script.alexa_announcement
-      data_template:
-        message: *door_open_message
+        entity_id: automation.edmond_came_inside_alert
