@@ -1,0 +1,59 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'edmond_came_inside'
+        
+    automation.edmond_is_outside:
+      <<: *customize
+        
+    script.door_open_alert:
+      <<: *customize
+
+automation:
+
+  - alias: 'Edmond is Outside'
+    trigger:
+    - entity_id: 
+      - binary_sensor.back_door
+      from: 'off'
+      platform: state
+      to: 'on'
+    - platform: time_pattern
+      minutes: '/1'
+      seconds: 00
+    condition: []
+    action:
+    - condition: template
+      value_template: "{{ is_state('binary_sensor.back_door', 'on') }}"
+    - service: script.turn_on
+      data:
+        entity_id: script.edmond_came_inside
+        
+  - alias: 'Disable "Edmond is Outside" alert when door is closed'
+    trigger:
+    - entity_id:
+      - binary_sensor.back_door
+      from: 'on'
+      platform: state
+      to: 'off'
+    condition: []
+    action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: automation.edmond_is_outside
+     
+    
+          
+          
+script:
+  edmond_came_inside:
+    alias: Edmond Came Inside
+    sequence:
+    - service: notify.nick
+      data_template:
+        message: &door_open_message >
+          Edmond came inside! Close the back door!
+    - service: script.alexa_announcement
+      data_template:
+        message: *door_open_message

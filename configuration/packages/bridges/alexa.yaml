@@ -20,6 +20,7 @@ cloud:
         - script.garage_door_open_cover
         - script.garage_door_close_cover
         - sensor.garage_door_status
+        - automation.edmond_is_outside
       exclude_entities:
         - switch.garage_door_relay
         - light.outside_amplifier_28
