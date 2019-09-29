@@ -32,6 +32,7 @@ group:
     control: hidden
     entities:
       - input_boolean.dogs_home
+      - automation.edmond_is_outside
       - input_boolean.vacation_mode
       - group.holiday_modes
       
