@@ -1,1 +1,1 @@
-"""The broadlink component."""
+"""The broadlink_media component."""

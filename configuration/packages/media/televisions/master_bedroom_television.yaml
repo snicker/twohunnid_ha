@@ -20,7 +20,7 @@ homeassistant:
       friendly_name: "Turn Off Master Bedroom TV if Fire TV Stick is Off"
       
 media_player:
-  - platform: broadlink
+  - platform: broadlink_media
     host: 192.168.1.205
     mac: '78:0f:77:06:ef:75'
     name: master_bedroom_television
