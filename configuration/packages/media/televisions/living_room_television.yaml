@@ -37,7 +37,7 @@ homeassistant:
       
 media_player:
   - platform: broadlink_media
-    host: 192.168.1.199
+    host: 192.168.1.168
     mac: '78:0f:77:18:5f:ae'
     name: living_room_television
     ping_host: 192.168.1.234
