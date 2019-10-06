@@ -1,6 +1,6 @@
 switch:
   - platform: broadlink
-    host: 192.168.1.199
+    host: 192.168.1.168
     mac: '78:0f:77:18:5f:ae'
     type: rm_mini
     friendly_name: "Living Room RM Mini"
