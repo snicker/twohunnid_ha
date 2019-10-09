@@ -21,6 +21,7 @@ cloud:
         - script.garage_door_close_cover
         - sensor.garage_door_status
         - switch.edmond_is_outside
+        - switch.xiaomi_vacuum
       exclude_entities:
         - switch.garage_door_relay
         - light.outside_amplifier_28

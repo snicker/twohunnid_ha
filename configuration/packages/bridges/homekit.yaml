@@ -24,6 +24,7 @@ homekit:
       - switch.coffee_grinder
       - switch.master_bedroom_humidifier
       - alarm_control_panel.home_alarm
+      - switch.xiaomi_vacuum
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code

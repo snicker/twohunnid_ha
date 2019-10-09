@@ -7,6 +7,11 @@ homeassistant:
     vacuum.xiaomi_vacuum_cleaner:
       <<: *customize
       friendly_name: "Fabrizzio the Vacuum"
+      
+    switch.xiaomi_vacuum:
+      <<: *customize
+      friendly_name: "Vacuum Cleaner"
+      hidden: true
         
     automation.xiaomi_vacuum_cleaner_error_notification:
       <<: *customize
