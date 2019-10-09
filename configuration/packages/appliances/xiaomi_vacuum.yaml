@@ -7,8 +7,85 @@ homeassistant:
     vacuum.xiaomi_vacuum_cleaner:
       <<: *customize
       friendly_name: "Fabrizzio the Vacuum"
+        
+    automation.xiaomi_vacuum_cleaner_error_notification:
+      <<: *customize
+      friendly_name: "Xiaomi Vacuum Error Notifications"
+        
+    automation.xiaomi_vacuum_cleaner_maintenance_notifications:
+      <<: *customize
+      friendly_name: "Xiaomi Vacuum Maintenance Notifications"
+        
+    automation.xiaomi_vacuum_cleaner_main_brush_error_restart:
+      <<: *customize
+      friendly_name: "Xiaomi Vacuum Restart Cleaning on Main Brush Error"
       
 vacuum:
   - platform: xiaomi_miio
     host: 192.168.1.165
     token: !secret xiaomi_vacuum_token
+    
+switch:
+  - platform: template
+    switches:
+      xiaomi_vacuum:
+        value_template: "{{ states('vacuum.xiaomi_vacuum_cleaner') in ('cleaning') }}"
+        turn_on:
+          service: vacuum.start
+          data:
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+        turn_off:
+          service: vacuum.return_to_base
+          data:
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+
+automation:
+
+  - alias: xiaomi_vacuum_cleaner_error_notification
+    trigger: 
+      - platform: state
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        to: 'error'
+    condition: []
+    action:
+      - service: notify.nick
+        data_template:
+          message: "Fabrizzio has a problem: {{ state_attr('vacuum.xiaomi_vacuum_cleaner','error') }}"
+          
+  - alias: xiaomi_vacuum_cleaner_main_brush_error_restart
+    trigger: 
+      - platform: state
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        to: 'error'
+    condition:
+      - condition: template
+        value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner','error') == 'main_brush' }}"
+    action:
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+
+  - alias: xiaomi_vacuum_cleaner_maintenance_notifications
+    trigger:
+    - platform: state
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      to: "cleaning"
+    - platform: state
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      to: "docked"
+    condition:
+      - condition: template
+        value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner','sensor_dirty_left') | int <= 1 or state_attr('vacuum.xiaomi_vacuum_cleaner','filter_left') | int <= 1 or state_attr('vacuum.xiaomi_vacuum_cleaner','side_brush_left') | int <= 1 or state_attr('vacuum.xiaomi_vacuum_cleaner','main_brush_left') | int <= 1 }}"
+    action:
+    - data_template:
+        message: "{% set plant = 'plant.peace_lily' %}{{ state_attr(plant,'friendly_name') }} has an issue: {{ state_attr(plant,'problem') }}. Moisture: {{ state_attr(plant,'moisture') }}% Temp: {{ state_attr(plant,'temperature') }} Conductivity: {{ state_attr(plant,'conductivity') }}"
+    - service: notify.nick
+      data_template:
+        message: >-
+          Fabrizzio needs some maintenance!
+          {% set v = 'vacuum.xiaomi_vacuum_cleaner' %}{% if state_attr(v,'sensor_dirty_left') | int <= 1 %}Please clean the sensors.{%endif%}
+          {% if state_attr(v,'filter_left') | int <= 1 %}Please replace the filter.{%endif%}
+          {% if state_attr(v,'main_brush_left') | int <= 1 %}Please replace the main brush.{%endif%}
+          {% if state_attr(v,'side_brush_left') | int <= 1 %}Please replace the side brush.{%endif%}
+  
+      
