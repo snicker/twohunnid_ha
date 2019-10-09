@@ -69,7 +69,7 @@ automation:
       - service: vacuum.start
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
-
+          
   - alias: xiaomi_vacuum_cleaner_maintenance_notifications
     trigger:
     - platform: state
@@ -82,8 +82,6 @@ automation:
       - condition: template
         value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner','sensor_dirty_left') | int <= 1 or state_attr('vacuum.xiaomi_vacuum_cleaner','filter_left') | int <= 1 or state_attr('vacuum.xiaomi_vacuum_cleaner','side_brush_left') | int <= 1 or state_attr('vacuum.xiaomi_vacuum_cleaner','main_brush_left') | int <= 1 }}"
     action:
-    - data_template:
-        message: "{% set plant = 'plant.peace_lily' %}{{ state_attr(plant,'friendly_name') }} has an issue: {{ state_attr(plant,'problem') }}. Moisture: {{ state_attr(plant,'moisture') }}% Temp: {{ state_attr(plant,'temperature') }} Conductivity: {{ state_attr(plant,'conductivity') }}"
     - service: notify.nick
       data_template:
         message: >-
