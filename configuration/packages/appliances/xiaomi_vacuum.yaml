@@ -64,7 +64,7 @@ automation:
         to: 'error'
     condition:
       - condition: template
-        value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner','error') == 'main_brush' }}"
+        value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner','error') == 'Clean main brush' }}"
     action:
       - service: vacuum.start
         data:
