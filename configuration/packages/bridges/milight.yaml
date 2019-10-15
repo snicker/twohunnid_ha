@@ -4,17 +4,17 @@ light:
     - host: 192.168.1.164
       groups:
         - number: 1
-          name: north_pine_landscape_light
+          name: north_pine_landscape_light_old
           type: rgbww
         - number: 2
-          name: front_pine_landscape_light
+          name: front_pine_landscape_light_old
           type: rgbww
         - number: 3
-          name: ash_landscape_light
+          name: ash_landscape_light_old
           type: rgbww
         - number: 4
-          name: olive_landscape_light
+          name: olive_landscape_light_old
           type: rgbww
         - number: 0
-          name: all_front_landscape_lights
+          name: all_front_landscape_lights_old
           type: rgbww
