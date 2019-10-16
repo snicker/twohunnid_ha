@@ -24,6 +24,7 @@ group:
     - light.front_landscape_lights
     - light.pool_light
     - light.front_porch_lights
+    - light.holiday_spotlight
     
   interior_lights:
     icon: mdi:lightbulb
