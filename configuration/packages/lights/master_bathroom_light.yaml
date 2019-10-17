@@ -27,11 +27,11 @@ homeassistant:
       
 binary_sensor:
   - platform: template 
-      sensors:
-        master_bathroom_motion:
-          friendly_name: "Motion - Master Bathroom"
-          device_class: motion
-          value_template: "{{ states('sensor.jasco_products_26933_smart_motion_dimmer_burglar_2')|int == 8 }}"
+    sensors:
+      master_bathroom_motion:
+        friendly_name: "Motion - Master Bathroom"
+        device_class: motion
+        value_template: "{{ states('sensor.jasco_products_26933_smart_motion_dimmer_burglar_2')|int == 8 }}"
 
 light:
   - platform: template
