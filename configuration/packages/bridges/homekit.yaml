@@ -14,6 +14,8 @@ homekit:
       - light.ash_landscape_light
       - light.olive_landscape_light
       - light.all_front_landscape_lights
+      - light.jasco_products_26933_smart_motion_dimmer_level_2
+      - light.jasco_products_26933_smart_motion_dimmer_level
     include_entities:
       - cover.garage_door
       - media_player.universal_media_player_living_room

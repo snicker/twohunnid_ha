@@ -32,6 +32,8 @@ cloud:
         - light.ash_landscape_light
         - light.olive_landscape_light
         - light.all_front_landscape_lights
+        - light.jasco_products_26933_smart_motion_dimmer_level_2
+        - light.jasco_products_26933_smart_motion_dimmer_level
     entity_config:
       script.alarm_arm_away:
         name: Home Security
