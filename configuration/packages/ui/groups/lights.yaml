@@ -31,6 +31,7 @@ group:
     name: Interior Lighting
     entities:
     - light.leviton_dzmx11lz_dimmer_level
+    - light.master_bathroom_light
     - light.z_wave_products_inc_wd100_level
     - light.christmas_tree_27
     - group.copper_wire_string_lights_settings

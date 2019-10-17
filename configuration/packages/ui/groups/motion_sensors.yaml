@@ -36,6 +36,7 @@ group:
     entities:
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
+      - binary_sensor.master_bathroom_motion
       - binary_sensor.ballet_studio_camera_motion_sensor_debounced
       - binary_sensor.living_room_camera_motion_sensor_debounced
       - binary_sensor.garage_camera_motion
