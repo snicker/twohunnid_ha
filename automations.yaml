@@ -268,15 +268,3 @@
   - data:
       entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
     service: homeassistant.turn_off
-- id: '1571445108957'
-  alias: Zwave Event
-  trigger:
-  - event_data:
-      entity_id: zwave.jasco_products_26933_smart_motion_dimmer_2
-    event_type: zwave.node_event
-    platform: event
-  condition: []
-  action:
-  - data:
-      message: '{{ trigger.event.data }}'
-    service: persistent_notification.create
