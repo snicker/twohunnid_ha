@@ -1,0 +1,25 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'on_the_way_home'
+        
+    automation.on_the_way_home:
+      <<: *customize
+
+automation:
+
+  - alias: 'On The Way Home?'
+    trigger:
+    - platform: state
+      entity_id: 
+      - sensor.nick_home_dir_of_travel
+      to: 'towards'
+      for: 00:02:00
+    condition: []
+    action:
+    - service: notify.nick
+      data:
+        message: "Are you heading home?"
+        inline_keyboard:
+          - "Yes:/nick_heading_home, No:/nick_not_heading_home"

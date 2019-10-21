@@ -11,5 +11,4 @@ homeassistant:
 device_tracker:
   - platform: google_maps
     username: !secret device_tracker_gmail_username
-    password: !secret device_tracker_gmail_password
     max_gps_accuracy: 250
