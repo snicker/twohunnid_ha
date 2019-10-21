@@ -21,9 +21,139 @@ homeassistant:
       
     sensor.zwift_altitude_803962:
       <<: *customize
-        
+
+input_datetime:
+  zwift_last_online:
+    name: Zwift Last Online
+    has_date: true
+    has_time: true
+  zwift_last_offline:
+    name: Zwift Last Offline
+    has_date: true
+    has_time: true
+    
+automation:
+  - alias: zwift_record_online_time
+    trigger:
+      - platform: state
+        entity_id: sensor.zwift_online_803962
+        to: true
+        from: false
+    condition: []
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.zwift_last_online
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+  - alias: zwift_record_offline_time
+    trigger:
+      - platform: state
+        entity_id: sensor.zwift_online_803962
+        to: false
+        from: true
+    condition: []
+    action:
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.zwift_last_offline
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      
 sensor:
   - platform: zwift
     username: !secret zwift_username
     password: !secret zwift_password
-  
+    
+  - platform: template
+    sensors:
+      zwift_ftp:
+        friendly_name: "Zwift FTP"
+        entity_id: sensor.zwift_online_803962
+        unit_of_measurement: 'watts'
+        value_template: "{{states.sensor.zwift_online_803962.attributes.ftp}}"
+          
+      zwift_power_zone:
+        friendly_name: "Zwift Power Zone"   
+        entity_id: sensor.zwift_power_803962
+        value_template: >-
+          {% set ftp = states('sensor.zwift_ftp') | float %}
+          {% set power = states('sensor.zwift_power_803962') | float %}
+          {% set zone1 = ftp | float * 0.55 %}
+          {% set zone2 = ftp | float * 0.76 %}
+          {% set zone3 = ftp | float * 0.90 %}
+          {% set zone4 = ftp | float * 1.05 %}
+          {% set zone5 = ftp | float * 1.2 %}
+          {% set zone6 = ftp | float * 1.5 %}
+          
+          {% if power < 1 %}Off
+          {% elif zone1 > power %}Active Recovery
+          {% elif zone2 > power %}Endurance
+          {% elif zone3 > power %}Tempo
+          {% elif zone4 > power %}Threshold
+          {% elif zone5 > power %}VO2 Max
+          {% elif zone6 > power %}Anaerobic capacity
+          {% elif zone6 < power %}Neuromuscular Power{% endif %}
+
+  - platform: history_stats
+    name: Threshold last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'Threshold'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+          
+  - platform: history_stats
+    name: Off last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'Off'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+          
+  - platform: history_stats
+    name: Active Recovery last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'Active Recovery'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+          
+
+  - platform: history_stats
+    name: Endurance last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'Endurance'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+          
+  - platform: history_stats
+    name: Tempo last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'Tempo'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+          
+  - platform: history_stats
+    name: VO2 Max last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'VO2 Max'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+          
+  - platform: history_stats
+    name: Anaerobic capacity last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'Anaerobic capacity'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+          
+  - platform: history_stats
+    name: Neuromuscular Power last Zwift Session
+    entity_id: sensor.zwift_power_zone
+    state: 'Neuromuscular Power'
+    type: time
+    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
