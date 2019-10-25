@@ -38,3 +38,35 @@ homeassistant:
 input_boolean:
   halloween_mode:
     initial: off
+    
+script:
+  halloween_front_porch_cycle_step_1:
+    sequence:
+      - service: script.porch_lights_transition_left
+        data:
+          color: '{"r": 255, "g": 0, "b": 0}'
+          transition: 20
+      - service: script.porch_lights_transition_right
+        data:
+          color: '{"r": 255, "g": 0, "b": 255}'
+          transition: 20
+      - delay: '00:00:30'
+      - condition: state
+        entity_id: light.front_porch_lights
+        state: on
+      - service: script.halloween_front_porch_cycle_step_2
+  halloween_front_porch_cycle_step_2:
+    sequence:
+      - service: script.porch_lights_transition_left
+        data:
+          color: '{"r": 255, "g": 0, "b": 255}'
+          transition: 20
+      - service: script.porch_lights_transition_right
+        data:
+          color: '{"r": 255, "g": 0, "b": 0}'
+          transition: 20
+      - delay: '00:00:30'
+      - condition: state
+        entity_id: light.front_porch_lights
+        state: on
+      - service: script.halloween_front_porch_cycle_step_1

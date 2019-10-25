@@ -1,0 +1,86 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'front_landscape_lights
+      hidden: &hidden
+        <<: *customize
+        hidden: true
+        
+    light.front_porch_lights_power:
+      <<: *hidden
+        
+    switch.inovelli_nzw30_onoff_switch_switch:
+      <<: *hidden
+    
+    light.front_porch_lights:
+      <<: *customize
+      friendly_name: "Front Porch Lights"
+      
+    light.front_porch_bottom_left:
+      <<: *hidden
+      
+    light.front_porch_bottom_right:
+      <<: *hidden
+      
+    light.front_porch_upper_left:
+      <<: *hidden
+      
+    light.front_porch_upper_right:
+      <<: *hidden
+      
+    light.front_porch_left:
+      <<: *hidden
+      
+    light.front_porch_right:
+      <<: *hidden
+      
+    automation.porch_lights_on_when_zwave_switch_on:
+      <<: *customize
+      friendly_name: "Turn on front porch MiLights when switch is powered"
+
+light:
+  - platform: template
+    lights:
+      front_porch_lights_power:
+        friendly_name: "Front Porch Lights Power"
+        value_template: '{{ is_state("switch.inovelli_nzw30_onoff_switch_switch", "on") }}'
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.inovelli_nzw30_onoff_switch_switch
+        turn_off:
+          service: switch.turn_off
+          entity_id: switch.inovelli_nzw30_onoff_switch_switch
+          
+  - platform: group
+    name: front_porch_lights
+    entities:
+      - light.front_porch_lights_power
+      - light.front_porch_all_lights
+      
+automation:
+  - alias: porch_lights_on_when_zwave_switch_on
+    trigger:
+      platform: state
+      entity_id: switch.inovelli_nzw30_onoff_switch_switch
+      from: 'off'
+      to: 'on'
+    action:
+      - delay: "00:00:01"
+      - service: light.turn_on
+        data:
+          entity_id: light.front_porch_lights
+          
+script:
+  porch_lights_transition_left:
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: milight/0xFD01/rgb_cct/1
+          payload_template: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'
+  porch_lights_transition_right:
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: milight/0xFD01/rgb_cct/2
+          payload_template: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'
