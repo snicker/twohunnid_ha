@@ -3,37 +3,38 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'front_porch_lights'
-      hidden: &hidden
+        
+      hide: &hide
         <<: *customize
         hidden: true
         
     light.front_porch_lights_power:
-      <<: *hidden
+      <<: *hide
         
     switch.inovelli_nzw30_onoff_switch_switch:
-      <<: *hidden
+      <<: *hide
     
     light.front_porch_lights:
       <<: *customize
       friendly_name: "Front Porch Lights"
       
     light.front_porch_bottom_left:
-      <<: *hidden
+      <<: *hide
       
     light.front_porch_bottom_right:
-      <<: *hidden
+      <<: *hide
       
     light.front_porch_upper_left:
-      <<: *hidden
+      <<: *hide
       
     light.front_porch_upper_right:
-      <<: *hidden
+      <<: *hide
       
     light.front_porch_left:
-      <<: *hidden
+      <<: *hide
       
     light.front_porch_right:
-      <<: *hidden
+      <<: *hide
       
     automation.porch_lights_on_when_zwave_switch_on:
       <<: *customize
