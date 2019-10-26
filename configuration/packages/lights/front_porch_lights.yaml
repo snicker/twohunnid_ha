@@ -76,12 +76,12 @@ script:
   porch_lights_transition_left:
     sequence:
       - service: mqtt.publish
-        data:
-          topic: milight/0xFD01/rgb_cct/1
-          payload_template: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'
+        data_template:
+          topic: "milight/0xFD01/rgb_cct/1"
+          payload: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'
   porch_lights_transition_right:
     sequence:
       - service: mqtt.publish
-        data:
-          topic: milight/0xFD01/rgb_cct/2
-          payload_template: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'
+        data_template:
+          topic: "milight/0xFD01/rgb_cct/2"
+          payload: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'

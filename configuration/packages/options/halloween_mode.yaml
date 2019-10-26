@@ -45,10 +45,12 @@ script:
       - service: script.porch_lights_transition_left
         data:
           color: '{"r": 255, "g": 0, "b": 0}'
+          brightness: 255
           transition: 20
       - service: script.porch_lights_transition_right
         data:
           color: '{"r": 255, "g": 0, "b": 255}'
+          brightness: 255
           transition: 20
       - delay: '00:00:30'
       - condition: state
@@ -60,10 +62,12 @@ script:
       - service: script.porch_lights_transition_left
         data:
           color: '{"r": 255, "g": 0, "b": 255}'
+          brightness: 255
           transition: 20
       - service: script.porch_lights_transition_right
         data:
           color: '{"r": 255, "g": 0, "b": 0}'
+          brightness: 255
           transition: 20
       - delay: '00:00:30'
       - condition: state
