@@ -78,10 +78,10 @@ script:
       - service: mqtt.publish
         data_template:
           topic: "milight/0xFD01/rgb_cct/1"
-          payload: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'
+          payload: '{"status": "ON", "color": {{ color }}, "transition": {{ transition or 1 }}}'
   porch_lights_transition_right:
     sequence:
       - service: mqtt.publish
         data_template:
           topic: "milight/0xFD01/rgb_cct/2"
-          payload: '{"status": "ON", "color": {{ color }}, "brightness": {{ brightness or 255 }}, "transition": {{ transition or 1 }}}'
+          payload: '{"status": "ON", "color": {{ color }}, "transition": {{ transition or 1 }}}'

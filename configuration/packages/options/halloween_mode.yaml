@@ -44,15 +44,13 @@ script:
     sequence:
       - service: script.porch_lights_transition_left
         data:
-          color: '{"r": 255, "g": 0, "b": 0}'
-          brightness: 255
-          transition: 20
+          color: '{"r": 255, "g": 52, "b": 0}'
+          transition: 5
       - service: script.porch_lights_transition_right
         data:
-          color: '{"r": 255, "g": 0, "b": 255}'
-          brightness: 255
-          transition: 20
-      - delay: '00:00:30'
+          color: '{"r": 204, "g": 0, "b": 204}'
+          transition: 5
+      - delay: '00:00:20'
       - condition: state
         entity_id: light.front_porch_lights
         state: 'on'
@@ -61,15 +59,13 @@ script:
     sequence:
       - service: script.porch_lights_transition_left
         data:
-          color: '{"r": 255, "g": 0, "b": 255}'
-          brightness: 255
-          transition: 20
+          color: '{"r": 204, "g": 0, "b": 204}'
+          transition: 5
       - service: script.porch_lights_transition_right
         data:
-          color: '{"r": 255, "g": 0, "b": 0}'
-          brightness: 255
-          transition: 20
-      - delay: '00:00:30'
+          color: '{"r": 255, "g": 52, "b": 0}'
+          transition: 5
+      - delay: '00:00:20'
       - condition: state
         entity_id: light.front_porch_lights
         state: 'on'
