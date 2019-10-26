@@ -46,6 +46,7 @@ script:
         data_template:
           topic: "milight/0xFD01/rgb_cct/0"
           payload: '{"status": "ON", "brightness":10, "transition": 1}'
+      - delay: '00:00:01'
       - service: script.porch_lights_transition_left
         data:
           color: '{"r": 255, "g": 52, "b": 0}'
@@ -65,6 +66,7 @@ script:
         data_template:
           topic: "milight/0xFD01/rgb_cct/0"
           payload: '{"status": "ON", "brightness":10, "transition": 1}'
+      - delay: '00:00:01'
       - service: script.porch_lights_transition_left
         data:
           color: '{"r": 204, "g": 0, "b": 204}'
