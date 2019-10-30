@@ -30,6 +30,10 @@ homeassistant:
       friendly_name: "Halloween Mode?"
       icon: mdi:halloween
       persistent: true
+      
+    automation.halloween_mode_front_porch_cycle_on:
+      <<: *customize
+      friendly_name: "Halloween Mode: Cycle Front Porch Lights"
 
 ################################################
 ## Input Boolean
@@ -38,6 +42,48 @@ homeassistant:
 input_boolean:
   halloween_mode:
     initial: off
+    
+group:
+  halloween_automations:
+    name: Halloween Automations
+    entities: 
+    - automation.halloween_mode_front_porch_cycle_on
+    
+automation:
+  - id: enable_halloween_automations
+    alias: Enable Halloween Automations when Halloween Mode On
+    trigger:
+    - platform: state
+      entity_id: input_boolean.halloween_mode
+      to: 'on'
+    condition: []
+    action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: group.halloween_automations
+        
+  - id: disable_halloween_automations
+    alias: Disable Halloween Automations when Halloween Mode Off
+    trigger:
+    - platform: state
+      entity_id: input_boolean.halloween_mode
+      to: 'off'
+    condition: []
+    action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: group.halloween_automations
+        
+  - alias: halloween_mode_front_porch_cycle_on
+    trigger:
+      platform: state
+      entity_id: switch.front_porch_lights
+      from: 'off'
+      to: 'on'
+    action:
+      - service: script.turn_on
+        data:
+          entity_id: script.halloween_front_porch_cycle_step_1
     
 script:
   halloween_front_porch_cycle_step_1:
