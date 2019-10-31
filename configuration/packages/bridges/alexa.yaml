@@ -34,6 +34,13 @@ cloud:
         - light.all_front_landscape_lights
         - light.jasco_products_26933_smart_motion_dimmer_level_2
         - light.jasco_products_26933_smart_motion_dimmer_level
+        - light.front_porch_lights_power
+        - light.front_porch_bottom_left
+        - light.front_porch_bottom_right
+        - light.front_porch_upper_left
+        - light.front_porch_upper_right
+        - light.front_porch_left
+        - light.front_porch_right
     entity_config:
       script.alarm_arm_away:
         name: Home Security
