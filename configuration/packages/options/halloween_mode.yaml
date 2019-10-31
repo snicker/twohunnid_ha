@@ -81,7 +81,7 @@ automation:
       from: 'off'
       to: 'on'
     action:
-      - service: script.turn_on
+      - service: script.turn_off
         data:
           entity_id: script.halloween_front_porch_cycle_step_1
     
