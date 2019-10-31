@@ -22,6 +22,8 @@ cloud:
         - sensor.garage_door_status
         - switch.edmond_is_outside
         - switch.xiaomi_vacuum
+        - binary_sensor.front_door_camera_person_detected
+        - alarm_control_panel.home_alarm
       exclude_entities:
         - switch.garage_door_relay
         - light.outside_amplifier_28
@@ -51,6 +53,11 @@ cloud:
       media_player.universal_media_player_living_room:
         name: TV
         description: Living room television
+      binary_sensor.front_door_camera_person_detected:
+        display_categories: DOORBELL
+        name: Front Door
+        description: Front Door Bell sensor
+        
 
 alexa_media:
   accounts:
