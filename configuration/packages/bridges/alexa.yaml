@@ -43,6 +43,7 @@ cloud:
         - light.front_porch_upper_right
         - light.front_porch_left
         - light.front_porch_right
+        - light.front_porch_all_lights
     entity_config:
       script.alarm_arm_away:
         name: Home Security
