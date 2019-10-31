@@ -21,13 +21,35 @@ homeassistant:
       
     sensor.zwift_altitude_803962:
       <<: *customize
+    
+    sensor.zwift_ftp_803962:
+      <<: *customize
+    
+    sensor.zwift_power_zone_803962:
+      <<: *customize
+    
+      
+group:
+  health_zwift:
+    control: hidden
+    icon: mdi:bike
+    name: Zwift - Nick
+    entities:
+      - sensor.zwift_online_803962
+      - sensor.zwift_heart_rate_803962
+      - sensor.zwift_speed_803962
+      - sensor.zwift_power_803962
+      - sensor.zwift_cadence_803962
+      - sensor.zwift_gradient_803962
+      - sensor.zwift_ftp_803962
+      - sensor.zwift_power_zone_803962
 
 input_datetime:
-  zwift_last_online:
+  zwift_last_online_803962:
     name: Zwift Last Online
     has_date: true
     has_time: true
-  zwift_last_offline:
+  zwift_last_offline_803962:
     name: Zwift Last Offline
     has_date: true
     has_time: true
@@ -37,24 +59,25 @@ automation:
     trigger:
       - platform: state
         entity_id: sensor.zwift_online_803962
-        to: true
-        from: false
+        to: "True"
+        from: "False"
     condition: []
     action:
       - service: input_datetime.set_datetime
-        entity_id: input_datetime.zwift_last_online
+        entity_id: input_datetime.zwift_last_online_803962
         data_template:
           datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          
   - alias: zwift_record_offline_time
     trigger:
       - platform: state
         entity_id: sensor.zwift_online_803962
-        to: false
-        from: true
+        to: "False"
+        from: "True"
     condition: []
     action:
       - service: input_datetime.set_datetime
-        entity_id: input_datetime.zwift_last_offline
+        entity_id: input_datetime.zwift_last_offline_803962
         data_template:
           datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
       
@@ -65,17 +88,17 @@ sensor:
     
   - platform: template
     sensors:
-      zwift_ftp:
-        friendly_name: "Zwift FTP"
+      zwift_ftp_803962:
+        friendly_name: "Zwift FTP (803962)"
         entity_id: sensor.zwift_online_803962
         unit_of_measurement: 'watts'
         value_template: "{{states.sensor.zwift_online_803962.attributes.ftp}}"
           
-      zwift_power_zone:
-        friendly_name: "Zwift Power Zone"   
+      zwift_power_zone_803962:
+        friendly_name: "Zwift Power Zone (803962)"   
         entity_id: sensor.zwift_power_803962
         value_template: >-
-          {% set ftp = states('sensor.zwift_ftp') | float %}
+          {% set ftp = states('sensor.zwift_ftp_803962') | float %}
           {% set power = states('sensor.zwift_power_803962') | float %}
           {% set zone1 = ftp | float * 0.55 %}
           {% set zone2 = ftp | float * 0.76 %}
@@ -95,65 +118,65 @@ sensor:
 
   - platform: history_stats
     name: Threshold last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'Threshold'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
           
   - platform: history_stats
     name: Off last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'Off'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
           
   - platform: history_stats
     name: Active Recovery last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'Active Recovery'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
           
 
   - platform: history_stats
     name: Endurance last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'Endurance'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
           
   - platform: history_stats
     name: Tempo last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'Tempo'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
           
   - platform: history_stats
     name: VO2 Max last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'VO2 Max'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
           
   - platform: history_stats
     name: Anaerobic capacity last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'Anaerobic capacity'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
           
   - platform: history_stats
     name: Neuromuscular Power last Zwift Session
-    entity_id: sensor.zwift_power_zone
+    entity_id: sensor.zwift_power_zone_803962
     state: 'Neuromuscular Power'
     type: time
-    start: '{{ states.input_datetime.zwift_last_online.attributes.timestamp }}'  
-    end: '{{ states.input_datetime.zwift_last_offline.attributes.timestamp }}'
+    start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
+    end: '{{ states.input_datetime.zwift_last_offline_803962.attributes.timestamp }}'
