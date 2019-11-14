@@ -1,0 +1,18 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'garage_overhead_light'
+      hidden: &hidden
+        <<: *customize
+        hidden: true
+      
+    light.garage_overhead_light:
+      <<: *customize
+
+light:
+  - platform: x10rf
+    devices:
+      - id: b9
+        name: garage_overhead_light
+    
