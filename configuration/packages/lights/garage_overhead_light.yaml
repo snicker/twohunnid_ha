@@ -9,6 +9,7 @@ homeassistant:
       
     light.garage_overhead_light:
       <<: *customize
+      friendly_name: "Garage Overhead Light"
 
 light:
   - platform: x10rf
