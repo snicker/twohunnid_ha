@@ -276,7 +276,14 @@
     for: 00:05:00
     platform: state
     to: 'off'
-  condition: []
+  - entity_id: light.garage_overhead_light
+    for: 00:05:00
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.garage_camera_motion
+    state: 'off'
   action:
   - data:
       entity_id: light.garage_overhead_light
