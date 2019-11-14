@@ -294,6 +294,7 @@
     to: 'on'
   condition:
   - after: '16:00:00'
+    before: '6:00:00'
     condition: time
   action:
   - data:
