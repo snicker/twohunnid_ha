@@ -290,9 +290,8 @@
     for: 00:00:01
     platform: numeric_state
   - entity_id: binary_sensor.garage_interior_door
-    from: closed
     platform: state
-    to: open
+    to: 'on'
   condition:
   - after: sunset
     after_offset: -00:30:00
@@ -301,4 +300,4 @@
   action:
   - data:
       entity_id: light.garage_overhead_light
-    service: homeassistant.turn_off
+    service: homeassistant.turn_on
