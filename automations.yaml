@@ -281,3 +281,23 @@
   - data:
       entity_id: light.garage_overhead_light
     service: light.turn_off
+- id: '1573699508759'
+  alias: Garage Lights On If Doors Open After Dusk
+  description: ''
+  trigger:
+  - above: '0'
+    entity_id: sensor.garage_door_position
+    for: 00:00:01
+    platform: numeric_state
+  - entity_id: binary_sensor.garage_interior_door
+    from: closed
+    platform: state
+    to: open
+  condition:
+  - after: sunset
+    after_offset: -00:30:00
+    condition: sun
+  action:
+  - data:
+      entity_id: light.garage_overhead_light
+    service: homeassistant.turn_off
