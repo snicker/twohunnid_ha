@@ -3,21 +3,21 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'master_bathroom_light'
-      hidden: &hidden
+      hide: &hide
         <<: *customize
         hidden: true
     
     light.jasco_products_26933_smart_motion_dimmer_level:
-      <<: *hidden
+      <<: *hide
     
     light.jasco_products_26933_smart_motion_dimmer_level_2:
-      <<: *hidden
+      <<: *hide
     
     sensor.jasco_products_26933_smart_motion_dimmer_burglar:
-      <<: *hidden
+      <<: *hide
       
     sensor.jasco_products_26933_smart_motion_dimmer_burglar_2:
-      <<: *hidden
+      <<: *hide
       
     light.master_bathroom_light:
       <<: *customize

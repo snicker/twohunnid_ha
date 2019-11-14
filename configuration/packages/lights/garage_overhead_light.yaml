@@ -3,7 +3,7 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'garage_overhead_light'
-      hidden: &hidden
+      hide: &hide
         <<: *customize
         hidden: true
       
