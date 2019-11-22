@@ -13,4 +13,4 @@ binary_sensor:
     host: 8.8.8.8
     name: internet_connection_status
     scan_interval: 5
-    counts: 2
+    count: 2
