@@ -1,0 +1,16 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'internet_connection_status'
+        
+    binary_sensor.internet_connection_status:
+      <<: *customize
+      friendly_name: "Internet Connection Status"
+        
+binary_sensor:
+  - platform: ping
+    host: 8.8.8.8
+    name: internet_connection_status
+    scan_interval: 5
+    counts: 2
