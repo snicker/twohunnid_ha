@@ -8,9 +8,49 @@ homeassistant:
       <<: *customize
       friendly_name: "Internet Connection Status"
         
+    sensor.internet_connection_health_7d:
+      <<: *customize
+      friendly_name: "Internet Connection Health (7d)"
+        
+    binary_sensor.external_network_accessible:
+      <<: *customize
+      friendly_name: "External Network Accessible"
+        
+    binary_sensor.internal_network_accessible:
+      <<: *customize
+      friendly_name: "Internal Network Accessible"
+        
 binary_sensor:
   - platform: ping
     host: 8.8.8.8
-    name: internet_connection_status
+    name: external_network_accessible
     scan_interval: 5
     count: 2
+  - platform: ping
+    host: 192.168.1.1
+    name: internal_network_accessible
+    scan_interval: 5
+    count: 2
+  - platform: template
+    sensors:
+      internet_connection_status:
+        device_class: connectivity
+        value_template: >-
+          {% set internal = is_state('binary_sensor.internal_network_connection','on') %}
+          {% set external = is_state('binary_sensor.external_network_connection','on') %}
+          {% if internal and external %}
+          {{ true }}
+          {% elif internal and not external %}
+          {{ false }}
+          {% elif not internal %}
+          {{ None }}
+          {% endif %}
+
+sensor:
+  - platform: history_stats
+    name: internet_connection_health_7d
+    entity_id: binary_sensor.internet_connection_status
+    state: 'on'
+    type: ratio
+    start: '{{ as_timestamp(now()) - (7 * 86400) }}'  
+    end: '{{ now() }}'
