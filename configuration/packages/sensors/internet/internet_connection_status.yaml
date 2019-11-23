@@ -36,8 +36,8 @@ binary_sensor:
       internet_connection_status:
         device_class: connectivity
         value_template: >-
-          {% set internal = is_state('binary_sensor.internal_network_connection','on') %}
-          {% set external = is_state('binary_sensor.external_network_connection','on') %}
+          {% set internal = is_state('binary_sensor.internal_network_accessible','on') %}
+          {% set external = is_state('binary_sensor.external_network_accessible','on') %}
           {% if internal and external %}
           {{ true }}
           {% elif internal and not external %}
