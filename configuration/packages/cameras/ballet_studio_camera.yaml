@@ -24,9 +24,11 @@ homeassistant:
       device_class: connectivity
 
 camera:
-  - platform: ffmpeg
+  - platform: generic
     name: yi_home_camera_ballet_studio
-    input: -rtsp_transport tcp -i rtsp://192.168.1.237:8554/unicast
+    still_image_url: https://192.168.1.237/cgi-bin/currentpic.cgi
+    stream_source: rtsp://192.168.1.237:8554/unicast
+    verify_ssl: false
     
 binary_sensor:
   - platform: ping
