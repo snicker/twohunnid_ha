@@ -25,7 +25,7 @@ homeassistant:
 
 camera:
   - platform: generic
-    name: yi_home_camera_ballet_studio
+    name: living_room_camera
     still_image_url: https://192.168.1.238/cgi-bin/currentpic.cgi
     stream_source: rtsp://192.168.1.238:8554/unicast
     verify_ssl: false
