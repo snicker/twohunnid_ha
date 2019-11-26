@@ -29,6 +29,9 @@ camera:
     still_image_url: https://192.168.1.238/cgi-bin/currentpic.cgi
     stream_source: rtsp://192.168.1.238:8554/unicast
     verify_ssl: false
+    authentication: basic
+    username: root
+    password: !secret dafang_cam_password
     
 binary_sensor:
   - platform: ping
