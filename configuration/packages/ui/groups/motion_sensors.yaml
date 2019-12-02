@@ -16,6 +16,7 @@ group:
       - binary_sensor.ballet_studio_camera_motion_sensor_debounced
       - binary_sensor.living_room_camera_motion_sensor_debounced
       - binary_sensor.modetftp_motion_laundry
+      - binary_sensor.front_yard_camera_motion
       
   all_exterior_motion_sensors:
     name: Motion Sensors - Exterior
@@ -28,6 +29,7 @@ group:
       - binary_sensor.motion_front_yard_south
       - binary_sensor.motion_front_driveway
       - binary_sensor.front_door_camera_motion_detected
+      - binary_sensor.front_yard_camera_motion
       
   all_interior_motion_sensors:
     name: Motion Sensors - Interior
@@ -95,3 +97,4 @@ group:
     entities:
       - group.motion_front_yard_south
       - group.motion_front_driveway
+      - binary_sensor.front_yard_camera_motion
