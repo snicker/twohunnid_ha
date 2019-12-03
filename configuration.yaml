@@ -21,6 +21,8 @@ logger:
     
 frontend:
 
+mobile_app:
+
 config:
 
 http:
