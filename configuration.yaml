@@ -57,13 +57,6 @@ mqtt:
   discovery: true
   discovery_prefix: homeassistant
 
-#begin two hunnid crap
-vera:
-  vera_controller_url: http://192.168.1.191:3480/
-  exclude: []
-  # Optional to import switches as lights - this is a list of vera device ids
-  lights: [19,27]
-
 zwave:
   usb_path: /dev/ttyACM0
   #udev rule: SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", ATTRS{serial}=="3f980000.usb", SYMLINK+="zwave"
