@@ -8,14 +8,14 @@ homeassistant:
       <<: *customize
       hidden: true
     
-    light.christmas_tree_27:
+    light.christmas_tree:
       <<: *customize
       friendly_name: "Christmas Tree"
 
 light:
   - platform: template
     lights:
-      christmas_tree_27:
+      christmas_tree:
         value_template: "{{ is_state('light.remotec_unknown_type_8200_id_8130_level_2', 'on') }}"
         level_template: "{{ state_attr('light.remotec_unknown_type_8200_id_8130_level_2','brightness')|int }}"
         turn_on:
