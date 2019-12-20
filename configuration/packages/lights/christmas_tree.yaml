@@ -3,6 +3,10 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'christmas_tree'
+        
+    light.remotec_unknown_type_8200_id_8130_level_2:
+      <<: *customize
+      hidden: true
     
     light.christmas_tree_27:
       <<: *customize
