@@ -4,7 +4,7 @@ homeassistant:
       customize: &customize
         package: 'plant_room_lamp'
         
-    switch.25048234840d8ebe302f:
+    light.remotec_unknown_type_8200_id_8130_level:
       <<: *customize
       hidden: true
     

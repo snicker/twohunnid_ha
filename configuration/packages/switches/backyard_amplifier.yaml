@@ -4,7 +4,7 @@ homeassistant:
       customize: &customize
         package: 'backyard_amplifier'
         
-    light.outside_amplifier_28:
+    switch.25048234840d8ebe302f:
       <<: *customize
       hidden: true
     

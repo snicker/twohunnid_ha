@@ -26,7 +26,6 @@ cloud:
         - alarm_control_panel.home_alarm
       exclude_entities:
         - switch.garage_door_relay
-        - light.outside_amplifier_28
         - light.pantry_light
         - light.front_landscape_lights_power
         - light.north_pine_landscape_light
@@ -44,6 +43,8 @@ cloud:
         - light.front_porch_left
         - light.front_porch_right
         - light.front_porch_all_lights
+        - light.remotec_unknown_type_8200_id_8130_level
+        - light.remotec_unknown_type_8200_id_8130_level_2
     entity_config:
       script.alarm_arm_away:
         name: Home Security
