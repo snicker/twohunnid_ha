@@ -43,7 +43,33 @@ homeassistant:
     binary_sensor.tesla_model_3_charger_sensor:
       <<: *customize
 
+    input_number.tesla_climate_target_temperature:
+      <<: *customize
+
+    script.tesla_climate_activate:
+      <<: *customize
+      friendly_name: Tesla Model 3 Climate Activator
+
 tesla:
   username: !secret tesla_account_username
   password: !secret tesla_account_password 
   scan_interval: 600
+
+input_number:
+  tesla_climate_target_temperature:
+    name: Tesla Model 3 Target Temperature
+    icon: mdi:thermometer
+    unit_of_measurement: "fahrenheit"
+    mode: slider
+    step: 1
+    min: 45
+    max: 95
+
+script:
+  tesla_climate_activate:
+    sequence:
+      - service: climate.set_temperature
+        data_template:
+          entity_id: climate.tesla_model_3_hvac_climate_system
+          temperature: "{{ states('input_number.tesla_climate_target_temperature') | int  }}"
+          hvac_mode: heat

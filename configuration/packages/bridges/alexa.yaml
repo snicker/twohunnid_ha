@@ -24,6 +24,7 @@ cloud:
         - alarm_control_panel.home_alarm
         - lock.kwikset_touchpad_electronic_deadbolt_locked
         - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+        - script.tesla_climate_activate
       exclude_entities:
         - switch.garage_door_relay
         - light.pantry_light
