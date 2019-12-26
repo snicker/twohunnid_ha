@@ -4,5 +4,33 @@ homeassistant:
       customize: &customize
         package: 'juicenet'
 
+    sensor.200stonewoodjuicebox_amps:
+      <<: *customize
+      friendly_name: Juicebox Amps
+
+    sensor.200stonewoodjuicebox_charge_time:
+      <<: *customize
+      friendly_name: Juicebox Charging Time
+
+    sensor.200stonewoodjuicebox_charging_status:
+      <<: *customize
+      friendly_name: Juicebox Charging Status
+
+    sensor.200stonewoodjuicebox_energy_added:
+      <<: *customize
+      friendly_name: Juicebox Energy Added
+
+    sensor.200stonewoodjuicebox_temperature:
+      <<: *customize
+      friendly_name: Juicebox Temperature
+
+    sensor.200stonewoodjuicebox_voltage:
+      <<: *customize
+      friendly_name: Juicebox Voltage
+
+    sensor.200stonewoodjuicebox_watts:
+      <<: *customize
+      friendly_name: Juicebox Watts
+
 juicenet:
   access_token: !secret juicenet_token
