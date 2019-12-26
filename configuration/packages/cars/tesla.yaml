@@ -1,0 +1,9 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'tesla'
+
+tesla:
+  username: !secret tesla_account_username
+  password: !secret tesla_account_password 
