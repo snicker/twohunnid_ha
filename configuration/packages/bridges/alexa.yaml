@@ -3,7 +3,6 @@ cloud:
     filter:
       include_domains:
         - light
-        - lock
       include_entities:
         - switch.backyard_amplifier
         - script.alarm_arm_away
@@ -11,7 +10,6 @@ cloud:
         - group.exterior_lights
         - group.interior_lights
         - group.all_lights
-        - group.all_locks
         - group.interior_christmas_lights
         - media_player.universal_media_player_living_room
         - switch.pool_pump
@@ -24,6 +22,8 @@ cloud:
         - switch.xiaomi_vacuum
         - binary_sensor.front_door_camera_person_detected
         - alarm_control_panel.home_alarm
+        - lock.kwikset_touchpad_electronic_deadbolt_locked
+        - lock.kwikset_touchpad_electronic_deadbolt_locked_2
       exclude_entities:
         - switch.garage_door_relay
         - light.pantry_light

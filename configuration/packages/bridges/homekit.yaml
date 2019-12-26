@@ -3,8 +3,6 @@ homekit:
   filter:
     include_domains:
       - light
-      - lock
-      - climate
     exclude_entities:
       - switch.garage_door_relay
       - light.pantry_light
@@ -37,6 +35,10 @@ homekit:
       - switch.master_bedroom_humidifier
       - alarm_control_panel.home_alarm
       - switch.xiaomi_vacuum
+      - lock.kwikset_touchpad_electronic_deadbolt_locked
+      - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - climate.hallway
+      - climate.dining_room
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code

@@ -4,6 +4,45 @@ homeassistant:
       customize: &customize
         package: 'tesla'
 
+    climate.tesla_model_3_hvac_climate_system:
+      <<: *customize
+
+    lock.tesla_model_3_door_lock:
+      <<: *customize
+
+    lock.tesla_model_3_charger_door_lock:
+      <<: *customize
+
+    sensor.tesla_model_3_mileage_sensor:
+      <<: *customize
+
+    switch.tesla_model_3_update_switch:
+      <<: *customize
+
+    sensor.tesla_model_3_battery_sensor:
+      <<: *customize
+
+    switch.tesla_model_3_maxrange_switch:
+      <<: *customize
+
+    sensor.tesla_model_3_range_sensor:
+      <<: *customize
+
+    switch.tesla_model_3_charger_switch:
+      <<: *customize
+
+    sensor.tesla_model_3_temperature_sensor_inside:
+      <<: *customize
+
+    sensor.tesla_model_3_temperature_sensor_outside:
+      <<: *customize
+
+    binary_sensor.tesla_model_3_parking_brake_sensor:
+      <<: *customize
+
+    binary_sensor.tesla_model_3_charger_sensor:
+      <<: *customize
+
 tesla:
   username: !secret tesla_account_username
   password: !secret tesla_account_password 
