@@ -1,0 +1,8 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'juicenet'
+
+juicenet:
+  access_token: !secret juicenet_token
