@@ -145,14 +145,15 @@ camera_snapshot:
   alias: snapshot from camera
   sequence:
   - data_template:
-      entity_id: "camera.{{ camera_entity_id }}"
-      filename: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
+      entity_id: camera.{{ camera_entity_id }}
+      filename: /tmp/{{ camera_entity_id }}_snapshot.jpg
     service: camera.snapshot
   - data_template:
       data:
         photo:
-        - caption: "Snapshot from {{ state_attr('camera.'+camera_entity_id, 'friendly_name') }}"
-          file: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
+        - caption: Snapshot from {{ state_attr('camera.'+camera_entity_id, 'friendly_name')
+            }}
+          file: /tmp/{{ camera_entity_id }}_snapshot.jpg
       message: camerasnap
     service: notify.nick
 ifttt_piper_arm_stay:
@@ -174,8 +175,15 @@ ifttt_piper_disarm:
       event: piper_disarm
     service: ifttt.trigger
 halloween_scream:
-  alias: "Halloween! Scream over MQTT"
+  alias: Halloween! Scream over MQTT
   sequence:
   - service: mqtt.publish
     data:
-      topic: "halloween/scream"
+      topic: halloween/scream
+'1577427473459':
+  alias: Stop Spotify In 10 Minutes
+  sequence:
+  - delay: 00:00:10
+  - data:
+      entity_id: media_player.spotify
+    service: media_player.media_stop
