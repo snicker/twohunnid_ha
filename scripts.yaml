@@ -183,7 +183,7 @@ halloween_scream:
 '1577427473459':
   alias: Stop Spotify In 10 Minutes
   sequence:
-  - delay: 00:00:10
+  - delay: 00:10:00
   - data:
       entity_id: media_player.spotify
-    service: media_player.media_stop
+    service: media_player.media_pause
