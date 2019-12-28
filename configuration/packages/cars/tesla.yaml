@@ -73,3 +73,6 @@ script:
           entity_id: climate.tesla_model_3_hvac_climate_system
           temperature: "{{ states('input_number.tesla_climate_target_temperature') | int  }}"
           hvac_mode: heat
+      - service: climate.turn_on
+        data_template:
+          entity_id: climate.tesla_model_3_hvac_climate_system
