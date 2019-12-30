@@ -39,18 +39,6 @@
   - data:
       message: back
     service: notify.nick
-- id: '1537421917666'
-  alias: 'Notification: Garage Door Open'
-  trigger:
-  - entity_id: sensor.vision_zg8101_garage_door_detector_alarm_level
-    from: '0'
-    platform: state
-    to: '255'
-  condition: []
-  action:
-  - data:
-      message: the garage is opening
-    service: notify.nick
 - id: '1537936842222'
   alias: 'Alarm State: Armed, Run "Alarm State: Armed (Any)" Script'
   trigger:
@@ -163,13 +151,13 @@
 - id: '1551828897602'
   alias: HA Server Overload
   trigger:
-  - above: '1'
+  - above: '2'
     entity_id: sensor.load_5m
     platform: numeric_state
   condition: []
   action:
   - data:
-      message: Homeassistant load has been over 1.00 for the 5m average... might want
+      message: Homeassistant load has been over 2.00 for the 5m average... might want
         to look into it
     service: notify.nick
 - id: '1558144520212'
@@ -215,10 +203,10 @@
       entity_id: switch.pool_pump
     service: switch.turn_off
 - id: '1567051911910'
-  alias: Pantry Light Off After 5 Mins
+  alias: Pantry Light Off After 3 Mins
   trigger:
   - entity_id: light.pantry_light
-    for: 00:05:00
+    for: 00:03:00
     platform: state
     to: 'on'
   condition: []
@@ -287,6 +275,26 @@
   action:
   - data:
       entity_id: light.garage_overhead_light
+    service: light.turn_off
+- id: '1573699279520'
+  alias: Ballet Studio Lights Off After 5 Mins No Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.ballet_studio_camera_motion_sensor_debounced
+    for: 00:05:00
+    platform: state
+    to: 'off'
+  - entity_id: light.z_wave_products_inc_wd100_level_3
+    for: 00:05:00
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.ballet_studio_camera_motion_sensor_debounced
+    state: 'off'
+  action:
+  - data:
+      entity_id: light.z_wave_products_inc_wd100_level_3
     service: light.turn_off
 - id: '1573699508759'
   alias: Garage Lights On If Doors Open After Dusk
