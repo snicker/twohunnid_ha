@@ -68,6 +68,9 @@ input_number:
 script:
   tesla_climate_activate:
     sequence:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: automation.garage_door_open_when_interior_door_open
       - service: climate.set_temperature
         data_template:
           entity_id: climate.tesla_model_3_hvac_climate_system

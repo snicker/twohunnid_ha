@@ -29,6 +29,15 @@ homeassistant:
     automation.garage_door_still_open:
       <<: *customize
       friendly_name: "Garage Door Open Alert"
+
+    automation.garage_door_open_when_interior_door_open:
+      <<: *customize
+      friendly_name: "Open Garage Door on Interior Door Opened"
+
+    automation.garage_door_open_when_interior_door_open_disabler:
+      <<: *customize
+      friendly_name: "Disable 'Open Garage Door on Interior Door Opened' after 10m"
+
       
 group:
   garage_door:
@@ -157,4 +166,31 @@ automation:
             action_data:
               entity_id: camera.yi_home_camera_garage
               yes_script: "script.garage_door_close_ios_response_yes"
-          
+
+  - alias: garage_door_open_when_interior_door_open
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.garage_interior_door
+        from: 'closed'
+        to: 'open'
+    condition:
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'closed'
+    action:
+      - service: cover.open_cover
+        entity_id: cover.garage_door
+      - service: homeassistant.turn_off
+        data:
+          entity_id: automation.garage_door_open_when_interior_door_open
+
+  - alias: garage_door_open_when_interior_door_open_disabler
+    trigger:
+      - platform: state
+        entity_id: automation.garage_door_open_when_interior_door_open
+        to: 'on'
+        for: 00:10:00
+    action:
+      - service: homeassistant.turn_off
+        data:
+          entity_id: automation.garage_door_open_when_interior_door_open
