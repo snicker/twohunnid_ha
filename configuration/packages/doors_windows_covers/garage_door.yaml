@@ -171,8 +171,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.garage_interior_door
-        from: off
-        to: on
+        from: 'off'
+        to: 'on'
     condition:
       - condition: state
         entity_id: cover.garage_door
