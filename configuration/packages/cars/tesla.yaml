@@ -59,7 +59,7 @@ input_number:
   tesla_climate_target_temperature:
     name: Tesla Model 3 Target Temperature
     icon: mdi:thermometer
-    unit_of_measurement: "fahrenheit"
+    unit_of_measurement: "F"
     mode: slider
     step: 1
     min: 45
@@ -77,5 +77,5 @@ script:
           temperature: "{{ states('input_number.tesla_climate_target_temperature') | int  }}"
           hvac_mode: heat
       - service: climate.turn_on
-        data_template:
+        data:
           entity_id: climate.tesla_model_3_hvac_climate_system
