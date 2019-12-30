@@ -12,11 +12,15 @@ telegram_bot:
       - !secret http_reverse_proxy_ip
     allowed_chat_ids:
       - !secret telegram_bot_chat_id_1
+      - !secret telegram_bot_flight_alerts_group_id
         
 notify:
   - name: !secret telegram_bot_chat_name_1
     platform: telegram
     chat_id: !secret telegram_bot_chat_id_1
+  - name: flight_alerts
+    platform: telegram
+    chat_id: !secret telegram_bot_flight_alerts_group_id
   - name: telegram
     platform: group
     services:
