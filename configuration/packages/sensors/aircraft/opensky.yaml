@@ -28,6 +28,7 @@ homeassistant:
     binary_sensor.ghettobird_overhead:
       <<: *customize
       friendly_name: "Ghettobird Overhead"
+      icon: mdi:helicopter
 
 input_boolean:
   ghettobird_overhead:
@@ -43,7 +44,6 @@ binary_sensor:
     sensors:
       ghettobird_overhead:
         value_template: "{{ is_state('input_boolean.ghettobird_overhead','on') }}"
-        icon: mdi:helicopter
         device_class: occupancy
 
 automation:
