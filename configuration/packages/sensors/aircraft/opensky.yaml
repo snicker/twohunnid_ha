@@ -56,7 +56,7 @@ automation:
     action:
       service: notify.flight_alerts
       data_template:
-        message : 'Flight entry of {{ trigger.event.data.callsign }} '
+        message : 'Flight entry of {{ trigger.event.data.callsign }} (https://www.flightradar24.com/{{ trigger.event.data.callsign }}/)'
 
   - alias: 'flight_exit_home_region'
     trigger:
