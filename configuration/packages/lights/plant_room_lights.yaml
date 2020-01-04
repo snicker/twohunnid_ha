@@ -7,4 +7,16 @@ homeassistant:
     light.z_wave_products_inc_wd100_level_2:
       <<: *customize
       friendly_name: "Plant Room Lights"
-        
+
+    sensor.plant_room_lights_on_today:
+      <<: *customize
+      friendly_name: "Plant Room Light Duration Tracker"
+
+sensor:
+  - platform: history_stats
+    name: plant_room_lights_on_today
+    entity_id: light.z_wave_products_inc_wd100_level_2
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
