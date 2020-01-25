@@ -143,11 +143,7 @@
     to: 'on'
   condition: []
   action:
-  - data:
-      entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked_2
-    service: lock.unlock
-  - data: {}
-    service: script.alarm_disarm
+  - scene: scene.nick_gets_home
 - id: '1551828897602'
   alias: HA Server Overload
   trigger:
