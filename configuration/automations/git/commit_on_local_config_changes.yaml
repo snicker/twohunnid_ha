@@ -6,7 +6,7 @@
       event_type: modified
   condition:
     condition: template
-    value_template: "{{ trigger.event.data.file in ('automations.yaml','customize.yaml','scripts.yaml','entity_registry.yaml') }}"
+    value_template: "{{ trigger.event.data.file in ('automations.yaml','customize.yaml','scripts.yaml','entity_registry.yaml','scenes.yaml') }}"
   action:
     - service: logbook.log
       data_template:
