@@ -135,7 +135,7 @@
       message: congrats on your zwift level!
     service: notify.nick
 - id: '1550015887078'
-  alias: disarm and unlock when nick home
+  alias: 'Nick gets Home: Activate Scene'
   trigger:
   - entity_id: input_boolean.presence_nick_homekit
     from: 'off'
