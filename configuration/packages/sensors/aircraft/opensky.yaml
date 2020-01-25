@@ -45,6 +45,7 @@ binary_sensor:
       ghettobird_overhead:
         value_template: "{{ is_state('input_boolean.ghettobird_overhead','on') }}"
         device_class: occupancy
+        delay_on: 30s
 
 automation:
   - alias: 'flight_enter_home_region'
@@ -79,9 +80,6 @@ automation:
       - condition: template
         value_template: "{{ trigger.event.data.callsign in state_attr('automation.ghettobird_overhead','ghettobird_callsigns') }}"
     action:
-      - service: notify.telegram
-        data_template:
-          message: 'Ghettobird overhead! (https://www.flightradar24.com/{{ trigger.event.data.callsign }}/)'
       - service: homeassistant.turn_on
         data:
           entity_id: input_boolean.ghettobird_overhead
@@ -96,9 +94,6 @@ automation:
       - condition: template
         value_template: "{{ trigger.event.data.callsign in state_attr('automation.ghettobird_overhead','ghettobird_callsigns') }}"
     action:
-      - service: notify.telegram
-        data_template:
-          message: 'Ghettobird gone: {{ trigger.event.data.callsign }}'
       - service: homeassistant.turn_off
         data:
           entity_id: input_boolean.ghettobird_overhead
