@@ -39,6 +39,7 @@ homekit:
       - lock.kwikset_touchpad_electronic_deadbolt_locked_2
       - climate.hallway
       - climate.dining_room
+      - binary_sensor.ghettobird_overhead
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
