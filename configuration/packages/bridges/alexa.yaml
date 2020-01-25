@@ -15,8 +15,7 @@ cloud:
         - switch.pool_pump
         - switch.coffee_grinder
         - switch.master_bedroom_humidifier
-        - script.garage_door_open_cover
-        - script.garage_door_close_cover
+        - cover.garage_door
         - sensor.garage_door_status
         - switch.edmond_is_outside
         - switch.xiaomi_vacuum

@@ -25,7 +25,7 @@ homekit:
       - light.remotec_unknown_type_8200_id_8130_level
       - light.remotec_unknown_type_8200_id_8130_level_2
     include_entities:
-      - cover.garage_door
+      - cover.garage_door_homekit
       - media_player.universal_media_player_living_room
       - media_player.master_bedroom_television
       - input_boolean.presence_nick_homekit

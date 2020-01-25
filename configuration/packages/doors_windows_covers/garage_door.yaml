@@ -26,6 +26,12 @@ homeassistant:
       friendly_name: "Garage Door"
       device_class: garage
       
+    cover.garage_door_homekit:
+      <<: *customize
+      friendly_name: "Garage Door (for Homekit)"
+      hidden: true
+      device_class: garage
+      
     automation.garage_door_still_open:
       <<: *customize
       friendly_name: "Garage Door Open Alert"
@@ -127,6 +133,19 @@ cover:
           {% else %}
             mdi:garage
           {% endif %}
+      garage_door_homekit:
+        friendly_name: "Garage Door (for Homekit)"
+        position_template: "{{ state_attr('cover.garage_door','current_position') }}"
+        open_cover:
+          - service: script.alarm_disarm
+          - service: cover.open_cover
+            entity_id: cover.garage_door
+        close_cover:
+          - service: cover.close_cover
+            entity_id: cover.garage_door
+        stop_cover:
+          - service: cover.stop_cover
+            entity_id: cover.garage_door
       
 automation:
 
