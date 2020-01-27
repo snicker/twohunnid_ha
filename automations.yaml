@@ -325,3 +325,17 @@
   action:
   - entity_id: light.plant_room_lamp
     service: light.turn_on
+- id: '1580153067349'
+  alias: Plant Room Lamp Off When Double Tap Wall Switch Off
+  description: ''
+  trigger:
+  - event_data:
+      entity_id: zwave.z_wave_products_inc_wd100_2
+      scene_data: 7860
+      scene_id: 2
+    event_type: zwave.scene_activated
+    platform: event
+  condition: []
+  action:
+  - entity_id: light.plant_room_lamp
+    service: light.turn_off
