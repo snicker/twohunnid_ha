@@ -359,3 +359,17 @@
   action:
   - entity_id: light.z_wave_products_inc_wd100_level_2
     service: light.turn_off
+- id: '1581130104525'
+  alias: Ballet studio lights on when motion detected at night
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.ballet_studio_camera_motion_sensor_debounced
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - after: sunset
+    condition: sun
+  action:
+  - entity_id: light.z_wave_products_inc_wd100_level_3
+    service: light.turn_on
