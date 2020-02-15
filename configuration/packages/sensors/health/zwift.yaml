@@ -43,6 +43,7 @@ group:
       - sensor.zwift_gradient_803962
       - sensor.zwift_ftp_803962
       - sensor.zwift_power_zone_803962
+      - automation.zwift_heartrate_fan_control
 
 input_datetime:
   zwift_last_online_803962:
@@ -80,6 +81,44 @@ automation:
         entity_id: input_datetime.zwift_last_offline_803962
         data_template:
           datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+  - alias: zwift_heartrate_fan_control
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.zwift_heart_rate_803962
+        below: 100
+      - platform: numeric_state
+        entity_id: sensor.zwift_heart_rate_803962
+        above: 100
+        below: 120
+      - platform: numeric_state
+        entity_id: sensor.zwift_heart_rate_803962
+        above: 120
+        below: 140
+      - platform: numeric_state
+        entity_id: sensor.zwift_heart_rate_803962
+        above: 140
+    action:
+      - service_template: >-
+          {% if states('sensor.zwift_heart_rate_803962') | int <= 100 %}
+            fan.turn_off
+          {% else %}
+            fan.turn_on
+          {% endif %}
+        data_template:
+          entity_id: fan.jasco_products_14287_fan_control_switch_level_2
+          speed: >-
+            {% set hr = states('sensor.zwift_heart_rate_803962') | int %}
+            {% if hr <= 100 %}
+            off
+            {% elif hr > 100 and hr <= 120 %}
+            low
+            {% elif hr > 120 and hr <= 140 %}
+            medium
+            {% elif hr > 140 %}
+            high
+            {% endif %}
+
       
 sensor:
   - platform: zwift
