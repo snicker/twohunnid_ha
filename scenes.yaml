@@ -1,7 +1,5 @@
 - id: '1579975394614'
   name: Nick Gets Home
   entities:
-    alarm_control_panel.home_alarm:
-      state: disarmed
-    cover.garage_door:
+    cover.garage_door_homekit:
       state: open 
