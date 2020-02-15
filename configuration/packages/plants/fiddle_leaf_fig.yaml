@@ -14,28 +14,28 @@ homeassistant:
         
     plant.fiddle_leaf_fig:
       <<: *customize
-      friendly_name: Fiddle Leaf Fig
+      friendly_name: Crown of Thorns
       battery_sensor_creation_disabled: true
       
     sensor.plant_fiddle_leaf_fig_battery:
       <<: *customize
-      friendly_name: "Fiddle Leaf Fig - Battery"
+      friendly_name: "Crown of Thorns - Battery"
       
     sensor.plant_fiddle_leaf_fig_moisture:
       <<: *customize
-      friendly_name: "Fiddle Leaf Fig - Moisture"
+      friendly_name: "Crown of Thorns - Moisture"
       
     sensor.plant_fiddle_leaf_fig_temperature:
       <<: *customize
-      friendly_name: "Fiddle Leaf Fig - Temperature"
+      friendly_name: "Crown of Thorns - Temperature"
         
     sensor.plant_fiddle_leaf_fig_light:
       <<: *customize
-      friendly_name: "Fiddle Leaf Fig - Brightness"
+      friendly_name: "Crown of Thorns - Brightness"
       
     sensor.plant_fiddle_leaf_fig_conductivity:
       <<: *customize
-      friendly_name: "Fiddle Leaf Fig - Conductivity"
+      friendly_name: "Crown of Thorns - Conductivity"
     
         
         
@@ -56,7 +56,7 @@ plant:
 
 automation:
   - id: fiddle_leaf_fig_notify_problems
-    alias: 'Fiddle Leaf Fig Notify of Problems'
+    alias: 'Crown of Thorns Notify of Problems'
     trigger:
     - platform: time_pattern
       minutes: '/60'

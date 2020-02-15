@@ -14,28 +14,28 @@ homeassistant:
         
     plant.zebra_plant:
       <<: *customize
-      friendly_name: Zebra Plant
+      friendly_name: Fiddle Leaf Fig
       battery_sensor_creation_disabled: true
       
     sensor.plant_zebra_plant_battery:
       <<: *customize
-      friendly_name: "Zebra Plant - Battery"
+      friendly_name: "Fiddle Leaf Fig - Battery"
       
     sensor.plant_zebra_plant_moisture:
       <<: *customize
-      friendly_name: "Zebra Plant - Moisture"
+      friendly_name: "Fiddle Leaf Fig - Moisture"
       
     sensor.plant_zebra_plant_temperature:
       <<: *customize
-      friendly_name: "Zebra Plant - Temperature"
+      friendly_name: "Fiddle Leaf Fig - Temperature"
         
     sensor.plant_zebra_plant_light:
       <<: *customize
-      friendly_name: "Zebra Plant - Brightness"
+      friendly_name: "Fiddle Leaf Fig - Brightness"
       
     sensor.plant_zebra_plant_conductivity:
       <<: *customize
-      friendly_name: "Zebra Plant - Conductivity"
+      friendly_name: "Fiddle Leaf Fig - Conductivity"
     
         
         
@@ -47,16 +47,16 @@ plant:
       temperature: sensor.plant_zebra_plant_temperature
       conductivity: sensor.plant_zebra_plant_conductivity
       brightness: sensor.plant_zebra_plant_light
-    min_moisture: 25
+    min_moisture: 20
     max_moisture: 80
     min_battery: 15
-    min_conductivity: 250
+    min_conductivity: 200
     min_temperature: 40
     max_temperature: 90
         
 automation:
   - id: zebra_plant_notify_problems
-    alias: 'Zebra Plant Notify of Problems'
+    alias: 'Fiddle Leaf Fig Notify of Problems'
     trigger:
     - platform: time_pattern
       minutes: '/60'
