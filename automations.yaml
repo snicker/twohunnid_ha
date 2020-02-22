@@ -411,3 +411,21 @@
   action:
   - entity_id: light.front_porch_lights
     service: light.turn_on
+- id: '1582360083628'
+  alias: porch lights off if on after 10pm for more than 2 minutes
+  description: ''
+  trigger:
+  - entity_id: light.front_porch_lights
+    for: 00:02:00
+    platform: state
+    to: 'on'
+  condition:
+  - condition: or
+    conditions:
+    - before: sunset
+      condition: sun
+    - after: 00:22:00
+      condition: time
+  action:
+  - entity_id: light.front_porch_lights
+    service: light.turn_off
