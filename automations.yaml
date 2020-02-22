@@ -373,3 +373,41 @@
   action:
   - entity_id: light.z_wave_products_inc_wd100_level_3
     service: light.turn_on
+- id: '1582359841784'
+  alias: porch lights on when front yard motion after dark
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.front_door_camera_motion_detected
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.front_yard_camera_motion
+    platform: state
+    to: 'on'
+  condition:
+  - after: sunset
+    after_offset: 01:30:00
+    before: sunrise
+    before_offset: 00:30:00
+    condition: sun
+  action:
+  - entity_id: light.front_porch_lights
+    service: light.turn_on
+- id: '1582359845715'
+  alias: porch lights on when front yard motion after dark
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.front_door_camera_motion_detected
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.front_yard_camera_motion
+    platform: state
+    to: 'on'
+  condition:
+  - after: sunset
+    after_offset: 01:30:00
+    before: sunrise
+    before_offset: 00:30:00
+    condition: sun
+  action:
+  - entity_id: light.front_porch_lights
+    service: light.turn_on
