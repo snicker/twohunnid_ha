@@ -40,6 +40,11 @@ homekit:
       - climate.hallway
       - climate.dining_room
       - binary_sensor.ghettobird_overhead
+      - sensor.plant_desert_rose_moisture
+      - sensor.plant_dragon_tree_moisture
+      - sensor.plant_fiddle_leaf_fig_moisture
+      - sensor.plant_peace_lily_moisture
+      - sensor.plant_zebra_plant_moisture
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
