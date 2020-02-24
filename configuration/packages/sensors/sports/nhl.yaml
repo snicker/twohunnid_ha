@@ -6,6 +6,7 @@ homeassistant:
         
     sensor.nhl_golden_knights:
       <<: *customize
+      friendly_name: "NHL: Golden Knights Hockey Information"
         
     sensor.nhl_golden_knights_away_team:
       <<: *customize
@@ -47,7 +48,7 @@ automation:
     - delay: "00:01:00"
     - service: script.alexa_announcement
       data_template:
-        message: "go knights go!"
+        message: "scooooooooooooooooooooooooooooore, ring! for your vegas golden knights: {{ states.sensor.nhl_golden_knights.attributes.last_goal }}. go knights go!"
   - id: golden_knights_final_score
     alias: golden_knights_final_score
     initial_state: true
@@ -59,4 +60,4 @@ automation:
     action:
     - service: script.alexa_announcement
       data_template:
-        message: "Final Score: {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} {{ states('sensor.nhl_golden_knights_away_team') }},, {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}{{ states('sensor.nhl_golden_knights_home_team') }} !"
+        message: "Go Knights Go. Final Score: {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} {{ states('sensor.nhl_golden_knights_away_team') }},, {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}{{ states('sensor.nhl_golden_knights_home_team') }} !"
