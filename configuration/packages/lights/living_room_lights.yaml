@@ -1,0 +1,50 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'living_room_lights'
+        
+    light.inovelli_lzw31_sn_dimmer_red_series_level:
+      <<: *customize
+      friendly_name: "Fireplace Lights"
+        
+    light.inovelli_lzw31_sn_dimmer_red_series_level_2:
+      <<: *customize
+      friendly_name: "Living Room Central Lights"
+
+    light.living_room_lights:
+      <<: *customize
+      friendly_name: "Living Room Lights"
+
+light:
+  - platform: group
+    name: living_room_lights
+    entities:
+      - light.inovelli_lzw31_sn_dimmer_red_series_level
+      - light.inovelli_lzw31_sn_dimmer_red_series_level_2
+
+script:
+  living_room_switch_notification:
+    sequence:
+      - service: script.inovelli_led
+        data_template:
+          entity_id: light.inovelli_lzw31_sn_dimmer_red_series_level
+          color: "{{ color }}"
+          level: "{{ level }}"
+          duration: "{{ duration }}"
+          effect: "{{ effect }}"
+      - service: script.inovelli_led
+        data_template:
+          entity_id: light.inovelli_lzw31_sn_dimmer_red_series_level_2
+          color: "{{ color }}"
+          level: "{{ level }}"
+          duration: "{{ duration }}"
+          effect: "{{ effect }}"
+  living_room_switch_notification_off:
+    sequence:
+      - service: script.inovelli_led_off
+        data_template:
+          entity_id: light.inovelli_lzw31_sn_dimmer_red_series_level
+      - service: script.inovelli_led_off
+        data_template:
+          entity_id: light.inovelli_lzw31_sn_dimmer_red_series_level_2
