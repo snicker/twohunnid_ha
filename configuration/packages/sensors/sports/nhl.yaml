@@ -44,6 +44,7 @@ automation:
       event_data:
         team_id: "54"
     action:
+    - delay: "00:01:00"
     - service: script.alexa_announcement
       data_template:
         message: "go knights go!"
