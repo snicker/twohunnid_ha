@@ -1,0 +1,61 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'nhl'
+        
+    sensor.nhl_golden_knights:
+      <<: *customize
+        
+    sensor.nhl_golden_knights_away_team:
+      <<: *customize
+        
+    sensor.nhl_golden_knights_home_team:
+      <<: *customize
+        
+    automation.golden_knights_score:
+      <<: *customize
+      friendly_name: "NHL: Golden Knights Score a Goal"
+        
+    automation.golden_knights_final_score:
+      <<: *customize
+      friendly_name: "NHL: Announce Golden Knights Final Score"
+
+sensor:
+  - platform: nhl_api
+    team_id: 54
+    name: nhl_golden_knights
+  - platform: template
+    sensors:
+      nhl_golden_knights_away_team:
+        friendly_name_template: '{{ states.sensor.nhl_golden_knights.attributes.away_name }}'
+        value_template: '{{ states.sensor.nhl_golden_knights.attributes.away_score }}'
+        entity_picture_template: '{{ states.sensor.nhl_golden_knights.attributes.away_logo }}'
+      nhl_golden_knights_home_team:
+        friendly_name_template: '{{ states.sensor.nhl_golden_knights.attributes.home_name }}'
+        value_template: '{{ states.sensor.nhl_golden_knights.attributes.home_score }}'
+        entity_picture_template: '{{ states.sensor.nhl_golden_knights.attributes.home_logo }}'
+
+automation:
+  - alias: golden_knights_score
+    trigger:
+      platform: event
+      event_type: nhl_goal
+      event_data:
+        team_id: "54"
+    action:
+    - service: script.alexa_announcement
+      data_template:
+        message: "go knights go!"
+  - id: golden_knights_final_score
+    alias: golden_knights_final_score
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: sensor.nhl_golden_knights
+      from: "Game Over"
+      to: "Final"
+    action:
+    - service: script.alexa_announcement
+      data_template:
+        message: "Final Score: {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} {{ states('sensor.nhl_golden_knights_away_team') }},, {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}{{ states('sensor.nhl_golden_knights_home_team') }} !"
