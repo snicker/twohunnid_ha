@@ -97,5 +97,5 @@ script:
               } %}
 
               {# Preform the Inovelli mind bending mathmatics automatically for us! :) #}
-              {{ colors[color|title] + (level * 256) + (durations[duration|title] * 65536) + (effects[effect|title] * 16777216) }}
+              {{ colors[color|title] + (level|int * 256) + (durations[duration|title] * 65536) + (effects[effect|title] * 16777216) }}
             {% endif %}
