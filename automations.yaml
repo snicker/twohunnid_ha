@@ -422,7 +422,7 @@
   condition:
   - condition: or
     conditions:
-    - before: sunset
+    - before: sunrise
       before_offset: -00:15:00
       condition: sun
     - after: '22:00:00'
