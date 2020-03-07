@@ -99,12 +99,7 @@ automation:
         entity_id: sensor.zwift_heart_rate_803962
         above: 140
     action:
-      - service_template: >-
-          {% if states('sensor.zwift_heart_rate_803962') | int <= 100 %}
-            fan.turn_off
-          {% else %}
-            fan.turn_on
-          {% endif %}
+      - service: fan.turn_on
         data_template:
           entity_id: fan.jasco_products_14287_fan_control_switch_level_2
           speed: >-
