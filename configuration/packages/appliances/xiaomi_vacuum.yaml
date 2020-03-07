@@ -24,6 +24,9 @@ homeassistant:
     automation.xiaomi_vacuum_cleaner_main_brush_error_restart:
       <<: *customize
       friendly_name: "Xiaomi Vacuum Restart Cleaning on Main Brush Error"
+
+    script.locate_vacuum:
+      <<: *customize
       
 vacuum:
   - platform: xiaomi_miio
@@ -43,6 +46,14 @@ switch:
           service: vacuum.return_to_base
           data:
             entity_id: vacuum.xiaomi_vacuum_cleaner
+
+script:
+  locate_vacuum:
+    alias: "Locate Vacuum"
+    sequence:
+      - service: vacuum.locate
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
 
 automation:
 
