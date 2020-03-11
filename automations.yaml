@@ -430,3 +430,20 @@
   action:
   - entity_id: light.front_porch_lights
     service: light.turn_off
+- id: '1583941722746'
+  alias: 'Internet: came back online'
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.internet_connection_status
+    for: 00:03:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: The internet connection at home is back online!
+    service: notify.nick
+  - data:
+      message: The internet is back online!
+    service: script.alexa_announcement
