@@ -3,6 +3,7 @@ homekit:
   filter:
     include_domains:
       - light
+      - camera
     exclude_entities:
       - switch.garage_door_relay
       - light.pantry_light
