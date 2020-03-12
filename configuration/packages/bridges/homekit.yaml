@@ -3,7 +3,6 @@ homekit:
   filter:
     include_domains:
       - light
-      - camera
     exclude_entities:
       - switch.garage_door_relay
       - light.pantry_light
@@ -46,6 +45,13 @@ homekit:
       - sensor.plant_fiddle_leaf_fig_moisture
       - sensor.plant_peace_lily_moisture
       - sensor.plant_zebra_plant_moisture
+      - camera.yi_home_camera_backyard_patio
+      - camera.yi_home_camera_ballet_studio
+      - camera.yi_home_camera_garage
+      - camera.front_door
+      - camera.front_yard_camera
+      - camera.dlink_camera_laundry
+      - camera.living_room_camera
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
@@ -61,3 +67,18 @@ homekit:
         - feature: toggle_mute
         - feature: play_pause
         - feature: play_stop
+    camera.yi_home_camera_backyard_patio:
+      support_audio: false
+    camera.yi_home_camera_ballet_studio:
+      support_audio: false
+    camera.yi_home_camera_garage:
+      support_audio: false
+    camera.front_door:
+      support_audio: false
+    camera.front_yard_camera:
+      support_audio: false
+    camera.dlink_camera_laundry:
+      support_audio: false
+    camera.living_room_camera:
+      support_audio: false
+    
