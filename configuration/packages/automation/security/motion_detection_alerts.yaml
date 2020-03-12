@@ -117,7 +117,6 @@ automation:
         entity_id: automation.reactivate_interior_motion_detection_alerts_after_30_minutes
         
   - alias: 'Telegram Command: snooze_all_exterior_motion_sensors_alerts'
-    hide_entity: true
     trigger:
       platform: event
       event_type: telegram_callback
@@ -132,7 +131,6 @@ automation:
         entity_id: script.snooze_exterior_detection_alerts
         
   - alias: 'Telegram Command: snooze_all_interior_motion_sensors_alerts'
-    hide_entity: true
     trigger:
       platform: event
       event_type: telegram_callback

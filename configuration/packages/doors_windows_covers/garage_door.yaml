@@ -150,7 +150,6 @@ cover:
 automation:
 
   - alias: "Garage Door Still Open"
-    hide_entity: true
     trigger:
       - platform: state
         entity_id:
