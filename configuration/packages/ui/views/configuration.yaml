@@ -7,7 +7,7 @@ group:
   configuration:
     name: Config
     icon: mdi:cogs
-    view: yes
+    
     entities:
       - group.home_settings
       - group.hahardware
@@ -16,7 +16,7 @@ group:
       - group.battery_status
 
   hardware_freenas:
-    view: no
+    
     entities:
       - sensor.freenas_version
       - sensor.freenas_alert_level
@@ -27,7 +27,7 @@ group:
       
   home_settings:
     name: Home Settings
-    view: no
+    
     control: hidden
     entities:
       - input_boolean.dogs_home
@@ -37,7 +37,7 @@ group:
       
   holiday_modes:
     name: Holiday Modes
-    view: no
+    
     control: hidden
     entities:
       - input_boolean.halloween_mode
@@ -45,7 +45,7 @@ group:
       
   hahardware:
     name: HomeAssistant Hardware
-    view: no
+    
     entities:
       - sensor.disk_use_percent_home
       - sensor.memory_use_percent
@@ -54,7 +54,7 @@ group:
       
   ha_control:
     name: HA Control
-    view: no
+    
     control: hidden
     entities:
       - script.git_pull

@@ -7,7 +7,7 @@ homeassistant:
       
 group:
   lights_and_locks:
-    view: yes
+    
     name: Lights, Locks, and Switches
     icon: mdi:lightbulb
     entities:

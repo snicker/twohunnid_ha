@@ -76,7 +76,6 @@ group:
   alexa_all_media_players:
     name: "All Alexas"
     control: hidden
-    view: no
     entities:
     - media_player.backyard_dot
     - media_player.kitchen_dot

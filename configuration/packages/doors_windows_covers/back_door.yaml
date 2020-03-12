@@ -26,7 +26,7 @@ group:
   back_door_sensors:
     name: "Back Door Sensors"
     control: hidden
-    view: no
+    
     entities:
       - binary_sensor.back_door
       - lock.kwikset_touchpad_electronic_deadbolt_locked

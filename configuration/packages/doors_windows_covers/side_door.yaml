@@ -22,7 +22,7 @@ group:
   side_door_sensors:
     name: "Side Door Sensors"
     control: hidden
-    view: no
+    
     entities:
       - binary_sensor.side_door
       - binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_2

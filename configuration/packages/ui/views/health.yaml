@@ -6,7 +6,7 @@ homeassistant:
 group:
   health:
     icon: mdi:heart-pulse
-    view: yes
+    
     name: Health
     entities:
       - group.health_zwift

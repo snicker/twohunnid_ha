@@ -7,7 +7,7 @@ group:
   cameras:
     name: Cameras
     icon: mdi:cctv
-    view: yes
+    
     entities:
       - camera.dlink_camera_laundry
       - camera.front_door
@@ -18,7 +18,7 @@ group:
       - group.camera_status
   camera_status:
     name: Cameras Online
-    view: no
+    
     icon: mdi:cctv
     entities:
       - binary_sensor.laundry_camera_status

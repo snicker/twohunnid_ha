@@ -2,7 +2,7 @@ group:
   all_motion_sensors:
     name: Motion Sensors - All
     control: hidden
-    view: no
+    
     entities:
       - binary_sensor.motion_backyard_north
       - binary_sensor.backyard_patio_camera_motion
@@ -20,7 +20,7 @@ group:
       
   all_exterior_motion_sensors:
     name: Motion Sensors - Exterior
-    view: no
+    
     control: hidden
     entities:
       - binary_sensor.motion_backyard_north
@@ -33,7 +33,7 @@ group:
       
   all_interior_motion_sensors:
     name: Motion Sensors - Interior
-    view: no
+    
     control: hidden
     entities:
       - binary_sensor.piper_sensor_motion
@@ -46,7 +46,7 @@ group:
       
   motion_sensor_scripts:
     name: Motion Sensor Scripts
-    view: no
+    
     control: hidden
     entities:
       - script.snooze_interior_detection_alerts
@@ -84,7 +84,7 @@ group:
   motion_backyard:
     name: Motion - Backyard
     control: hidden
-    view: no
+    
     entities:
       - group.motion_backyard_north
       - binary_sensor.backyard_patio_camera_motion
@@ -93,7 +93,7 @@ group:
   motion_front_yard:
     name: Motion - Front Yard
     control: hidden
-    view: no
+    
     entities:
       - group.motion_front_yard_south
       - group.motion_front_driveway

@@ -34,7 +34,7 @@ homeassistant:
 group:
   plants:
     name: Plants
-    view: yes
+    
     entities:
       - history_graph.plant_moisture
       - plant.desert_rose

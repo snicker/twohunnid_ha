@@ -5,7 +5,7 @@ homeassistant:
       
 group:
   climate:
-    view: yes
+    
     name: Climate & Temperature
     icon: mdi:thermostat
     entities:

@@ -5,7 +5,7 @@ homeassistant:
       
 group:
   media_players:
-    view: yes
+    
     name: Media Players
     icon: mdi:movie
     entities:

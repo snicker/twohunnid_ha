@@ -16,7 +16,7 @@ homeassistant:
       battery_sensor_creation_disabled: true
       
     group.battery_view:
-      view: no
+      
       
     sensor.spacecell_battery_level_2:
       battery_alert_disabled: true

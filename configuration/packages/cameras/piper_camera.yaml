@@ -30,7 +30,7 @@ homeassistant:
 group:
   piper_sensors:
     name: Piper Sensors
-    view: no
+    
     entities:
       - binary_sensor.piper_sensor_motion
       - binary_sensor.piper_sensor_sound

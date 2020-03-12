@@ -5,7 +5,7 @@ homeassistant:
       
 group:
   door_window_motion_sound_sensors:
-    view: yes
+    
     name: Doors, Windows, Motion and Sound
     icon: mdi:eye
     entities:
