@@ -28,7 +28,7 @@ group:
   home_settings:
     name: Home Settings
     
-    control: hidden
+    
     entities:
       - input_boolean.dogs_home
       - switch.edmond_is_outside
@@ -38,7 +38,7 @@ group:
   holiday_modes:
     name: Holiday Modes
     
-    control: hidden
+    
     entities:
       - input_boolean.halloween_mode
       - input_boolean.christmas_mode
@@ -55,7 +55,7 @@ group:
   ha_control:
     name: HA Control
     
-    control: hidden
+    
     entities:
       - script.git_pull
       - script.homeassistant_reload_without_restart

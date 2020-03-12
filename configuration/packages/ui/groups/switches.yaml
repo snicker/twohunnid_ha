@@ -1,7 +1,7 @@
 group:
   switches:
     icon: mdi:switch
-    control: hidden
+    
     name: All Switches
     entities: 
       - switch.backyard_amplifier

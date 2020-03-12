@@ -49,7 +49,7 @@ binary_sensor:
 group:
   living_room_camera:
     name: "Living Room Camera Settings"
-    control: hidden
+    
     entities:
     - camera.living_room_camera
     - switch.living_room_camera_h264_rtsp_server

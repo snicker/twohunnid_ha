@@ -1,7 +1,7 @@
 alarm_arming:
   name: Alarm
   icon: mdi:lock
-  control: hidden
+  
   entities:
     - alarm_control_panel.home_alarm
     - script.alarm_arm_away

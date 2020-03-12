@@ -1,7 +1,7 @@
 group:
   all_motion_sensors:
     name: Motion Sensors - All
-    control: hidden
+    
     
     entities:
       - binary_sensor.motion_backyard_north
@@ -21,7 +21,7 @@ group:
   all_exterior_motion_sensors:
     name: Motion Sensors - Exterior
     
-    control: hidden
+    
     entities:
       - binary_sensor.motion_backyard_north
       - binary_sensor.backyard_patio_camera_motion
@@ -34,7 +34,7 @@ group:
   all_interior_motion_sensors:
     name: Motion Sensors - Interior
     
-    control: hidden
+    
     entities:
       - binary_sensor.piper_sensor_motion
       - binary_sensor.motion_indoor_foyer
@@ -47,7 +47,7 @@ group:
   motion_sensor_scripts:
     name: Motion Sensor Scripts
     
-    control: hidden
+    
     entities:
       - script.snooze_interior_detection_alerts
       - script.snooze_exterior_detection_alerts
@@ -55,35 +55,35 @@ group:
       
   motion_backyard_north:
     name: Motion - Backyard (North)
-    control: hidden
+    
     entities:
       - binary_sensor.motion_backyard_north
       - sensor.device_motion_backyard_north_battery
       
   motion_backyard_south:
     name: Motion - Backyard (South)
-    control: hidden
+    
     entities:
       - binary_sensor.motion_backyard_south
       - sensor.device_motion_backyard_south_battery
       
   motion_front_yard_south:
     name: Motion - Front Yard (South)
-    control: hidden
+    
     entities:
       - binary_sensor.motion_front_yard_south
       - sensor.device_motion_front_yard_south_battery
       
   motion_front_driveway:
     name: Motion - Front Driveway
-    control: hidden
+    
     entities:
       - binary_sensor.motion_front_driveway
       - sensor.device_motion_front_driveway_battery
       
   motion_backyard:
     name: Motion - Backyard
-    control: hidden
+    
     
     entities:
       - group.motion_backyard_north
@@ -92,7 +92,7 @@ group:
       
   motion_front_yard:
     name: Motion - Front Yard
-    control: hidden
+    
     
     entities:
       - group.motion_front_yard_south

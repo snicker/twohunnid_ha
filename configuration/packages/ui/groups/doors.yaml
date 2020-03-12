@@ -2,7 +2,7 @@ group:
   all_doors:
     name: "All Doors"
     
-    control: hidden
+    
     entities:
       - binary_sensor.garage_door
       - binary_sensor.pantry_door_sensor
@@ -14,7 +14,7 @@ group:
   exterior_doors:
     name: "Exterior Doors"
     
-    control: hidden
+    
     entities:
       - binary_sensor.back_door
       - binary_sensor.side_door
@@ -24,7 +24,7 @@ group:
   interior_doors:
     name: "Interior Doors"
     
-    control: hidden
+    
     entities:
       - binary_sensor.pantry_door_sensor
       

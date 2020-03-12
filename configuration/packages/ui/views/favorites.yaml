@@ -16,7 +16,7 @@ group:
       - group.pool
       
   favorite_locks:
-    control: hidden
+    
     icon: mdi:lock
     name: Doors & Locks
     entities:
@@ -25,7 +25,7 @@ group:
       - cover.garage_door
   
   favorite_lights:
-    control: hidden
+    
     icon: mdi:lightbulb
     name: Lights
     entities:
@@ -34,7 +34,7 @@ group:
       - light.string_lights
       
   favorite_switches:
-    control: hidden
+    
     icon: mdi:switch
     name: Switches
     entities:

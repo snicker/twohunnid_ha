@@ -49,7 +49,7 @@ binary_sensor:
 group:
   ballet_studio_camera:
     name: "Ballet Studio Camera Settings"
-    control: hidden
+    
     entities:
     - camera.yi_home_camera_ballet_studio
     - switch.ballet_studio_camera_h264_rtsp_server

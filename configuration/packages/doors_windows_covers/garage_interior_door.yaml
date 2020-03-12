@@ -21,7 +21,7 @@ binary_sensor:
 group:
   garage_interior_door_sensors:
     name: "Garage Interior Door Sensors"
-    control: hidden
+    
     
     entities:
       - binary_sensor.garage_interior_door

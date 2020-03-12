@@ -13,7 +13,7 @@ group:
       - group.health_nick
       
   health_nick:
-    control: hidden
+    
     icon: mdi:account
     name: Health - Nick
     entities:
