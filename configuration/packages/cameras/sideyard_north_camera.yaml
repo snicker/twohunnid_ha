@@ -1,0 +1,39 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'sideyard_north_camera'
+    
+    camera.sideyard_north_camera:
+      <<: *customize
+      friendly_name: "Side Yard North Camera"
+      icon: mdi:cctv
+    
+    binary_sensor.sideyard_north_camera_motion:
+      <<: *customize
+      friendly_name: "Motion - Side Yard North (Camera)"
+      camera_entity_id: "sideyard_north_camera"
+      
+    binary_sensor.sideyard_north_camera_status:
+      <<: *customize
+      friendly_name: "Side Yard North Camera Status"
+      device_class: connectivity
+
+camera:
+  - platform: generic
+    name: sideyard_north_camera_camera
+    still_image_url: http://192.168.1.73:8080/cgi-bin/snapshot.sh?res=low
+    stream_source: rtsp://192.168.1.73:554/ch0_0.h264
+    
+binary_sensor:
+  - platform: mqtt
+    name: sideyard_north_camera_motion
+    state_topic: "cameras/yicam4/motion"
+    payload_on: "motion_start"
+    payload_off: "motion_stop"
+    device_class: motion
+  - platform: ping
+    name: sideyard_north_camera_status
+    host: 192.168.1.73
+    count: 3
+    scan_interval: 60

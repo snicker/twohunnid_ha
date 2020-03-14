@@ -52,6 +52,7 @@ homekit:
       - camera.front_yard_camera
       - camera.dlink_camera_laundry
       - camera.living_room_camera
+      - camera.sideyard_north_camera
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
@@ -80,5 +81,7 @@ homekit:
     camera.dlink_camera_laundry:
       support_audio: false
     camera.living_room_camera:
+      support_audio: false
+    camera.sideyard_north_camera:
       support_audio: false
     
