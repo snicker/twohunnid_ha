@@ -76,6 +76,7 @@ automation:
         - binary_sensor.motion_front_driveway
         - binary_sensor.front_door_camera_motion_detected
         - binary_sensor.front_yard_camera_motion
+        - binary_sensor.sideyard_north_camera_motion
       from: 'off'
       platform: state
       to: 'on'
