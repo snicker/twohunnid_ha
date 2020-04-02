@@ -450,3 +450,18 @@
   - data:
       message: The internet is back online!
     service: script.alexa_announcement
+- id: '1585787709740'
+  alias: Zwift Ride On
+  description: ''
+  trigger:
+  - event_data: {}
+    event_type: ''
+    platform: event
+  condition: []
+  action:
+  - data:
+      message: ride on!
+    service: script.notify_alexa
+  - data:
+      message: ride on!
+    service: notify.nick
