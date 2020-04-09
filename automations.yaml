@@ -129,7 +129,10 @@
   trigger:
   - entity_id: sensor.zwift_level_803962
     platform: state
-  condition: []
+  condition:
+  - condition: template
+    value_template: '{{ trigger.to_state.state | int > trigger.from_state.state |
+      int }}'
   action:
   - data:
       message: congrats on your zwift level!
@@ -447,3 +450,18 @@
   - data:
       message: The internet is back online!
     service: script.alexa_announcement
+- id: '1585787709740'
+  alias: Zwift Ride On
+  description: ''
+  trigger:
+  - event_data: {}
+    event_type: ''
+    platform: event
+  condition: []
+  action:
+  - data:
+      message: ride on!
+    service: script.notify_alexa
+  - data:
+      message: ride on!
+    service: notify.nick
