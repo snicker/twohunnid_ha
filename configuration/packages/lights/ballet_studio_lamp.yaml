@@ -1,0 +1,19 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'ballet_studio_lamp'
+      hide: &hide
+        <<: *customize
+        hidden: true
+      
+    light.ballet_studio_lamp:
+      <<: *customize
+      friendly_name: "Ballet Studio Lamp"
+
+light:
+  - platform: x10rf
+    devices:
+      - id: b1
+        name: ballet_studio_lamp
+    
