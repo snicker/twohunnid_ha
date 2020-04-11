@@ -11,6 +11,37 @@ homeassistant:
       <<: *customize
       friendly_name: "Ballet Studio Lamp"
 
+
+automation:
+  - id: ballet_studio_lamp_double_tap_on
+    alias: Ballet Studio Lamp On When Double Tap Wall Switch On
+    description: ''
+    trigger:
+    - event_data:
+        entity_id: zwave.z_wave_products_inc_wd100_3
+        scene_data: 7860
+        scene_id: 1
+      event_type: zwave.scene_activated
+      platform: event
+    condition: []
+    action:
+    - entity_id: light.ballet_studio_lamp
+      service: light.turn_on
+  - id: ballet_studio_lamp_double_tap_off
+    alias: Ballet Studio Lamp Off When Double Tap Wall Switch Off
+    description: ''
+    trigger:
+    - event_data:
+        entity_id: zwave.z_wave_products_inc_wd100_3
+        scene_data: 7860
+        scene_id: 2
+      event_type: zwave.scene_activated
+      platform: event
+    condition: []
+    action:
+    - entity_id: light.ballet_studio_lamp
+      service: light.turn_off
+
 light:
   - platform: x10rf
     devices:
