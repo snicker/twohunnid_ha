@@ -1,51 +1,5 @@
 cloud:
   alexa:
-    filter:
-      include_domains:
-        - light
-      include_entities:
-        - switch.backyard_amplifier
-        - script.alarm_arm_away
-        - script.alarm_arm_night
-        - group.exterior_lights
-        - group.interior_lights
-        - group.all_lights
-        - group.interior_christmas_lights
-        - media_player.universal_media_player_living_room
-        - switch.pool_pump
-        - switch.coffee_grinder
-        - switch.master_bedroom_humidifier
-        - cover.garage_door
-        - sensor.garage_door_status
-        - switch.edmond_is_outside
-        - switch.xiaomi_vacuum
-        - binary_sensor.front_door_camera_person_detected
-        - alarm_control_panel.home_alarm
-        - lock.kwikset_touchpad_electronic_deadbolt_locked
-        - lock.kwikset_touchpad_electronic_deadbolt_locked_2
-        - script.tesla_climate_activate
-        - script.locate_vacuum
-      exclude_entities:
-        - switch.garage_door_relay
-        - light.pantry_light
-        - light.front_landscape_lights_power
-        - light.north_pine_landscape_light
-        - light.front_pine_landscape_light
-        - light.ash_landscape_light
-        - light.olive_landscape_light
-        - light.all_front_landscape_lights
-        - light.jasco_products_26933_smart_motion_dimmer_level_2
-        - light.jasco_products_26933_smart_motion_dimmer_level
-        - light.front_porch_lights_power
-        - light.front_porch_bottom_left
-        - light.front_porch_bottom_right
-        - light.front_porch_upper_left
-        - light.front_porch_upper_right
-        - light.front_porch_left
-        - light.front_porch_right
-        - light.front_porch_all_lights
-        - light.remotec_unknown_type_8200_id_8130_level
-        - light.remotec_unknown_type_8200_id_8130_level_2
     entity_config:
       script.alarm_arm_away:
         name: Home Security
