@@ -58,7 +58,7 @@ class X10RFLight(X10Light):
         brightness = kwargs.get(ATTR_BRIGHTNESS)
         if brightness is not None and brightness > 0:
             cur_step = math.ceil(self._brightness / 4.0)
-            new_step = math.ceil(brightness / 4.0))
+            new_step = math.ceil(brightness / 4.0)
             delta = new_step - cur_step
             if delta != 0:
                 command = "bright" if delta > 0 else "dim"
