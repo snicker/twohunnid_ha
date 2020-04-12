@@ -65,5 +65,5 @@ class X10RFLight(X10Light):
                 rf = "" if self._is_cm11a else "f"
                 step = abs(delta)
                 x10_command(f"{rf}{command} {self._id} {step}")
-                self._brightness = math.ceil(brightness /4.0) - 1
+                self._brightness = (math.ceil(brightness /4.0) * 4) - 1
         self._state = True
