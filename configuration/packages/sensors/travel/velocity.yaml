@@ -1,0 +1,30 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'velocity'
+
+    sensor.velocity_nick:
+      <<: *customize
+      friendly_name: "Current Speed - Nick"
+      unit_of_measurement: "mph"
+      
+    group.velocity_nick:
+      <<: *customize
+
+group:
+  velocity_nick:
+    name: "Nick - Velocity Sensors"
+    entities:
+      - device_tracker.spacecell
+      - device_tracker.tesla_model_3_location_tracker
+
+sensor:
+  - platform: template
+    sensors:
+      velocity_nick:
+        entity_id:
+          - device_tracker.spacecell
+          - device_tracker.tesla_model_3_location_tracker
+        value_template: >
+          {% for obj in states|sort(attribute='last_updated', reverse=1) if obj.entity_id in state_attr(motion_group,'entity_id') if obj.attributes.get('speed')|int > 0 %}{% if loop.index == 1 %}{{obj.attributes.get('speed') | int}}{%endif%}{% endfor %}
