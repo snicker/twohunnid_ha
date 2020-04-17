@@ -18,6 +18,7 @@ group:
     entities:
       - device_tracker.spacecell
       - device_tracker.tesla_model_3_location_tracker
+      - device_tracker.life360_nick
 
 sensor:
   - platform: template
