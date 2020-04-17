@@ -27,5 +27,6 @@ sensor:
         entity_id:
           - device_tracker.spacecell
           - device_tracker.tesla_model_3_location_tracker
+          - device_tracker.life360_nick
         value_template: >
           {% for obj in states|sort(attribute='last_updated', reverse=1) if obj.entity_id in state_attr(motion_group,'entity_id') if obj.attributes.get('speed')|int > 0 %}{% if loop.index == 1 %}{{obj.attributes.get('speed') | int}}{%endif%}{% endfor %}
