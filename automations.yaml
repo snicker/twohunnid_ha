@@ -440,3 +440,17 @@
   - data:
       message: ride on!
     service: notify.nick
+- id: '1587237199784'
+  alias: 'Nick gets Home by walking: Activate Scene'
+  description: ''
+  trigger:
+  - entity_id: input_boolean.presence_nick_homekit
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - below: '7'
+    condition: numeric_state
+    entity_id: sensor.velocity_nick
+  action:
+  - scene: scene.nick_gets_home_by_walking
