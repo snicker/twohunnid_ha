@@ -9,3 +9,15 @@
       package: garage_door
       state: open
       supported_features: 11
+- id: '1587236913730'
+  name: Nick Gets Home By Walking
+  entities:
+    lock.kwikset_touchpad_electronic_deadbolt_locked_2:
+      friendly_name: Front Door Lock
+      lock_status: Unlocked by RF
+      node_id: 11
+      package: front_door
+      state: unlocked
+      value_id: '72057594228277248'
+      value_index: 0
+      value_instance: 1
