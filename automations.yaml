@@ -453,4 +453,6 @@
     condition: numeric_state
     entity_id: sensor.velocity_nick
   action:
+  - data: {}
+    service: script.alarm_disarm
   - scene: scene.nick_gets_home_by_walking
