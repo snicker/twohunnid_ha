@@ -1,5 +1,11 @@
 - id: '1579975394614'
-  name: Nick Gets Home
+  name: Nick Gets Home By Bike/Car
   entities:
     cover.garage_door_homekit:
-      state: open 
+      current_position: 100
+      device_class: garage
+      friendly_name: Garage Door (for Homekit)
+      hidden: true
+      package: garage_door
+      state: open
+      supported_features: 11
