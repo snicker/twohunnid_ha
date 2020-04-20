@@ -111,7 +111,7 @@ sensor:
             100
           {% elif states('sensor.garage_door_status') == 'closed' %}
             0
-          {% else %}
+          {% elif states('sensor.garage_door_status') in ('opening','closing') %}
             50
           {% endif %}
           
