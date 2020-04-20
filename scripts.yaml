@@ -187,3 +187,10 @@ halloween_scream:
   - data:
       entity_id: media_player.spotify
     service: media_player.media_pause
+'1587359809961':
+  alias: Hallway Fan On
+  sequence:
+  - data:
+      fan_mode: 'on'
+    entity_id: climate.hallway
+    service: climate.set_fan_mode
