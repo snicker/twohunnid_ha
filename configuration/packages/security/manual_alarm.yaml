@@ -23,6 +23,8 @@ alarm_control_panel:
       delay_time: 0
     armed_night:
       pending_time: 5
+    triggered:
+      pending_time: 1
 
 
 
@@ -52,12 +54,12 @@ script:
 
   alarm_triggered:
     sequence:
-#      - service: homeassistant.turn_on
-#        data:
-#          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
-#      - service: homeassistant.turn_on
-#        data:
-#          entity_id: switch.noonlight_switch
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.noonlight_switch
       - service: notify.ios_nickcell
         data:
           title: "Home alarm siren activated!"
@@ -71,9 +73,22 @@ script:
               category: yesno
             action_data:
               yes_script: "script.alarm_disarm"
+      - service: script.alarm_alexa_is_a_snitch-start
+  
+  alarm_alexa_is_a_snitch-start:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: triggered
+      - service: script.alarm_alexa_is_a_snitch
+
+  alarm_alexa_is_a_snitch:
+    sequence:
       - service: script.alexa_announcement_all
         data:
           message: The police have been notified. Leave the premises immediately!
+      - delay: 00:00:15
+      - service: script.alarm_alexa_is_a_snitch-start
+
 
   alarm_untriggered:
     sequence:
