@@ -76,6 +76,7 @@ script:
       - service: script.alarm_alexa_is_a_snitch_start
   
   alarm_alexa_is_a_snitch_start:
+    sequence:
       - condition: state
         entity_id: alarm_control_panel.home_alarm
         state: triggered
