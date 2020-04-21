@@ -244,9 +244,6 @@
   - data:
       message: alarm has been triggered!!
     service: notify.nick
-  - data:
-      entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
-    service: homeassistant.turn_on
 - id: '1567707958845'
   alias: Alarm triggered stop
   trigger:
