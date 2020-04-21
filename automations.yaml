@@ -216,45 +216,6 @@
   - data:
       entity_id: light.pantry_light
     service: light.turn_off
-- id: '1567707738302'
-  alias: Alarm trigger when doors open
-  trigger:
-  - entity_id: group.interior_doors
-    platform: state
-    to: 'On'
-  condition:
-  - condition: state
-    entity_id: alarm_control_panel.home_alarm
-    state: armed_away
-  action:
-  - data:
-      entity_id: alarm_control_panel.home_alarm
-    service: alarm_control_panel.alarm_trigger
-- id: '1567707885188'
-  alias: Alarm triggered
-  trigger:
-  - entity_id: alarm_control_panel.home_alarm
-    platform: state
-    to: triggered
-  condition: []
-  action:
-  - data:
-      message: alarm has been triggered!!!
-    service: notify.ios_nickcell
-  - data:
-      message: alarm has been triggered!!
-    service: notify.nick
-- id: '1567707958845'
-  alias: Alarm triggered stop
-  trigger:
-  - entity_id: alarm_control_panel.home_alarm
-    from: triggered
-    platform: state
-  condition: []
-  action:
-  - data:
-      entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
-    service: homeassistant.turn_off
 - id: '1573699277520'
   alias: Garage Lights Off After 2.5 Mins No Motion
   description: ''

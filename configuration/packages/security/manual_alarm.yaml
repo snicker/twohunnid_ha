@@ -7,6 +7,8 @@ homeassistant:
     alarm_control_panel.home_alarm:
       <<: *customize
 
+
+
 alarm_control_panel:
   - platform: manual
     name: Home Alarm
@@ -21,3 +23,136 @@ alarm_control_panel:
       delay_time: 0
     armed_night:
       pending_time: 5
+
+
+
+script:
+
+  trigger_alarm_with_warning:
+    sequence:
+      - service: script.alexa_announcement_all
+        data:
+          message: The alarm has been triggered. Siren will start in less than 30 seconds.
+      - service: notify.ios_nickcell
+        data:
+          title: "Home alarm triggered!"
+          message: The alarm has been triggered. Siren will start in less than 30 seconds. Disarm?
+          data:
+            push:
+              sound:
+                name: default
+                critical: 1
+                volume: 1.0
+              category: yesno
+            action_data:
+              yes_script: "script.alarm_disarm"
+      - service: alarm_control_panel.alarm_trigger
+        data:
+          entity_id: alarm_control_panel.home_alarm
+
+  alarm_triggered:
+    sequence:
+#      - service: homeassistant.turn_on
+#        data:
+#          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+#      - service: homeassistant.turn_on
+#        data:
+#          entity_id: switch.noonlight_switch
+      - data:
+          message: alarm has been triggered!!
+        service: notify.ios_nickcell
+        data:
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
+      - service: script.alexa_announcement_all
+        data:
+          message: The police have been notified. Leave the premises immediately!
+
+  alarm_untriggered:
+    sequence:
+      - data:
+          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+        service: homeassistant.turn_off
+
+  alarm_arm_night:
+    alias: 'Alarm: Arm Night'
+    sequence:
+    - data:
+        entity_id: alarm_control_panel.home_alarm
+        code: !secret alarm_panel_code
+      service: alarm_control_panel.alarm_arm_night
+
+  alarm_arm_away:
+    alias: 'Alarm: Arm Away'
+    sequence:
+    - data:
+        entity_id: alarm_control_panel.home_alarm
+        code: !secret alarm_panel_code
+      service: alarm_control_panel.alarm_arm_away
+
+  alarm_arm_home:
+    alias: 'Alarm: Arm Home'
+    sequence:
+    - data:
+        entity_id: alarm_control_panel.home_alarm
+        code: !secret alarm_panel_code
+      service: alarm_control_panel.alarm_arm_home
+
+  alarm_disarm:
+    alias: 'Alarm: Disarm'
+    sequence:
+    - data:
+        entity_id: alarm_control_panel.home_alarm
+        code: !secret alarm_panel_code
+      service: alarm_control_panel.alarm_disarm
+
+
+
+automation:
+  - alias: Alarm trigger when doors open
+    trigger:
+    - entity_id:
+      - binary_sensor.back_door
+      - binary_sensor.side_door
+      - binary_sensor.garage_interior_door
+      - binary_sensor.front_door
+      platform: state
+      to: 'on'
+    condition:
+    - condition: template
+      value_template: "{{ states('alarm_control_panel.home_alarm') in ('armed_away','armed_night') }}"
+    action:
+    - service: script.trigger_alarm_with_warning
+
+  - alias: Alarm trigger when garage door opens at night
+    trigger:
+    - above: '0'
+      entity_id: sensor.garage_door_position
+      for: 00:00:01
+      platform: numeric_state
+    condition:
+    - condition: template
+      value_template: "{{ states('alarm_control_panel.home_alarm') in ('armed_night') }}"
+    action:
+    - service: script.trigger_alarm_with_warning
+
+  - alias: Alarm triggered
+    trigger:
+    - entity_id: alarm_control_panel.home_alarm
+      platform: state
+      to: triggered
+    condition: []
+    action:
+    - service: script.alarm_triggered
+
+  - alias: Alarm triggered stop
+    trigger:
+    - entity_id: alarm_control_panel.home_alarm
+      from: triggered
+      platform: state
+    condition: []
+    action:
+    - service: script.alarm_untriggered
