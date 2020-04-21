@@ -73,9 +73,9 @@ script:
               category: yesno
             action_data:
               yes_script: "script.alarm_disarm"
-      - service: script.alarm_alexa_is_a_snitch-start
+      - service: script.alarm_alexa_is_a_snitch_start
   
-  alarm_alexa_is_a_snitch-start:
+  alarm_alexa_is_a_snitch_start:
       - condition: state
         entity_id: alarm_control_panel.home_alarm
         state: triggered
@@ -87,7 +87,7 @@ script:
         data:
           message: The police have been notified. Leave the premises immediately!
       - delay: 00:00:15
-      - service: script.alarm_alexa_is_a_snitch-start
+      - service: script.alarm_alexa_is_a_snitch_start
 
 
   alarm_untriggered:
