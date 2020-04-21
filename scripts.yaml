@@ -2,19 +2,11 @@ alarm_state_armed_any:
   alias: 'Alarm State: Armed (Any)'
   sequence:
   - data_template:
-      message: 'the alarm has been set to {{ states(''alarm_control_panel.home_alarm'')|replace(''_'',''
-        '') }} mode
-
-        '
+      message: 'the alarm has been set to {{ states("alarm_control_panel.home_alarm")|replace("_"," ") }} mode'
     service: notify.nick
   - service: lock.lock
     data:
       entity_id: all
-  - service: homeassistant.turn_on
-    data_template:
-      entity_id: "{% if states('input_boolean.dogs_home') == 'off' and states('alarm_control_panel.home_alarm')\
-        \ != 'armed_home' %}\n  script.ifttt_piper_arm_away\n{% else %}\n  script.ifttt_piper_arm_stay\n\
-        {% endif %}\n"
 alarm_state_disarmed:
   alias: 'Alarm State: Disarmed'
   sequence:
