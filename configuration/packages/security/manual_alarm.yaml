@@ -58,15 +58,19 @@ script:
 #      - service: homeassistant.turn_on
 #        data:
 #          entity_id: switch.noonlight_switch
-      - data:
-          message: alarm has been triggered!!
-        service: notify.ios_nickcell
+      - service: notify.ios_nickcell
         data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 1.0
+          title: "Home alarm siren activated!"
+          message: The alarm siren has been activated! Disarm?
+          data:
+            push:
+              sound:
+                name: default
+                critical: 1
+                volume: 1.0
+              category: yesno
+            action_data:
+              yes_script: "script.alarm_disarm"
       - service: script.alexa_announcement_all
         data:
           message: The police have been notified. Leave the premises immediately!
