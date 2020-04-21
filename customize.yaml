@@ -1,2 +1,1 @@
-alarm_control_panel.home_alarm:
-  code_arm_required: 'false'
+alarm_control_panel.home_alarm: {}
