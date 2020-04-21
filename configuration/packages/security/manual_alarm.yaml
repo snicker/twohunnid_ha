@@ -54,12 +54,12 @@ script:
 
   alarm_triggered:
     sequence:
-#      - service: homeassistant.turn_on
-#        data:
-#          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
-#      - service: homeassistant.turn_on
-#        data:
-#          entity_id: switch.noonlight_switch
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.noonlight_switch
       - service: notify.ios_nickcell
         data:
           title: "Home alarm siren activated!"
@@ -80,6 +80,7 @@ script:
       - condition: state
         entity_id: alarm_control_panel.home_alarm
         state: triggered
+      - delay: 00:00:01
       - service: script.alarm_alexa_is_a_snitch
 
   alarm_alexa_is_a_snitch:
