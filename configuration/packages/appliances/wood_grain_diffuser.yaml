@@ -16,13 +16,21 @@ homeassistant:
       <<: *customize
       friendly_name: "Wood Grain Diffuser Lamp"
 
+# Tasmota Module Configuration
+# https://templates.blakadder.com/oil_diffuser_550ml.html
+# {"NAME":"MY-KCL01800FB","GPIO":[255,255,255,255,255,255,0,0,255,255,255,255,255],"FLAG":0,"BASE":54}
+# Backlog SetOption66 1; TuyaMCU 21,7; TuyaMCU 11,111; TuyaMCU 12,101; TuyaMCU 13,133; TuyaMCU 14,9; TuyaMCU 15,115; DimmerRange 1,255; SetOption59 1; SwitchMode 1
+# Rule1 ON TuyaReceived#Data=55AA00070005020400010012 do Power1 0 ENDON ON TuyaReceived#Data=55AA00070005020400010113 do Power1 1 ENDON ON TuyaReceived#Data=55AA00070005020400010214 do Power1 1 ENDON ON TuyaReceived#Data=55AA00070005020400010315 do TuyaSend4 2,1 ENDON ON Power1#State=1 do TuyaSend4 2,1 ENDON ON Power1#State=0 do TuyaSend4 2,0 ENDON
+# Rule2 ON Power3#State=1 do backlog Tuyasend4 6,3; publish2 tele/woodgrain_diffuser/STATE {"Light":"ON","LightMode":"color"} ENDON ON Event#light_off do TuyaSend4 6,0 ENDON ON Event#rgb_cycle do TuyaSend4 6,1 ENDON ON Event#white do TuyaSend4 6,2 ENDON ON Event#color do TuyaSend4 6,3 ENDON ON Power3#State=0 do Backlog TuyaSend4 6,0; publish2 tele/woodgrain_diffuser/STATE {"Light":"OFF"} ENDON
+# Rule3 ON TuyaReceived#Data=55AA00070005060400010319 do Power3 1 ENDON ON TuyaReceived#Data=55AA00070005060400010117 do Publish2 tele/woodgrain_diffuser/STATE {"Light":"ON","LightMode":"rgb_cycle"} ENDON ON TuyaReceived#Data=55AA00070005060400010016 do Power3 0 ENDON ON TuyaReceived#Data=55AA00070005060400010218 do Publish2 tele/woodgrain_diffuser/STATE {"Light":"ON","LightMode":"white"} ENDON
+
 fan:
   - platform: mqtt
     name: wood_grain_diffuser
     availability_topic: "tele/woodgrain_diffuser/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-    state_topic: "stat/woodgrain_woodgrain_diffuser/POWER1"
+    state_topic: "stat/woodgrain_diffuser/POWER1"
     command_topic: "cmnd/woodgrain_diffuser/POWER1"
     payload_on: "ON"
     payload_off: "OFF"
