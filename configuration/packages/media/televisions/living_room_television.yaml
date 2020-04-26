@@ -74,8 +74,8 @@ media_player:
         service: media_player.volume_mute
         data:
           entity_id: media_player.living_room_television
-      attributes:
-        state: media_player.living_room_television
-        source: media_player.living_room_television|source
-        is_volume_muted: media_player.living_room_television|is_volume_muted
-        source_list: media_player.living_room_television|source_list
+    attributes:
+      state: media_player.living_room_television
+      source: media_player.living_room_television|source
+      is_volume_muted: media_player.living_room_television|is_volume_muted
+      source_list: media_player.living_room_television|source_list
