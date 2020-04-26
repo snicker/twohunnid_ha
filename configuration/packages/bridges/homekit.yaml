@@ -53,6 +53,8 @@ homekit:
       - camera.dlink_camera_laundry
       - camera.living_room_camera
       - camera.sideyard_north_camera
+      - fan.wood_grain_diffuser
+      - light.wood_grain_diffuser_lamp
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
