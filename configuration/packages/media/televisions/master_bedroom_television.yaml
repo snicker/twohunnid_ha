@@ -10,6 +10,12 @@ homeassistant:
       ir_codes_source: http://www.remotecentral.com/cgi-bin/mboard/rc-discrete/thread.cgi?7222
       icon: mdi:television
       device_class: tv
+
+    media_player.master_bedroom_television_homekit:
+      <<: *customize
+      friendly_name: "Master Bedroom Television (Homekit)"
+      icon: mdi:television
+      device_class: tv
       
     automation.turn_on_master_bedroom_tv_if_fire_tv_stick_is_on:
       <<: *customize
@@ -26,6 +32,36 @@ media_player:
     name: master_bedroom_television
     ircodes_ini: 'configuration/packages/media/televisions/sharp_aquos_ir_codes.ini'
     timeout: 10
+  - platform: universal
+    name: master_bedroom_television_homekit
+    children:
+      - media_player.master_bedroom_television
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        data:
+          entity_id: media_player.master_bedroom_television
+      turn_off:
+        service: media_player.turn_off
+        data:
+          entity_id: media_player.master_bedroom_television
+      volume_up:
+        service: media_player.volume_up
+        data:
+          entity_id: media_player.master_bedroom_television
+      volume_down:
+        service: media_player.volume_down
+        data:
+          entity_id: media_player.master_bedroom_television
+      volume_mute:
+        service: media_player.volume_mute
+        data:
+          entity_id: media_player.master_bedroom_television
+      attributes:
+        state: media_player.master_bedroom_television
+        source: media_player.master_bedroom_television|source
+        is_volume_muted: media_player.master_bedroom_television|is_volume_muted
+        source_list: media_player.master_bedroom_television|source_list
 
 automation:
   - alias: turn_on_master_bedroom_tv_if_fire_tv_stick_is_on
