@@ -1,2 +1,4 @@
 alarm_control_panel.home_alarm:
   code_arm_required: 'false'
+binary_sensor.konnected_motion_kitchen:
+  gpio_pin: '1'
