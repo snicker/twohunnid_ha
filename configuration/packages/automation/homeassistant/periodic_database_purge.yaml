@@ -2,9 +2,9 @@ automation:
   - alias: Database Purge
     trigger:
       platform: time
-      at: '12:00:00'
+      at: '2:30:00'
     action:
       - service: recorder.purge
         data:
-          keep_days: 28
+          keep_days: 14
           repack: true
