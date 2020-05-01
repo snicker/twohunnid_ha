@@ -48,6 +48,9 @@ history:
 
 logbook:
 
+recorder:
+  auto_purge: false
+
 map:
 
 sun:
