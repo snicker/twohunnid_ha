@@ -314,9 +314,11 @@
   description: ''
   trigger:
   - entity_id: binary_sensor.front_door_camera_motion_detected
+    from: 'off'
     platform: state
     to: 'on'
   - entity_id: binary_sensor.front_yard_camera_motion
+    from: 'off'
     platform: state
     to: 'on'
   condition:
