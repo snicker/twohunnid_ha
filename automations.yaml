@@ -416,3 +416,16 @@
   - data: {}
     service: script.alarm_disarm
   - scene: scene.nick_gets_home_by_walking
+- id: '1589162185956'
+  alias: Kitchen Lights On With Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.konnected_motion_kitchen
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.kitchen_sconces
+    service: light.turn_on
