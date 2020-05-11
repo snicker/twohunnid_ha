@@ -2,7 +2,8 @@ alarm_state_armed_any:
   alias: 'Alarm State: Armed (Any)'
   sequence:
   - data_template:
-      message: 'the alarm has been set to {{ states("alarm_control_panel.home_alarm")|replace("_"," ") }} mode'
+      message: the alarm has been set to {{ states("alarm_control_panel.home_alarm")|replace("_","
+        ") }} mode
     service: notify.nick
   - service: lock.lock
     data:
@@ -158,3 +159,14 @@ halloween_scream:
       fan_mode: 'on'
     entity_id: climate.hallway
     service: climate.set_fan_mode
+'1589168295612':
+  alias: Front Porch Lights Alarm Mode On
+  sequence:
+  - data:
+      effect: 5
+    entity_id: light.front_porch_right
+    service: light.turn_on
+  - data:
+      effect: 7
+    entity_id: light.front_porch_left
+    service: light.turn_on
