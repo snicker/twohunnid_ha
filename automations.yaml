@@ -429,3 +429,17 @@
   - data: {}
     entity_id: light.kitchen_sconces
     service: light.turn_on
+- id: '1589323818157'
+  alias: Kitchen Lights Off when No Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.konnected_motion_kitchen
+    for: 00:15:00
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.kitchen_sconces
+    service: light.turn_off
