@@ -424,7 +424,11 @@
     from: 'off'
     platform: state
     to: 'on'
-  condition: []
+  condition:
+  - after: sunset
+    before: sunrise
+    before_offset: -00:10:00
+    condition: sun
   action:
   - data: {}
     entity_id: light.kitchen_sconces
