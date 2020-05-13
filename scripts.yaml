@@ -7,7 +7,9 @@ alarm_state_armed_any:
     service: notify.nick
   - service: lock.lock
     data:
-      entity_id: all
+      entity_id:
+        - lock.kwikset_touchpad_electronic_deadbolt_locked
+        - lock.kwikset_touchpad_electronic_deadbolt_locked_2
 alarm_state_disarmed:
   alias: 'Alarm State: Disarmed'
   sequence:
