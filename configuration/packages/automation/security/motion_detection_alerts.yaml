@@ -45,6 +45,7 @@ automation:
       - binary_sensor.modetftp_motion_laundry
       - binary_sensor.ballet_studio_camera_motion_sensor_debounced
       - binary_sensor.living_room_camera_motion_sensor_debounced
+      - binary_sensor.konnected_motion_kitchen
       from: 'off'
       platform: state
       to: 'on'

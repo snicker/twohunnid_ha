@@ -85,7 +85,13 @@ script:
           entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
       - service: homeassistant.turn_on
         data:
+          entity_id: switch.konnected_alarm_bell
+      - service: homeassistant.turn_on
+        data:
           entity_id: switch.noonlight_switch
+      - service: homeassistant.turn_on
+        data:
+          entity_id: script.front_porch_lights_alarm_mode_on
       - service: notify.ios_nickcell
         data:
           title: "Home alarm siren activated!"
@@ -100,6 +106,19 @@ script:
             action_data:
               yes_script: "script.alarm_disarm"
       - service: script.alarm_alexa_is_a_snitch_start
+
+  alarm_untriggered:
+    sequence:
+      - data:
+          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+        service: homeassistant.turn_off
+      - data:
+          entity_id: switch.konnected_alarm_bell
+        service: homeassistant.turn_off
+      - service: light.turn_on
+        data:
+          effect: white
+        entity_id: light.front_porch_lights
   
   alarm_alexa_is_a_snitch_start:
     sequence:
@@ -117,12 +136,17 @@ script:
       - delay: 00:00:15
       - service: script.alarm_alexa_is_a_snitch_start
 
-
-  alarm_untriggered:
+  front_porch_lights_alarm_mode_on:
+    alias: Front Porch Lights Alarm Mode On
     sequence:
-      - data:
-          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
-        service: homeassistant.turn_off
+    - data:
+        effect: 5
+      entity_id: light.front_porch_right
+      service: light.turn_on
+    - data:
+        effect: 7
+      entity_id: light.front_porch_left
+      service: light.turn_on
 
   alarm_arm_night:
     alias: 'Alarm: Arm Night'
@@ -180,6 +204,21 @@ automation:
       entity_id: sensor.garage_door_position
       for: 00:00:01
       platform: numeric_state
+    condition:
+    - condition: template
+      value_template: "{{ states('alarm_control_panel.home_alarm') in ('armed_night') }}"
+    action:
+    - service: script.trigger_alarm_with_warning
+
+  - alias: Alarm trigger when motion detected at night
+    trigger:
+    - entity_id: 
+      - binary_sensor.motion_indoor_foyer
+      - binary_sensor.modetftp_motion_laundry
+      - binary_sensor.konnected_motion_kitchen
+      from: 'off'
+      platform: state
+      to: 'on'
     condition:
     - condition: template
       value_template: "{{ states('alarm_control_panel.home_alarm') in ('armed_night') }}"
