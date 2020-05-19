@@ -7,6 +7,10 @@ homeassistant:
     alarm_control_panel.home_alarm:
       <<: *customize
 
+    input_boolean.home_alarm_test_mode:
+      <<: *customize
+      friendly_name: "Home Alarm Testing Mode"
+
 
 
 alarm_control_panel:
@@ -52,7 +56,9 @@ alarm_control_panel:
               entity_id: alarm_control_panel.home_alarm
               code: !secret alarm_panel_code
 
-
+input_boolean:
+  home_alarm_test_mode:
+    icon: mdi:alarm
 
 script:
 
@@ -98,18 +104,6 @@ script:
 
   alarm_triggered:
     sequence:
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.konnected_alarm_bell
-      - service: homeassistant.turn_on
-        data:
-          entity_id: switch.noonlight_switch
-      - service: homeassistant.turn_on
-        data:
-          entity_id: script.front_porch_lights_alarm_mode_on
       - service: notify.ios_nickcell
         data:
           title: "Home alarm siren activated!"
@@ -124,6 +118,21 @@ script:
             action_data:
               yes_script: "script.alarm_disarm"
       - service: script.alarm_alexa_is_a_snitch_start
+      - condition: state
+        entity_id: input_boolean.home_alarm_test_mode
+        state: 'off'
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.linear_wa105dbz1_main_operated_siren_switch
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.konnected_alarm_bell
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.noonlight_switch
+      - service: homeassistant.turn_on
+        data:
+          entity_id: script.front_porch_lights_alarm_mode_on
 
   alarm_untriggered:
     sequence:
@@ -260,3 +269,14 @@ automation:
     condition: []
     action:
     - service: script.alarm_untriggered
+
+  - alias: Disable alarm test mode after 10 minutes
+    trigger:
+      - platform: state
+        entity_id: input_boolean.home_alarm_test_mode
+        to: 'on'
+        for: 00:10:00
+    action:
+      - service: homeassistant.turn_off
+        data:
+          entity_id: input_boolean.home_alarm_test_mode
