@@ -45,6 +45,7 @@ group:
       - binary_sensor.living_room_camera_motion_sensor_debounced
       - binary_sensor.garage_camera_motion
       - binary_sensor.modetftp_motion_laundry
+      - binary_sensor.konnected_motion_kitchen
       
   motion_sensor_scripts:
     name: Motion Sensor Scripts

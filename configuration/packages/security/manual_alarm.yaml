@@ -78,6 +78,24 @@ script:
         data:
           entity_id: alarm_control_panel.home_alarm
 
+  unexpected_motion_ask_to_trigger:
+    sequence:
+      - service: notify.ios_nickcell
+        data_template:
+          title: "Unexpected motion detected!"
+          message: &motion_detected_message >
+            Unexpected motion detected! Do you wish to trigger the alarm?
+            {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr('group.all_interior_motion_sensors','entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|replace('Motion - ','') }} ({{ (now() - obj.last_updated).total_seconds()|int }}s ago){% if loop.index < loop.length %}, {% endif %}{% endfor %}
+          data:
+            push:
+              sound:
+                name: default
+                critical: 1
+                volume: 1.0
+              category: yesno
+            action_data:
+              yes_script: "script.trigger_alarm_with_warning"
+
   alarm_triggered:
     sequence:
       - service: homeassistant.turn_on
@@ -210,7 +228,7 @@ automation:
     action:
     - service: script.trigger_alarm_with_warning
 
-  - alias: Alarm trigger when motion detected at night
+  - alias: Ask to trigger alarm when motion detected at night
     trigger:
     - entity_id: 
       - binary_sensor.motion_indoor_foyer
@@ -223,7 +241,7 @@ automation:
     - condition: template
       value_template: "{{ states('alarm_control_panel.home_alarm') in ('armed_night') }}"
     action:
-    - service: script.trigger_alarm_with_warning
+    - service: script.unexpected_motion_ask_to_trigger
 
   - alias: Alarm triggered
     trigger:
