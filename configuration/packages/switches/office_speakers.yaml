@@ -1,0 +1,51 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'office_speakers'
+        
+    switch.25048234840d8ebe302f:
+      <<: *customize
+      hidden: true
+    
+    switch.office_speakers:
+      <<: *customize
+      friendly_name: "Office Speakers"
+      
+    automation.office_speakers_auto_on:
+      <<: *customize
+      friendly_name: "Office Speakers: Auto On"
+      
+    automation.office_speakers_auto_off:
+      <<: *customize
+      friendly_name: "Office Speakers: Auto Off"
+            
+automation:
+  - id: office_speakers_auto_on
+    alias: office_speakers_auto_on
+    trigger:
+    - entity_id: media_player.office_dot
+      platform: state
+      to: playing
+    - entity_id: sensor.last_alexa
+      platform: state
+      to: media_player.office_dot
+    condition: []
+    action:
+    - data:
+        entity_id: switch.office_speakers
+      service: switch.turn_on
+  - id: office_speakers_auto_off
+    alias: office_speakers_auto_off
+    trigger:
+    - platform: template
+      value_template: "{{ states('media_player.office_dot') != 'playing' }}"
+      for: "00:05:00"
+    - platform: template
+      value_template: "{{ states('sensor.last_alexa') != 'media_player.office_dot' and states('media_player.office_dot') != 'playing' }}"
+      for: "00:05:00"
+    condition: []
+    action:
+    - data:
+        entity_id: switch.office_speakers
+      service: switch.turn_off
