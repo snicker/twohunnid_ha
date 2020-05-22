@@ -1,10 +1,10 @@
 ﻿homeassistant:
-  name: !secret home_name
-  latitude: !secret home_lat
-  longitude: !secret home_long
-  elevation: !secret home_elevation
-  unit_system: imperial
-  time_zone: !secret home_time_zone
+  #name: !secret home_name
+  #latitude: !secret home_lat
+  #longitude: !secret home_long
+  #elevation: !secret home_elevation
+  #unit_system: imperial
+  #time_zone: !secret home_time_zone
   customize: !include customize.yaml
   packages: !include_dir_named configuration/packages
   whitelist_external_dirs:
