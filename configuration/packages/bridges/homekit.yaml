@@ -88,7 +88,7 @@ homekit:
       linked_motion_sensor: binary_sensor.modetftp_motion_laundry
     camera.living_room_camera:
       support_audio: false
-      video_codec: copy
+      stream_source: "-rtsp_transport tcp -i rtsp://192.168.1.238:8554/unicast"
       linked_motion_sensor: binary_sensor.living_room_camera_motion_sensor_debounced
     camera.sideyard_north_camera:
       support_audio: false
