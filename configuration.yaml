@@ -26,7 +26,6 @@ mobile_app:
 config:
 
 http:
-  base_url: !secret http_base_url 
   use_x_forwarded_for: true
   trusted_proxies:
     - "192.168.1.19"
