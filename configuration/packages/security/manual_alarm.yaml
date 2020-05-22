@@ -27,8 +27,6 @@ alarm_control_panel:
       delay_time: 0
     armed_night:
       arming_time: 20
-    triggered:
-      arming_time: 1
 
   - platform: template
     panels:
