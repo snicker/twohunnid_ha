@@ -451,3 +451,17 @@
   - data: {}
     entity_id: light.kitchen_sconces
     service: light.turn_off
+- id: '1590342751412'
+  alias: 'iOS Action : Beer'
+  description: increments beer counter by one
+  trigger:
+  - event_data:
+      actionName: beer
+    event_type: ios.action_fired
+    platform: event
+  condition: []
+  action:
+  - data_template:
+      entity_id: input_number.ounces_of_beer
+      value: '{{ (states.input_number.ounces_of_beer.state | int ) + 1 }}'
+    service: input_number.set_value

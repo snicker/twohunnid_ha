@@ -100,4 +100,3 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 ffmpeg:
-stream:
