@@ -2,19 +2,19 @@ homeassistant:
   customize:
     package.node_anchors:
       customize: &customize
-        package: 'garage_overhead_light'
+        package: 'string_lights'
       hide: &hide
         <<: *customize
         hidden: true
       
-    light.garage_overhead_light:
+    light.string_lights:
       <<: *customize
-      friendly_name: "Garage Overhead Light"
+      friendly_name: "String Lights"
 
 light:
   - platform: mqtt
-    name: garage_overhead_light
-    command_topic: "x10/b9/command"
+    name: string_lights
+    command_topic: "x10/b2/command"
     payload_on: "fon"
     payload_off: "foff"
     

@@ -1,4 +1,0 @@
-- platform: x10rf
-  devices:
-    - id: b2
-      name: String Lights

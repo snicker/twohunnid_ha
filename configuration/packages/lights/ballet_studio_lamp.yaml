@@ -43,8 +43,11 @@ automation:
       service: light.turn_off
 
 light:
-  - platform: x10rf
-    devices:
-      - id: b1
-        name: ballet_studio_lamp
-    
+  - platform: mqtt
+    name: ballet_studio_lamp
+    on_command_type: first
+    command_topic: "x10/b1/command"
+    payload_on: "fon"
+    payload_off: "foff"    
+    brightness_command_topic: "x10/b1/fbrightness"
+    brightness_state_topic: "x10/b1/status/brightness"
