@@ -51,6 +51,6 @@ light:
     payload_on: "fon"
     payload_off: "foff"    
     state_topic: "x10/b1/status"
-    state_value_template: "f"
+    state_value_template: "f{{ value }}"
     brightness_command_topic: "x10/b1/fbrightness"
     brightness_state_topic: "x10/b1/status/brightness"
