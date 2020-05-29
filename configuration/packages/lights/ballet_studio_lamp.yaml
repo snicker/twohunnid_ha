@@ -50,5 +50,7 @@ light:
     command_topic: "x10/b1/command"
     payload_on: "fon"
     payload_off: "foff"    
+    state_topic: "x10/b1/status"
+    state_value_template: "f"
     brightness_command_topic: "x10/b1/fbrightness"
     brightness_state_topic: "x10/b1/status/brightness"

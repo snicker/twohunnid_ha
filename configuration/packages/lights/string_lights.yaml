@@ -18,4 +18,6 @@ light:
     command_topic: "x10/b2/command"
     payload_on: "fon"
     payload_off: "foff"
+    state_topic: "x10/b2/status"
+    state_value_template: "f"
     
