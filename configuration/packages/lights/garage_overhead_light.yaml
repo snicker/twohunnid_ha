@@ -14,6 +14,7 @@ homeassistant:
 light:
   - platform: mqtt
     name: garage_overhead_light
+    optimistic: false
     command_topic: "x10/b9/command"
     payload_on: "fon"
     payload_off: "foff"

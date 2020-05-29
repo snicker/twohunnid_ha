@@ -45,6 +45,7 @@ automation:
 light:
   - platform: mqtt
     name: ballet_studio_lamp
+    optimistic: false
     on_command_type: first
     command_topic: "x10/b1/command"
     payload_on: "fon"
