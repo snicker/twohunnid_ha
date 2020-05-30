@@ -122,6 +122,12 @@ sensor:
     
   - platform: template
     sensors:
+      zwift_tron_progress_802962:
+        friendly_name: "Zwift Tron Progress"
+        entity_id: sensor.zwift_online_803962
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('sensor.zwift_online_803962','totalDistanceClimbed') / 50000 }}"
+
       zwift_ftp_803962:
         friendly_name: "Zwift FTP (803962)"
         entity_id: sensor.zwift_online_803962
