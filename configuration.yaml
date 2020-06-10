@@ -8,7 +8,7 @@
   customize: !include customize.yaml
   packages: !include_dir_named configuration/packages
   whitelist_external_dirs:
-    - /home/homeassistant/.homeassistant
+#    - /home/homeassistant/.homeassistant
     - /tmp
   auth_providers:
    - type: homeassistant
