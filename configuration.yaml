@@ -74,10 +74,10 @@ nest:
   client_id: !secret nest_client_id
   client_secret: !secret nest_client_secret
   
-folder_watcher:
-  - folder: /config
-    patterns:
-    - '*.yaml'
+#folder_watcher:
+#  - folder: /config
+#    patterns:
+#    - '*.yaml'
     
 shell_command:
   git_commit_all: 'git --git-dir=/home/homeassistant/.homeassistant/.git --work-tree=/home/homeassistant/.homeassistant commit -a -m "automated commit for changes to local files while running"'
