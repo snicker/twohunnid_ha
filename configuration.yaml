@@ -75,7 +75,7 @@ nest:
   client_secret: !secret nest_client_secret
   
 folder_watcher:
-  - folder: /home/homeassistant/.homeassistant
+  - folder: /config
     patterns:
     - '*.yaml'
     
