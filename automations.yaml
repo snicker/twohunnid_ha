@@ -465,3 +465,42 @@
       entity_id: input_number.ounces_of_beer
       value: '{{ (states.input_number.ounces_of_beer.state | int ) + 1 }}'
     service: input_number.set_value
+- id: '1592460864088'
+  alias: Master Subwoofer On With Amp
+  description: ''
+  trigger:
+  - entity_id: switch.master_bedroom_powerstrip_socket_1
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_2
+    service: switch.turn_on
+- id: '1592460866877'
+  alias: Master Subwoofer On With Amp
+  description: ''
+  trigger:
+  - entity_id: switch.master_bedroom_powerstrip_socket_1
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_2
+    service: switch.turn_on
+- id: '1592460952328'
+  alias: Master Subwoofer Off With Amp
+  description: ''
+  trigger:
+  - entity_id: switch.master_bedroom_powerstrip_socket_1
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_2
+    service: switch.turn_off
