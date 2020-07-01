@@ -1,0 +1,138 @@
+substitutions:
+  board: esp01_1m
+  device_name: master_bedroom_powerstrip
+  friendly_name: Master Bedroom Powerstrip
+  
+esphome:
+  name: ${device_name}
+  platform: ESP8266
+  board: ${board}
+ 
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: on
+  ap:
+    ssid: !secret wifi_backup_ssid
+    password: !secret wifi_backup_password
+  reboot_timeout: 0s
+ 
+web_server:
+  port: 80
+ 
+logger:
+ 
+switch:
+- platform: gpio
+  name: "${friendly_name} Socket 1"
+  icon: mdi:power-socket-us
+  id: relay1
+  pin:
+    number: GPIO5
+    inverted: False
+  restore_mode: RESTORE_DEFAULT_ON
+  on_turn_on:
+  - switch.turn_on: red_led
+  on_turn_off:
+    - if:
+        condition:
+          and:
+            - switch.is_off: relay2
+            - switch.is_off: relay3
+            - switch.is_off: relay4
+        then:
+          - switch.turn_off: red_led
+- platform: gpio
+  name: "${friendly_name} Socket 2"
+  icon: mdi:power-socket-us
+  id: relay2
+  pin:
+    number: GPIO4
+    inverted: False
+  restore_mode: RESTORE_DEFAULT_ON
+  on_turn_on:
+  - switch.turn_on: red_led
+  on_turn_off:
+    - if:
+        condition:
+          and:
+            - switch.is_off: relay1
+            - switch.is_off: relay3
+            - switch.is_off: relay4
+        then:
+          - switch.turn_off: red_led
+- platform: gpio
+  name: "${friendly_name} Socket 3"
+  icon: mdi:power-socket-us
+  id: relay3
+  pin:
+    number: GPIO12
+    inverted: False
+  restore_mode: RESTORE_DEFAULT_ON
+  on_turn_on:
+  - switch.turn_on: red_led
+  on_turn_off:
+    - if:
+        condition:
+          and:
+            - switch.is_off: relay1
+            - switch.is_off: relay2
+            - switch.is_off: relay4
+        then:
+          - switch.turn_off: red_led
+- platform: gpio
+  name: "${friendly_name} Socket 4"
+  icon: mdi:power-socket-us
+  id: relay4
+  pin:
+    number: GPIO13
+    inverted: False
+  restore_mode: RESTORE_DEFAULT_ON
+  on_turn_on:
+  - switch.turn_on: red_led
+  on_turn_off:
+    - if:
+        condition:
+          and:
+            - switch.is_off: relay1
+            - switch.is_off: relay2
+            - switch.is_off: relay3
+        then:
+          - switch.turn_off: red_led
+- platform: gpio
+  name: "${friendly_name} USB Ports"
+  icon: mdi:usb
+  id: relay5
+  pin:
+    number: GPIO14
+    inverted: False
+  restore_mode: RESTORE_DEFAULT_ON
+ 
+- platform: gpio
+  internal: true
+  id: red_led
+  pin:
+    number: GPIO1
+    inverted: True
+ 
+- platform: restart
+  name: '${friendly_name} Reboot'
+ 
+binary_sensor:
+- platform: gpio
+  id: power_button
+  pin:
+    number: GPIO3
+    mode: INPUT_PULLUP
+    inverted: False
+  internal: true
+  on_press:
+    - switch.toggle: relay5
+ 
+# Enable Home Assistant API
+api:
+  password: !secret ota_api_password
+  reboot_timeout: 0s
+
+ota:
+  password: !secret ota_api_password
