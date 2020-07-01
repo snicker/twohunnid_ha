@@ -433,6 +433,10 @@
     - after: sunset
       after_offset: -00:40:00
       condition: sun
+  - condition: state
+    entity_id: light.kitchen_sconces
+    for: 00:00:05
+    state: 'off'
   action:
   - data: {}
     entity_id: light.kitchen_sconces
@@ -465,3 +469,125 @@
       entity_id: input_number.ounces_of_beer
       value: '{{ (states.input_number.ounces_of_beer.state | int ) + 1 }}'
     service: input_number.set_value
+- id: '1592460864088'
+  alias: Master Subwoofer On With Amp
+  description: ''
+  trigger:
+  - entity_id: switch.master_bedroom_powerstrip_socket_1
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_2
+    service: switch.turn_on
+- id: '1592460866877'
+  alias: Master Subwoofer On With Amp
+  description: ''
+  trigger:
+  - entity_id: switch.master_bedroom_powerstrip_socket_1
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_2
+    service: switch.turn_on
+- id: '1592460952328'
+  alias: Master Subwoofer Off With Amp
+  description: ''
+  trigger:
+  - entity_id: switch.master_bedroom_powerstrip_socket_1
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_2
+    service: switch.turn_off
+- id: '1593232218257'
+  alias: Dining Room Lights On Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.konnected_motion_dining_room
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: or
+    conditions:
+    - before: sunrise
+      before_offset: -00:10:00
+      condition: sun
+    - after: sunset
+      after_offset: -00:40:00
+      condition: sun
+  - condition: state
+    entity_id: light.z_wave_products_inc_wd100_level
+    for: 00:00:05
+    state: 'off'
+  action:
+  - data: {}
+    entity_id: light.z_wave_products_inc_wd100_level
+    service: light.turn_on
+- id: '1593232338954'
+  alias: Dining Room Lights Off No Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.konnected_motion_dining_room
+    for: 00:20:00
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.z_wave_products_inc_wd100_level
+    service: light.turn_off
+- id: '1593233346948'
+  alias: Master Bedroom Lights On Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.konnected_motion_master_bedroom
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: or
+    conditions:
+    - before: sunrise
+      before_offset: -00:10:00
+      condition: sun
+    - after: sunset
+      after_offset: -00:40:00
+      condition: sun
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_night
+  - condition: state
+    entity_id: light.leviton_dzmx11lz_dimmer_level
+    for: 00:00:05
+    state: 'off'
+  action:
+  - data: {}
+    entity_id: light.leviton_dzmx11lz_dimmer_level
+    service: light.turn_on
+- id: '1593233573752'
+  alias: Master Bedroom Lights Off No Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.konnected_motion_master_bedroom
+    for: 00:15:00
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.leviton_dzmx11lz_dimmer_level
+    service: light.turn_off

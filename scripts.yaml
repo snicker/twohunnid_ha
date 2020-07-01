@@ -8,8 +8,8 @@ alarm_state_armed_any:
   - service: lock.lock
     data:
       entity_id:
-        - lock.kwikset_touchpad_electronic_deadbolt_locked
-        - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - lock.kwikset_touchpad_electronic_deadbolt_locked
+      - lock.kwikset_touchpad_electronic_deadbolt_locked_2
 alarm_state_disarmed:
   alias: 'Alarm State: Disarmed'
   sequence:
@@ -161,3 +161,17 @@ halloween_scream:
       fan_mode: 'on'
     entity_id: climate.hallway
     service: climate.set_fan_mode
+'1592461045886':
+  alias: Master Bedroom Amp Off After 15 Minutes
+  sequence:
+  - delay: 00:15:00
+  - data: {}
+    entity_id: media_player.master_bedroom_dot
+    service: media_player.media_stop
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_2
+    service: switch.turn_off
+  - delay: 00:00:05
+  - data: {}
+    entity_id: switch.master_bedroom_powerstrip_socket_1
+    service: switch.turn_off
