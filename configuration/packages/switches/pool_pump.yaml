@@ -55,38 +55,38 @@ automation:
     alias: pool_pump_turn_on_by_schedule
     trigger:
     - platform: state
-      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
-      to: on
+      entity_id: "binary_sensor.pool_pump_scheduled_to_be_on_sensor"
+      to: "on"
     - platform: time_pattern
       minutes: "/5"
     condition:
     - condition: state
-      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
-      state: on
+      entity_id: "binary_sensor.pool_pump_scheduled_to_be_on_sensor"
+      state: "on"
     - condition: state
-      entity_id: switch.pool_pump
-      state: off
+      entity_id: "switch.pool_pump"
+      state: "off"
     action:
     - service: switch.turn_on 
       data:
-        entity_id: switch.backyard_amplifier
+        entity_id: "switch.pool_pump"
 
   - id: pool_pump_turn_off_by_schedule
     alias: pool_pump_turn_off_by_schedule
     trigger:
     - platform: state
-      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
-      to: off
+      entity_id: "binary_sensor.pool_pump_scheduled_to_be_on_sensor"
+      to: "off"
     - platform: time_pattern
       minutes: "/5"
     condition:
     - condition: state
-      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
-      state: off
+      entity_id: "binary_sensor.pool_pump_scheduled_to_be_on_sensor"
+      state: "off"
     - condition: state
-      entity_id: switch.pool_pump
-      state: on
+      entity_id: "switch.pool_pump"
+      state: "on"
     action:
     - service: switch.turn_off
       data:
-        entity_id: switch.backyard_amplifier
+        entity_id: "switch.pool_pump"
