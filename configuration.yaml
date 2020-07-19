@@ -52,9 +52,9 @@ recorder:
   db_url: !secret db_url
   exclude:
     entity_globs:
-      - "sensor.time*"
-      - "sensor.sun*"
-      - "sensor.date*"
+      - sensor.time*
+      - sensor.sun*
+      - sensor.date*
 
 map:
 
