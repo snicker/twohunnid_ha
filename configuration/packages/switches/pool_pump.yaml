@@ -39,6 +39,14 @@ binary_sensor:
     sensors:
       pool_pump_scheduled_to_be_on_sensor:
         friendly_name: "Pool Pump Scheduled To Be On"
+        entity_id:
+          - sensor.time
+          - input_datetime.pool_pump_schedule_start_1
+          - input_datetime.pool_pump_schedule_stop_1
+          - input_datetime.pool_pump_schedule_start_2
+          - input_datetime.pool_pump_schedule_stop_2
+          - input_datetime.pool_pump_schedule_start_3
+          - input_datetime.pool_pump_schedule_stop_3
         value_template: >-
           {% set n = now() %}
           {% set n = (n.hour*60+n.minute)*60+n.second %}
