@@ -50,6 +50,11 @@ logbook:
 recorder:
   auto_purge: false
   db_url: !secret db_url
+  exclude:
+    entity_globs:
+      - sensor.time*
+      - sensor.sun*
+      - sensor.date*
 
 map:
 
