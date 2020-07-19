@@ -7,3 +7,86 @@ homeassistant:
     switch.pool_pump:
       <<: *customize
       icon: mdi:pool
+
+input_datetime:
+  pool_pump_schedule_start_1:
+    name: Pool Pump Start Time 1
+    has_date: false
+    has_time: true
+  pool_pump_schedule_stop_1:
+    name: Pool Pump Stop Time 1
+    has_date: false
+    has_time: true
+  pool_pump_schedule_start_2:
+    name: Pool Pump Start Time 2
+    has_date: false
+    has_time: true
+  pool_pump_schedule_stop_2:
+    name: Pool Pump Stop Time 2
+    has_date: false
+    has_time: true
+  pool_pump_schedule_start_3:
+    name: Pool Pump Start Time 3
+    has_date: false
+    has_time: true
+  pool_pump_schedule_stop_3:
+    name: Pool Pump Stop Time 3
+    has_date: false
+    has_time: true
+
+binary_sensor:
+  - platform: template
+    sensors:
+      pool_pump_scheduled_to_be_on_sensor:
+        friendly_name: "Pool Pump Scheduled To Be On"
+        value_template: >-
+          {% set n = now() %}
+          {% set n = (n.hour*60+n.minute)*60+n.second %}
+          {% set start1 = state_attr('input_datetime.pool_pump_schedule_start_1', 'timestamp') %}
+          {% set end1 = state_attr('input_datetime.pool_pump_schedule_stop_1', 'timestamp') %}
+          {% set start2 = state_attr('input_datetime.pool_pump_schedule_start_2', 'timestamp') %}
+          {% set end2 = state_attr('input_datetime.pool_pump_schedule_stop_2', 'timestamp') %}
+          {% set start3 = state_attr('input_datetime.pool_pump_schedule_start_3', 'timestamp') %}
+          {% set end3 = state_attr('input_datetime.pool_pump_schedule_stop_3', 'timestamp') %}
+          {{ (n > start1 and n < end1) or (n > start2 and n < end2) or (n > start3 and n < end3) }}
+
+automation:
+  - id: pool_pump_turn_on_by_schedule
+    alias: pool_pump_turn_on_by_schedule
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
+      to: on
+    - platform: time_pattern
+      minutes: "/5"
+    condition:
+    - condition: state
+      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
+      state: on
+    - condition: state
+      entity_id: switch.pool_pump
+      state: off
+    action:
+    - service: switch.turn_on 
+      data:
+        entity_id: switch.backyard_amplifier
+
+  - id: pool_pump_turn_off_by_schedule
+    alias: pool_pump_turn_off_by_schedule
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
+      to: off
+    - platform: time_pattern
+      minutes: "/5"
+    condition:
+    - condition: state
+      entity_id: binary_sensor.pool_pump_scheduled_to_be_on_sensor
+      state: off
+    - condition: state
+      entity_id: switch.pool_pump
+      state: on
+    action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.backyard_amplifier
