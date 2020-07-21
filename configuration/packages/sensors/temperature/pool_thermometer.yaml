@@ -17,6 +17,7 @@ automation:
       entity_id: sensor.pool_thermometer_mqtt
     condition: []
     action:
+    - delay: "00:00:03"
     - service: script.turn_on
       data_template:
         entity_id: script.pool_thermometer_save_snapshot_and_message
