@@ -10,6 +10,7 @@
   whitelist_external_dirs:
 #    - /home/homeassistant/.homeassistant
     - /tmp
+    - /config
   auth_providers:
    - type: homeassistant
 

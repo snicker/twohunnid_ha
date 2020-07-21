@@ -1,8 +1,41 @@
 sensor:
   - platform: mqtt
+    name: pool_thermometer_mqtt
     state_topic: "rtl_433/AMTX3107/rows/0/data"
+
 image_processing:
   - platform: seven_segments
     digits: 3
     source:
       - entity_id: camera.yi_home_camera_ballet_studio
+
+automation:
+
+  - alias: 'pool_thermometer_temp_change'
+    trigger:
+    - platform: state
+      entity_id: sensor.pool_thermometer_mqtt
+    condition: []
+    action:
+    - service: script.turn_on
+      data_template:
+        entity_id: script.pool_thermometer_save_snapshot_and_message
+        variables:
+          source_data: "{{ states('sensor.pool_thermometer_mqtt') }}"
+
+script:
+
+  pool_thermometer_save_snapshot_and_message:
+    alias: pool_thermometer_save_snapshot_and_message
+    sequence:
+    - service: camera.snapshot
+      data_template:
+        entity_id: "camera.yi_home_camera_ballet_studio"
+        filename: "/config/snapshots/amtx_{{ source_data }}.jpg"
+    - service: notify.ha_debug
+      data_template:
+        message: "data: {{ source_data }}"
+        data:
+          photo:
+            caption: "data: {{ source_data }}"
+            file: "/config/snapshots/amtx_{{ source_data }}.jpg"

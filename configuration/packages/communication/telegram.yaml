@@ -13,6 +13,7 @@ telegram_bot:
     allowed_chat_ids:
       - !secret telegram_bot_chat_id_1
       - !secret telegram_bot_flight_alerts_group_id
+      - !secret telegram_bot_ha_debug_group_id
         
 notify:
   - name: !secret telegram_bot_chat_name_1
@@ -21,6 +22,9 @@ notify:
   - name: flight_alerts
     platform: telegram
     chat_id: !secret telegram_bot_flight_alerts_group_id
+  - name: ha_debug
+    platform: telegram
+    chat_id: !secret telegram_bot_ha_debug_group_id
   - name: telegram
     platform: group
     services:
