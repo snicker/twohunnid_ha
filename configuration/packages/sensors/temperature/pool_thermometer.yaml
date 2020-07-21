@@ -1,0 +1,8 @@
+sensor:
+  - platform: mqtt
+    state_topic: "rtl_433/AMTX3107/rows/0/data"
+image_processing:
+  - platform: seven_segments
+    digits: 3
+    source:
+      - entity_id: camera.yi_home_camera_ballet_studio
