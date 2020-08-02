@@ -47,7 +47,7 @@ media_player:
     mac: '78:0f:77:18:5f:ae'
     name: living_room_television
     ping_host: 192.168.1.234
-    ircodes_ini: 'lib/vpnmaster/homeassistant-custom-components/broadlink_media_codes/samsung.ini'
+    ircodes_ini: 'configuration/packages/media/televisions/samsung_tv_ir_codes.ini'
     timeout: 10
   - platform: universal
     name: living_room_television_homekit
