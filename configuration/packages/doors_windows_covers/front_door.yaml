@@ -35,6 +35,10 @@ binary_sensor:
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4')|int == 255 }}"
       front_door_doorbell:
         device_class: presence
+        entity_id:
+          - binary_sensor.front_door_camera_person_detected
+          - binary_sensor.front_door
+          - input_boolean.front_door_doorbell_enabled
         value_template: >-
           {% set doorbell_enabled = states('input_boolean.front_door_doorbell_enabled') %}
           {% set someone_at_the_door = states('binary_sensor.front_door_camera_person_detected') %}
