@@ -11,6 +11,10 @@ homeassistant:
       <<: *customize
       friendly_name: "Front Door"
       
+    binary_sensor.front_door_doorbell:
+      <<: *customize
+      friendly_name: "Front Doorbell"
+      
     sensor.front_door_unlocked_by_user_code:
       <<: *customize
       friendly_name: "Front door unlocked by user"
@@ -19,13 +23,27 @@ homeassistant:
       <<: *customize
       friendly_name: "Front Door Lock"
 
+    input_boolean.front_door_doorbell_enabled:
+      <<: *customize
+      friendly_name": "Front Doorbell Enabled"
+
 binary_sensor:
   - platform: template
     sensors:
       front_door:
         device_class: door
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4')|int == 255 }}"
-        
+      front_door_doorbell:
+        device_class: presence
+        value_template: >-
+          {% set doorbell_enabled = states('input_boolean.front_door_doorbell_enabled') %}
+          {% set someone_at_the_door = states('binary_sensor.front_door_camera_person_detected') %}
+          {% set front_door_opened_recently = states('binary_sensor.front_door') or (not states('binary_sensor.front_door') and (now() - states.binary_sensor.front_door.last_updated).total_seconds() < 180) %}
+          {{ doorbell_enabled and someone_at_the_door and not front_door_opened_recently }}
+
+input_boolean:
+  front_door_doorbell_enabled:
+
 sensor:
   - platform: template
     sensors:
