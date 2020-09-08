@@ -10,7 +10,7 @@ cloud:
       media_player.universal_media_player_living_room:
         name: TV
         description: Living room television
-      binary_sensor.front_door_camera_person_detected:
+      binary_sensor.front_door_doorbell:
         display_categories: DOORBELL
         name: Front Door
         description: Front Door Bell sensor

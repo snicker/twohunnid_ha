@@ -54,6 +54,7 @@ homekit:
       - camera.sideyard_north_camera
       - fan.wood_grain_diffuser
       - light.wood_grain_diffuser_lamp
+      - binary_sensor.front_door_doorbell
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
