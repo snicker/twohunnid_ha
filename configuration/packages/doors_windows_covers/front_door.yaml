@@ -40,9 +40,9 @@ binary_sensor:
           - binary_sensor.front_door
           - input_boolean.front_door_doorbell_enabled
         value_template: >-
-          {% set doorbell_enabled = states('input_boolean.front_door_doorbell_enabled') %}
-          {% set someone_at_the_door = states('binary_sensor.front_door_camera_person_detected') %}
-          {% set front_door_opened_recently = states('binary_sensor.front_door') or (not states('binary_sensor.front_door') and (now() - states.binary_sensor.front_door.last_updated).total_seconds() < 180) %}
+          {% set doorbell_enabled = is_state('input_boolean.front_door_doorbell_enabled','on') %}
+          {% set someone_at_the_door = is_state('binary_sensor.front_door_camera_person_detected','on') %}
+          {% set front_door_opened_recently = is_state('binary_sensor.front_door','on') or (is_state('binary_sensor.front_door','off') and (now() - states.binary_sensor.front_door.last_updated).total_seconds() < 450) %}
           {{ doorbell_enabled and someone_at_the_door and not front_door_opened_recently }}
 
 input_boolean:
