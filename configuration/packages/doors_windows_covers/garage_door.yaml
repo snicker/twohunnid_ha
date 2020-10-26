@@ -172,7 +172,7 @@ automation:
         to: 'open'
         for: '00:30:00'
     action:
-      - service: notify.ios_nickcell
+      - service: notify.mobile_app_spacecell
         data_template:
           message: "Garage door's been open for {{ relative_time(states.cover.garage_door.last_changed) }}. Close it?"
           data:

@@ -65,7 +65,7 @@ script:
       - service: script.alexa_announcement_all
         data:
           message: The alarm has been triggered. Siren will start in less than 30 seconds.
-      - service: notify.ios_nickcell
+      - service: notify.mobile_app_spacecell
         data:
           title: "Home alarm triggered!"
           message: The alarm has been triggered. Siren will start in less than 30 seconds. Disarm?
@@ -84,7 +84,7 @@ script:
 
   unexpected_motion_ask_to_trigger:
     sequence:
-      - service: notify.ios_nickcell
+      - service: notify.mobile_app_spacecell
         data_template:
           title: "Unexpected motion detected!"
           message: &motion_detected_message >
@@ -102,7 +102,7 @@ script:
 
   alarm_triggered:
     sequence:
-      - service: notify.ios_nickcell
+      - service: notify.mobile_app_spacecell
         data:
           title: "Home alarm siren activated!"
           message: The alarm siren has been activated! Disarm?

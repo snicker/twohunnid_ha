@@ -31,7 +31,7 @@ automation:
     - condition: state
       entity_id: alarm_control_panel.home_alarm
       state: disarmed
-    - service: notify.ios_nickcell
+    - service: notify.mobile_app_spacecell
       data_template:
         message: "Alarm has not been armed. Arm now?"
         data:
