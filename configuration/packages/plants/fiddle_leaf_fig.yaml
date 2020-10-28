@@ -59,7 +59,7 @@ automation:
     alias: 'Crown of Thorns Notify of Problems'
     trigger:
     - platform: time_pattern
-      minutes: '/60'
+      minutes: '/59'
       seconds: 00
     - entity_id: plant.fiddle_leaf_fig
       platform: state
