@@ -1,5 +1,0 @@
-
-
-flo:
-  email: !secret flo_username
-  password: !secret flo_password
