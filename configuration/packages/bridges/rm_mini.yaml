@@ -1,17 +1,8 @@
 switch:
   - platform: broadlink
-    host: 192.168.1.168
     mac: '78:0f:77:18:5f:ae'
-    type: rm_mini
-    friendly_name: "Living Room RM Mini"
     switches:
       rm_mini_copper_wire_string_lights:
         command_on: "JgBgAAABLJMUEhMSExIUEhMTEhMTEhMTEjYUNhM3EzUXMhU3EzYUNhM2FRETNhQSExMSExMyFxMTEhM2FBITNhM3EzYUEhM2FQAFHQABLUcUAAxSAAEtRxMADFMAASxHFQANBQAAAAAAAAAA"
         command_off: "JgBiAAABLJIYDxQSExIVEBYQFRAWEBYPEzYUNhY0FjMUNhM3FjMWNBM2FzMVNRUQFhAVEBM2Fw8WDxcPFg8VNBczFjQVEBczFgAFGwABLEkU1QsAC3IAAS5GFAAMUwABKkkUAA0FAAAAAAAA"
         friendly_name: "Copper Wire String Lights"
-        
-  - platform: broadlink
-    host: 192.168.1.205
-    mac: '78:0f:77:06:ef:75'
-    type: rm_mini
-    friendly_name: "Bedroom RM Mini"
