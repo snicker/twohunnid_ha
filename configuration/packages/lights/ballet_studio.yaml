@@ -4,7 +4,7 @@ homeassistant:
       customize: &customize
         package: 'ballet_studio_lights'
     
-    light.z_wave_products_inc_wd100_level_3:
+    light.zwaveproducts_com_wd_100_level_2:
       <<: *customize
       friendly_name: "Ballet Studio Lights"
         

@@ -4,7 +4,7 @@ homeassistant:
       customize: &customize
         package: 'dining_room_chandelier'
     
-    light.z_wave_products_inc_wd100_level:
+    light.zwaveproducts_com_wd_100_level:
       <<: *customize
       friendly_name: "Dining Room Chandelier"
         

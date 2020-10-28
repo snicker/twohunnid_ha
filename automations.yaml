@@ -224,7 +224,7 @@
     for: 00:05:00
     platform: state
     to: 'off'
-  - entity_id: light.z_wave_products_inc_wd100_level_3
+  - entity_id: light.zwaveproducts_com_wd_100_level_2
     for: 00:05:00
     platform: state
     to: 'on'
@@ -234,7 +234,7 @@
     state: 'off'
   action:
   - data:
-      entity_id: light.z_wave_products_inc_wd100_level_3
+      entity_id: light.zwaveproducts_com_wd_100_level_2
     service: light.turn_off
 - id: '1573699508759'
   alias: Garage Lights On If Doors Open After Dusk
@@ -287,7 +287,7 @@
   - after: sunset
     condition: sun
   action:
-  - entity_id: light.z_wave_products_inc_wd100_level_3
+  - entity_id: light.zwaveproducts_com_wd_100_level_2
     service: light.turn_on
 - id: '1582359841784'
   alias: porch lights on when front yard motion after dark
@@ -506,12 +506,12 @@
       after_offset: -00:40:00
       condition: sun
   - condition: state
-    entity_id: light.z_wave_products_inc_wd100_level
+    entity_id: light.zwaveproducts_com_wd_100_level
     for: 00:00:05
     state: 'off'
   action:
   - data: {}
-    entity_id: light.z_wave_products_inc_wd100_level
+    entity_id: light.zwaveproducts_com_wd_100_level
     service: light.turn_on
 - id: '1593232338954'
   alias: Dining Room Lights Off No Motion
@@ -525,7 +525,7 @@
   condition: []
   action:
   - data: {}
-    entity_id: light.z_wave_products_inc_wd100_level
+    entity_id: light.zwaveproducts_com_wd_100_level
     service: light.turn_off
 - id: '1593233346948'
   alias: Master Bedroom Lights On Motion
@@ -550,12 +550,12 @@
       entity_id: alarm_control_panel.home_alarm
       state: armed_night
   - condition: state
-    entity_id: light.leviton_dzmx11lz_dimmer_level
+    entity_id: light.leviton_dzmx1_1lz_dimmer_level
     for: 00:00:05
     state: 'off'
   action:
   - data: {}
-    entity_id: light.leviton_dzmx11lz_dimmer_level
+    entity_id: light.leviton_dzmx1_1lz_dimmer_level
     service: light.turn_on
 - id: '1593233573752'
   alias: Master Bedroom Lights Off No Motion
@@ -569,7 +569,7 @@
   condition: []
   action:
   - data: {}
-    entity_id: light.leviton_dzmx11lz_dimmer_level
+    entity_id: light.leviton_dzmx1_1lz_dimmer_level
     service: light.turn_off
 - id: '1602885984531'
   alias: 'Smartthings: Sync Backyard Sprinkler Switches'

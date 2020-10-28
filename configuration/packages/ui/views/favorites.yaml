@@ -29,8 +29,8 @@ group:
     icon: mdi:lightbulb
     name: Lights
     entities:
-      - light.leviton_dzmx11lz_dimmer_level
-      - light.z_wave_products_inc_wd100_level
+      - light.leviton_dzmx1_1lz_dimmer_level
+      - light.zwaveproducts_com_wd_100_level
       - light.string_lights
       
   favorite_switches:

@@ -14,5 +14,5 @@
         before_offset: "-0:20:00"
   action:
     - service: light.turn_on
-      entity_id: light.z_wave_products_inc_wd100_level_3
+      entity_id: light.zwaveproducts_com_wd_100_level_2
       

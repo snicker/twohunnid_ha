@@ -30,13 +30,13 @@ group:
     icon: mdi:lightbulb
     name: Interior Lighting
     entities:
-    - light.leviton_dzmx11lz_dimmer_level
+    - light.leviton_dzmx1_1lz_dimmer_level
     - light.master_bathroom_light
-    - light.z_wave_products_inc_wd100_level
+    - light.zwaveproducts_com_wd_100_level
     - light.christmas_tree
     - group.copper_wire_string_lights_settings
     - light.z_wave_products_inc_wd100_level_2
-    - light.z_wave_products_inc_wd100_level_3
+    - light.zwaveproducts_com_wd_100_level_2
     - light.kitchen_sconces
     - light.pantry_light_conditional
     - light.office_desk_lamp
