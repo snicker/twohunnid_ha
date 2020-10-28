@@ -175,3 +175,13 @@ halloween_scream:
   - data: {}
     entity_id: switch.master_bedroom_powerstrip_socket_1
     service: switch.turn_off
+open_tesla_trunk:
+  alias: Open Tesla Trunk
+  mode: single
+  sequence:
+  - data_template:
+      entity_id: '{{ trunk_id }}'
+    service: lock.unlock
+  - data_template:
+      entity_id: '{{ trunk_id }}'
+    service: lock.lock

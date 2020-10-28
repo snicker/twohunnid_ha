@@ -571,3 +571,99 @@
   - data: {}
     entity_id: light.leviton_dzmx11lz_dimmer_level
     service: light.turn_off
+- id: '1602885984531'
+  alias: 'Smartthings: Sync Backyard Sprinkler Switches'
+  description: ''
+  trigger:
+  - entity_id: switch.backyard_sprinklers
+    platform: state
+  - entity_id: switch.skydrop_d4d633de_zone_4_watering
+    platform: state
+  condition: []
+  action:
+  - data:
+      entity_id: '{% if trigger.from_state.entity_id == "switch.backyard_sprinklers"
+        %} light.bank_stalamp {% elif trigger.from_state.entity_id == "switch.skydrop_d4d633de_zone_4_watering"
+        %} switch.skydrop_d4d633de_zone_4_watering {% endif %}'
+    service_template: '{% if trigger.to_state.state == "on" %} switch.turn_on {% elif
+      trigger.to_state.state == "off" %} switch.turn_off {% endif %}'
+  - delay: 00:00:05
+  mode: single
+- id: '1603776641169'
+  alias: 'ALERT: the prowler might be here'
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.motion_front_driveway
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_night
+  action:
+  - data:
+      data:
+        action_data:
+          yes_script: script.trigger_exterior_alarm
+        push:
+          category: yesno
+          sound:
+            critical: 1
+            name: US-EN-Morgan-Freeman-Vacate-The-Premises
+            volume: 1
+      message: Motion detected in driveway! Sound the alarm?
+      title: Motion in driveway!
+    service: notify.mobile_app_spacecell
+  mode: single
+- id: '1603835967318'
+  alias: Pedestrian Gate Open In Night Mode
+  description: ''
+  trigger:
+  - device_id: 604fb2f1eced4b23971103bcab4aeca9
+    domain: binary_sensor
+    entity_id: binary_sensor.driveway_pedestrian_gate
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    platform: device
+    type: opened
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_night
+  action:
+  - device_id: deaf39e9c0f843eda4386b7c325a13e9
+    domain: switch
+    entity_id: switch.konnected_alarm_bell
+    type: turn_on
+  - data: {}
+    entity_id: light.front_landscape_lights
+    service: light.turn_on
+  - data: {}
+    entity_id: light.front_porch_lights
+    service: light.turn_on
+  - data: {}
+    entity_id: light.living_room_lights
+    service: light.turn_on
+  mode: single
+- id: '1603862067713'
+  alias: turn off alarm after 3min
+  description: ''
+  trigger:
+  - device_id: deaf39e9c0f843eda4386b7c325a13e9
+    domain: switch
+    entity_id: switch.konnected_alarm_bell
+    for:
+      hours: 0
+      minutes: 3
+      seconds: 0
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - device_id: deaf39e9c0f843eda4386b7c325a13e9
+    domain: switch
+    entity_id: switch.konnected_alarm_bell
+    type: turn_off
+  mode: single
