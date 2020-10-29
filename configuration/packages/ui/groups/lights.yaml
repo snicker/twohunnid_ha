@@ -35,7 +35,7 @@ group:
     - light.zwaveproducts_com_wd_100_level
     - light.christmas_tree
     - group.copper_wire_string_lights_settings
-    - light.z_wave_products_inc_wd100_level_2
+    - light.zwaveproducts_com_wd_100_level_3
     - light.zwaveproducts_com_wd_100_level_2
     - light.kitchen_sconces
     - light.pantry_light_conditional

@@ -4,7 +4,7 @@ homeassistant:
       customize: &customize
         package: 'plant_room_lights'
     
-    light.z_wave_products_inc_wd100_level_2:
+    light.zwaveproducts_com_wd_100_level_3:
       <<: *customize
       friendly_name: "Plant Room Lights"
 
@@ -15,7 +15,7 @@ homeassistant:
 sensor:
   - platform: history_stats
     name: plant_room_lights_on_today
-    entity_id: light.z_wave_products_inc_wd100_level_2
+    entity_id: light.zwaveproducts_com_wd_100_level_3
     state: 'on'
     type: time
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
