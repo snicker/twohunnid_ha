@@ -587,7 +587,7 @@
         %} switch.skydrop_d4d633de_zone_4_watering {% endif %}'
     service_template: '{% if trigger.to_state.state == "on" %} switch.turn_on {% elif
       trigger.to_state.state == "off" %} switch.turn_off {% endif %}'
-  - delay: 00:00:05
+  - delay: 00:00:10
   mode: single
 - id: '1603776641169'
   alias: 'ALERT: the prowler might be here'
@@ -666,4 +666,35 @@
     domain: switch
     entity_id: switch.konnected_alarm_bell
     type: turn_off
+  mode: single
+- id: '1603906962823'
+  alias: Moen Flo To Away When Alarm Away
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: armed_away
+  condition: []
+  action:
+  - service: flo.set_away_mode
+    data: {}
+    entity_id: switch.shutoff_valve
+  mode: single
+- id: '1603907093782'
+  alias: Moen Flo to Home when Alarm Disarmed
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    from: armed_away
+    to: armed_home
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    from: armed_away
+    to: disarmed
+  condition: []
+  action:
+  - service: flo.set_home_mode
+    data: {}
+    entity_id: switch.shutoff_valve
   mode: single
