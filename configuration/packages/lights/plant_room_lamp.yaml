@@ -18,7 +18,7 @@ automation:
     description: ''
     trigger:
     - event_data:
-        entity_id: zwave.z_wave_products_inc_wd100_2
+        entity_id: zwave.zwaveproducts_com_wd_100_4
         scene_data: 7860
         scene_id: 1
       event_type: zwave.scene_activated
@@ -32,7 +32,7 @@ automation:
     description: ''
     trigger:
     - event_data:
-        entity_id: zwave.z_wave_products_inc_wd100_2
+        entity_id: zwave.zwaveproducts_com_wd_100_4
         scene_data: 7860
         scene_id: 2
       event_type: zwave.scene_activated
