@@ -1,0 +1,41 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'skydrop'
+        
+    group.skydrop_sprinklers:
+      <<: *customize
+
+    sensor.active_sprinklers:
+      <<: *customize
+      icon: mdi:sprinkler
+
+group:
+  skydrop_sprinklers:
+    name: All Sprinklers
+    entities:
+      - switch.skydrop_4536a142_zone_3_watering
+      - switch.skydrop_4536a142_zone_4_watering
+      - switch.skydrop_4536a142_zone_5_watering
+      - switch.skydrop_4536a142_zone_6_watering
+      - switch.skydrop_4536a142_zone_7_watering
+      - switch.skydrop_4536a142_zone_8_watering
+      - switch.skydrop_d4d633de_zone_4_watering
+      - switch.skydrop_d4d633de_zone_5_watering
+
+sensor:
+  - platform: template
+    sensors:
+      active_sprinklers:
+        entity_id:
+          - switch.skydrop_4536a142_zone_3_watering
+          - switch.skydrop_4536a142_zone_4_watering
+          - switch.skydrop_4536a142_zone_5_watering
+          - switch.skydrop_4536a142_zone_6_watering
+          - switch.skydrop_4536a142_zone_7_watering
+          - switch.skydrop_4536a142_zone_8_watering
+          - switch.skydrop_d4d633de_zone_4_watering
+          - switch.skydrop_d4d633de_zone_5_watering
+        value_template: >
+          {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr('group.skydrop_sprinklers','entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|replace(' Watering','') }}{% if loop.index < loop.length %}, {% endif %}{% endfor %}
