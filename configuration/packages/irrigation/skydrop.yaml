@@ -9,6 +9,7 @@ homeassistant:
 
     sensor.active_sprinklers:
       <<: *customize
+      friendly_name: Currently Active Sprinklers
       icon: mdi:sprinkler
 
 group:
