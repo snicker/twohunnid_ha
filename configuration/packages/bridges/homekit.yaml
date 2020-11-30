@@ -24,6 +24,8 @@ homekit:
       - light.front_porch_all_lights
       - light.remotec_unknown_type_8200_id_8130_level
       - light.remotec_unknown_type_8200_id_8130_level_2
+      - light.holiday_lighting_south
+      - light.holiday_lighting_north
     include_entities:
       - cover.garage_door_homekit
       - media_player.master_bedroom_television_homekit
