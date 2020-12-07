@@ -16,6 +16,8 @@ group:
       - light.holiday_spotlight
       - light.christmas_eave_lights
       - light.olive_tree_holiday_lights
+      - light.ash_tree_holiday_lights
+      - light.front_pine_tree_holiday_lights
     
   exterior_lights:
     icon: mdi:lightbulb
@@ -29,6 +31,8 @@ group:
     - light.holiday_spotlight
     - light.christmas_eave_lights
     - light.olive_tree_holiday_lights
+    - light.ash_tree_holiday_lights
+    - light.front_pine_tree_holiday_lights
     
   interior_lights:
     icon: mdi:lightbulb
