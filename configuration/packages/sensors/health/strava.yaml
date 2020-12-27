@@ -12,7 +12,7 @@ homeassistant:
       <<: *customize
       friendly_name: "Strava Goal: Target Mileage"
 
-    input_text.strava_goal_target_date:
+    input_datetime.strava_goal_target_date:
       <<: *customize
       friendly_name: "Strava Goal: Target Completion Date"
 
@@ -42,7 +42,7 @@ group:
     entities:
       - input_text.strava_goal_starting_mileage
       - input_text.strava_goal_target_mileage
-      - input_text.strava_goal_target_date
+      - input_datetime.strava_goal_target_date
       - sensor.strava_goal_mileage_complete
       - sensor.strava_goal_percent_complete
       - sensor.strava_goal_mileage_remaining
@@ -79,7 +79,7 @@ sensor:
       strava_goal_miles_per_day_target:
         unit_of_measurement: "mi"
         value_template: >
-          {{ (states('sensor.strava_goal_mileage_remaining') | float / states('strava_goal_days_remaining') | float) | round(1,"ceil") }}
+          {{ (states('sensor.strava_goal_mileage_remaining') | float / states('sensor.strava_goal_days_remaining') | float) | round(1,"ceil") }}
 
       strava_goal_percent_complete:
         unit_of_measurement: "%"
