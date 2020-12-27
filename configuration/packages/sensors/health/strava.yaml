@@ -1,0 +1,88 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'strava'
+
+    input_text.strava_goal_starting_mileage:
+      <<: *customize
+      friendly_name: "Strava Goal: Starting Mileage"
+
+    input_text.strava_goal_target_mileage:
+      <<: *customize
+      friendly_name: "Strava Goal: Target Mileage"
+
+    input_text.strava_goal_target_date:
+      <<: *customize
+      friendly_name: "Strava Goal: Target Completion Date"
+
+    sensor.strava_goal_mileage_complete:
+      <<: *customize
+      friendly_name: "Strava Goal: Mileage Complete"
+
+    sensor.strava_goal_mileage_remaining:
+      <<: *customize
+      friendly_name: "Strava Goal: Mileage Remaining"
+
+    sensor.strava_goal_days_remaining:
+      <<: *customize
+      friendly_name: "Strava Goal: Days Remaining"
+
+    sensor.strava_goal_miles_per_day_target:
+      <<: *customize
+      friendly_name: "Strava Goal: Target Distance Per Day"
+
+    sensor.strava_goal_percent_complete:
+      <<: *customize
+      friendly_name: "Strava Goal: Percent Complete"
+
+group:
+  strava_goal_settings:
+    name: "Strava Goal: Settings"
+    entities:
+      - input_text.strava_goal_starting_mileage
+      - input_text.strava_goal_target_mileage
+      - input_text.strava_goal_target_date
+      - sensor.strava_goal_mileage_complete
+      - sensor.strava_goal_percent_complete
+      - sensor.strava_goal_mileage_remaining
+      - sensor.strava_goal_days_remaining
+      - sensor.strava_goal_miles_per_day_target
+
+sensor:
+  - platform: template
+    sensors:
+      strava_goal_mileage_complete:
+        unit_of_measurement: "mi"
+        value_template: >
+          {% set current_strava_mileage = states('sensor.strava_stats_summary_all_ride_distance') | string | replace(' mi','') | float %}
+          {% set zwift_online_mileage = states('sensor.zwift_distance_803962') | float / 1609.34 %}
+          {% set current_mileage = current_strava_mileage + zwift_online_mileage %}
+          {% set starting_mileage = states('input_text.strava_goal_starting_mileage') | float %}
+          {{ current_mileage - starting_mileage }}
+
+      strava_goal_mileage_remaining:
+        unit_of_measurement: "mi"
+        value_template: >
+          {% set current_strava_mileage = states('sensor.strava_stats_summary_all_ride_distance') | string | replace(' mi','') | float %}
+          {% set zwift_online_mileage = states('sensor.zwift_distance_803962') | float / 1609.34 %}
+          {% set current_mileage = current_strava_mileage + zwift_online_mileage %}
+          {% set starting_mileage = states('input_text.strava_goal_starting_mileage') | float %}
+          {% set final_mileage = starting_mileage + states('input_text.strava_goal_target_mileage') | float %}
+          {{ final_mileage - current_mileage }}
+
+      strava_goal_days_remaining:
+        unit_of_measurement: "d"
+        value_template: >
+          {{ ((state_attr('input_datetime.strava_goal_target_date','timestamp') - now().timestamp()) / 86400) | round(0, "ceil") }}
+
+      strava_goal_miles_per_day_target:
+        unit_of_measurement: "mi"
+        value_template: >
+          {{ (states('sensor.strava_goal_mileage_remaining') | float / states('strava_goal_days_remaining') | float) | round(1,"ceil") }}
+
+      strava_goal_percent_complete:
+        unit_of_measurement: "%"
+        value_template: >
+          {{ states('sensor.strava_goal_mileage_complete') | float / states('input_text.strava_goal_target_mileage') | float }}
+  
