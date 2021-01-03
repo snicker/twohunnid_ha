@@ -28,6 +28,7 @@ homekit:
       - light.holiday_lighting_north
     include_entities:
       - cover.garage_door_homekit
+      - switch.driveway_swing_gate_relay
       - media_player.master_bedroom_television_homekit
       - input_boolean.presence_nick_homekit
       - input_boolean.presence_brittany_homekit
