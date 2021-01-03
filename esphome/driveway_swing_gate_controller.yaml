@@ -10,7 +10,7 @@ wifi:
   reboot_timeout: 0s
   ap:
     ssid: "driveway_swing_gate_controller"
-    password: "esphome"
+    password: "esphome1"
   domain: .twohunnid
   fast_connect: true
 
