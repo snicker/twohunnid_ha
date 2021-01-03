@@ -35,11 +35,13 @@ binary_sensor:
     name: "Driveway Swing Gate Controller Closed Sensor"
     pin:
       number: GPIO1 #TX
+      mode: FUNCTION_3
       inverted: True
   - platform: gpio
     name: "Driveway Swing Gate Controller Open Sensor"
     pin:
       number: GPIO3 #RX
+      mode: FUNCTION_3
       inverted: True
       
 switch:
@@ -55,7 +57,7 @@ switch:
     id: internal_relay_switch
     internal: True
   - platform: template
-    name: "Garage Door Relay"
+    name: "Driveway Swing Gate Relay"
     id: driveway_swing_gate_relay
     turn_on_action:
       - switch.turn_on: internal_relay_switch
