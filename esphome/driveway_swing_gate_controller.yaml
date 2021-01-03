@@ -35,13 +35,13 @@ binary_sensor:
     name: "Driveway Swing Gate Controller Closed Sensor"
     pin:
       number: GPIO1 #TX
-      mode: FUNCTION_3
+      mode: INPUT_PULLUP
       inverted: True
   - platform: gpio
     name: "Driveway Swing Gate Controller Open Sensor"
     pin:
       number: GPIO3 #RX
-      mode: FUNCTION_3
+      mode: INPUT_PULLUP
       inverted: True
       
 switch:
