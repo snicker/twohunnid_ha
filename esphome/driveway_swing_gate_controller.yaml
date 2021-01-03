@@ -13,7 +13,7 @@ wifi:
 
 # Enable logging
 logger:
-  baud: 0
+  baud_rate: 0
 
 web_server:
   port: 80
