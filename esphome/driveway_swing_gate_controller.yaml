@@ -1,7 +1,7 @@
 esphome:
   name: driveway_swing_gate_controller
   platform: ESP8266
-  board: nodemcuv3
+  board: nodemcuv2
   board_flash_mode: dout
 
 wifi:
