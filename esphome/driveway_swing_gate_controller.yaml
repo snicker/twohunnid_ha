@@ -1,7 +1,7 @@
 esphome:
   name: driveway_swing_gate_controller
   platform: ESP8266
-  board: esp01_1m
+  board: nodemcuv3
   board_flash_mode: dout
 
 wifi:
@@ -51,7 +51,7 @@ switch:
   - platform: gpio
     restore_mode: ALWAYS_OFF
     pin: 
-      number: GPIO12
+      number: D1
       inverted: False
     name: "Driveway Swing Gate Internal Relay Switch"
     id: internal_relay_switch
