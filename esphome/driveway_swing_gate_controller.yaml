@@ -1,7 +1,7 @@
 esphome:
   name: driveway_swing_gate_controller
   platform: ESP8266
-  board: nodemcuv2
+  board: WEMOS
   board_flash_mode: dout
 
 wifi:
@@ -34,13 +34,13 @@ binary_sensor:
   - platform: gpio
     name: "Driveway Swing Gate Controller Closed Sensor"
     pin:
-      number: GPIO1 #TX
+      number: D3
       mode: INPUT_PULLUP
       inverted: True
   - platform: gpio
     name: "Driveway Swing Gate Controller Open Sensor"
     pin:
-      number: GPIO3 #RX
+      number: D2
       mode: INPUT_PULLUP
       inverted: True
       
