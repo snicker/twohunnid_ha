@@ -78,8 +78,8 @@ automation:
         - binary_sensor.front_door_camera_motion_detected
         - binary_sensor.front_yard_camera_motion
         - binary_sensor.sideyard_north_camera_motion
-        - binary_sensor.front_driveway_camera_motion_debounced
-        - binary_sensor.south_driveway_camera_motion_debounced
+        - binary_sensor.front_driveway_camera_motion_sensor_debounced
+        - binary_sensor.south_driveway_camera_motion_sensor_debounced
       from: 'off'
       platform: state
       to: 'on'
