@@ -353,18 +353,23 @@
   description: ''
   trigger:
   - entity_id: binary_sensor.internet_connection_status
-    for: 00:03:00
     from: 'off'
     platform: state
     to: 'on'
-  condition: []
+  condition:
+  - condition: template
+    value_template: '{{ (now() - trigger.from_state.last_changed).total_seconds()
+      > 60 }}'
   action:
   - data:
-      message: The internet connection at home is back online!
+      message: The internet connection at home is back online after {{ ((now() - states.binary_sensor.internet_connection_status.last_changed).total_seconds()
+        / 60) | int }}m{{ ((now() - states.binary_sensor.internet_connection_status.last_changed).total_seconds()
+        % 60) | int }}s!
     service: notify.nick
   - data:
       message: The internet is back online!
     service: script.alexa_announcement
+  mode: single
 - id: '1585787709740'
   alias: Zwift Ride On
   description: ''
