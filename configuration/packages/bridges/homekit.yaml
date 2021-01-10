@@ -77,9 +77,9 @@ homekit:
         - feature: play_stop
     camera.front_driveway_camera:
       video_codec: copy
-      max_width: 640
-      max_height: 360
+      max_width: 1600
+      max_height: 900
     camera.south_driveway_camera:
       video_codec: copy
-      max_width: 640
-      max_height: 360
+      max_width: 1600
+      max_height: 900
