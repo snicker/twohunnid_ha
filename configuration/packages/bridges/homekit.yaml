@@ -55,6 +55,8 @@ homekit:
       - camera.dlink_camera_laundry
       - camera.living_room_camera
       - camera.sideyard_north_camera
+      - camera.front_driveway_camera
+      - camera.south_driveway_camera
       - fan.wood_grain_diffuser
       - light.wood_grain_diffuser_lamp
       - binary_sensor.front_door_doorbell
@@ -73,3 +75,11 @@ homekit:
         - feature: toggle_mute
         - feature: play_pause
         - feature: play_stop
+    camera.front_driveway_camera:
+      video_codec: copy
+      max_width: 640
+      max_height: 360
+    camera.south_driveway_camera:
+      video_codec: copy
+      max_width: 640
+      max_height: 360

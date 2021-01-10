@@ -18,6 +18,8 @@ group:
       - binary_sensor.modetftp_motion_laundry
       - binary_sensor.front_yard_camera_motion
       - binary_sensor.sideyard_north_camera_motion
+      - binary_sensor.front_driveway_camera_motion_debounced
+      - binary_sensor.south_driveway_camera_motion_debounced
       
   all_exterior_motion_sensors:
     name: Motion Sensors - Exterior
@@ -32,6 +34,8 @@ group:
       - binary_sensor.front_door_camera_motion_detected
       - binary_sensor.front_yard_camera_motion
       - binary_sensor.sideyard_north_camera_motion
+      - binary_sensor.front_driveway_camera_motion_debounced
+      - binary_sensor.south_driveway_camera_motion_debounced
       
   all_interior_motion_sensors:
     name: Motion Sensors - Interior

@@ -1,0 +1,47 @@
+
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'front_driveway_camera'
+    
+    camera.front_driveway_camera:
+      <<: *customize
+      friendly_name: "Front Driveway Camera"
+      icon: mdi:cctv
+    
+    binary_sensor.front_driveway_camera_motion_sensor:
+      <<: *customize
+    
+    binary_sensor.front_driveway_camera_motion_sensor_debounced:
+      <<: *customize
+      friendly_name: "Motion - Front Driveway (Camera)"
+      camera_entity_id: "front_driveway_camera"
+      
+    binary_sensor.front_driveway_camera_status:
+      <<: *customize
+      friendly_name: "Front Driveway Camera Status"
+      device_class: connectivity
+
+camera:
+  - platform: generic
+    name: front_driveway_camera
+    still_image_url: https://192.168.1.209/cgi-bin/currentpic.cgi
+    stream_source: rtsp://192.168.1.209:8554/unicast
+    verify_ssl: false
+    authentication: basic
+    username: root
+    password: !secret dafang_cam_password
+    
+binary_sensor:
+  - platform: ping
+    name: front_driveway_camera_status
+    host: 192.168.1.209
+    count: 3
+    scan_interval: 60
+  - platform: template
+    sensors:
+      front_driveway_camera_motion_sensor_debounced:
+        value_template: "{{ is_state('binary_sensor.front_driveway_camera_motion_sensor','on') }}"
+        device_class: motion
+        delay_off: "00:00:10"
