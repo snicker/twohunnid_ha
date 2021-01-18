@@ -3,6 +3,7 @@ esphome:
   platform: ESP8266
   board: d1_mini_pro
   board_flash_mode: dout
+  esp8266_restore_from_flash: true
 
 wifi:
   ssid: !secret wifi_ssid
@@ -21,6 +22,13 @@ logger:
 web_server:
   port: 80
 
+globals:
+  # 0=closed, 1=opening, 2=open, 3=closing
+  - id: gate_state
+    type: int
+    restore_value: yes
+    initial_value: 0
+
 binary_sensor:
   - platform: gpio
     name: "Driveway Swing Gate Controller Button"
@@ -32,22 +40,48 @@ binary_sensor:
       then:
         - switch.toggle: driveway_swing_gate_relay
   - platform: gpio
-    name: "Driveway Swing Gate Controller Closed Sensor"
-    pin:
-      number: D3
-      mode: INPUT_PULLUP
-      inverted: True
-  - platform: gpio
-    name: "Driveway Swing Gate Controller Open Sensor"
+    name: "Driveway Swing Gate Moving Sensor"
     pin:
       number: D2
       mode: INPUT_PULLUP
       inverted: True
+    on_state:
+      then:
+        - lambda: |-
+            id(gate_state) = (id(gate_state) + 1) % 4;
+  - platform: template
+    name: "Driveway Swing Gate Open Sensor"
+    lambda: 'return id(gate_state) == 2;'
+  - platform: template
+    name: "Driveway Swing Gate Closed Sensor"
+    lambda: 'return id(gate_state) == 0;'
+
+cover:
+  - platform: endstop
+    device_class: gate
+    name: "Driveway Swing Gate"
+    open_action:
+      - switch.turn_on: driveway_swing_gate_relay
+    open_duration: 30s
+    open_endstop: driveway_swing_gate_open_sensor
+
+    close_action:
+      - switch.turn_on: driveway_swing_gate_relay
+    close_duration: 30s
+    close_endstop: driveway_swing_gate_closed_sensor
+
+    stop_action:
+      - if:
+          condition:
+            lambda: 'return id(gate_state) % 2 == 1;'
+          then:
+            - switch.turn_on: driveway_swing_gate_relay
       
 switch:
   - platform: restart
     name: "Reboot Driveway Swing Gate Controller"
     id: driveway_swing_gate_controller_restart
+    restore_mode: ALWAYS_OFF
   - platform: gpio
     restore_mode: ALWAYS_OFF
     pin: 
@@ -57,6 +91,7 @@ switch:
     id: internal_relay_switch
     internal: True
   - platform: template
+    restore_mode: ALWAYS_OFF
     name: "Driveway Swing Gate Relay"
     id: driveway_swing_gate_relay
     turn_on_action:
@@ -64,6 +99,15 @@ switch:
       - delay: 250ms
       - switch.turn_off: internal_relay_switch
       - switch.turn_off: driveway_swing_gate_relay
+  - platform: template
+    restore_mode: ALWAYS_OFF
+    name: "Driveway Swing Gate State Reset"
+    id: driveway_swing_gate_relay
+    turn_on_action:
+      - globals.set:
+          id: gate_state
+          value: 0
+      - switch.turn_off: driveway_swing_gate_state_reset
 
 # Enable Home Assistant API
 api:
