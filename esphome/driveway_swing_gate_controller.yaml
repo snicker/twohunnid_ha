@@ -51,9 +51,11 @@ binary_sensor:
             id(gate_state) = (id(gate_state) + 1) % 4;
   - platform: template
     name: "Driveway Swing Gate Open Sensor"
+    id: driveway_swing_gate_open_sensor
     lambda: 'return id(gate_state) == 2;'
   - platform: template
     name: "Driveway Swing Gate Closed Sensor"
+    id: driveway_swing_gate_closed_sensor
     lambda: 'return id(gate_state) == 0;'
 
 cover:
@@ -100,8 +102,8 @@ switch:
       - switch.turn_off: driveway_swing_gate_relay
   - platform: template
     restore_state: false
-    name: "Driveway Swing Gate State Reset"
-    id: driveway_swing_gate_relay
+    name: "Driveway Swing Gate State Reset to Closed"
+    id: driveway_swing_gate_state_reset
     turn_on_action:
       - globals.set:
           id: gate_state
