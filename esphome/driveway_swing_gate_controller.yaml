@@ -90,7 +90,7 @@ switch:
     id: internal_relay_switch
     internal: True
   - platform: template
-    restore_state: 0
+    restore_state: false
     name: "Driveway Swing Gate Relay"
     id: driveway_swing_gate_relay
     turn_on_action:
@@ -99,7 +99,7 @@ switch:
       - switch.turn_off: internal_relay_switch
       - switch.turn_off: driveway_swing_gate_relay
   - platform: template
-    restore_state: 0
+    restore_state: false
     name: "Driveway Swing Gate State Reset"
     id: driveway_swing_gate_relay
     turn_on_action:
