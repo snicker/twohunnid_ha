@@ -64,12 +64,12 @@ cover:
     name: "Driveway Swing Gate"
     open_action:
       - switch.turn_on: driveway_swing_gate_relay
-    open_duration: 30s
+    open_duration: 27s
     open_endstop: driveway_swing_gate_open_sensor
 
     close_action:
       - switch.turn_on: driveway_swing_gate_relay
-    close_duration: 30s
+    close_duration: 27s
     close_endstop: driveway_swing_gate_closed_sensor
 
     stop_action:
