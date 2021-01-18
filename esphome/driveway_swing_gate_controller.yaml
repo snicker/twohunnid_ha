@@ -81,9 +81,9 @@ switch:
   - platform: restart
     name: "Reboot Driveway Swing Gate Controller"
     id: driveway_swing_gate_controller_restart
-    restore_mode: ALWAYS_OFF
+    restore_state: ALWAYS_OFF
   - platform: gpio
-    restore_mode: ALWAYS_OFF
+    restore_state: ALWAYS_OFF
     pin: 
       number: D1
       inverted: False
@@ -91,7 +91,7 @@ switch:
     id: internal_relay_switch
     internal: True
   - platform: template
-    restore_mode: ALWAYS_OFF
+    restore_state: ALWAYS_OFF
     name: "Driveway Swing Gate Relay"
     id: driveway_swing_gate_relay
     turn_on_action:
@@ -100,7 +100,7 @@ switch:
       - switch.turn_off: internal_relay_switch
       - switch.turn_off: driveway_swing_gate_relay
   - platform: template
-    restore_mode: ALWAYS_OFF
+    restore_state: ALWAYS_OFF
     name: "Driveway Swing Gate State Reset"
     id: driveway_swing_gate_relay
     turn_on_action:
