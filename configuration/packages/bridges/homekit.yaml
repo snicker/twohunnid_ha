@@ -1,85 +1,50 @@
 homekit:
   auto_start: False
+  name: Home Assistant Bridge - Manually Configured
   filter:
-    include_domains:
-      - light
-    exclude_entities:
-      - switch.garage_door_relay
-      - light.pantry_light
-      - light.front_landscape_lights_power
-      - light.north_pine_landscape_light
-      - light.front_pine_landscape_light
-      - light.ash_landscape_light
-      - light.olive_landscape_light
-      - light.all_front_landscape_lights
-      - light.jasco_products_26933_smart_motion_dimmer_level_2
-      - light.jasco_products_26933_smart_motion_dimmer_level
-      - light.front_porch_lights_power
-      - light.front_porch_bottom_left
-      - light.front_porch_bottom_right
-      - light.front_porch_upper_left
-      - light.front_porch_upper_right
-      - light.front_porch_left
-      - light.front_porch_right
-      - light.front_porch_all_lights
-      - light.remotec_unknown_type_8200_id_8130_level
-      - light.remotec_unknown_type_8200_id_8130_level_2
-      - light.holiday_lighting_south
-      - light.holiday_lighting_north
     include_entities:
-      - cover.garage_door_homekit
-      - switch.driveway_swing_gate_relay
-      - media_player.master_bedroom_television_homekit
-      - input_boolean.presence_nick_homekit
-      - input_boolean.presence_brittany_homekit
-      - switch.pool_pump
-      - switch.coffee_grinder
-      - switch.master_bedroom_humidifier
       - alarm_control_panel.home_alarm
-      - switch.xiaomi_vacuum
-      - lock.kwikset_touchpad_electronic_deadbolt_locked
-      - lock.kwikset_touchpad_electronic_deadbolt_locked_2
-      - climate.hallway
-      - climate.dining_room
-      - binary_sensor.ghettobird_overhead
-      - sensor.plant_desert_rose_moisture
-      - sensor.plant_dragon_tree_moisture
-      - sensor.plant_fiddle_leaf_fig_moisture
-      - sensor.plant_peace_lily_moisture
-      - sensor.plant_zebra_plant_moisture
+      - camera.front_driveway_camera
+      - camera.south_driveway_camera
       - camera.yi_home_camera_backyard_patio
       - camera.yi_home_camera_ballet_studio
+      - camera.living_room_camera
       - camera.yi_home_camera_garage
       - camera.front_door
       - camera.front_yard_camera
       - camera.dlink_camera_laundry
-      - camera.living_room_camera
       - camera.sideyard_north_camera
-      - camera.front_driveway_camera
-      - camera.south_driveway_camera
-      - fan.wood_grain_diffuser
-      - light.wood_grain_diffuser_lamp
-      - binary_sensor.front_door_doorbell
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
-    media_player.living_room_television_homekit:
-      feature_list:
-        - feature: on_off
-        - feature: toggle_mute
-        - feature: play_pause
-        - feature: play_stop
-    media_player.master_bedroom_television_homekit:
-      feature_list:
-        - feature: on_off
-        - feature: toggle_mute
-        - feature: play_pause
-        - feature: play_stop
     camera.front_driveway_camera:
       video_codec: copy
+      support_audio: True
       max_width: 1600
       max_height: 900
     camera.south_driveway_camera:
       video_codec: copy
+      support_audio: True
       max_width: 1600
       max_height: 900
+    camera.yi_home_camera_backyard_patio:
+      video_codec: copy
+      support_audio: True
+    camera.yi_home_camera_ballet_studio:
+      video_codec: copy
+      support_audio: True
+      max_width: 1600
+      max_height: 900
+    camera.living_room_camera:
+      video_codec: copy
+      support_audio: True
+      max_width: 1600
+      max_height: 900
+    camera.yi_home_camera_garage:
+      video_codec: copy
+      max_width: 640
+      max_height: 360
+    camera.front_yard_camera:
+      video_codec: copy
+    camera.sideyard_north_camera:
+      video_codec: copy
