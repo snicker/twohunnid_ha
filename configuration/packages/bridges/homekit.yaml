@@ -1,6 +1,6 @@
 homekit:
   auto_start: False
-  name: Home Assistant Bridge - Manually Configured
+  name: HABridge-Manual
   filter:
     include_entities:
       - alarm_control_panel.home_alarm
