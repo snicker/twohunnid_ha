@@ -32,7 +32,22 @@ camera:
     authentication: basic
     username: root
     password: !secret dafang_cam_password
-    
+
+rest_command:
+  camera_reboot_ballet_studio:
+    url: 'https://192.168.1.237/cgi-bin/action.cgi?cmd=reboot'
+    username: root
+    password: !secret dafang_cam_password
+
+automation:
+  - alias: camera_reboot_ballet_studio_nightly
+    trigger:
+      platform: time
+      at: "01:00:00"
+    action:
+      - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
+      - service: rest_command.camera_reboot_ballet_studio
+
 binary_sensor:
   - platform: ping
     name: ballet_studio_camera_status
