@@ -1,0 +1,97 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'milight_gateway'
+      
+    binary_sensor.milight_gateway_status:
+      <<: *customize
+      friendly_name: "Milight Gateway Status"
+      device_class: connectivity
+
+    automation.reboot_milight_gateway_nightly:
+      <<: *customize
+      friendly_name: "Reboot Milight Gateway Nightly"
+
+    automation.milight_gateway_update_alert:
+      <<: *customize
+      friendly_name: "Milight Gateway Update Alerts"
+
+    binary_sensor.milight_gateway_update_required:
+      <<: *customize
+      friendly_name: "Milight Gateway Update Available"
+
+    sensor.milight_gateway_current_version:
+      <<: *customize
+      friendly_name: "Milight Gateway Current Version"
+
+    sensor.milight_gateway_latest_version:
+      <<: *customize
+      friendly_name: "Milight Gateway Latest Version"
+
+rest_command:
+  milight_gateway_reboot:
+    url: 'http://192.168.1.120/system'
+    method: "post"
+    payload: '{"command": "restart"}'
+    content_type:  'application/json'
+
+automation:
+  - alias: reboot_milight_gateway_nightly
+    trigger:
+      platform: time
+      at: "01:00:00"
+    action:
+      - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
+      - service: rest_command.milight_gateway_reboot
+  - alias: milight_gateway_update_alert
+    trigger:
+      - platform: time
+        at: "12:00:00"
+      - platform: state
+        entity_id: binary_sensor.milight_gateway_update_required
+        to: 'on'
+        for: 00:00:10
+    condition:
+      - condition: state
+        entity_id: 'binary_sensor.milight_gateway_update_required'
+        state: 'on'
+    action:
+      - service: persistent_notification.create
+        data:
+          notification_id: "milight_gateway_update"
+          message: >
+            Milight Gateway Update Available: {{ states('sensor.milight_gateway_latest_version') }}
+            [Milight Gateway Github...](https://github.com/sidoh/esp8266_milight_hub)
+            [Milight Gateway...](http://192.168.1.120/)
+          title: "Milight Gateway Update Available"
+
+binary_sensor:
+  - platform: ping
+    name: milight_gateway_status
+    host: 192.168.1.120
+    count: 3
+    scan_interval: 60
+  - platform: template
+    sensors:
+      milight_gateway_update_required:
+        value_template: >
+          {% set current_version = states("sensor.milight_gateway_current_version") %}
+          {% set latest_version = states("sensor.milight_gateway_latest_version") %}
+          {{ current_version and latest_version and current_version != latest_version }}
+
+sensor:
+  - platform: rest
+    name: milight_gateway_current_version
+    resource: http://192.168.1.120/about
+    value_template: '{{ value_json.version }}'
+    json_attributes:
+      - queue_stats
+      - reset_reason
+  - platform: rest
+    name: milight_gateway_latest_version
+    resource: https://api.github.com/repos/sidoh/esp8266_milight_hub/releases/latest
+    value_template: '{{ value_json.tag_name }}'
+    headers:
+      Accept: application/vnd.github.v3+json
+      Content-Type: application/json
