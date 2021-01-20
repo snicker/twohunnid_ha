@@ -115,10 +115,10 @@ switch:
       - globals.set:
           id: gate_state
           value: '0'
-        - lambda: |-
-            if (id(gate_state) == 0) {
-              id(driveway_swing_gate).publish_state(COVER_CLOSED)
-            }
+      - lambda: |-
+          if (id(gate_state) == 0) {
+            id(driveway_swing_gate).publish_state(COVER_CLOSED)
+          }
       - switch.turn_off: driveway_swing_gate_state_reset
 
 # Enable Home Assistant API
