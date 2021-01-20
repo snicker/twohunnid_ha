@@ -49,6 +49,12 @@ binary_sensor:
       then:
         - lambda: |-
             id(gate_state) = (id(gate_state) + 1) % 4;
+            if (id(gate_state) == 0) {
+              id(driveway_swing_gate).publish_state(COVER_CLOSED)
+            }
+            if (id(gate_state) == 2) {
+              id(driveway_swing_gate).publish_state(COVER_OPEN)
+            }
   - platform: template
     name: "Driveway Swing Gate Open Sensor"
     id: driveway_swing_gate_open_sensor
@@ -61,6 +67,7 @@ binary_sensor:
 cover:
   - platform: endstop
     device_class: gate
+    id: driveway_swing_gate
     name: "Driveway Swing Gate"
     open_action:
       - switch.turn_on: driveway_swing_gate_relay
@@ -108,6 +115,10 @@ switch:
       - globals.set:
           id: gate_state
           value: '0'
+        - lambda: |-
+            if (id(gate_state) == 0) {
+              id(driveway_swing_gate).publish_state(COVER_CLOSED)
+            }
       - switch.turn_off: driveway_swing_gate_state_reset
 
 # Enable Home Assistant API
