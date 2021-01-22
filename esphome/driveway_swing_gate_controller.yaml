@@ -49,8 +49,8 @@ binary_sensor:
       then:
         - lambda: |-
             id(gate_state) = (id(gate_state) + 1) % 4;
-            auto state = id(gate_state)
-            auto swing_gate = id(driveway_swing_gate)
+            auto state = id(gate_state);
+            auto swing_gate = id(driveway_swing_gate);
             if (state == 0) {
               swing_gate->position = COVER_CLOSED;
               swing_gate.publish_state();
