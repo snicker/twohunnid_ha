@@ -53,17 +53,17 @@ binary_sensor:
             auto swing_gate = id(driveway_swing_gate);
             if (state == 0) {
               swing_gate->position = COVER_CLOSED;
-              swing_gate.publish_state();
+              swing_gate->publish_state();
             }
             else if (state == 1) {
-              swing_gate.start_direction_(COVER_OPERATION_OPENING);
+              swing_gate->start_direction_(COVER_OPERATION_OPENING);
             }
             else if (state == 2) {
               swing_gate->position = COVER_OPEN;
-              swing_gate.publish_state();
+              swing_gate->publish_state();
             }
             else if (state == 3) {
-              swing_gate.start_direction_(COVER_OPERATION_CLOSING);
+              swing_gate->start_direction_(COVER_OPERATION_CLOSING);
             }
   - platform: template
     name: "Driveway Swing Gate Open Sensor"
