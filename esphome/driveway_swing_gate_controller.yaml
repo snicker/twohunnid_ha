@@ -55,15 +55,9 @@ binary_sensor:
               swing_gate->position = COVER_CLOSED;
               swing_gate->publish_state();
             }
-            else if (state == 1) {
-              swing_gate->start_direction_(COVER_OPERATION_OPENING);
-            }
             else if (state == 2) {
               swing_gate->position = COVER_OPEN;
               swing_gate->publish_state();
-            }
-            else if (state == 3) {
-              swing_gate->start_direction_(COVER_OPERATION_CLOSING);
             }
   - platform: template
     name: "Driveway Swing Gate Open Sensor"
@@ -80,12 +74,12 @@ cover:
     id: driveway_swing_gate
     name: "Driveway Swing Gate"
     open_action:
-      - switch.turn_on: driveway_swing_gate_relay
+      - switch.turn_on: driveway_swing_gate_open_switch
     open_duration: 27s
     open_endstop: driveway_swing_gate_open_sensor
 
     close_action:
-      - switch.turn_on: driveway_swing_gate_relay
+      - switch.turn_on: driveway_swing_gate_close_switch
     close_duration: 27s
     close_endstop: driveway_swing_gate_closed_sensor
 
@@ -94,7 +88,7 @@ cover:
           condition:
             lambda: 'return id(gate_state) % 2 == 1;'
           then:
-            - switch.turn_on: driveway_swing_gate_relay
+            - switch.turn_on: driveway_swing_gate_stop_switch
       
 switch:
   - platform: restart
@@ -117,6 +111,56 @@ switch:
       - delay: 250ms
       - switch.turn_off: internal_relay_switch
       - switch.turn_off: driveway_swing_gate_relay
+  - platform: template
+    restore_state: false
+    name: "Driveway Swing Gate Open Switch"
+    id: driveway_swing_gate_open_switch
+    turn_on_action:
+      - if:
+          condition:
+            lambda: 'return id(gate_state) == 3;'
+          then:
+            - logger.log: "Open Switch: Gate is closing, stopping..."
+            - switch.turn_on: driveway_swing_gate_relay
+            - delay: 1s
+      - if:
+          condition:
+            lambda: 'return id(gate_state) == 0;'
+          then:
+            - logger.log: "Open Switch: Gate is closed, opening..."
+            - switch.turn_on: driveway_swing_gate_relay
+      - switch.turn_off: driveway_swing_gate_open_switch
+  - platform: template
+    restore_state: false
+    name: "Driveway Swing Gate Close Switch"
+    id: driveway_swing_gate_close_switch
+    turn_on_action:
+      - if:
+          condition:
+            lambda: 'return id(gate_state) == 1;'
+          then:
+            - logger.log: "Close Switch: Gate is opening, stopping..."
+            - switch.turn_on: driveway_swing_gate_relay
+            - delay: 1s
+      - if:
+          condition:
+            lambda: 'return id(gate_state) == 2;'
+          then:
+            - logger.log: "Close Switch: Gate is open, closing..."
+            - switch.turn_on: driveway_swing_gate_relay
+      - switch.turn_off: driveway_swing_gate_close_switch
+  - platform: template
+    restore_state: false
+    name: "Driveway Swing Gate Stop Switch"
+    id: driveway_swing_gate_stop_switch
+    turn_on_action:
+      - if:
+          condition:
+            lambda: 'return id(gate_state) % 2 == 1;'
+          then:
+            - logger.log: "Stop Switch: Gate is moving, stopping..."
+            - switch.turn_on: driveway_swing_gate_relay
+      - switch.turn_off: driveway_swing_gate_stop_switch
   - platform: template
     restore_state: false
     name: "Driveway Swing Gate State Reset to Closed"
