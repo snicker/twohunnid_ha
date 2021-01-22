@@ -49,13 +49,21 @@ binary_sensor:
       then:
         - lambda: |-
             id(gate_state) = (id(gate_state) + 1) % 4;
-            if (id(gate_state) == 0) {
-              id(driveway_swing_gate)->position = COVER_CLOSED;
-              id(driveway_swing_gate).publish_state();
+            auto state = id(gate_state)
+            auto swing_gate = id(driveway_swing_gate)
+            if (state == 0) {
+              swing_gate->position = COVER_CLOSED;
+              swing_gate.publish_state();
             }
-            if (id(gate_state) == 2) {
-              id(driveway_swing_gate)->position = COVER_OPEN;
-              id(driveway_swing_gate).publish_state();
+            else if (state == 1) {
+              swing_gate.start_direction_(COVER_OPERATION_OPENING);
+            }
+            else if (state == 2) {
+              swing_gate->position = COVER_OPEN;
+              swing_gate.publish_state();
+            }
+            else if (state == 3) {
+              swing_gate.start_direction_(COVER_OPERATION_CLOSING);
             }
   - platform: template
     name: "Driveway Swing Gate Open Sensor"
