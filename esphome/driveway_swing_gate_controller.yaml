@@ -128,6 +128,7 @@ switch:
           then:
             - logger.log: "Open Switch: Gate is closed, opening..."
             - switch.turn_on: driveway_swing_gate_relay
+      - delay: 2s
       - switch.turn_off: driveway_swing_gate_open_switch
   - platform: template
     restore_state: false
@@ -140,6 +141,7 @@ switch:
           then:
             - logger.log: "Close Switch: Gate is open, closing..."
             - switch.turn_on: driveway_swing_gate_relay
+      - delay: 2s
       - switch.turn_off: driveway_swing_gate_close_switch
   - platform: template
     restore_state: false
@@ -152,6 +154,7 @@ switch:
           then:
             - logger.log: "Stop Switch: Gate is moving, stopping..."
             - switch.turn_on: driveway_swing_gate_relay
+      - delay: 2s
       - switch.turn_off: driveway_swing_gate_stop_switch
   - platform: template
     restore_state: false
