@@ -55,9 +55,19 @@ binary_sensor:
               swing_gate->position = COVER_CLOSED;
               swing_gate->publish_state();
             }
+            else if (state == 1) {
+              auto call = swing_gate->make_call();
+              call.set_command_open();
+              call.perform();
+            }
             else if (state == 2) {
               swing_gate->position = COVER_OPEN;
               swing_gate->publish_state();
+            }
+            else if (state == 3) {
+              auto call = swing_gate->make_call();
+              call.set_command_close();
+              call.perform();
             }
   - platform: template
     name: "Driveway Swing Gate Open Sensor"
@@ -84,11 +94,7 @@ cover:
     close_endstop: driveway_swing_gate_closed_sensor
 
     stop_action:
-      - if:
-          condition:
-            lambda: 'return id(gate_state) % 2 == 1;'
-          then:
-            - switch.turn_on: driveway_swing_gate_stop_switch
+      - switch.turn_on: driveway_swing_gate_stop_switch
       
 switch:
   - platform: restart
@@ -118,13 +124,6 @@ switch:
     turn_on_action:
       - if:
           condition:
-            lambda: 'return id(gate_state) == 3;'
-          then:
-            - logger.log: "Open Switch: Gate is closing, stopping..."
-            - switch.turn_on: driveway_swing_gate_relay
-            - delay: 1s
-      - if:
-          condition:
             lambda: 'return id(gate_state) == 0;'
           then:
             - logger.log: "Open Switch: Gate is closed, opening..."
@@ -135,13 +134,6 @@ switch:
     name: "Driveway Swing Gate Close Switch"
     id: driveway_swing_gate_close_switch
     turn_on_action:
-      - if:
-          condition:
-            lambda: 'return id(gate_state) == 1;'
-          then:
-            - logger.log: "Close Switch: Gate is opening, stopping..."
-            - switch.turn_on: driveway_swing_gate_relay
-            - delay: 1s
       - if:
           condition:
             lambda: 'return id(gate_state) == 2;'
