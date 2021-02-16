@@ -62,7 +62,9 @@ automation:
           notification_id: "milight_gateway_update"
           message: >
             Milight Gateway Update Available: {{ states('sensor.milight_gateway_latest_version') }}
+
             [Milight Gateway Github...](https://github.com/sidoh/esp8266_milight_hub)
+
             [Milight Gateway...](http://192.168.1.120/)
           title: "Milight Gateway Update Available"
 
@@ -78,7 +80,8 @@ binary_sensor:
         value_template: >
           {% set current_version = states("sensor.milight_gateway_current_version") %}
           {% set latest_version = states("sensor.milight_gateway_latest_version") %}
-          {{ current_version and latest_version and current_version != latest_version }}
+          {% set available = current_version not in ('none','unknown','unavailable') and latest_version not in ('none','unknown','unavailable') %}
+          {{ available and current_version != latest_version }}
 
 sensor:
   - platform: rest
