@@ -80,7 +80,7 @@ binary_sensor:
         value_template: >
           {% set current_version = states("sensor.milight_gateway_current_version") %}
           {% set latest_version = states("sensor.milight_gateway_latest_version") %}
-          {% set available = current_version not in ('none','unknown','unavailable') and latest_version not in ('none','unknown','unavailable') %}
+          {% set available = current_version and latest_version and current_version not in ('none','unknown','unavailable') and latest_version not in ('none','unknown','unavailable') %}
           {{ available and current_version != latest_version }}
 
 sensor:
