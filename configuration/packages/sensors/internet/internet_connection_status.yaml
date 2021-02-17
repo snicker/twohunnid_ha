@@ -65,14 +65,14 @@ sensor:
   - platform: history_stats
     name: internet_connection_downtime_24h
     entity_id: binary_sensor.internet_connection_status
-    state: 'on'
+    state: 'off'
     type: time
     start: '{{ as_timestamp(now()) - (1 * 86400) }}'  
     end: '{{ now() }}'
   - platform: history_stats
     name: internet_connection_downtime_7d
     entity_id: binary_sensor.internet_connection_status
-    state: 'on'
+    state: 'off'
     type: time
     start: '{{ as_timestamp(now()) - (7 * 86400) }}'  
     end: '{{ now() }}'
