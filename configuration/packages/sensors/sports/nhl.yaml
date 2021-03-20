@@ -14,6 +14,12 @@ homeassistant:
     sensor.nhl_golden_knights_home_team:
       <<: *customize
         
+    sensor.nhl_golden_knights_period:
+      <<: *customize
+        
+    sensor.nhl_golden_knights_period_time_remaining:
+      <<: *customize
+        
     automation.golden_knights_score:
       <<: *customize
       friendly_name: "NHL: Golden Knights Score a Goal"
@@ -21,6 +27,14 @@ homeassistant:
     automation.golden_knights_final_score:
       <<: *customize
       friendly_name: "NHL: Announce Golden Knights Final Score"
+        
+    automation.golden_knights_period_start:
+      <<: *customize
+      friendly_name: "NHL: Announce Golden Knights Period Start"
+        
+    automation.golden_knights_period_end:
+      <<: *customize
+      friendly_name: "NHL: Announce Golden Knights Period End"
 
 sensor:
   - platform: nhl_api
@@ -36,8 +50,42 @@ sensor:
         friendly_name_template: '{{ states.sensor.nhl_golden_knights.attributes.home_name }}'
         value_template: '{{ states.sensor.nhl_golden_knights.attributes.home_score }}'
         entity_picture_template: '{{ states.sensor.nhl_golden_knights.attributes.home_logo }}'
+      nhl_golden_knights_period:
+        friendly_name: "NHL: VGK Current Period"
+        value_template: '{{ state_attr('sensor.nhl_golden_knights','current_period') }}'
+      nhl_golden_knights_period_time_remaining:
+        friendly_name: "NHL: VGK Current Period Seconds Remaining"
+        value_template: >-
+          {% set remaining = state_attr('sensor.nhl_golden_knights','time_remaining') %}
+          {% if remaining in ('END') %}
+            0
+          {% else %}
+            {% set mmss = state_attr('sensor.nhl_golden_knights','time_remaining').split(':') %}
+            {% set seconds_remaining = (mmss[0] | int * 60 + mmss[1] | int ) %}
+            {{ seconds_remaining }}
+          {% endif %}
+        
 
 automation:
+  - alias: golden_knights_period_start
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.nhl_golden_knights_period_time_remaining
+      above: 0
+    action:
+      - service: script.alexa_announcement
+        data_template:
+          message: "go knights go! hockey is back on! the golden knights are starting the {{ states.sensor.nhl_golden_knights_period }} period against the {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} right now!"
+  - alias: golden_knights_period_end
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.nhl_golden_knights_period_time_remaining
+      below: 1
+    action:
+      - delay: "00:00:30"
+      - service: script.alexa_announcement
+        data_template: 
+          message: "go knights go! the {{ states.sensor.nhl_golden_knights_period }} period is over! {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}{{ states('sensor.nhl_golden_knights_home_team') }},, {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} {{ states('sensor.nhl_golden_knights_away_team') }}"
   - alias: golden_knights_score
     trigger:
       platform: event
@@ -58,6 +106,7 @@ automation:
       from: "Game Over"
       to: "Final"
     action:
+    - delay: "00:01:00"
     - service: script.alexa_announcement
       data_template:
         message: "Go Knights Go. Final Score: {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} {{ states('sensor.nhl_golden_knights_away_team') }},, {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}{{ states('sensor.nhl_golden_knights_home_team') }} !"
