@@ -52,7 +52,7 @@ sensor:
         entity_picture_template: '{{ states.sensor.nhl_golden_knights.attributes.home_logo }}'
       nhl_golden_knights_period:
         friendly_name: "NHL: VGK Current Period"
-        value_template: '{{ state_attr('sensor.nhl_golden_knights','current_period') }}'
+        value_template: "{{ state_attr('sensor.nhl_golden_knights','current_period') }}"
       nhl_golden_knights_period_time_remaining:
         friendly_name: "NHL: VGK Current Period Seconds Remaining"
         value_template: >-
