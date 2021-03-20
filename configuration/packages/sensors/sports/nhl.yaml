@@ -57,7 +57,7 @@ sensor:
         friendly_name: "NHL: VGK Current Period Seconds Remaining"
         value_template: >-
           {% set remaining = state_attr('sensor.nhl_golden_knights','time_remaining') %}
-          {% if remaining in ('END') %}
+          {% if remaining in ('END','Final') %}
             0
           {% else %}
             {% set mmss = state_attr('sensor.nhl_golden_knights','time_remaining').split(':') %}
