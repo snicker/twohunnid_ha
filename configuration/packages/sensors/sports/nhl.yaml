@@ -75,7 +75,13 @@ automation:
     action:
       - service: script.alexa_announcement
         data_template:
-          message: "go knights go! hockey is back on! the golden knights are starting the {{ states.sensor.nhl_golden_knights_period }} period against the {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} right now!"
+          message: >-
+            {% if state_attr('sensor.nhl_golden_knights','away_id') == 54 %}
+            {% set other_team = state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') %}
+            {% else %}
+            {% set other_team = state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') %}
+            {% endif %}
+            go knights go! hockey is back on! the golden knights are starting the {{ states('sensor.nhl_golden_knights_period') }} period against the {{ other_team }} right now!
   - alias: golden_knights_period_end
     trigger:
       platform: numeric_state
@@ -85,7 +91,7 @@ automation:
       - delay: "00:00:30"
       - service: script.alexa_announcement
         data_template: 
-          message: "go knights go! the {{ states.sensor.nhl_golden_knights_period }} period is over! {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}{{ states('sensor.nhl_golden_knights_home_team') }},, {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }} {{ states('sensor.nhl_golden_knights_away_team') }}"
+          message: "go knights go! the {{ states('sensor.nhl_golden_knights_period') }} period is over! {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}, {{ states('sensor.nhl_golden_knights_home_team') }},, {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }}, {{ states('sensor.nhl_golden_knights_away_team') }}"
   - alias: golden_knights_score
     trigger:
       platform: event
