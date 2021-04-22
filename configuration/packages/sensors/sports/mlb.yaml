@@ -1,0 +1,252 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'mlb'
+
+sensor:
+  - platform: rest
+    resource: http://statsapi.mlb.com/api/v1/schedule?sportId=1&teamId=115
+    name: mlb_rockies_game_status
+    scan_interval: 
+      hours: 24
+    value_template: '{{ value_json.dates[0].games[0].status.detailedState }}'
+    json_attributes:
+      - dates
+  - platform: template
+    sensors:
+      mlb_rockies_away_team:
+        friendly_name_template: >-
+          {% if states('sensor.mlb_rockies_game_status') == 'unknown' %}
+            No Game
+          {% else %}
+            {{ states.sensor.mlb_rockies_game_status.attributes["dates"][0]["games"][0]["teams"]["away"]["team"]["name"] }}
+          {% endif %}
+        value_template: >-
+          {% if states('sensor.mlb_rockies_game_status') == 'unknown' %}
+            0
+          {% else %}
+            {{ states.sensor.mlb_rockies_game_status.attributes["dates"][0]["games"][0]["teams"]["away"]["score"] }}
+          {% endif %}
+
+      mlb_rockies_home_team:
+        friendly_name_template: >-
+          {% if states('sensor.mlb_rockies_game_status') == 'unknown' %}
+            No Game
+          {% else %}
+            {{ states.sensor.mlb_rockies_game_status.attributes["dates"][0]["games"][0]["teams"]["home"]["team"]["name"] }}
+          {% endif %}
+        value_template: >-
+          {% if states('sensor.mlb_rockies_game_status') == 'unknown' %}
+            0
+          {% else %}
+            {{ states.sensor.mlb_rockies_game_status.attributes["dates"][0]["games"][0]["teams"]["home"]["score"] }}
+          {% endif %}
+
+      mlb_rockies_home_or_away:
+        friendly_name: "MLB: Rockies Home or Away"
+        value_template: >-
+          {% if states('sensor.mlb_rockies_game_status') == 'unknown' %}
+            No Game
+          {% else %}
+            {% if states.sensor.mlb_rockies_game_status.attributes["dates"][0]["games"][0]["teams"]["away"]["team"]["id"] == 115 %}Away{% else %}Home{% endif %}
+          {% endif %}
+
+      mlb_rockies_score:
+        friendly_name_template: >-
+          {% if states('sensor.mlb_rockies_home_or_away') == 'Away' %}
+          {{ state_attr('sensor.mlb_rockies_away_team','friendly_name') }}
+          {% else %}
+          {{ state_attr('sensor.mlb_rockies_home_team','friendly_name') }}
+          {% endif %}
+        value_template: >-
+          {% if states('sensor.mlb_rockies_home_or_away') == 'Away' %}
+          {{ states('sensor.mlb_rockies_away_team') }}
+          {% else %}
+          {{ states('sensor.mlb_rockies_home_team') }}
+          {% endif %}
+
+      mlb_rockies_opponent_score:
+        friendly_name_template: >-
+          {% if states('sensor.mlb_rockies_home_or_away') == 'Home' %}
+          {{ state_attr('sensor.mlb_rockies_away_team','friendly_name') }}
+          {% else %}
+          {{ state_attr('sensor.mlb_rockies_home_team','friendly_name') }}
+          {% endif %}
+        value_template: >-
+          {% if states('sensor.mlb_rockies_home_or_away') == 'Home' %}
+          {{ states('sensor.mlb_rockies_away_team') }}
+          {% else %}
+          {{ states('sensor.mlb_rockies_home_team') }}
+          {% endif %}
+
+script:
+  mlb_rockies_update:
+    alias: mlb_rockies_update
+    sequence:
+    - service: homeassistant.update_entity
+      entity_id: sensor.mlb_rockies_game_status
+
+automation:
+  # Check the day's schedule every day, after it updates (at 10 AM Eastern).
+  - alias: mlb_rockies_check_schedule
+    trigger:
+    - platform: time
+      at: '7:05:00'
+    action:
+    - service: script.turn_on
+      entity_id: script.mlb_rockies_update
+    mode: single
+
+  # From the time the schedule is updated until warm-up starts, check the status every 10 minutes.
+  - alias: mlb_rockies_check_schedule_every_10
+    trigger:
+    - platform: time_pattern
+      minutes: /10
+    condition:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: sensor.mlb_rockies_game_status
+        state: Scheduled
+      - condition: state
+        entity_id: sensor.mlb_rockies_game_status
+        state: Delayed
+    action:
+    - service: script.turn_on
+      entity_id: script.mlb_rockies_update
+    mode: single
+
+  # From the time the warmup starts until the game starts, check the status every minute.
+  - alias: mlb_rockies_check_schedule_every_1
+    trigger:
+    - platform: time_pattern
+      seconds: /60
+    condition:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: sensor.mlb_rockies_game_status
+        state: Pre-Game
+      - condition: state
+        entity_id: sensor.mlb_rockies_game_status
+        state: Warmup
+      - condition: state
+        entity_id: sensor.mlb_rockies_game_status
+        state: 'Delayed Start: Rain'
+    action:
+    - service: script.turn_on
+      entity_id: script.mlb_rockies_update
+    mode: single
+
+  # Recover from connection issues by checking the status every minute if the status is lost
+  - alias: mlb_rockies_unavailable
+    trigger:
+    - platform: time_pattern
+      seconds: /60
+    condition:
+    - condition: state
+      entity_id: sensor.mlb_rockies_game_status
+      state: unavailable
+    action:
+    - service: script.turn_on
+      entity_id: script.mlb_rockies_update
+    mode: single
+
+  # Once the game starts, turn on both "Game On" automations.
+  # Because a game can change status mid-game (for replays, manager challenges, etc.), the "Game On" automations don't rely on particular statuses.
+  # Instead, they are turned on at the start of the game and turned off at the end of the game.
+  - alias: mlb_rockies_in_progress
+    trigger:
+    - entity_id: sensor.mlb_rockies_game_status
+      platform: state
+      to: In Progress
+    condition: []
+    action:
+    - data:
+        entity_id: automation.mlb_rockies_game_on
+      entity_id: automation.mlb_rockies_game_on
+      service: automation.turn_on
+    mode: single
+
+  # When the game ends, turn off both "Game On" automations and the input boolean.
+  # Wait one hour, then check the status one last time to catch the "Final" status.
+  - alias: mlb_rockies_game_over
+    trigger:
+    - entity_id: sensor.mlb_rockies_game_status
+      platform: state
+      to: Game Over
+    - entity_id: sensor.mlb_rockies_game_status
+      platform: state
+      to: Final
+    - entity_id: sensor.mlb_rockies_game_status
+      platform: state
+      to: Suspended
+    - entity_id: sensor.mlb_rockies_game_status
+      platform: state
+      to: Cancelled
+    condition: []
+    action:
+    - data:
+        entity_id: automation.mlb_rockies_game_on
+      entity_id: automation.mlb_rockies_game_on
+      service: automation.turn_off
+    - delay: 01:00:00
+    - data: {}
+      entity_id: script.mlb_rockies_update
+      service: script.turn_on
+    mode: single
+   
+  ## update game state every 5 seconds when it's on
+  - alias: mlb_rockies_game_on
+    description: ''
+    trigger:
+    - platform: time_pattern
+      seconds: /5
+    condition:
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Game Over") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Final") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Suspended") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Pre-Game")  }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Warmup") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Delayed Start: Rain") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Scheduled") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Delayed") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.mlb_rockies_game_status", "Cancelled") }}'
+    action:
+    - entity_id: script.mlb_rockies_update
+      service: script.turn_on
+    mode: single
+
+  - alias: mlb_rockies_run_scored
+    trigger:
+    - entity_id: sensor.mlb_rockies_score
+      platform: state
+    condition:
+    - condition: template
+      value_template: "{{ trigger.to_state is not none and trigger.from_state is not none and trigger.to_state.state|int > trigger.from_state.state|int }}"
+    action:
+    - delay: "00:01:00"
+    - service: script.alexa_announcement
+      data_template:
+        message: "Go Rockies! {{ trigger.from_state.state|int - trigger.to_state.state|int }} run{% if trigger.from_state.state|int - trigger.to_state.state|int > 1 %}s{% endif %} will score!"
+
+  - alias: mlb_rockies_final_score
+    trigger:
+      platform: state
+      entity_id: sensor.mlb_rockies_game_status
+      to: "Final"
+    action:
+    - delay: "00:01:00"
+    - service: script.alexa_announcement
+      data_template:
+        message: "Go Rockies. Final Score: {{ state_attr( 'sensor.mlb_rockies_score', 'friendly_name') }} {{ states('sensor.mlb_rockies_score') }},, {{ state_attr( 'sensor.mlb_rockies_opponent_score', 'friendly_name') }}{{ states('sensor.mlb_rockies_opponent_score') }} !"
