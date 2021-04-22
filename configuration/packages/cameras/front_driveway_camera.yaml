@@ -36,6 +36,7 @@ camera:
 rest_command:
   camera_reboot_front_driveway:
     url: 'https://192.168.1.209/cgi-bin/action.cgi?cmd=reboot'
+    verify_ssl: false
     username: root
     password: !secret dafang_cam_password
 
