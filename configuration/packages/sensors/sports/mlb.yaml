@@ -80,6 +80,16 @@ sensor:
           {{ states('sensor.mlb_rockies_home_team') }}
           {% endif %}
 
+      mlb_rockies_next_game:
+        friendly_name: "MLB: Rockies Next Game"
+        value_template: >-
+          {% if states('sensor.mlb_rockies_game_status') == 'unknown' %}
+            No Game
+          {% else %}
+            {% set gametime = states.sensor.mlb_rockies_game_status.attributes["dates"][0]["games"][0]["gameDate"] %}
+            {{ strptime(gametime,'%Y-%m-%dT%H:%M:%S%z').timestamp() | timestamp_custom("%b %e %I:%M %p ") }}
+          {% endif %}
+
 script:
   mlb_rockies_update:
     alias: mlb_rockies_update
