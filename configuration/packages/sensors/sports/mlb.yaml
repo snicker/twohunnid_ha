@@ -121,7 +121,7 @@ automation:
   - alias: mlb_rockies_check_schedule_every_1
     trigger:
     - platform: time_pattern
-      seconds: /60
+      seconds: /59
     condition:
     - condition: or
       conditions:
@@ -143,7 +143,7 @@ automation:
   - alias: mlb_rockies_unavailable
     trigger:
     - platform: time_pattern
-      seconds: /60
+      seconds: /59
     condition:
     - condition: state
       entity_id: sensor.mlb_rockies_game_status
