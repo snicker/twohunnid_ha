@@ -248,7 +248,7 @@ automation:
     - delay: "00:01:00"
     - service: script.alexa_announcement
       data_template:
-        message: "Go Rockies! {{ trigger.to_state.state|int - trigger.from_state.state|int }} run{% if trigger.from_state.state|int - trigger.to_state.state|int > 1 %}s{% endif %} will score!"
+        message: "Go Rockies! {{ trigger.to_state.state|int - trigger.from_state.state|int }} run{% if trigger.to_state.state|int - trigger.from_state.state|int > 1 %}s{% endif %} will score!"
 
   - alias: mlb_rockies_final_score
     trigger:
