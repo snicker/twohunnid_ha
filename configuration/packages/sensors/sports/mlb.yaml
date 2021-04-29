@@ -254,7 +254,10 @@ automation:
     trigger:
       platform: state
       entity_id: sensor.mlb_rockies_game_status
-      to: "Final"
+      to: "Game Over"
+    condition:
+    - condition: template
+      value_template: "{{ states('sensor.mlb_rockies_score') >= states('sensor.mlb_rockies_opponent_score') }}"
     action:
     - delay: "00:01:00"
     - service: script.alexa_announcement
