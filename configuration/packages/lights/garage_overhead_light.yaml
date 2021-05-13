@@ -16,8 +16,8 @@ light:
     name: garage_overhead_light
     optimistic: false
     command_topic: "x10/b9/command"
-    payload_on: "fon"
-    payload_off: "foff"
+    payload_on: "on"
+    payload_off: "off"
     state_topic: "x10/b9/status"
-    state_value_template: "f{{ value }}"
+    state_value_template: "{{ value }}"
     
