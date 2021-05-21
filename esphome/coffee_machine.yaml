@@ -1,4 +1,17 @@
-
+# .plan
+# should automatically turn off after 3 hours
+# should never turn on after power outage
+# short press turns on immediately
+# press and hold:
+#   if no timer set:
+#     for each second held down, add 15 mins to a timer
+#     blink blue X times for each 15 min interval after release
+#     start a timer to turn on the relay
+#     blink 2x per second every 5s until timer goes off
+#   if timer set:
+#     anything greater than 1s, reset timer
+#     blink 3x red
+# 
 
 substitutions:
   plug_name: CoffeeMachine
@@ -47,18 +60,14 @@ binary_sensor:
     name: "${plug_name}_button"
     on_press:
       then:
-        - switch.toggle: switch
+        - switch.toggle: relay1
         
 switch:
-  - platform: binary
-    id: switch
-    name: "${plug_name}_switch"
-    output: relay1
-
-output:
 - platform: gpio
   id: relay1
+  name: "${plug_name}_switch"
   pin: GPIO14
+  restore_mode: ALWAYS_OFF
 
 switch:
 - platform: gpio
