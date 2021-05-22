@@ -1,8 +1,8 @@
 # .plan
-# should automatically turn off after 3 hours
-# should never turn on after power outage
-# short press turns on immediately
-# press and hold:
+# [ ] should automatically turn off after 3 hours
+# [X] should never turn on after power outage
+# [X] short press turns on immediately
+# [ ] press and hold:
 #   if no timer set:
 #     for each second held down, add 15 mins to a timer
 #     blink blue X times for each 15 min interval after release
@@ -65,9 +65,27 @@ binary_sensor:
 switch:
 - platform: gpio
   id: relay1
-  name: "${plug_name}_switch"
   pin: GPIO14
+  internal: true
   restore_mode: ALWAYS_OFF
+
+- platform: template
+  id: timed_switch
+  name: "${plug_name}_switch"
+  lambda: |-
+    if (id(relay1).state) {
+      return true;
+    } else {
+      return false;
+    }
+  turn_on_action:
+    - switch.turn_on: relay1
+    - switch.turn_on: led_blue_internal
+    - delay: 30s
+    - switch.turn_off: timed_switch
+  turn_off_action:
+    - switch.turn_off: led_blue_internal
+    - switch.turn_off: relay1
 
 - platform: gpio
   id: led_red_internal
