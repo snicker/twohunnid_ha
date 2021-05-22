@@ -52,11 +52,11 @@ time:
   - platform: homeassistant
     id: homeassistant_time
 
- globals:
-   - id: delay_timer_cycles
-     type: int
-     restore_value: no
-     initial_value: '0'
+globals:
+  - id: delay_timer_cycles
+    type: int
+    restore_value: no
+    initial_value: '0'
     
 sensor:
   - platform: template
