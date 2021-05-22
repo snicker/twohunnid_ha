@@ -68,8 +68,6 @@ switch:
   name: "${plug_name}_switch"
   pin: GPIO14
   restore_mode: ALWAYS_OFF
-
-switch:
 - platform: gpio
   name: "${plug_name}_LED_Red"
   pin: GPIO1
