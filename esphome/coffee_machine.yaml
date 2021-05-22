@@ -85,7 +85,7 @@ switch:
 - platform: template
   name: "${plug_name}_LED_Blue"
   lambda: |-
-    if (id(led_blue_internal).state) {
+    if (id(led_blue_internal).state && !id(led_red_internal).state) {
       return true;
     } else {
       return false;
@@ -99,7 +99,7 @@ switch:
 - platform: template
   name: "${plug_name}_LED_Red"
   lambda: |-
-    if (id(led_red_internal).state) {
+    if (id(led_red_internal).state && !id(led_blue_internal).state) {
       return true;
     } else {
       return false;
