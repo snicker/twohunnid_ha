@@ -68,11 +68,64 @@ switch:
   name: "${plug_name}_switch"
   pin: GPIO14
   restore_mode: ALWAYS_OFF
+
 - platform: gpio
-  name: "${plug_name}_LED_Red"
+  id: led_red_internal
   pin: GPIO1
   inverted: True
+  internal: True
   restore_mode: ALWAYS_OFF
+- platform: gpio
+  id: led_blue_internal
+  pin: GPIO13
+  inverted: True
+  internal: True
+  restore_mode: ALWAYS_OFF
+
+- platform: template
+  name: "${plug_name}_LED_Blue"
+  lambda: |-
+    if (id(led_blue_internal).state) {
+      return true;
+    } else {
+      return false;
+    }
+  turn_on_action:
+    - switch.turn_off: led_red_internal
+    - switch.turn_on: led_blue_internal
+  turn_off_action:
+    - switch.turn_off: led_blue_internal
+
+- platform: template
+  name: "${plug_name}_LED_Red"
+  lambda: |-
+    if (id(led_red_internal).state) {
+      return true;
+    } else {
+      return false;
+    }
+  turn_on_action:
+    - switch.turn_off: led_blue_internal
+    - switch.turn_on: led_red_internal
+  turn_off_action:
+    - switch.turn_off: led_red_internal
+
+- platform: template
+  name: "${plug_name}_LED_Purple"
+  lambda: |-
+    if (id(led_red_internal).state && id(led_blue_internal).state) {
+      return true;
+    } else {
+      return false;
+    }
+  turn_on_action:
+    - switch.turn_on: led_blue_internal
+    - switch.turn_on: led_red_internal
+  turn_off_action:
+    - switch.turn_off: led_blue_internal
+    - switch.turn_off: led_red_internal
+
+
 - platform: gpio
   name: "${plug_name}_LED_Blue"
   pin: GPIO13
