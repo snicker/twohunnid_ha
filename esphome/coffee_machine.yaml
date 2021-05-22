@@ -66,58 +66,60 @@ binary_sensor:
     name: "${plug_name}_button"
     on_click:
     - min_length: 0ms
+      max_length: 499ms
+      then:
+        - switch.toggle: timed_switch
+        - switch.turn_off: delay_timer_switch
+    - min_length: 500ms
       max_length: 999ms
       then:
-        - switch.turn_on: timed_switch
-        - switch.turn_off: delay_timer_switch
+        - globals.set:
+            id: "delay_timer_cycles"
+            value: "1"
     - min_length: 1000ms
       max_length: 1999ms
       then:
         - globals.set:
             id: "delay_timer_cycles"
-            value: "1"
+            value: "2"
     - min_length: 2000ms
       max_length: 2999ms
       then:
         - globals.set:
             id: "delay_timer_cycles"
-            value: "2"
+            value: "3"
     - min_length: 3000ms
       max_length: 3999ms
       then:
         - globals.set:
             id: "delay_timer_cycles"
-            value: "3"
+            value: "4"
     - min_length: 4000ms
       max_length: 4999ms
       then:
         - globals.set:
             id: "delay_timer_cycles"
-            value: "4"
+            value: "5"
     - min_length: 5000ms
       max_length: 5999ms
       then:
         - globals.set:
             id: "delay_timer_cycles"
-            value: "5"
+            value: "6"
     - min_length: 6000ms
       max_length: 6999ms
       then:
         - globals.set:
             id: "delay_timer_cycles"
-            value: "6"
-    - min_length: 7000ms
-      max_length: 7999ms
-      then:
-        - globals.set:
-            id: "delay_timer_cycles"
             value: "7"
-    - min_length: 8000ms
+    - min_length: 7000ms
+      max_length: 60000ms
       then:
         - globals.set:
             id: "delay_timer_cycles"
             value: "8"
     - min_length: 1000ms
+      max_length: 60000ms
       then:
         - switch.turn_on: delay_timer_switch
 
