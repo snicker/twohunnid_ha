@@ -18,7 +18,7 @@ substitutions:
   # Higher value gives lower watt readout
   current_res: "0.00221"
   # Lower value gives lower voltage readout
-  voltage_div: "940"
+  voltage_div: "752"
 esphome:
   name: ${plug_name}
   platform: ESP8266
