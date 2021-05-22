@@ -2,15 +2,15 @@
 # [X] should automatically turn off after 3 hours
 # [X] should never turn on after power outage
 # [X] short press turns on immediately
-# [ ] press and hold:
-#   if no timer set:
-#     for each second held down, add 15 mins to a timer
-#     blink blue X times for each 15 min interval after release
-#     start a timer to turn on the relay
-#     blink 2x per second every 5s until timer goes off
-#   if timer set:
-#     anything greater than 1s, reset timer
-#     blink 3x red
+# [X] press and hold:
+#   [ ] if no timer set:
+#     [ ] for each second held down, add 15 mins to a timer
+#     [ ] blink purple X times for each 15 min interval after release
+#     [X] start a timer to turn on the relay
+#     [ ] blink purple 2x per second every 5s until timer goes off
+#   [ ] if timer set:
+#     [ ] anything greater than 1s, reset timer
+#     [ ] blink 3x red
 # 
 
 substitutions:
@@ -51,18 +51,93 @@ web_server:
 time:
   - platform: homeassistant
     id: homeassistant_time
+
+ globals:
+   - id: delay_timer_cycles
+     type: int
+     restore_value: no
+     initial_value: '0'
     
+sensor:
+  - platform: template
+    name: "Timer Cycles"
+    lambda: |-
+      return id(delay_timer_cycles);
+    update_interval: 1s
+
 binary_sensor:
   - platform: gpio
     pin:
       number: GPIO3
       inverted: True
     name: "${plug_name}_button"
-    on_press:
+    on_click:
+    - min_length: 0ms
+      max_length: 999ms
       then:
-        - switch.toggle: relay1
-        
+        - switch.turn_on: timed_switch
+        - switch.turn_off: delay_timer_switch
+    - min_length: 1000ms
+      max_length: 1999ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 1
+    - min_length: 2000ms
+      max_length: 2999ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 2
+    - min_length: 3000ms
+      max_length: 3999ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 3
+    - min_length: 4000ms
+      max_length: 4999ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 4
+    - min_length: 5000ms
+      max_length: 5999ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 5
+    - min_length: 6000ms
+      max_length: 6999ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 6
+    - min_length: 7000ms
+      max_length: 7999ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 7
+    - min_length: 8000ms
+      then:
+        - globals.set:
+            id: delay_timer_cycles
+            value: 8
+    - min_length: 1000ms
+      then:
+        - switch.turn_on: delay_timer_switch
+
 switch:
+- platform: template
+  id: delay_timer_switch
+  name: "${plug_name}_delay_timer"
+  optimistic: True
+  turn_on_action:
+    - delay: !lambda "return id(delay_timer_cycles) * 5000;"
+    - switch.turn_on: timed_switch
+    - switch.turn_off: delay_timer_switch
+
 - platform: gpio
   id: relay1
   pin: GPIO14
