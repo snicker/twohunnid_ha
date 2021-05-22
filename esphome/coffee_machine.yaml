@@ -57,13 +57,6 @@ globals:
     type: int
     restore_value: no
     initial_value: '0'
-    
-sensor:
-  - platform: template
-    name: "Timer Cycles"
-    lambda: |-
-      return id(delay_timer_cycles);
-    update_interval: 1s
 
 binary_sensor:
   - platform: gpio
@@ -219,6 +212,12 @@ switch:
     - switch.turn_off: led_red_internal
 
 sensor:
+  - platform: template
+    name: "Timer Cycles"
+    lambda: |-
+      return id(delay_timer_cycles);
+    update_interval: 1s
+    
   - platform: hlw8012
     sel_pin:
       number: GPIO12
