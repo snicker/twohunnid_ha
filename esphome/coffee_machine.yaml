@@ -125,12 +125,6 @@ switch:
     - switch.turn_off: led_blue_internal
     - switch.turn_off: led_red_internal
 
-
-- platform: gpio
-  name: "${plug_name}_LED_Blue"
-  pin: GPIO13
-  inverted: True
-  restore_mode: ALWAYS_OFF
 sensor:
   - platform: hlw8012
     sel_pin:
