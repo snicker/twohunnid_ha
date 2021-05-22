@@ -1,5 +1,5 @@
 # .plan
-# [ ] should automatically turn off after 3 hours
+# [X] should automatically turn off after 3 hours
 # [X] should never turn on after power outage
 # [X] short press turns on immediately
 # [ ] press and hold:
@@ -81,7 +81,7 @@ switch:
   turn_on_action:
     - switch.turn_on: relay1
     - switch.turn_on: led_blue_internal
-    - delay: 30s
+    - delay: 10800s
     - switch.turn_off: timed_switch
   turn_off_action:
     - switch.turn_off: led_blue_internal
