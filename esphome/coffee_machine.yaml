@@ -14,7 +14,7 @@
 # 
 
 substitutions:
-  plug_name: CoffeeMachine
+  plug_name: coffee_machine
   # Higher value gives lower watt readout
   current_res: "0.00221"
   # Lower value gives lower voltage readout
