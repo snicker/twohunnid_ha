@@ -87,6 +87,7 @@ class WeightGurusConnector:
         import requests
         data = {"email": self.username, "password": self.password}
         login_response = requests.post("https://api.weightgurus.com/v3/account/login", data=data)
+        return login_response
         
     async def _connect(self):
         login_response = await self.hass.async_add_executor_job(self.login)
