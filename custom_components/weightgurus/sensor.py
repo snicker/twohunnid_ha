@@ -96,20 +96,24 @@ class WeightGurusConnector:
         self._account = login_json['account']
         self._token = login_json["accessToken"]
         return self._token
+
+    def get_data(self):
+        import requests
+        op_url = "https://api.weightgurus.com/v3/operation/?start={}Z".format(self.last_update.isoformat())
+        data_response = requests.get(
+            op_url,
+            headers={
+                "Authorization": 'Bearer {}'.format(self._token),
+                "Accept": "application/json, text/plain, */*",
+            },
+        )
+        response_json = data_response.json()
+        return response_json
         
     async def _update(self):
         try:
-            import requests
             self._token = await self._connect()
-            op_url = "https://api.weightgurus.com/v3/operation/?start={}Z".format(self.last_update.isoformat())
-            data_response = requests.get(
-                op_url,
-                headers={
-                    "Authorization": 'Bearer {}'.format(self._token),
-                    "Accept": "application/json, text/plain, */*",
-                },
-            )
-            response_json = data_response.json()
+            response_json = await self.hass.async_add_executor_job(self.get_data)
             _LOGGER.debug('weightgurus update response: {}'.format(response_json))
             operations = response_json.get('operations',[])
             if len(operations) > 0:
