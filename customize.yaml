@@ -2,3 +2,13 @@ alarm_control_panel.home_alarm:
   code_arm_required: 'false'
 binary_sensor.konnected_motion_kitchen:
   gpio_pin: '1'
+sensor.plant_desert_rose_battery:
+  battery_alert_disabled: true
+sensor.plant_dragon_tree_battery:
+  battery_alert_disabled: true
+sensor.plant_fiddle_leaf_fig_battery:
+  battery_alert_disabled: true
+sensor.plant_peace_lily_battery:
+  battery_alert_disabled: true
+sensor.plant_zebra_plant_battery:
+  battery_alert_disabled: true

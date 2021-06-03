@@ -185,3 +185,139 @@ open_tesla_trunk:
   - data_template:
       entity_id: '{{ trunk_id }}'
     service: lock.lock
+front_yard_sprinklers_one_cycle:
+  alias: Front Yard Sprinklers One Cycle
+  sequence:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_4536a142_zone_3_watering
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 30
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_4536a142_zone_4_watering
+  - delay:
+      hours: 0
+      minutes: 6
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_4536a142_zone_5_watering
+  - delay:
+      hours: 0
+      minutes: 7
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_4536a142_zone_6_watering
+  - delay:
+      hours: 0
+      minutes: 7
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_4536a142_zone_7_watering
+  - delay:
+      hours: 0
+      minutes: 7
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    target:
+      entity_id: switch.skydrop_4536a142_zone_7_watering
+  mode: single
+front_yard_sprinklers_full_cycle:
+  alias: All Sprinklers Full Cycle
+  sequence:
+  - service: script.front_yard_sprinklers_one_cycle
+  - service: script.backyard_sprinklers_one_cycle
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: script.front_yard_sprinklers_one_cycle
+  - service: script.backyard_sprinklers_one_cycle
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: script.front_yard_sprinklers_one_cycle
+  - service: script.backyard_sprinklers_one_cycle
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: script.front_yard_sprinklers_one_cycle
+  - service: script.backyard_sprinklers_one_cycle
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: script.front_yard_drip_one_cycle
+  - service: script.backyard_drip_sprinklers_one_cycle
+  mode: single
+front_yard_drip_one_cycle:
+  alias: Front Yard Drip Sprinklers One Cycle
+  sequence:
+  - condition: time
+    weekday:
+    - mon
+    - wed
+    - sat
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_4536a142_zone_8_watering
+  - delay:
+      hours: 0
+      minutes: 45
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    target:
+      entity_id: switch.skydrop_4536a142_zone_8_watering
+  mode: single
+backyard_sprinklers_one_cycle:
+  alias: Backyard Sprinklers One Cycle
+  sequence:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_d4d633de_zone_4_watering
+  - delay:
+      hours: 0
+      minutes: 4
+      seconds: 30
+      milliseconds: 0
+  - service: switch.turn_off
+    target:
+      entity_id: switch.skydrop_d4d633de_zone_4_watering
+  mode: single
+backyard_drip_sprinklers_one_cycle:
+  alias: Backyard Drip Sprinklers One Cycle
+  sequence:
+  - condition: time
+    weekday:
+    - tue
+    - thu
+    - sat
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_d4d633de_zone_5_watering
+  - delay:
+      hours: 0
+      minutes: 45
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    target:
+      entity_id: switch.skydrop_d4d633de_zone_5_watering
+  mode: single

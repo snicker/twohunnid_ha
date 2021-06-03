@@ -150,6 +150,10 @@
     entity_id: sensor.velocity_nick
   action:
   - scene: scene.nick_gets_home
+  - service: cover.open_cover
+    data: {}
+    entity_id: cover.driveway_swing_gate
+  mode: single
 - id: '1551828897602'
   alias: HA Server Overload
   trigger:
@@ -702,4 +706,32 @@
   - service: flo.set_home_mode
     data: {}
     entity_id: switch.shutoff_valve
+  mode: single
+- id: '1617582655772'
+  alias: Home Assistant update notification
+  description: ''
+  use_blueprint:
+    path: Klumper/update_notification.yaml
+    input:
+      notification_message: Home Assistant {{ newest_version }} is available
+      delay: 0
+      updater: binary_sensor.updater
+      notify_device: 31a0fe0697834079bfc41dcd13669f6b
+- id: '1622606858616'
+  alias: Run Sprinklers on Schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: '4:00:00'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+  action:
+  - service: script.front_yard_sprinklers_full_cycle
   mode: single

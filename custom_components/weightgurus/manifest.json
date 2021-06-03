@@ -1,6 +1,7 @@
 {
   "domain": "weightgurus",
   "name": "WeightGurus sensor",
+  "version": 1.0,
   "documentation": "",
   "requirements": [],
   "dependencies": [],
