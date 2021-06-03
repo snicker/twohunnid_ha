@@ -1,6 +1,7 @@
 {
   "domain": "broadlink_media",
   "name": "BroadLink",
+  "version": "1.0",
   "documentation": "",
   "requirements": [],
   "dependencies": [],
