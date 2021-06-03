@@ -43,10 +43,10 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     password = config.get(CONF_PASSWORD)
     name = config.get(CONF_NAME)
     
-    weightgurus_connector = WeightGurusConnector(username, password)
+    weightgurus_connector = WeightGurusConnector(hass, username, password)
     try:
-        weightgurus_connector._connect()
-        weightgurus_connector.update()
+        await weightgurus_connector._connect()
+        await weightgurus_connector._update()
     except:
         _LOGGER.exception("Could not create WeightGurus sensor for '{}'!".format(username))
         return
@@ -56,11 +56,12 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     async_add_entities(dev, True)
     
 class WeightGurusConnector:
-    def __init__(self, username, password, update_interval = timedelta(seconds=10)):
+    def __init__(self, hass, username, password, update_interval = timedelta(seconds=10)):
         self.username = username
         self.password = password
+        self.hass = hass
         self.update_interval = update_interval
-        self.update = Throttle(self.update_interval)(self._update)
+        self.update = self._update
         self.default_unit = 'lb'
         self.last_update = datetime.utcnow() - timedelta(days=7)
         
@@ -81,21 +82,24 @@ class WeightGurusConnector:
     @property
     def weight(self):
         return self.most_recent_operation.get('weight',0) / 10.0
-        
-    def _connect(self):
+
+    def login(self):
         import requests
         data = {"email": self.username, "password": self.password}
         login_response = requests.post("https://api.weightgurus.com/v3/account/login", data=data)
+        
+    async def _connect(self):
+        login_response = await self.hass.async_add_executor_job(self.login)
         login_json = login_response.json()
         _LOGGER.debug('weightgurus login response: {}'.format(login_json))
         self._account = login_json['account']
         self._token = login_json["accessToken"]
         return self._token
         
-    def _update(self):
+    async def _update(self):
         try:
             import requests
-            self._token = self._connect()
+            self._token = await self._connect()
             op_url = "https://api.weightgurus.com/v3/operation/?start={}Z".format(self.last_update.isoformat())
             data_response = requests.get(
                 op_url,
@@ -146,8 +150,8 @@ class WeightGurusSensor(Entity):
     def icon(self):
         return 'mdi:relative-scale'
 
-    def update(self):
+    async def async_update(self):
         """Get the latest data from the sensor."""
-        self._connector.update()
+        await self._connector._update()
         self._state = self._connector.weight
         self._attrs = self._connector.most_recent_operation
