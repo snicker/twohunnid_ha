@@ -1,0 +1,213 @@
+esphome:
+  name: portable_wifi_fan
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+  includes:
+    - portable_wifi_fan.h
+
+wifi:
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: FanAndLampController
+    password: !secret ap_password
+
+logger:
+  baud_rate: 0
+
+web_server:
+  port: 80
+  auth:
+    username: admin
+    password: !secret ota_api_password
+
+api:
+  password: !secret ota_api_password
+
+ota:
+  password: !secret ota_api_password
+
+output:
+  - platform: custom
+    type: float
+    outputs:
+      id: fanoutput
+    lambda: |-
+      auto sonoff4ch_fan = new Sonoff4CHFanOutput();
+      App.register_component(sonoff4ch_fan);
+      return {sonoff4ch_fan};
+  # Register the blue LED as a dimmable output ....
+  - platform: esp8266_pwm
+    id: blue_led
+    pin: GPIO13
+    inverted: True
+
+fan:
+  - platform: speed
+    output: fanoutput
+    id: portable_wifi_fan
+    name: "Portable Wifi Fan"
+    speed_count: 3
+
+interval:
+  - interval: 500ms
+    then:
+      - if:
+          condition:
+            lambda: 'return id(portable_wifi_fan).state;'
+          then:
+            - light.turn_on:
+                id: blue_led_light
+                brightness: !lambda |- 
+                  return id(portable_wifi_fan).speed / 3.0;
+                transition_length: 400ms
+          else:
+            - if:
+                condition:
+                  light.is_on: blue_led_light
+                then:
+                  light.turn_off: 
+                    id: blue_led_light
+                    transition_length: 400ms
+
+binary_sensor:
+  - platform: gpio
+    internal: True
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff 4CH Button 1"
+    on_press:
+      then:
+        - switch.toggle: relay1
+        - switch.turn_on: update_fan_speed
+        - light.turn_on:
+            id: blue_led_light
+            brightness: !lambda |- 
+              return id(portable_wifi_fan).speed / 3.0;
+            transition_length: 249ms
+  - platform: gpio
+    internal: True
+    pin:
+      number: GPIO9
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff 4CH Button 2"
+    on_press:
+      then:
+        - switch.toggle: relay2
+        - switch.turn_on: update_fan_speed
+        - light.turn_on:
+            id: blue_led_light
+            brightness: !lambda |- 
+              return id(portable_wifi_fan).speed / 3.0;
+            transition_length: 249ms
+  - platform: gpio
+    internal: True
+    pin:
+      number: GPIO10
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff 4CH Button 3"
+    on_press:
+      then:
+        - switch.toggle: relay3
+        - switch.turn_on: update_fan_speed
+        - light.turn_on:
+            id: blue_led_light
+            brightness: !lambda |- 
+              return id(portable_wifi_fan).speed / 3.0;
+            transition_length: 249ms
+  - platform: gpio
+    internal: True
+    pin:
+      number: GPIO14
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff 4CH Button 4"
+  - platform: status
+    name: "Sonoff 4CH Status"
+
+switch:
+  - platform: template
+    internal: True
+    id: update_fan_speed
+    optimistic: True
+    turn_on_action:
+      then:
+        - delay: 200ms
+        - if:
+            condition:
+              and:
+                - switch.is_off: relay1
+                - switch.is_off: relay2
+                - switch.is_off: relay3
+            then:
+              - fan.turn_off: portable_wifi_fan
+        - if:
+            condition:
+              and:
+                - switch.is_off: relay1
+                - switch.is_off: relay2
+                - switch.is_on: relay3
+            then:
+              - fan.turn_on:
+                  id: portable_wifi_fan
+                  speed: 1
+        - if:
+            condition:
+              and:
+                - switch.is_off: relay1
+                - switch.is_on: relay2
+                - switch.is_off: relay3
+            then:
+              - fan.turn_on:
+                  id: portable_wifi_fan
+                  speed: 2
+        - if:
+            condition:
+              and:
+                - switch.is_on: relay1
+                - switch.is_off: relay2
+                - switch.is_off: relay3
+            then:
+              - fan.turn_on:
+                  id: portable_wifi_fan
+                  speed: 3
+        - switch.turn_off: update_fan_speed
+  - platform: gpio
+    internal: True
+    name: "Sonoff 4CH Relay 1"
+    id: relay1
+    pin: GPIO12
+    interlock: [relay1,relay2,relay3]
+  - platform: gpio
+    internal: True
+    name: "Sonoff 4CH Relay 2"
+    id: relay2
+    pin: GPIO5
+    interlock: [relay1,relay2,relay3]
+  - platform: gpio
+    internal: True
+    name: "Sonoff 4CH Relay 3"
+    id: relay3
+    pin: GPIO4
+    interlock: [relay1,relay2,relay3]
+  - platform: gpio
+    internal: True
+    name: "Sonoff 4CH Relay 4"
+    id: relay4
+    pin: GPIO15
+
+light:
+  # ... and then make a light out of it.
+  - platform: monochromatic
+    internal: True
+    id: blue_led_light
+    name: "Sonoff 4CH Blue LED"
+    output: blue_led
