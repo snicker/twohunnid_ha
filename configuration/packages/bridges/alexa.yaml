@@ -16,8 +16,8 @@ cloud:
         description: Front Door Bell sensor
       binary_sensor.internet_connection_status:
         display_categories: DOORBELL
-        name: Front Door
-        description: Front Door Bell sensor
+        name: Internet Connection
+        description: Internet Connection
       switch.coffee_machine_switch:
         display_categories: COFFEE_MAKER
         name: Coffee Machine
