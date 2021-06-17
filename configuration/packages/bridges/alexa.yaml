@@ -14,6 +14,14 @@ cloud:
         display_categories: DOORBELL
         name: Front Door
         description: Front Door Bell sensor
+      binary_sensor.internet_connection_status:
+        display_categories: DOORBELL
+        name: Front Door
+        description: Front Door Bell sensor
+      switch.coffee_machine_switch:
+        display_categories: COFFEE_MAKER
+        name: Coffee Machine
+        description: the coffee machine in the kitchen
         
 
 alexa_media:
@@ -74,7 +82,7 @@ script:
         data:
           type: announce
           method: all
-    
+
 sensor:
   - platform: template
     sensors:
