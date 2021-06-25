@@ -10,6 +10,14 @@ homeassistant:
     binary_sensor.side_door:
       <<: *customize
       friendly_name: "Side Door"
+      
+    sensor.side_door_unlocked_by_user_code:
+      <<: *customize
+      friendly_name: "Side door unlocked by user"
+
+    lock.assa_abloy_yale_key_free_touchscreen_deadbolt_yrd446_locked:
+      <<: *customize
+      friendly_name: "Side Door Lock"
 
 binary_sensor:
   - platform: template
@@ -17,14 +25,21 @@ binary_sensor:
       side_door:
         device_class: door
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_2')|int == 255 }}"
-      
+
+sensor:
+  - platform: template
+    sensors:
+      side_door_unlocked_by_user_code:
+        value_template: "{%if 'Unlocked with Keypad' in (state_attr('lock.assa_abloy_yale_key_free_touchscreen_deadbolt_yrd446_locked','lock_status') or '') %}{{ state_attr('lock.assa_abloy_yale_key_free_touchscreen_deadbolt_yrd446_locked','lock_status') | replace('Unlocked with Keypad by user','') | int }}{% endif %}"
+
 group:
   side_door_sensors:
     name: "Side Door Sensors"
-    
-    
     entities:
       - binary_sensor.side_door
+      - lock.assa_abloy_yale_key_free_touchscreen_deadbolt_yrd446_locked
+      - sensor.assa_abloy_yale_key_free_touchscreen_deadbolt_yrd446_battery_level
+      - sensor.side_door_unlocked_by_user_code
       - binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_2
       - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_2
       - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_2
