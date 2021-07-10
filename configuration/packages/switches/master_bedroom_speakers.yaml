@@ -1,0 +1,49 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'master_bedroom_speakers'
+        
+    switch.master_bedroom_powerstrip_socket_1:
+      <<: *customize
+        
+    switch.master_bedroom_powerstrip_socket_2:
+      <<: *customize
+      
+    automation.master_bedroom_speakers_auto_on:
+      <<: *customize
+      friendly_name: "Master Bedroom Speakers: Auto On"
+      
+    automation.master_bedroom_speakers_auto_off:
+      <<: *customize
+      friendly_name: "Master Bedroom Speakers: Auto Off"
+            
+automation:
+  - id: master_bedroom_speakers_auto_on
+    alias: master_bedroom_speakers_auto_on
+    trigger:
+    - entity_id: media_player.master_bedroom_dot
+      platform: state
+      to: playing
+    - entity_id: sensor.last_alexa
+      platform: state
+      to: media_player.master_bedroom_dot
+    condition: []
+    action:
+    - data:
+        entity_id: switch.master_bedroom_powerstrip_socket_1
+      service: switch.turn_on
+  - id: master_bedroom_speakers_auto_off
+    alias: master_bedroom_speakers_auto_off
+    trigger:
+    - platform: template
+      value_template: "{{ states('media_player.master_bedroom_dot') != 'playing' }}"
+      for: "00:10:00"
+    - platform: template
+      value_template: "{{ states('sensor.last_alexa') != 'media_player.master_bedroom_dot' and states('media_player.master_bedroom_dot') != 'playing' }}"
+      for: "00:10:00"
+    condition: []
+    action:
+    - data:
+        entity_id: switch.master_bedroom_powerstrip_socket_1
+      service: switch.turn_off
