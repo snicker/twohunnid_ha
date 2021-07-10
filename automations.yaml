@@ -735,3 +735,76 @@
   action:
   - service: script.front_yard_sprinklers_full_cycle
   mode: single
+- id: '1622995690538'
+  alias: Zwift Speed Fan Control
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.zwift_speed_803962
+    below: 10
+  - platform: numeric_state
+    entity_id: sensor.zwift_speed_803962
+    above: 10
+    below: 25
+  - platform: numeric_state
+    entity_id: sensor.zwift_speed_803962
+    above: 25
+    below: 40
+  - platform: numeric_state
+    entity_id: sensor.zwift_speed_803962
+    above: '40'
+  action:
+  - service: fan.turn_on
+    data_template:
+      entity_id: fan.portable_wifi_fan
+      speed: '{% set hr = states(''sensor.zwift_speed_803962'') | float %} {% if hr
+        <= 10 %} off {% elif hr > 10 and hr <= 25 %} low {% elif hr > 25 and hr <=
+        40 %} medium {% elif hr > 40 %} high {% endif %}'
+  mode: single
+- id: '1624461794899'
+  alias: Turn Stuff Off In Summer At 11am
+  description: ''
+  trigger:
+  - platform: time
+    at: '10:59'
+  condition:
+  - condition: template
+    value_template: '{{ now().month >= 6 and now().month <= 9 and now().weekday()
+      <= 4 }}'
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.master_bedroom_humidifier
+      - switch.coffee_machine_switch
+      - switch.master_bedroom_powerstrip_socket_1
+      - switch.master_bedroom_powerstrip_socket_2
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.zwaveproducts_com_wd_100_level_4
+      - light.kitchen_sconces
+      - light.zwaveproducts_com_wd_100_level_2
+      - light.leviton_dzmx1_1lz_dimmer_level
+      - light.living_room_lights
+      - light.garage_overhead_light
+      - light.inovelli_lzw31_sn_dimmer_red_series_level_4
+      - light.office_desk_lamp
+      - light.pantry_light_conditional
+      - light.ballet_studio_lamp
+      - light.zwaveproducts_com_wd_100_level
+  mode: single
+- id: '1625666458279'
+  alias: Coffee Machine Schedule
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.coffee_machine_start_time
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.coffee_machine_switch
+  - service: homeassistant.turn_off
+    target:
+      entity_id: automation.coffee_machine_schedule
+  mode: single
