@@ -63,31 +63,33 @@ script:
   alexa_announcement_all:
     alias: "Send announcement to all Alexas"
     sequence:
+    sequence:
+    - service: notify.alexa_media
+      data:
+        message: '<audio src="soundbank://soundlibrary/musical/amzn_sfx_bell_short_chime_03"/>'
+        data:
+          type: tts
+        target: group.alexa_all_media_players
     - service: script.notify_alexa
       data_template: 
         message: "{{ message }}"
         title: "{{ title }}"
         alexa: group.alexa_all_media_players
-    - service: script.notify_alexa
-      data_template: 
-        message: "{{ message }}"
-        title: "{{ title }}"
-        type: tts
-        alexa: group.alexa_notification_media_players_tts_only
   alexa_announcement:
     alias: "Send announcement to main Alexas"
     sequence:
-    - service: script.notify_alexa
-      data_template: 
-        message: "{{ message }}"
-        title: "{{ title }}"
-        alexa: group.alexa_notification_media_players
+    - service: notify.alexa_media
+      data:
+        message: '<audio src="soundbank://soundlibrary/musical/amzn_sfx_bell_short_chime_03"/>'
+        data:
+          type: tts
+        target: group.alexa_notification_media_players
     - service: script.notify_alexa
       data_template: 
         message: "{{ message }}"
         title: "{{ title }}"
         type: tts
-        alexa: group.alexa_notification_media_players_tts_only
+        alexa: group.alexa_notification_media_players
   notify_alexa:
     alias: "Notify one Alexa"
     sequence:
