@@ -27,11 +27,6 @@ homeassistant:
 
     script.locate_vacuum:
       <<: *customize
-      
-vacuum:
-  - platform: xiaomi_miio
-    host: 192.168.1.165
-    token: !secret xiaomi_vacuum_token
     
 switch:
   - platform: template
