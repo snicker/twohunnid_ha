@@ -50,23 +50,20 @@ group:
     - media_player.nicholas_s_family_hub
   alexa_notification_media_players:
     - media_player.backyard_dot
-    - media_player.kitchen_dot
     - media_player.plant_room_dot
     - media_player.master_bedroom_dot
     - media_player.ballet_studio_fire_tv
     - media_player.nicholas_s_2nd_echo_input
-    - media_player.nicholas_s_family_hub
-  alexa_notification_media_players_tts_only:
     - media_player.nicholas_s_family_hub
     
 script:
   alexa_announcement_all:
     alias: "Send announcement to all Alexas"
     sequence:
-    sequence:
     - service: notify.alexa_media
-      data:
-        message: '<audio src="soundbank://soundlibrary/musical/amzn_sfx_bell_short_chime_03"/>'
+      data_template:
+        message: >
+          <audio src="soundbank://soundlibrary/{{ sound or "musical/amzn_sfx_bell_short_chime_03" }}"/>
         data:
           type: tts
         target: group.alexa_all_media_players
@@ -79,8 +76,9 @@ script:
     alias: "Send announcement to main Alexas"
     sequence:
     - service: notify.alexa_media
-      data:
-        message: '<audio src="soundbank://soundlibrary/musical/amzn_sfx_bell_short_chime_03"/>'
+      data_template:
+        message: >
+          <audio src="soundbank://soundlibrary/{{ sound or "musical/amzn_sfx_bell_short_chime_03" }}"/>
         data:
           type: tts
         target: group.alexa_notification_media_players
