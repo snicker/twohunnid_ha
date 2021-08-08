@@ -64,12 +64,9 @@ script:
       data_template:
         message: >
           <audio src="soundbank://soundlibrary/{{ sound or "musical/amzn_sfx_bell_short_chime_03" }}"/>
+          {{ message }}
         data:
           type: tts
-        target: group.alexa_all_media_players
-    - service: script.notify_alexa
-      data_template: 
-        message: "{{ message }}"
         title: "{{ title }}"
         alexa: group.alexa_all_media_players
   alexa_announcement:
@@ -79,15 +76,11 @@ script:
       data_template:
         message: >
           <audio src="soundbank://soundlibrary/{{ sound or "musical/amzn_sfx_bell_short_chime_03" }}"/>
+          {{ message }}
         data:
           type: tts
-        target: group.alexa_notification_media_players
-    - service: script.notify_alexa
-      data_template: 
-        message: "{{ message }}"
         title: "{{ title }}"
-        type: tts
-        alexa: group.alexa_notification_media_players
+        target: group.alexa_notification_media_players
   notify_alexa:
     alias: "Notify one Alexa"
     sequence:
