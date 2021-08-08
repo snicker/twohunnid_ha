@@ -248,6 +248,7 @@ automation:
     - delay: "00:01:00"
     - service: script.alexa_announcement
       data_template:
+        sound: "sports/crowds/crowds_09"
         message: "Go Rockies! {{ trigger.to_state.state|int - trigger.from_state.state|int }} run{% if trigger.to_state.state|int - trigger.from_state.state|int > 1 %}s{% endif %} will score!"
 
   - alias: mlb_rockies_final_score
@@ -262,4 +263,5 @@ automation:
     - delay: "00:01:00"
     - service: script.alexa_announcement
       data_template:
+        sound: "sports/crowds/crowds_09"
         message: "Go Rockies. Final Score: {{ state_attr( 'sensor.mlb_rockies_score', 'friendly_name') }} {{ states('sensor.mlb_rockies_score') }},, {{ state_attr( 'sensor.mlb_rockies_opponent_score', 'friendly_name') }}{{ states('sensor.mlb_rockies_opponent_score') }} !"
