@@ -15,11 +15,14 @@ esphome:
   board: esp01_1m
 
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  reboot_timeout: 0s
-  domain: .twohunnid
-  fast_connect: true
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: ${device_name}_${device_index}_AP
+    password: !secret ap_password
 
 # Enable logging
 logger:
