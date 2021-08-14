@@ -1,0 +1,53 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'backyard_landscape_lights'
+        
+    switch.backyard_landscape_lighting_switch:
+      <<: *customize
+      hidden: true
+
+    light.backyard_landscape_lighting_power:
+      <<: *customize
+      hidden: true
+    
+    light.backyard_landscape_lights:
+      <<: *customize
+      friendly_name: "Backyard Landscape Lights"
+      
+    automation.backyard_milights_on_when_outlet_on:
+      <<: *customize
+      friendly_name: "Turn on backyard landscape MiLights when switch is powered"
+
+light:
+  - platform: template
+    lights:
+      backyard_landscape_lighting_power:
+        friendly_name: "Backyard Landscape Lights Power"
+        value_template: '{{ is_state("switch.backyard_landscape_lighting_switch", "on") }}'
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.backyard_landscape_lighting_switch
+        turn_off:
+          service: switch.turn_off
+          entity_id: switch.backyard_landscape_lighting_switch
+          
+  - platform: group
+    name: backyard_landscape_lights
+    entities:
+      - light.backyard_landscape_lighting_switch
+      - light.backyard_palm_tree_lights_2
+      
+automation:
+  - alias: backyard_milights_on_when_outlet_on
+    trigger:
+      platform: state
+      entity_id: switch.backyard_landscape_lighting_switch
+      from: 'off'
+      to: 'on'
+    action:
+      - delay: "00:00:01"
+      - service: light.turn_on
+        data:
+          entity_id: light.backyard_palm_tree_lights_2

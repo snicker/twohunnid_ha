@@ -18,6 +18,7 @@ group:
       - light.olive_tree_holiday_lights
       - light.ash_tree_holiday_lights
       - light.front_pine_tree_holiday_lights
+      - light.backyard_landscape_lights
     
   exterior_lights:
     icon: mdi:lightbulb
