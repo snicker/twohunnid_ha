@@ -36,14 +36,14 @@ light:
   - platform: group
     name: backyard_landscape_lights
     entities:
-      - light.backyard_landscape_lighting_switch
+      - light.backyard_landscape_lighting_power
       - light.backyard_palm_tree_lights_2
       
 automation:
   - alias: backyard_milights_on_when_outlet_on
     trigger:
       platform: state
-      entity_id: switch.backyard_landscape_lighting_switch
+      entity_id: switch.backyard_landscape_lighting_power
       from: 'off'
       to: 'on'
     action:
