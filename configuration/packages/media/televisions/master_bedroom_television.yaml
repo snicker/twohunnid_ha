@@ -66,7 +66,7 @@ automation:
     id: turn_on_master_bedroom_tv_if_fire_tv_stick_is_on
     trigger: 
     - platform: state
-      entity_id: media_player.master_bedroom_fire_tv
+      entity_id: media_player.nicholas_s_4th_fire_tv_2
       from: 'off'
     condition: []
     action:
@@ -83,7 +83,7 @@ automation:
     id: turn_off_master_bedroom_tv_if_fire_tv_stick_is_off
     trigger: 
     - platform: state
-      entity_id: media_player.master_bedroom_fire_tv
+      entity_id: media_player.nicholas_s_4th_fire_tv_2
       to: 'off'
     condition: []
     action:
