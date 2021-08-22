@@ -68,7 +68,7 @@ script:
         data:
           type: tts
         title: "{{ title }}"
-        alexa: group.alexa_all_media_players
+        target: group.alexa_all_media_players
   alexa_announcement:
     alias: "Send announcement to main Alexas"
     sequence:
