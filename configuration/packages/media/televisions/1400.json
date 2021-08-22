@@ -1,0 +1,27 @@
+{
+    "manufacturer": "Sharp",
+    "supportedModels": [
+      "LC-52LE820UN"
+    ],
+    "supportedController": "Broadlink",
+    "commandsEncoding": "Base64",
+    "commands": {
+        "off": "JgBCAAk8CRkJGQkZCTwJPAk8CRkJPAkZCRkJPAkZCTwJGQkABZcJPAkZCRkJGQk8CRkJGQk8CRkJPAk8CRkJPAkZCTwJPA0FAAAAAA==",
+        "on": "JgBCAAk8CRkJGQkZCTwJGQk8CRkJPAkZCRkJPAkZCTwJGQkABbkJPAkZCRkJGQk8CTwJGQk8CRkJPAk8CRkJPAkZCTwJPA0FAAAAAA==",
+        "previousChannel": "JgBEAAs7CBsLGAgbCxgIGws7CBwKGAg+CxgIGwsYCD8KGQkABeMIPgoaCRoKGQkaCjwHGws7CD8KGQk9CjwHPwoZCTwLAA0FAAAAAA==",
+        "nextChannel": "JgBEAAk9BxsKGgoZChkJPQkaChkJGgo8CRoKGQoZCjsLGAgABeULOwgbCxgIGwsYCBsLPAc+CzsJHAo7CT4KOwgbCzsIAA0FAAAAAA==",
+        "volumeDown": "JgBEAAo8ChkIGwsYCBsLPAccCjsIGws7CBsLGAgbCzsJGwoABeIIPgsYCBsLGAgbCxgIPwoZCjsIGwo8CD4LPAoZCjwJAA0FAAAAAA==",
+        "volumeUp": "JgBEAAs7CBsLGAgbCxgIGwsYCj0LGAg/ChkJGgoZCjwHGwoABeMIPgsYCxgJGwsYCD4LOwgbCzwHGws7CD8IPQsYCD4LAA0FAAAAAA==",
+        "mute": "JgBIAAg+CxgWGAkbCBoLPAc+CzwHGws7CBwKGQkaCjsIGwsABeIIPgsYCBsLGAgcChkJGgoZCTwLGAo9CTwIPgoaCT0JAAJABAANBQ==",
+        "sources": {
+            "Input 1": "JgBCAAc+BxsIGggaCBoIGwc9BxsIGgg8CDwHGwgaCDwIGggABW8IPAgaCBoIGwcbCDwHGwg8CDwHGwgaCDwIPAgaCDwIPg0FAAAAAA==",
+            "Input 2": "JgBCAAc+BxsIGggaCBoIGwc9Bz0IGwc9Bz0IGwcbCDwHGwgABW8HPQcbCBoIGggbCDwIGwcbCDwHGwgaCDwIPAgaCDwIPg0FAAAAAA==",
+            "Input 3": "JgBCAAg8BxsIGggaCBsIPQg8CDwIGgg8CDwIGggbBzwIGwcABW8IPAgbCBsHGwgaCBoIGwcbBz0HGwgaCDwIPAgaCDwIPA0FAAAAAA==",
+            "Input 4": "JgBCAAc+BxsIGggaCBoIPAg8CBoIGwc9BxsHPQc9Bz0IGwcABW8IPAgbCBsHGwgaCBoIGwc9CDwIGwg9CBsHGwgaCDwIPg0FAAAAAA==",
+            "Input 5": "JgBCAAg8BxsIGggaCDwIGggbBz0IPQgbBxsIPAcbCDwIGggABW8IPAcbCBoIGgg8CDwIPAgaCBoIPAg8CBoIPAgbCD0IPA0FAAAAAA==",
+            "Input 6": "JgBCAAg9CBsIHAccCD0IGwgbCBsIHAc+BxwIPQccCBsIGwgABXsHPgccCBsIGwg9CD0IPQg9CD0HHAg9CBsIPQg9CD0IPQ0FAAAAAA==",
+            "Input 7": "JgBCAAg8BxsIGggaCDwIPAgaCDwIGgg8CBsIGwc9CD0IGwcABW8IPAgbCBsHGwg8CBoIPAgaCDwIGgg8CDwIGggaCDwIPA0FAAAAAA==",
+            "Input 8": "JgBCAAg8BxsIGggaCDwIPAg8CDwIGgg8CBoIGgg8CDwIGggABW8IPAgaCBsIGwc9BxsHGwgaCDwIGgg8CDwIGggbCD0IPA0FAAAAAA=="
+        }
+    }
+}
