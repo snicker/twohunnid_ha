@@ -10,6 +10,7 @@ alarm_state_armed_any:
       entity_id:
       - lock.kwikset_touchpad_electronic_deadbolt_locked
       - lock.kwikset_touchpad_electronic_deadbolt_locked_2
+      - lock.assa_abloy_yale_key_free_touchscreen_deadbolt_yrd446_locked
 alarm_state_disarmed:
   alias: 'Alarm State: Disarmed'
   sequence:
