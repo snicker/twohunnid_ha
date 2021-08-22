@@ -42,13 +42,10 @@ homeassistant:
       icon: mdi:television
       
 media_player:
-  - platform: broadlink_media
-    host: 192.168.1.168
-    mac: '78:0f:77:18:5f:ae'
+  - platform: smartir
+    controller_data: 192.168.1.168
     name: living_room_television
-    ping_host: 192.168.1.234
-    ircodes_ini: 'configuration/packages/media/televisions/samsung_tv_ir_codes.ini'
-    timeout: 10
+    device_code: 1062
   - platform: universal
     name: living_room_television_homekit
     children:
