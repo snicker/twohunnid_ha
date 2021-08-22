@@ -16,9 +16,11 @@
     platform: time
   condition: []
   action:
-  - data:
-      entity_id: group.exterior_lights
+  - data: {}
     service: homeassistant.turn_off
+    target:
+      entity_id: group.exterior_lights
+  mode: single
 - id: '1537420454578'
   alias: 'HAStatus: Shutdown'
   trigger:
@@ -807,4 +809,63 @@
   - service: homeassistant.turn_off
     target:
       entity_id: automation.coffee_machine_schedule
+  mode: single
+- id: '1628369471321'
+  alias: Sync AQI to Alexa Sensor
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.airnow_aqi
+  condition: []
+  action:
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.air_quality_index_for_alexa
+    data:
+      value: '{{ states(''sensor.airnow_aqi'') | int }}'
+  mode: single
+- id: '1628373516745'
+  alias: Air Quality Notifications
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.airnow_aqi
+    below: 50
+  - platform: numeric_state
+    entity_id: sensor.airnow_aqi
+    above: 50
+    below: 100
+  - platform: numeric_state
+    entity_id: sensor.airnow_aqi
+    above: 100
+    below: 150
+  - platform: numeric_state
+    entity_id: sensor.airnow_aqi
+    above: '150'
+    below: '200'
+  - platform: numeric_state
+    entity_id: sensor.airnow_aqi
+    above: '200'
+    below: '300'
+  - platform: numeric_state
+    entity_id: sensor.airnow_aqi
+    above: '300'
+  condition: []
+  action:
+  - service: notify.nick
+    data_template:
+      message: 'Air quality alert:  {% if trigger.get(''to_state'') %}{% if trigger.to_state.state|int
+        > trigger.from_state.state|int %} Air quality is getting worse.  {% else %}
+        Air quality is improving.  {% endif %}{% endif %} {% set aqi = states(''sensor.airnow_aqi'')
+        | int %} A Q I is {{ aqi }}
+
+        '
+  - service: script.alexa_announcement
+    data:
+      message: 'Air quality alert:  {% if trigger.get(''to_state'') %}{% if trigger.to_state.state|int
+        > trigger.from_state.state|int %} Air quality is getting worse.  {% else %}
+        Air quality is improving.  {% endif %}{% endif %} {% set aqi = states(''sensor.airnow_aqi'')
+        | int %} A Q I is {{ aqi }}.
+
+        '
   mode: single
