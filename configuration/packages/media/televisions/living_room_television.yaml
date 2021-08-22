@@ -75,5 +75,5 @@ media_player:
     attributes:
       state: media_player.living_room_television
       source: media_player.living_room_television|source
-      is_volume_muted: media_player.living_room_television|is_volume_muted
+      is_volume_muted: media_player.samsung_7_series_75|is_volume_muted
       source_list: media_player.living_room_television|source_list
