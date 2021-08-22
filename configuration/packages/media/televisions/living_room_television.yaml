@@ -36,7 +36,7 @@ homeassistant:
       icon: mdi:television
       device_class: tv
       
-    media_player.living_room_television_samsungtv:
+    media_player.samsung_7_series_75:
       <<: *customize
       friendly_name: "Living Room Television - SamsungTV"
       icon: mdi:television
@@ -45,7 +45,8 @@ media_player:
   - platform: smartir
     controller_data: 192.168.1.168
     name: living_room_television
-    device_code: 1062
+    device_code: 1060
+    power_sensor: media_player.samsung_7_series_75
   - platform: universal
     name: living_room_television_homekit
     children:
@@ -58,19 +59,19 @@ media_player:
       turn_off:
         service: media_player.turn_off
         data:
-          entity_id: media_player.living_room_television
+          entity_id: media_player.samsung_7_series_75
       volume_up:
         service: media_player.volume_up
         data:
-          entity_id: media_player.living_room_television
+          entity_id: media_player.samsung_7_series_75
       volume_down:
         service: media_player.volume_down
         data:
-          entity_id: media_player.living_room_television
+          entity_id: media_player.samsung_7_series_75
       volume_mute:
         service: media_player.volume_mute
         data:
-          entity_id: media_player.living_room_television
+          entity_id: media_player.samsung_7_series_75
     attributes:
       state: media_player.living_room_television
       source: media_player.living_room_television|source
