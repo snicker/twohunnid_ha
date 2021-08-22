@@ -27,6 +27,7 @@ group:
     - light.string_lights
     - light.backyard_flood_lights
     - light.front_landscape_lights
+    - light.backyard_landscape_lights
     - light.pool_light
     - light.front_porch_lights
     - light.holiday_spotlight
