@@ -43,7 +43,7 @@ homeassistant:
       
 media_player:
   - platform: smartir
-    controller_data: 192.168.1.168
+    controller_data: remote.living_room_rm_mini_remote
     name: living_room_television
     device_code: 1060
     power_sensor: media_player.samsung_7_series_75

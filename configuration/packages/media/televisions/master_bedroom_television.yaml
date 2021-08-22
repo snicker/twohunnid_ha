@@ -27,7 +27,7 @@ homeassistant:
       
 media_player:
   - platform: smartir
-    controller_data: 192.168.1.205
+    controller_data: remote.master_bedroom_rm_mini_remote
     name: master_bedroom_television
     device_code: 1400
   - platform: universal
