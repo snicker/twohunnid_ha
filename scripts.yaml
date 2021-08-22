@@ -192,42 +192,32 @@ front_yard_sprinklers_one_cycle:
     target:
       entity_id: switch.skydrop_4536a142_zone_3_watering
   - delay:
-      hours: 0
-      minutes: 5
-      seconds: 30
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_4536a142_zone_3_total_minutes'')
+        | float / 4 }}'
   - service: switch.turn_on
     target:
       entity_id: switch.skydrop_4536a142_zone_4_watering
   - delay:
-      hours: 0
-      minutes: 6
-      seconds: 0
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_4536a142_zone_4_total_minutes'')
+        | float / 4 }}'
   - service: switch.turn_on
     target:
       entity_id: switch.skydrop_4536a142_zone_5_watering
   - delay:
-      hours: 0
-      minutes: 7
-      seconds: 0
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_4536a142_zone_5_total_minutes'')
+        | float / 4 }}'
   - service: switch.turn_on
     target:
       entity_id: switch.skydrop_4536a142_zone_6_watering
   - delay:
-      hours: 0
-      minutes: 7
-      seconds: 0
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_4536a142_zone_6_total_minutes'')
+        | float / 4 }}'
   - service: switch.turn_on
     target:
       entity_id: switch.skydrop_4536a142_zone_7_watering
   - delay:
-      hours: 0
-      minutes: 7
-      seconds: 0
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_4536a142_zone_7_total_minutes'')
+        | float / 4 }}'
   - service: switch.turn_off
     target:
       entity_id: switch.skydrop_4536a142_zone_7_watering
@@ -273,18 +263,26 @@ front_yard_drip_one_cycle:
     weekday:
     - mon
     - wed
+    - fri
     - sat
   - service: switch.turn_on
     target:
       entity_id: switch.skydrop_4536a142_zone_8_watering
   - delay:
-      hours: 0
-      minutes: 45
-      seconds: 0
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_4536a142_zone_8_total_minutes'')
+        | float }}'
   - service: switch.turn_off
     target:
       entity_id: switch.skydrop_4536a142_zone_8_watering
+  - service: switch.turn_on
+    target:
+      entity_id: switch.skydrop_d4d633de_zone_3_watering
+  - delay:
+      minutes: '{{ states(''input_number.skydrop_4536a142_zone_8_total_minutes'')
+        | float }}'
+  - service: switch.turn_off
+    target:
+      entity_id: switch.skydrop_d4d633de_zone_3_watering
   mode: single
 backyard_sprinklers_one_cycle:
   alias: Backyard Sprinklers One Cycle
@@ -293,10 +291,8 @@ backyard_sprinklers_one_cycle:
     target:
       entity_id: switch.skydrop_d4d633de_zone_4_watering
   - delay:
-      hours: 0
-      minutes: 4
-      seconds: 30
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_d4d633de_zone_4_total_minutes'')
+        | float / 4 }}'
   - service: switch.turn_off
     target:
       entity_id: switch.skydrop_d4d633de_zone_4_watering
@@ -306,17 +302,18 @@ backyard_drip_sprinklers_one_cycle:
   sequence:
   - condition: time
     weekday:
+    - mon
     - tue
+    - wed
     - thu
+    - fri
     - sat
   - service: switch.turn_on
     target:
       entity_id: switch.skydrop_d4d633de_zone_5_watering
   - delay:
-      hours: 0
-      minutes: 45
-      seconds: 0
-      milliseconds: 0
+      minutes: '{{ states(''input_number.skydrop_d4d633de_zone_5_total_minutes'')
+        | float }}'
   - service: switch.turn_off
     target:
       entity_id: switch.skydrop_d4d633de_zone_5_watering
