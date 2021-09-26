@@ -509,8 +509,6 @@ automation:
               and states(entity_id) | int > states.input_number.battery_alert_threshold_min.state | int
             )
             or states(entity_id) | lower == 'low'
-            or states(entity_id) | lower == 'unknown'
-            or states(entity_id) | lower == 'unavailable'
           )
         ) -%}
           {{ state_attr(entity_id, "friendly_name") }} ({{ states(entity_id) }})
@@ -543,8 +541,6 @@ automation:
                 and states(entity_id) | int > states.input_number.battery_alert_threshold_min.state | int
               )
               or states(entity_id) | lower == 'low'
-              or states(entity_id) | lower == 'unknown'
-              or states(entity_id) | lower == 'unavailable'
             )
           ) -%}
             {{ state_attr(entity_id, "friendly_name") }} ({{ states(entity_id) }})
@@ -583,8 +579,6 @@ automation:
               and states(entity_id) | int > states.input_number.battery_alert_threshold_min.state | int
             )
             or states(entity_id) | lower == 'low'
-            or states(entity_id) | lower == 'unknown'
-            or states(entity_id) | lower == 'unavailable'
           )
         ) -%}
           {{ state_attr(entity_id, "friendly_name") }} ({{ states(entity_id) }})
