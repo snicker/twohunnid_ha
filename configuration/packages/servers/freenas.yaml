@@ -54,7 +54,7 @@ sensor:
     name: freenas_all_alerts
     resource: http://freenas.local/api/v2.0/alert/list
     value_template: >
-      {{ value_json | select_attr('dismissed','eq',False) | list | sort(attribute='datetime.$date') }}
+      {{ value_json | selectattr('dismissed','eq',False) | list | sort(attribute='datetime.$date') }}
   
   - platform: rest
     <<: *freenas_rest_sensor
