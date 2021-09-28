@@ -92,7 +92,7 @@ sensor:
         value_template: >
           {{ state_attr('sensor.freenas_all_alerts','objects') | list | rejectattr('dismissed') | list | length }}
         attribute_templates:
-          alerts: "{{ state_attr('sensor.freenas_all_alerts','objects') | list | rejectattr('dismissed') | list }}"
+          alerts: "{{ state_attr('sensor.freenas_all_alerts','objects') | list | rejectattr('dismissed') | sort(attribute='timestamp') | list }}"
       freenas_alert_level:
         value_template: "{{ state_attr('sensor.freenas_active_alerts','alerts') | list | first | attr('level') }}"
         attribute_templates:
