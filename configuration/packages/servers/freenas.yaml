@@ -54,7 +54,7 @@ sensor:
     name: freenas_all_alerts
     resource: http://freenas.local/api/v1.0/system/alert/?format=json
     value_template: >
-      {{ value_json | attr('objects') | length }}
+      {{ value_json.objects | length }}
     json_attributes:
       - objects
     
@@ -90,7 +90,7 @@ sensor:
         entity_id: sensor.freenas_resilver_time_remaining
       freenas_active_alerts:
         value_template: >
-          {{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | length }}
+          {{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | list | length }}
         attribute_templates:
           alerts: "{{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | sort(attribute='timestamp',reverse=True) | list }}"
       freenas_alert_level:
