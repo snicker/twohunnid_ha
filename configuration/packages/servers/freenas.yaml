@@ -54,7 +54,7 @@ sensor:
     name: freenas_all_alerts
     resource: http://freenas.local/api/v2.0/alert/list
     value_template: >
-      {{ value_json | selectattr('dismissed','eq',False) | list | sort(attribute='datetime.$date') }}
+      {{ value_json | rejectattr('dismissed') | list | sort(attribute='datetime.$date') }}
   
   - platform: rest
     <<: *freenas_rest_sensor
@@ -87,11 +87,11 @@ sensor:
         value_template: '{{ (now().strftime("%s") | int + (states("sensor.freenas_resilver_time_remaining") | int)) | timestamp_custom("%m/%d/%y %H:%M") }}'
         entity_id: sensor.freenas_resilver_time_remaining
       freenas_alert_level:
-        value_template: "{{ states('sensor.freenas_all_alerts') | list | first | selectattr('level') }}"
+        value_template: "{{ states('sensor.freenas_all_alerts') | list | first | attr('level') }}"
         attribute_templates:
-          message: "{{ states('sensor.freenas_all_alerts') | list | first | selectattr('formatted') }}"
-          timestamp: "{{ states('sensor.freenas_all_alerts') | list | first | selectattr('datetime.$date') }}"
-          level: "{{ states('sensor.freenas_all_alerts') | list | first | selectattr('level') }}"
+          message: "{{ states('sensor.freenas_all_alerts') | list | first | attr('formatted') }}"
+          timestamp: "{{ states('sensor.freenas_all_alerts') | list | first | attr('datetime.$date') }}"
+          level: "{{ states('sensor.freenas_all_alerts') | list | first | attr('level') }}"
       freenas_alert_message:
         entity_id: sensor.freenas_alert_level
         value_template: "{{ state_attr('sensor.freenas_alert_level','message') }}"
