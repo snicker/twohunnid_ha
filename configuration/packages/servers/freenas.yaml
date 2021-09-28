@@ -97,13 +97,13 @@ sensor:
         value_template: "{{ state_attr('sensor.freenas_alert_level','message') }}"
       freenas_disk_temp_ada0:
         unit_of_measurement: 'C°'
-        value_template: '{{ state_attr('sensor.freenas_disk_temps','ada0') }}'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada0') }}"
       freenas_disk_temp_ada1:
         unit_of_measurement: 'C°'
-        value_template: '{{ state_attr('sensor.freenas_disk_temps','ada1') }}'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada1') }}"
       freenas_disk_temp_ada2:
         unit_of_measurement: 'C°'
-        value_template: '{{ state_attr('sensor.freenas_disk_temps','ada2') }}'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada2') }}"
       freenas_disk_temp_ada3:
         unit_of_measurement: 'C°'
-        value_template: '{{ state_attr('sensor.freenas_disk_temps','ada3') }}'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada3') }}"
