@@ -54,7 +54,7 @@ sensor:
     name: freenas_all_alerts
     resource: http://freenas.local/api/v1.0/system/alert/?format=json
     value_template: >
-      {{ value_json | attr('objects') | list | sort(attribute='timestamp') | length }}
+      {{ value_json | attr('objects') | length }}
     json_attributes:
       - objects
     
@@ -90,15 +90,15 @@ sensor:
         entity_id: sensor.freenas_resilver_time_remaining
       freenas_active_alerts:
         value_template: >
-          {{ state_attr('sensor.freenas_all_alerts','objects') | list | rejectattr('dismissed') | list | length }}
+          {{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | length }}
         attribute_templates:
-          alerts: "{{ state_attr('sensor.freenas_all_alerts','objects') | list | rejectattr('dismissed') | sort(attribute='timestamp') | list }}"
+          alerts: "{{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | sort(attribute='timestamp',reverse=True) | list }}"
       freenas_alert_level:
-        value_template: "{{ state_attr('sensor.freenas_active_alerts','alerts') | list | first | attr('level') }}"
+        value_template: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}"
         attribute_templates:
-          message: "{{ state_attr('sensor.freenas_active_alerts','alerts') | list | first | attr('message') }}"
-          timestamp: "{{ state_attr('sensor.freenas_active_alerts','alerts') | list | first | attr('timestamp') }}"
-          level: "{{ state_attr('sensor.freenas_active_alerts','alerts') | list | first | attr('level') }}"
+          message: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).message }}"
+          timestamp: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).timestamp }}"
+          level: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}"
       freenas_alert_message:
         entity_id: sensor.freenas_alert_level
         value_template: "{{ state_attr('sensor.freenas_alert_level','message') }}"
