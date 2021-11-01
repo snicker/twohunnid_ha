@@ -50,10 +50,10 @@ homeassistant:
       <<: *customize
       friendly_name: Tesla Model 3 Climate Activator
 
-tesla:
-  username: !secret tesla_account_username
-  password: !secret tesla_account_password 
-  scan_interval: 600
+#tesla:
+#  username: !secret tesla_account_username
+#  password: !secret tesla_account_password 
+#  scan_interval: 600
 
 input_number:
   tesla_climate_target_temperature:
