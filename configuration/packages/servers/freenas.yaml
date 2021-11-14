@@ -94,11 +94,11 @@ sensor:
         attribute_templates:
           alerts: "{{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | sort(attribute='timestamp',reverse=True) | list }}"
       freenas_alert_level:
-        value_template: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}"
+        value_template: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}{% else %}none{% endif %}"
         attribute_templates:
-          message: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).message }}"
-          timestamp: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).timestamp }}"
-          level: "{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}"
+          message: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).message }}{% else %}none{% endif %}"
+          timestamp: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).timestamp }}{% else %}0{% endif %}"
+          level: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}{% else %}none{% endif %}"
       freenas_alert_message:
         entity_id: sensor.freenas_alert_level
         value_template: "{{ state_attr('sensor.freenas_alert_level','message') }}"
