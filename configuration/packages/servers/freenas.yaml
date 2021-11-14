@@ -46,13 +46,13 @@ sensor:
       - status
       - used_pct
       - is_decrypted
-    resource: http://freenas.local/api/v1.0/storage/volume/tank/?format=json
+    resource: http://freenas.twohunnid/api/v1.0/storage/volume/tank/?format=json
     value_template: '{{ value_json.status }}'
       
   - platform: rest
     <<: *freenas_rest_sensor
     name: freenas_all_alerts
-    resource: http://freenas.local/api/v1.0/system/alert/?format=json
+    resource: http://freenas.twohunnid/api/v1.0/system/alert/?format=json
     value_template: >
       {{ value_json.objects | length }}
     json_attributes:
@@ -65,13 +65,13 @@ sensor:
       - fullversion
       - name
       - version
-    resource: http://freenas.local/api/v1.0/system/version/?format=json
+    resource: http://freenas.twohunnid/api/v1.0/system/version/?format=json
     value_template: '{{ value_json.fullversion }}'
 
   - platform: rest
     <<: *freenas_rest_sensor
     method: POST
-    resource: http://freenas.local/api/v2.0/disk/temperatures
+    resource: http://freenas.twohunnid/api/v2.0/disk/temperatures
     payload: '{"names":["ada0", "ada1", "ada2", "ada3"],"powermode":"NEVER"}'
     name: freenas_disk_temps
     json_attributes:
