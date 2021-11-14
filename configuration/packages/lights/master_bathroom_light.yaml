@@ -38,7 +38,7 @@ light:
     lights:
       master_bathroom_light:
         friendly_name: "Master Bathroom Light"
-        level_template: "{{ state_attr('light.jasco_products_26933_smart_motion_dimmer_level_2','brightness')|int }}"
+        level_template: "{{ state_attr('light.jasco_products_26933_smart_motion_dimmer_level_2','brightness')|int(default=0) }}"
         value_template: "{{ states('light.jasco_products_26933_smart_motion_dimmer_level_2') }}"
         turn_on:
           service: light.turn_on

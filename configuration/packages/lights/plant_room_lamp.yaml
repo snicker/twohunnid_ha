@@ -47,7 +47,7 @@ light:
     lights:
       plant_room_lamp:
         value_template: "{{ is_state('light.remotec_unknown_type_8200_id_8130_level', 'on') }}"
-        level_template: "{{ state_attr('light.remotec_unknown_type_8200_id_8130_level','brightness')|int }}"
+        level_template: "{{ state_attr('light.remotec_unknown_type_8200_id_8130_level','brightness')|int(default=0) }}"
         turn_on:
           service: light.turn_on
           data:

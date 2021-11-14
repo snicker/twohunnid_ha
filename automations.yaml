@@ -874,8 +874,8 @@
   action:
   - service: notify.nick
     data_template:
-      message: 'Air quality alert:  {% if trigger.get(''to_state'') %}{% if trigger.to_state.state|int
-        > trigger.from_state.state|int %} Air quality is getting worse.  {% else %}
+      message: 'Air quality alert:  {% if trigger.get(''to_state'') %}{% if trigger.to_state.state|int(default=0)
+        > trigger.from_state.state|int(default=0) %} Air quality is getting worse.  {% else %}
         Air quality is improving.  {% endif %}{% endif %} {% set aqi = states(''sensor.airnow_aqi'')
         | int %} A Q I is {{ aqi }}
 

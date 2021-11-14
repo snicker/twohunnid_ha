@@ -17,7 +17,7 @@ light:
     lights:
       christmas_tree:
         value_template: "{{ is_state('light.remotec_unknown_type_8200_id_8130_level_2', 'on') }}"
-        level_template: "{{ state_attr('light.remotec_unknown_type_8200_id_8130_level_2','brightness')|int }}"
+        level_template: "{{ state_attr('light.remotec_unknown_type_8200_id_8130_level_2','brightness')|int(default=0) }}"
         turn_on:
           service: light.turn_on
           data:

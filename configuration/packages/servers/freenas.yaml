@@ -86,7 +86,7 @@ sensor:
         value_template: "{{ state_attr('sensor.freenas_tank_report','used_pct').title() }}"
         entity_id: sensor.freenas_tank_report
       freenas_resilver_etc:
-        value_template: '{{ (now().strftime("%s") | int + (states("sensor.freenas_resilver_time_remaining") | int)) | timestamp_custom("%m/%d/%y %H:%M") }}'
+        value_template: '{{ (now().strftime("%s") | int(default=0) + (states("sensor.freenas_resilver_time_remaining") | int(default=0))) | timestamp_custom("%m/%d/%y %H:%M") }}'
         entity_id: sensor.freenas_resilver_time_remaining
       freenas_active_alerts:
         value_template: >
