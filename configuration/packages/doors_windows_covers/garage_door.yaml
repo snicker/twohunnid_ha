@@ -87,7 +87,7 @@ binary_sensor:
       garage_door:
         friendly_name: "Garage Door"
         device_class: garage_door
-        value_template: "{{ states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 }}"
+        value_template: "{{ states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int(default=-1) == 255 }}"
         
 sensor:
   - platform: template
@@ -95,13 +95,13 @@ sensor:
       garage_door_status:
         friendly_name: "Garage Door Status"
         value_template: >-
-          {% if states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 2 %}
+          {% if states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int(default=-1) == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int(default=-1) == 2 %}
             opening
-          {% elif states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 0 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 254 %}
+          {% elif states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int(default=-1) == 0 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int(default=-1) == 254 %}
             closing
-          {% elif is_state('binary_sensor.vision_zg8101_garage_door_detector_sensor','off') or (states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 0 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 2) %}
+          {% elif is_state('binary_sensor.vision_zg8101_garage_door_detector_sensor','off') or (states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int(default=-1) == 0 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int(default=-1) == 2) %}
             closed
-          {% elif is_state('binary_sensor.vision_zg8101_garage_door_detector_sensor','on') or (states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int == 254) %}
+          {% elif is_state('binary_sensor.vision_zg8101_garage_door_detector_sensor','on') or (states('sensor.vision_zg8101_garage_door_detector_alarm_level')|int(default=-1) == 255 and states('sensor.vision_zg8101_garage_door_detector_burglar')|int(default=-1) == 254) %}
             open
           {% endif %}
       garage_door_position:
