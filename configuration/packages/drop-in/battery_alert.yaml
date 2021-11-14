@@ -814,7 +814,7 @@ automation:
             not is_state_attr(item.entity_id, 'hidden', true)
             and (
               is_state_attr(item.entity_id, 'device_class', 'battery')
-              or 'battery' in item.attributes.icon | lower
+              or 'battery' in state_attr(item.entity_id,'icon') | lower
               or (item.entity_id | lower).endswith('_bat')
               or (item.name | lower).endswith('_bat')
               ) or (
@@ -822,7 +822,7 @@ automation:
                   'battery' in item.entity_id | lower
                   or 'battery' in item.name | lower
                 ) and (
-                  item.attributes.icon is not defined
+                  state_attr(item.entity_id,'icon') is not defined
                 ) and (
                   not is_state_attr(item.entity_id, 'battery_alert_disabled', true)
                 ) and (
