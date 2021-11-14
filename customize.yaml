@@ -12,3 +12,7 @@ sensor.plant_peace_lily_battery:
   battery_alert_disabled: true
 sensor.plant_zebra_plant_battery:
   battery_alert_disabled: true
+sensor.nexus_7_battery_temperature:
+  battery_alert_disabled: 1
+sensor.nexus_7_battery_state:
+  battery_alert_disabled: '1'

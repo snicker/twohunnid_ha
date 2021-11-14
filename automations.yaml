@@ -6,20 +6,43 @@
     platform: sun
   condition: []
   action:
-  - data:
-      entity_id: group.exterior_landscape_lights
-    service: homeassistant.turn_on
+  - data: {}
+    service: light.turn_on
+    target:
+      entity_id:
+      - light.string_lights
+      - light.front_porch_lights
+      - light.front_landscape_lights
+      - light.pool_light
+      - light.holiday_spotlight
+      - light.christmas_eave_lights
+      - light.olive_tree_holiday_lights
+      - light.ash_tree_holiday_lights
+      - light.front_pine_tree_holiday_lights
+      - light.backyard_landscape_lights
+      - light.front_landscape_lights_power
 - id: '1534899747739'
   alias: 'Exterior Lights: Off at 10pm'
   trigger:
-  - at: '22:00:00'
+  - at: '22:00'
     platform: time
   condition: []
   action:
   - data: {}
-    service: homeassistant.turn_off
+    service: light.turn_off
     target:
-      entity_id: group.exterior_lights
+      entity_id:
+      - light.string_lights
+      - light.front_porch_lights
+      - light.front_landscape_lights
+      - light.pool_light
+      - light.holiday_spotlight
+      - light.christmas_eave_lights
+      - light.olive_tree_holiday_lights
+      - light.ash_tree_holiday_lights
+      - light.front_pine_tree_holiday_lights
+      - light.backyard_landscape_lights
+      - light.front_landscape_lights_power
   mode: single
 - id: '1537420454578'
   alias: 'HAStatus: Shutdown'
@@ -724,16 +747,13 @@
   description: ''
   trigger:
   - platform: time
-    at: '4:00:00'
+    at: 04:00:00
   condition:
   - condition: time
     weekday:
     - mon
-    - tue
     - wed
-    - thu
     - fri
-    - sat
   action:
   - service: script.front_yard_sprinklers_full_cycle
   mode: single
@@ -868,4 +888,17 @@
         | int %} A Q I is {{ aqi }}.
 
         '
+  mode: single
+- id: '1632367714028'
+  alias: FreeNAS Alert Level
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.freenas_alert_level
+  condition: []
+  action:
+  - service: notify.nick
+    data_template:
+      message: 'FreeNAS Alert ({{states("sensor.freenas_alert_level")}}) : {{ states(''sensor.freenas_alert_message'')
+        }}'
   mode: single
