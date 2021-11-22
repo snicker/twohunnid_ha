@@ -10,22 +10,32 @@ homeassistant:
     light.olive_tree_holiday_lights:
       <<: *customize
       friendly_name: "Olive Tree Holiday Lights"
+      source_switch: switch.front_olive_tree_outlet
       
     light.ash_tree_holiday_lights:
       <<: *customize
       friendly_name: "Ash Tree Holiday Lights"
+      source_switch: switch.front_ash_tree_outlet
       
     light.front_pine_tree_holiday_lights:
       <<: *customize
       friendly_name: "Front Pine Holiday Lights"
+      source_switch: switch.driveway_gate_outlet
       
     light.holiday_lighting_south:
       <<: *customize
       friendly_name: "Holiday Lighting - South"
-      
+      source_switch: switch.holiday_lighting_south_outlet
+
     light.holiday_lighting_north:
       <<: *customize
       friendly_name: "Holiday Lighting - North"
+      source_switch: switch.holiday_lighting_north_outlet
+
+    light.holiday_lighting_central:
+      <<: *customize
+      friendly_name: "Holiday Lighting - Central"
+      source_switch: switch.bnlink_smart_switch_01
       
     light.christmas_eave_lights:
       <<: *customize
@@ -81,16 +91,28 @@ light:
       holiday_lighting_north:
         unique_id: holiday_lighting_north
         availability_template: "{{ is_state('group.holiday_modes','on') }}"
-        value_template: '{{ is_state("switch.sonoff_mini_01", "on") }}'
+        value_template: '{{ is_state("switch.holiday_lighting_north_outlet", "on") }}'
         turn_on:
           service: switch.turn_on
-          entity_id: switch.sonoff_mini_01
+          entity_id: switch.holiday_lighting_north_outlet
         turn_off:
           service: switch.turn_off
-          entity_id: switch.sonoff_mini_01
+          entity_id: switch.holiday_lighting_north_outlet
+
+      holiday_lighting_central:
+        unique_id: holiday_lighting_central
+        availability_template: "{{ is_state('group.holiday_modes','on') }}"
+        value_template: '{{ is_state("switch.bnlink_smart_switch_01", "on") }}'
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.bnlink_smart_switch_01
+        turn_off:
+          service: switch.turn_off
+          entity_id: switch.bnlink_smart_switch_01
 
   - platform: group
     name: christmas_eave_lights
     entities:
       - light.holiday_lighting_south
+      - light.holiday_lighting_central
       - light.holiday_lighting_north
