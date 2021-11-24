@@ -1,0 +1,26 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'govee_leak_detectors'
+        
+    binary_sensor.govee_leak_detector_27124:
+      <<: *customize
+      friendly_name: "Leak Sensor - North Water Heater"
+
+    binary_sensor.govee_leak_detector_27124_button:
+      <<: *customize
+      friendly_name: "Leak Sensor - North Water Heater"
+
+binary_sensor:
+  - platform: mqtt
+    name: govee_leak_detector_27124
+    payload_on: "Water Leak"
+    off_delay: 10
+    device_class: moisture
+    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/27124/event"
+  - platform: mqtt
+    name: govee_leak_detector_27124_button
+    payload_on: "Button Press"
+    off_delay: 10
+    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/27124/event"
