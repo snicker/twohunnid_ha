@@ -44,6 +44,22 @@ homeassistant:
       <<: *customize
       friendly_name: "Leak Sensor Button - Master Bath"
 
+    binary_sensor.govee_leak_detector_2186:
+      <<: *customize
+      friendly_name: "Leak Sensor - Library Bath"
+
+    binary_sensor.govee_leak_detector_2186_button:
+      <<: *customize
+      friendly_name: "Leak Sensor Button - Library Bath"
+
+    binary_sensor.govee_leak_detector_2842:
+      <<: *customize
+      friendly_name: "Leak Sensor - Spare Bath"
+
+    binary_sensor.govee_leak_detector_2842_button:
+      <<: *customize
+      friendly_name: "Leak Sensor Button - Spare Bath"
+
 binary_sensor:
   - platform: mqtt
     name: govee_leak_detector_27124
@@ -104,3 +120,27 @@ binary_sensor:
     payload_on: "Button Press"
     off_delay: 10
     state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/26832/event"
+    
+  - platform: mqtt
+    name: govee_leak_detector_2186
+    payload_on: "Water Leak"
+    off_delay: 10
+    device_class: moisture
+    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2186/event"
+  - platform: mqtt
+    name: govee_leak_detector_2186_button
+    payload_on: "Button Press"
+    off_delay: 10
+    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2186/event"
+    
+  - platform: mqtt
+    name: govee_leak_detector_2842
+    payload_on: "Water Leak"
+    off_delay: 10
+    device_class: moisture
+    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2842/event"
+  - platform: mqtt
+    name: govee_leak_detector_2842_button
+    payload_on: "Button Press"
+    off_delay: 10
+    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2842/event"
