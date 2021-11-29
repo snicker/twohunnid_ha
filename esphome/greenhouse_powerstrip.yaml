@@ -15,7 +15,7 @@ wifi:
   - ssid: !secret wifi_secondary_ssid
     password: !secret wifi_secondary_password
   ap:
-    ssid: ${device_name}_${device_index}_AP
+    ssid: ${device_name}_AP
     password: !secret ap_password
  
 web_server:
