@@ -22,6 +22,11 @@ homeassistant:
       friendly_name: "Front Pine Holiday Lights"
       source_switch: switch.driveway_gate_outlet
       
+    light.north_front_yard_holiday_lights:
+      <<: *customize
+      friendly_name: "North Front Yard Holiday Lights"
+      source_switch: switch.north_driveway_gate_outlet_switch
+      
     light.holiday_lighting_south:
       <<: *customize
       friendly_name: "Holiday Lighting - South"
@@ -76,6 +81,17 @@ light:
         turn_off:
           service: switch.turn_off
           entity_id: switch.driveway_gate_outlet
+
+      north_front_yard_holiday_lights:
+        unique_id: north_front_yard_holiday_lights
+        availability_template: "{{ is_state('group.holiday_modes','on') }}"
+        value_template: '{{ is_state("switch.north_driveway_gate_outlet_switch", "on") }}'
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.north_driveway_gate_outlet_switch
+        turn_off:
+          service: switch.turn_off
+          entity_id: switch.north_driveway_gate_outlet_switch
 
       holiday_lighting_south:
         unique_id: holiday_lighting_south
