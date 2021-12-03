@@ -21,7 +21,9 @@ binary_sensor:
       back_door:
         device_class: door
         value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level')|int == 255 }}"
-      
+
+
+
 group:
   back_door_sensors:
     name: "Back Door Sensors"
@@ -31,11 +33,13 @@ group:
       - binary_sensor.back_door
       - lock.kwikset_touchpad_electronic_deadbolt_locked
       - binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_5
       - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_clock
-      - zwave.vision_security_zd2105us_5_recessed_door_window_sensor
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type_5
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance_5
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar_5
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_emergency_2
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_homehealth
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_power_management_3
+      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sourcenodeid_5
+      - zwave.vision_security_zd2105us_5_recessed_door_window_sensor_5
