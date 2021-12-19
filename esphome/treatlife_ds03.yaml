@@ -1,0 +1,52 @@
+esphome:
+  name: treatlife_ds03
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: TreatlifeDS03
+    password: !secret ap_password
+
+logger:
+  baud_rate: 0
+
+web_server:
+  port: 80
+  auth:
+    username: admin
+    password: !secret ota_api_password
+
+api:
+  password: !secret ota_api_password
+
+ota:
+  password: !secret ota_api_password
+
+uart:
+  rx_pin: GPIO3
+  tx_pin: GPIO1
+  baud_rate: 115200
+
+tuya:
+
+light:
+  - platform: "tuya"
+    name: Treatlife DS03 Light
+    dimmer_datapoint: 10
+    switch_datapoint: 9
+    min_value: 100
+    max_value: 1000
+
+fan:
+  - platform: "tuya"
+    name: Treatlife DS03 Fan
+    switch_datapoint: 1
+    speed_datapoint: 3
+    speed_count: 4
