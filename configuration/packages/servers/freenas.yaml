@@ -36,6 +36,14 @@ homeassistant:
     sensor.freenas_resilver_etc:
       <<: *customize
       friendly_name: FreeNAS - Resilver Estimated Time To Completion
+
+
+### migration plan after upgrading to TrueNAS 12 (1.0 API deprecated)
+# [ ] add hass-truenas integration in HACS
+# [ ] get status and % used for tank pool from 2.0 endpoints for sensor.freenas_tank_report
+# [ ] get all alerts from 2.0 endpoints
+# [ ] get freenas version from 2.0 endpoints
+# [ ] switch all existing 2.0 endpoints to bearer auth tokens
       
 sensor:
   - platform: rest
