@@ -48,10 +48,6 @@ history:
 
 logbook:
 
-recorder:
-  auto_purge: false
-  db_url: !secret db_url
-
 map:
 
 sun:
