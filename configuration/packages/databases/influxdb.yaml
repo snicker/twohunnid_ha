@@ -6,6 +6,7 @@ influxdb:
   username: !secret influxdb_user
   password: !secret influxdb_password
   port: 3186
+  measurement_attr: entity_id
   tags:
     source: homeassistant
   tags_attributes:
