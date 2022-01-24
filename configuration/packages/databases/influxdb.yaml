@@ -1,0 +1,27 @@
+influxdb:
+  api_version: 1
+  ssl: false
+  host: 192.168.1.16
+  database: homeassistant
+  username: !secret influxdb_user
+  password: !secret influxdb_password
+  port: 3186
+  measurement_attr: entity_id
+  tags:
+    source: homeassistant
+  tags_attributes:
+    - friendly_name
+  default_measurement: units
+  include:
+    domains:
+      - sensor
+      - binary_sensor
+  exclude:
+    entity_globs:
+      - sensor.dark_sky*
+      - sensor.tpms*
+    entities:
+      - sensor.date_time
+      - sensor.date_time_iso
+      - sensor.date_time_utc
+      - sensor.zwift_online_803962
