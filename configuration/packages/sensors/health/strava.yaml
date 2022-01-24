@@ -84,5 +84,6 @@ sensor:
       strava_goal_percent_complete:
         unit_of_measurement: "%"
         value_template: >
-          {{ states('sensor.strava_goal_mileage_complete') | float / states('input_text.strava_goal_target_mileage') | float }}
+          {{ "%.2f" | format(states('sensor.strava_goal_mileage_complete') | float / states('input_text.strava_goal_target_mileage') | float * 100) }}
+
   
