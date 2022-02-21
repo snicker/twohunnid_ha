@@ -75,10 +75,6 @@ script:
       - service: switch.turn_on
         data:
           entity_id: switch.garage_door_relay
-  garage_door_close_ios_response_yes:
-    sequence:
-      - service: cover.close_cover
-        entity_id: cover.garage_door
         
             
 binary_sensor:
@@ -178,12 +174,22 @@ automation:
           data:
             attachment:
               content-type: "jpeg"
-            push:
-              category: camera
             entity_id: camera.yi_home_camera_garage
-            action_data:
-              entity_id: camera.yi_home_camera_garage
-              yes_script: "script.garage_door_close_ios_response_yes"
+            actions:
+              - action: "IOS_CLOSE_GARAGE"
+                title: "Yes"
+              - action: "NULL"
+                title: "No"
+
+  - alias: "IOSAction: Close Garage"
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: "IOS_CLOSE_GARAGE"
+    action:
+      - service: cover.close_cover
+        entity_id: cover.garage_door
 
   - alias: garage_door_open_when_interior_door_open
     trigger:
