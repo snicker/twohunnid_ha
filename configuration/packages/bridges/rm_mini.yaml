@@ -12,6 +12,6 @@ switch:
   - platform: broadlink
     mac: '78:0f:77:18:5f:ae'
     switches:
-      - name: rm_mini_copper_wire_string_lights:
+      - name: rm_mini_copper_wire_string_lights
         command_on: "JgBgAAABLJMUEhMSExIUEhMTEhMTEhMTEjYUNhM3EzUXMhU3EzYUNhM2FRETNhQSExMSExMyFxMTEhM2FBITNhM3EzYUEhM2FQAFHQABLUcUAAxSAAEtRxMADFMAASxHFQANBQAAAAAAAAAA"
         command_off: "JgBiAAABLJIYDxQSExIVEBYQFRAWEBYPEzYUNhY0FjMUNhM3FjMWNBM2FzMVNRUQFhAVEBM2Fw8WDxcPFg8VNBczFjQVEBczFgAFGwABLEkU1QsAC3IAAS5GFAAMUwABKkkUAA0FAAAAAAAA"
