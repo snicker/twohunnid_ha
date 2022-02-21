@@ -1,0 +1,21 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'servers/iwatchtheplants'
+    
+    binary_sensor.iwatchtheplants_connection:
+      <<: *customize
+      friendly_name: iwatchtheplants.local network connection
+
+
+binary_sensor:
+  - platform: ping
+    name: iwatchtheplants_connection
+    host: iwatchtheplants.twohunnid
+    count: 3
+    scan_interval: 60
+
+sensor:
+  - platform: supervisord
+    url: http://iwatchtheplants.twohunnid/RPC2
