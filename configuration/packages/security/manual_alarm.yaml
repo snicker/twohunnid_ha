@@ -224,6 +224,15 @@ automation:
     action:
       - service: script.alarm_disarm
 
+  - alias: "IOSAction: Arm Alarm Away"
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: "IOS_DISARM_ALARM"
+    action:
+      - service: script.alarm_arm_away
+
   - alias: "IOSAction: Trigger Alarm With Warning"
     trigger:
       - platform: event

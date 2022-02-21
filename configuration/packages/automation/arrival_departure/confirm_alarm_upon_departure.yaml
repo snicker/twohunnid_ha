@@ -37,7 +37,9 @@ automation:
         message: "Alarm has not been armed. Arm now?"
         data:
           push:
-            category: yesno
-          action_data:
-            yes_script: "script.alarm_arm_away"
+            actions:
+              - action: "IOS_ARM_ALARM_AWAY"
+                title: "Yes"
+              - action: "NULL"
+                title: "No"
           
