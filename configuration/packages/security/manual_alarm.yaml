@@ -75,9 +75,11 @@ script:
                 name: default
                 critical: 1
                 volume: 1.0
-              category: yesno
-            action_data:
-              yes_script: "script.alarm_disarm"
+            actions:
+              - action: "IOS_DISARM_ALARM"
+                title: "Yes"
+              - action: "NULL"
+                title: "No"
       - service: alarm_control_panel.alarm_trigger
         data:
           entity_id: alarm_control_panel.home_alarm
@@ -96,9 +98,11 @@ script:
                 name: default
                 critical: 1
                 volume: 1.0
-              category: yesno
-            action_data:
-              yes_script: "script.trigger_alarm_with_warning"
+            actions:
+              - action: "IOS_TRIGGER_ALARM_WITH_WARNING"
+                title: "Yes"
+              - action: "NULL"
+                title: "No"
 
   alarm_triggered:
     sequence:
@@ -112,9 +116,11 @@ script:
                 name: default
                 critical: 1
                 volume: 1.0
-              category: yesno
-            action_data:
-              yes_script: "script.alarm_disarm"
+            actions:
+              - action: "IOS_DISARM_ALARM"
+                title: "Yes"
+              - action: "NULL"
+                title: "No"
       - service: script.alarm_alexa_is_a_snitch_start
       - condition: state
         entity_id: input_boolean.home_alarm_test_mode
@@ -208,6 +214,25 @@ script:
 
 
 automation:
+
+  - alias: "IOSAction: Disarm Alarm"
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: "IOS_DISARM_ALARM"
+    action:
+      - service: script.alarm_disarm
+
+  - alias: "IOSAction: Trigger Alarm With Warning"
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: "IOS_TRIGGER_ALARM_WITH_WARNING"
+    action:
+      - service: script.trigger_alarm_with_warning
+
   - alias: Alarm trigger when doors open
     trigger:
     - entity_id:
