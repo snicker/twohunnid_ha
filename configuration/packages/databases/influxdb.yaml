@@ -1,7 +1,7 @@
 influxdb:
   api_version: 1
   ssl: false
-  host: 192.168.1.16
+  host: 192.168.1.26
   database: homeassistant
   username: !secret influxdb_user
   password: !secret influxdb_password
