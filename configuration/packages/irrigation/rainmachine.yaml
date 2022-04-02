@@ -1,0 +1,114 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'rainmachine'
+        
+    group.all_sprinkler_valves:
+      <<: *customize
+
+    sensor.active_sprinklers:
+      <<: *customize
+      friendly_name: Currently Active Sprinklers
+      icon: mdi:sprinkler
+
+    binary_sensor.zone_7_is_watering:
+      <<: *customize
+      controlled_switch: switch.skydrop_d4d633de_zone_4_watering
+
+    binary_sensor.zone_8_is_watering:
+      <<: *customize
+      controlled_switch: switch.skydrop_d4d633de_zone_5_watering
+
+    binary_sensor.zone_9_is_watering:
+      <<: *customize
+      controlled_switch: switch.skydrop_d4d633de_zone_3_watering
+
+group:
+  all_sprinkler_valves:
+    name: All Sprinklers
+    entities:
+      - binary_sensor.front_yard_zone_1_is_watering
+      - binary_sensor.front_yard_zone_2_is_watering
+      - binary_sensor.front_yard_zone_3_is_watering
+      - binary_sensor.front_yard_zone_4_is_watering
+      - binary_sensor.front_yard_zone_5_is_watering
+      - binary_sensor.shrubs_roses_vegetables_is_watering
+      - switch.skydrop_d4d633de_zone_4_watering
+      - switch.skydrop_d4d633de_zone_5_watering
+      - switch.skydrop_d4d633de_zone_3_watering
+
+template:
+  - trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.front_yard_zone_1_is_watering
+          - binary_sensor.front_yard_zone_2_is_watering
+          - binary_sensor.front_yard_zone_3_is_watering
+          - binary_sensor.front_yard_zone_4_is_watering
+          - binary_sensor.front_yard_zone_5_is_watering
+          - binary_sensor.shrubs_roses_vegetables_is_watering
+          - switch.skydrop_d4d633de_zone_4_watering
+          - switch.skydrop_d4d633de_zone_5_watering
+          - switch.skydrop_d4d633de_zone_3_watering
+    sensor:
+      - name: active_sprinklers
+        unique_id: active_sprinklers
+        state: >
+          {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr('group.all_sprinkler_valves','entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|replace(' Watering','') }}{% if loop.index < loop.length %}, {% endif %}{% endfor %}
+  - binary_sensor:
+      - name: front_yard_zone_1_is_watering
+        unique_id: front_yard_zone_1_is_watering
+        state: "{{ state_attr('switch.front_yard_zone_1','status') == 'Running' }}"
+  - binary_sensor:
+      - name: front_yard_zone_2_is_watering
+        unique_id: front_yard_zone_2_is_watering
+        state: "{{ state_attr('switch.front_yard_zone_2','status') == 'Running' }}"
+  - binary_sensor:
+      - name: front_yard_zone_3_is_watering
+        unique_id: front_yard_zone_3_is_watering
+        state: "{{ state_attr('switch.front_yard_zone_3','status') == 'Running' }}"
+  - binary_sensor:
+      - name: front_yard_zone_4_is_watering
+        unique_id: front_yard_zone_4_is_watering
+        state: "{{ state_attr('switch.front_yard_zone_4','status') == 'Running' }}"
+  - binary_sensor:
+      - name: front_yard_zone_5_is_watering
+        unique_id: front_yard_zone_5_is_watering
+        state: "{{ state_attr('switch.front_yard_zone_5','status') == 'Running' }}"
+  - binary_sensor:
+      - name: zone_7_is_watering
+        unique_id: zone_7_is_watering
+        state: "{{ state_attr('switch.zone_7','status') == 'Running' }}"
+  - binary_sensor:
+      - name: zone_8_is_watering
+        unique_id: zone_8_is_watering
+        state: "{{ state_attr('switch.zone_8','status') == 'Running' }}"
+  - binary_sensor:
+      - name: zone_9_is_watering
+        unique_id: zone_9_is_watering
+        state: "{{ state_attr('switch.zone_9','status') == 'Running' }}"
+
+automation:
+  - alias: synchronize_sprinklers
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.zone_7_is_watering
+          - binary_sensor.zone_8_is_watering
+          - binary_sensor.zone_9_is_watering
+    action:
+      - condition: >
+          {% set controlled_switch = state_attr(trigger.entity_id,'controlled_switch') %}
+          {{ trigger.to_state.state != states(controlled_switch) }}
+      - service: >
+          {% set controlled_switch = state_attr(trigger.entity_id,'controlled_switch') %}
+          {% if states(controlled_switch) %}
+            homeassistant.turn_off
+          {% else %}
+            homeassistant.turn_on
+          {% endif %}
+        target:
+          entity_id: "{{ state_attr(trigger.entity_id,'controlled_switch') }}"
+
+
