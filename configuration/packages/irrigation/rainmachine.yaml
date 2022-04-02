@@ -95,6 +95,7 @@ template:
 
 automation:
   - alias: synchronize_sprinklers
+    id: synchronize_sprinklers
     trigger:
       - platform: state
         entity_id:
