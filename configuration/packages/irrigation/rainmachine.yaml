@@ -108,10 +108,10 @@ automation:
           {{ trigger.to_state.state != states(controlled_switch) }}
       - service: >
           {% set controlled_switch = state_attr(trigger.entity_id,'controlled_switch') %}
-          {% if states(controlled_switch) %}
-            homeassistant.turn_off
-          {% else %}
+          {% if states(controlled_switch) == 'off' %}
             homeassistant.turn_on
+          {% else %}
+            homeassistant.turn_off
           {% endif %}
         target:
           entity_id: "{{ state_attr(trigger.entity_id,'controlled_switch') }}"
