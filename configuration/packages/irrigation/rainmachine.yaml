@@ -77,6 +77,10 @@ template:
         unique_id: front_yard_zone_5_is_watering
         state: "{{ state_attr('switch.front_yard_zone_5','status') == 'Running' }}"
   - binary_sensor:
+      - name: shrubs_roses_vegetables_is_watering
+        unique_id: shrubs_roses_vegetables_is_watering
+        state: "{{ state_attr('switch.shrubs_roses_vegetables','status') == 'Running' }}"
+  - binary_sensor:
       - name: zone_7_is_watering
         unique_id: zone_7_is_watering
         state: "{{ state_attr('switch.zone_7','status') == 'Running' }}"
