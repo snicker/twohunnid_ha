@@ -96,6 +96,7 @@ template:
 automation:
   - alias: synchronize_sprinklers
     id: synchronize_sprinklers
+    mode: queued
     trigger:
       - platform: state
         entity_id:
