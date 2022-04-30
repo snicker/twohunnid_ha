@@ -3,3 +3,56 @@ nest:
   client_secret: !secret ghome_client_secret
   project_id: !secret ghome_project_id
   subscriber_id: !secret ghome_nest_subscriber_id
+
+template:
+  - trigger:
+      - platform: event
+        event_type: nest_event
+        event_data:
+          device_id: fd53a456b0d89b256ebb48d95018ab7d
+          type: camera_person
+    binary_sensor:
+      - name: "Front Door Person Detected"
+        unique_id: front_door_person_detected
+        state: "{{ true }}"
+        auto_off: 2
+        device_class: motion
+
+  - trigger:
+      - platform: event
+        event_type: nest_event
+        event_data:
+          device_id: fd53a456b0d89b256ebb48d95018ab7d
+          type: camera_motion
+    binary_sensor:
+      - name: "Front Door Motion Detected"
+        unique_id: front_door_motion_detected
+        state: "{{ true }}"
+        auto_off: 2
+        device_class: motion
+
+  - trigger:
+      - platform: event
+        event_type: nest_event
+        event_data:
+          device_id: fd53a456b0d89b256ebb48d95018ab7d
+          type: camera_sound
+    binary_sensor:
+      - name: "Front Door Sound Detected"
+        unique_id: front_door_sound_detected
+        state: "{{ true }}"
+        auto_off: 2
+        device_class: sound
+
+  - trigger:
+      - platform: event
+        event_type: nest_event
+        event_data:
+          device_id: fd53a456b0d89b256ebb48d95018ab7d
+          type: doorbell_chime
+    binary_sensor:
+      - name: "Front Doorbell"
+        unique_id: front_door_doorbell
+        state: "{{ true }}"
+        auto_off: 2
+        device_class: sound
