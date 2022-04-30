@@ -60,12 +60,6 @@ mqtt:
   broker: 192.168.1.19
   discovery: true
   discovery_prefix: homeassistant
-
-zwave:
-  usb_path: /dev/ttyACM0
-  #udev rule: SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", ATTRS{serial}=="3f980000.usb", SYMLINK+="zwave"
-  config_path: /config/ozw_config
-  network_key: !secret zwave_network_key
   
 #folder_watcher:
 #  - folder: /config
