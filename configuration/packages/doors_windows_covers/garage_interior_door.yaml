@@ -3,34 +3,7 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'garage_interior_door'
-        
-    sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery_3:
-      <<: *customize
       
     binary_sensor.garage_interior_door:
       <<: *customize
       friendly_name: "Garage Interior Door"
-
-binary_sensor:
-  - platform: template
-    sensors:
-      garage_interior_door:
-        device_class: door
-        value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_3')|int == 255 }}"
-      
-group:
-  garage_interior_door_sensors:
-    name: "Garage Interior Door Sensors"
-    
-    
-    entities:
-      - binary_sensor.garage_interior_door
-      - binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_3
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_3
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_3
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type_3
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance_3
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery_3
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar_3
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_clock_3
-      - zwave.vision_security_zd2105us_5_recessed_door_window_sensor_3

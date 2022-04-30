@@ -30,9 +30,6 @@ homeassistant:
 binary_sensor:
   - platform: template
     sensors:
-      front_door:
-        device_class: door
-        value_template: "{{ states('sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4')|int == 255 }}"
       front_door_doorbell:
         device_class: presence
         entity_id:
@@ -54,21 +51,3 @@ sensor:
       front_door_unlocked_by_user_code:
         value_template: "{%if 'Unlocked with Keypad' in (state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') or '') %}{{ state_attr('lock.kwikset_touchpad_electronic_deadbolt_locked_2','lock_status') | replace('Unlocked with Keypad by user','') | int }}{% endif %}"
       
-group:
-  front_door_sensors:
-    name: "Front Door Sensors"
-    
-    
-    entities:
-      - binary_sensor.front_door
-      - lock.kwikset_touchpad_electronic_deadbolt_locked_2
-      - sensor.front_door_unlocked_by_user_code
-      - binary_sensor.vision_security_zd2105us_5_recessed_door_window_sensor_sensor_4
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_access_control_4
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_level_4
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_alarm_type_4
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_appliance_4
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_battery_4
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_burglar_4
-      - sensor.vision_security_zd2105us_5_recessed_door_window_sensor_clock_4
-      - zwave.vision_security_zd2105us_5_recessed_door_window_sensor_4
