@@ -2,3 +2,4 @@ nest:
   client_id: !secret ghome_client_id
   client_secret: !secret ghome_client_secret
   project_id: !secret ghome_project_id
+  subscriber_id: !secret ghome_nest_subscriber_id
