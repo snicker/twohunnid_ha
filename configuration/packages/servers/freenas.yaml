@@ -9,6 +9,9 @@ homeassistant:
         authentication: basic
         headers:
           Content-Type: application/json
+      freenas_rest_sensor_token: &freenas_rest_sensor_token
+        headers:
+          Authorization: !secret freenas_authorization
     
     sensor.freenas_tank_report:
       <<: *customize
@@ -44,7 +47,14 @@ homeassistant:
 # [ ] get all alerts from 2.0 endpoints
 # [ ] get freenas version from 2.0 endpoints
 # [ ] switch all existing 2.0 endpoints to bearer auth tokens
-      
+
+binary_sensor:
+  - platform: ping
+    name: freenas_network_status
+    host: 192.168.1.16
+    count: 2
+    scan_interval: 30
+
 sensor:
   - platform: rest
     <<: *freenas_rest_sensor
@@ -87,6 +97,25 @@ sensor:
       - ada1
       - ada2
       - ada3
+
+  - platform: rest
+    <<: *freenas_rest_sensor_token
+    method: GET
+    resource: http://freenas.twohunnid/api/v2.0/system/ready
+    name: freenas_ready
+
+  - platform: rest
+    <<: *freenas_rest_sensor_token
+    method: GET
+    resource: http://freenas.twohunnid/api/v2.0/system/info
+    name: freenas_info
+
+  - platform: rest
+    <<: *freenas_rest_sensor_token
+    method: POST
+    resource: http://freenas.twohunnid/api/v2.0/vm/id/1/status
+    name: freenas_dockervm_status
+    value_template: "{{ value_json.state }}"
 
   - platform: template
     sensors:
