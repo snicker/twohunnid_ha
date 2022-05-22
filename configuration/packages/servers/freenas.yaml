@@ -39,6 +39,23 @@ homeassistant:
     sensor.freenas_resilver_etc:
       <<: *customize
       friendly_name: FreeNAS - Resilver Estimated Time To Completion
+      
+    binary_sensor.freenas_network_status:
+      <<: *customize
+      friendly_name: FreeNAS Network Connection
+      device_class: connectivity
+
+    binary_sensor.freenas_online:
+      <<: *customize
+      friendly_name: FreeNAS Online
+
+    binary_sensor.dockervm_online:
+      <<: *customize
+      friendly_name: DockerVM Online
+
+    sensor.freenas_ready:
+      <<: *customize
+      friendly_name: FreeNAS Ready State
 
 
 ### migration plan after upgrading to TrueNAS 12 (1.0 API deprecated)
@@ -47,6 +64,17 @@ homeassistant:
 # [ ] get all alerts from 2.0 endpoints
 # [ ] get freenas version from 2.0 endpoints
 # [ ] switch all existing 2.0 endpoints to bearer auth tokens
+
+template:
+  - binary_sensor:
+    - name: freenas_online
+      device_class: connectivity
+      state: >
+        {{ states("sensor.freenas_ready") == "true" and is_state("binary_sensor.freenas_network_status","on") }}
+    - name: dockervm_online
+      device_class: connectivity
+      state: >
+        {{ states("sensor.freenas_dockervm_status") == "RUNNING" }}
 
 binary_sensor:
   - platform: ping
