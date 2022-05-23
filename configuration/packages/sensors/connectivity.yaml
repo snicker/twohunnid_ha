@@ -1,0 +1,87 @@
+###################################################################################################
+## Package - Unavailable Entities Sensor
+## Count and list entities with a state of unavailable, unknown, or none (null)
+## See README for customization options.
+## https://github.com/jazzyisj/unavailable-entities-sensor/blob/main/README.md
+###################################################################################################
+## Modified by snicker to support monitoring connectivity sensors for anything that is disconnected
+###################################################################################################
+
+input_boolean:
+  name: offline_devices_automation_test_switch
+
+template:
+  - binary_sensor:
+    - name: "Offline Devices Automation Test Device Online"
+      unique_id: offline_devices_automation_test_device_online
+      device_class: connectivity
+      state: >
+        {{ is_state('input_boolean.offline_devices_automation_test_switch','on') }}
+
+  - sensor:
+      - name: "Offline Devices"
+        unique_id: offline_devices
+        icon: "{{ 'mdi:alert-circle' if states('sensor.offline_devices')|int(0) > 0 else 'mdi:check-circle' }}"
+        unit_of_measurement: entities
+        state: >
+          {% if state_attr('sensor.offline_devices','entity_id') != none %}
+            {{ state_attr('sensor.offline_devices','entity_id')|count }}
+          {% endif %}
+        attributes:
+          entity_id: >
+            {% if state_attr('group.ignored_connectivity_sensors','entity_id') != none %}
+              {% set ignore_seconds = 30 %}
+              {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
+              {% set entities = states.binary_sensor|selectattr('attributes.device_class','in',['connectivity'])|selectattr('state','in',['unknown','unavailable','off'])|list %}
+              {{ entities
+                |rejectattr('entity_id','in',state_attr('group.ignored_connectivity_sensors','entity_id'))
+                |rejectattr('exclude_from_connectivity_alerts','eq',true)
+                |rejectattr('last_changed','ge',ignore_ts)
+                |map(attribute='entity_id')|list }}
+            {% endif %}
+          help: "To supress alerts, add the 'exclude_from_connectivity_alerts' attribute to the entity as true or add to the ignored_connectivity_sensors group."
+
+group:
+  ignored_connectivity_sensors:
+    entities:
+      - sensor.offline_devices # prevent template loop warnings?
+
+# OPTIONAL - filter template loop warnings from the Home Assistant log.
+logger:
+  filters:
+    homeassistant.components.template.template_entity:
+      - 'Template loop detected while processing event'
+
+# OPTIONAL Example automation to demonstrate how you can utilize this sensor
+automation:
+  - id: offline_devices_notification
+    alias: 'Offline Devices Notification'
+    description: 'Create persistent notification if there are offline devices, dismiss if none.'
+    mode: restart
+    trigger:
+      - platform: state
+        entity_id: sensor.offline_devices
+        to: ~
+    condition:
+      - condition: template
+        value_template: >
+          {{ is_number(trigger.from_state.state)
+              and is_number(trigger.to_state.state) }}
+    action:
+      - choose:
+          conditions:
+            - condition: numeric_state
+              entity_id: sensor.offline_devices
+              below: 1
+          sequence:
+            - service: persistent_notification.dismiss
+              data:
+                notification_id: offline_devices
+        default:
+          - service: persistent_notification.create
+            data:
+              title: 'Offline Devices'
+              message: >
+                - {{ expand(state_attr('sensor.offline_devices','entity_id'))
+                      |map(attribute='entity_id')|join('\n- ') }}
+              notification_id: offline_devices
