@@ -62,12 +62,12 @@ automation:
     trigger:
       - platform: state
         entity_id: sensor.offline_devices
-        to: ~
+        attribute: entity_id
     condition:
       - condition: template
         value_template: >
-          {{ is_number(trigger.from_state.state)
-              and is_number(trigger.to_state.state) }}
+          {{ trigger.from_state.attributes.entity_id | length > -1 and 
+              trigger.to_state.attributes.entity_id | length > -1 }}
     action:
       - choose: # device has come back online
           conditions: >
