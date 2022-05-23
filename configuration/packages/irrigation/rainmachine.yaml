@@ -57,6 +57,11 @@ template:
         state: >
           {% for obj in states|sort(attribute='last_updated',reverse=1) if obj.entity_id in state_attr('group.all_sprinkler_valves','entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|replace(' Watering','') }}{% if loop.index < loop.length %}, {% endif %}{% endfor %}
   - binary_sensor:
+      - name: rainmachine_online
+        unique_id: rainmachine_online
+        device_class: connectivity
+        state: "{{ is_state('device_tracker.rainmachine_connectivity','home') }}"
+  - binary_sensor:
       - name: front_yard_zone_1_is_watering
         unique_id: front_yard_zone_1_is_watering
         state: "{{ state_attr('switch.front_yard_zone_1','status') == 'Running' }}"
