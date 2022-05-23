@@ -8,7 +8,8 @@
 ###################################################################################################
 
 input_boolean:
-  name: offline_devices_automation_test_switch
+  offline_devices_automation_test_switch:
+    name: "Offline Devices Automation Test Device Online Switch"
 
 template:
   - binary_sensor:
