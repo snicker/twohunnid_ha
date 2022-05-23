@@ -82,7 +82,8 @@ automation:
                     |map(attribute='attributes.friendly_name')
                     |map('replace',' Online','')
                     |map('replace',' Status','')
-                    |map('replace',' online sensor','')}} is online!
+                    |map('replace',' online sensor','')
+                    |join(', ')}} is online!
                 data:
                   group: "offline-device-notifications"
       - choose: # device has gone offline
@@ -98,7 +99,8 @@ automation:
                     |map(attribute='attributes.friendly_name')
                     |map('replace',' Online','')
                     |map('replace',' Status','')
-                    |map('replace',' online sensor','')}} is offline!
+                    |map('replace',' online sensor','')
+                    |join(', ')}} is offline!
                 data:
                   group: "offline-device-notifications"
       - choose:
@@ -116,6 +118,7 @@ automation:
               title: 'Offline Devices'
               message: >
                 The following devices are offline!
+
                 - {{ expand(state_attr('sensor.offline_devices','entity_id'))
                     |map(attribute='attributes.friendly_name')
                     |map('replace',' Online','')
