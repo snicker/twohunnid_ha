@@ -18,4 +18,4 @@ binary_sensor:
 
 sensor:
   - platform: supervisord
-    url: http://iwatchtheplants.twohunnid/RPC2
+    url: http://iwatchtheplants.twohunnid:9001/RPC2
