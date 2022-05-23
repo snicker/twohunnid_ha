@@ -6,7 +6,7 @@ homeassistant:
     
     binary_sensor.iwatchtheplants_connection:
       <<: *customize
-      friendly_name: iwatchtheplants.local network connection
+      friendly_name: iwatchtheplants Online
 
 
 binary_sensor:
