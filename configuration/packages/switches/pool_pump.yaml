@@ -8,6 +8,10 @@ homeassistant:
       <<: *customize
       icon: mdi:pool
 
+    binary_sensor.pool_pump_scheduled_to_be_on_sensor:
+      <<: *customize
+      friendly_name: "Pool Pump Scheduled To Be On"
+
 input_datetime:
   pool_pump_schedule_start_1:
     name: Pool Pump Start Time 1
@@ -34,31 +38,29 @@ input_datetime:
     has_date: false
     has_time: true
 
-binary_sensor:
-  - platform: template
-    sensors:
-      pool_pump_scheduled_to_be_on_sensor:
-        friendly_name: "Pool Pump Scheduled To Be On"
-        entity_id:
-          - sensor.time
-          - input_datetime.pool_pump_schedule_start_1
-          - input_datetime.pool_pump_schedule_stop_1
-          - input_datetime.pool_pump_schedule_start_2
-          - input_datetime.pool_pump_schedule_stop_2
-          - input_datetime.pool_pump_schedule_start_3
-          - input_datetime.pool_pump_schedule_stop_3
-        value_template: >-
-          {% set physical_switch_override_timer = 3600 %}
+template:
+  - binary_sensor:
+    - name: pool_pump_scheduled_to_be_on_sensor
+      unique_id: pool_pump_scheduled_to_be_on_sensor
+      state: >
+        {% if state_attr('binary_sensor.pool_pump_scheduled_to_be_on_sensor','physical_switch_override') %}
+          {{ states('binary_sensor.pool_pump_timer_physical_timer') }}
+        {% else %}
           {% set n = now() %}
           {% set n = (n.hour*60+n.minute)*60+n.second %}
-          {% set physical_switch_override = expand('binary_sensor.pool_pump_timer_physical_timer')[0].last_changed.timestamp() + physical_switch_override_timer > now().timestamp() %}
           {% set start1 = state_attr('input_datetime.pool_pump_schedule_start_1', 'timestamp') %}
           {% set end1 = state_attr('input_datetime.pool_pump_schedule_stop_1', 'timestamp') %}
           {% set start2 = state_attr('input_datetime.pool_pump_schedule_start_2', 'timestamp') %}
           {% set end2 = state_attr('input_datetime.pool_pump_schedule_stop_2', 'timestamp') %}
           {% set start3 = state_attr('input_datetime.pool_pump_schedule_start_3', 'timestamp') %}
           {% set end3 = state_attr('input_datetime.pool_pump_schedule_stop_3', 'timestamp') %}
-          {{ ((n > start1 and n < end1) or (n > start2 and n < end2) or (n > start3 and n < end3)) and not physical_switch_override }}
+          {{ (n > start1 and n < end1) or (n > start2 and n < end2) or (n > start3 and n < end3) }}
+        {% endif %}
+      attributes:
+        physical_switch_override_timer: 3600
+        physical_switch_override: >
+          {% set physical_switch_override_timer = state_attr('binary_sensor.pool_pump_scheduled_to_be_on_sensor','physical_switch_override_timer') | int %}
+          {{ expand('binary_sensor.pool_pump_timer_physical_timer')[0].last_changed.timestamp() + physical_switch_override_timer > now().timestamp() }}
 
 automation:
   - id: pool_pump_turn_on_by_schedule
