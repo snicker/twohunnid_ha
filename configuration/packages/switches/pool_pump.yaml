@@ -48,15 +48,17 @@ binary_sensor:
           - input_datetime.pool_pump_schedule_start_3
           - input_datetime.pool_pump_schedule_stop_3
         value_template: >-
+          {% set physical_switch_override_timer = 3600 %}
           {% set n = now() %}
           {% set n = (n.hour*60+n.minute)*60+n.second %}
+          {% set physical_switch_override = expand('binary_sensor.pool_pump_timer_physical_timer')[0].last_changed.timestamp() + physical_switch_override_timer > now().timestamp() %}
           {% set start1 = state_attr('input_datetime.pool_pump_schedule_start_1', 'timestamp') %}
           {% set end1 = state_attr('input_datetime.pool_pump_schedule_stop_1', 'timestamp') %}
           {% set start2 = state_attr('input_datetime.pool_pump_schedule_start_2', 'timestamp') %}
           {% set end2 = state_attr('input_datetime.pool_pump_schedule_stop_2', 'timestamp') %}
           {% set start3 = state_attr('input_datetime.pool_pump_schedule_start_3', 'timestamp') %}
           {% set end3 = state_attr('input_datetime.pool_pump_schedule_stop_3', 'timestamp') %}
-          {{ (n > start1 and n < end1) or (n > start2 and n < end2) or (n > start3 and n < end3) }}
+          {{ ((n > start1 and n < end1) or (n > start2 and n < end2) or (n > start3 and n < end3)) and not physical_switch_override }}
 
 automation:
   - id: pool_pump_turn_on_by_schedule
