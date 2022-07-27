@@ -1,0 +1,343 @@
+substitutions:
+  devicename: esp_rf_bridge
+  display_devicename: ESP RF Bridge
+
+esphome:
+  name: ${devicename}
+  platform: ESP8266
+  board: esp8285
+
+logger:
+  baud_rate: 0
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: ${devicename}
+    password: ${devicename}
+
+captive_portal:
+
+ota:
+  password: !secret ota_api_password
+
+web_server:
+  port: 80
+
+uart:
+  tx_pin: GPIO01
+  rx_pin: GPIO03
+  baud_rate: 19200
+
+api:
+  password: !secret ota_api_password
+  services:
+    - service: send_code
+      variables:
+        sync: int
+        low: int
+        high: int
+        code: int
+      then:
+        - rf_bridge.send_code:
+            sync: !lambda 'return sync;'
+            low: !lambda 'return low;'
+            high: !lambda 'return high;'
+            code: !lambda 'return code;'
+    - service: send_advanced_code
+      variables:
+        length: int
+        protocol: int
+        code: string
+      then:
+        - rf_bridge.send_advanced_code:
+            length: !lambda 'return length;'
+            protocol: !lambda 'return protocol;'
+            code: !lambda 'return code;'
+    - service: send_raw
+      variables:
+        raw: string
+      then:
+        - rf_bridge.send_raw:
+            raw:  !lambda 'return raw;'
+    - service: learn
+      then:
+        - rf_bridge.learn
+    - service: advanced_learn_on
+      then:
+        - rf_bridge.start_advanced_sniffing
+    - service: advanced_learn_off
+      then:
+        - rf_bridge.stop_advanced_sniffing
+    - service: bucket_learn_on
+      then:
+        - rf_bridge.start_bucket_sniffing
+
+rf_bridge:
+  on_code_received:
+    then:
+      - homeassistant.event:
+          event: esphome.rf_code_received
+          data:
+            sync: !lambda 'return format_hex(data.sync);'
+            low: !lambda 'return format_hex(data.low);'
+            high: !lambda 'return format_hex(data.high);'
+            code: !lambda 'return format_hex(data.code);'
+  on_advanced_code_received:
+    then:
+      - homeassistant.event:
+          event: esphome.rf_advanced_code_received
+          data:
+            length: !lambda 'return format_hex(data.length);'
+            protocol: !lambda 'return format_hex(data.protocol);'
+            code: !lambda 'return data.code;'
+
+binary_sensor:
+  - platform: status
+    name: "${display_devicename} Status"
+    on_state:
+      then:
+        - light.toggle: wifi_led
+  - platform: gpio
+    pin: GPIO00
+    name: "${display_devicename} Pairing Button"
+
+light:
+  - platform: binary
+    name: "${display_devicename} WiFi LED"
+    id: wifi_led
+    output: output_wifi_led
+    internal: True
+  - platform: binary
+    id: backyard_patio_fans_light
+    name: Backyard Patio Lights
+    output: backyard_fan_output_light
+
+fan:
+  - platform: speed
+    output: backyard_fan_output_fan_speed
+    direction_output: backyard_fan_output_direction
+    speed_count: 6
+    id: backyard_patio_fans
+    name: "Backyard Patio Fans"
+
+globals:
+  - id: backyard_fan_speed
+    type: float
+    initial_value: "0"
+  - id: backyard_fan_direction
+    type: float
+    initial_value: "0"
+  - id: backyard_fan_light_state
+    type: bool
+    initial_value: "false"
+
+output:
+  - platform: gpio
+    pin:
+      number: GPIO13
+      inverted: True
+    id: output_wifi_led
+  - platform: template
+    id: backyard_fan_output_light
+    type: binary
+    write_action:
+      - if:
+          condition:
+            lambda: return ( id(backyard_fan_light_state) != state );
+          then:
+            - script.execute: backyard_fan_light_toggle
+      - globals.set:
+          id: backyard_fan_light_state
+          value: !lambda return state;
+  - platform: template
+    id: backyard_fan_output_fan_speed
+    type: float
+    write_action:
+      - if:
+          condition:
+            lambda: return ((id(backyard_fan_speed) > 0) && (state <= 0));
+          then:
+            - script.execute: backyard_fan_toggle
+      - if:
+          condition:
+            lambda: return ((state > 0) && (state <= .167));
+          then:
+            - script.execute: backyard_fan_speed_1
+      - if:
+          condition:
+            lambda: return ((state > .167) && (state <= .334));
+          then:
+            - script.execute: backyard_fan_speed_2
+      - if:
+          condition:
+            lambda: return ((state > .334) && (state <= .50));
+          then:
+            - script.execute: backyard_fan_speed_3
+      - if:
+          condition:
+            lambda: return ((state > .50) && (state <= .667));
+          then:
+            - script.execute: backyard_fan_speed_4
+      - if:
+          condition:
+            lambda: return ((state > .667) && (state <= .834));
+          then:
+            - script.execute: backyard_fan_speed_5
+      - if:
+          condition:
+            lambda: return ((state > .834) && (state <= 1));
+          then:
+            - script.execute: backyard_fan_speed_6
+      - globals.set:
+          id: backyard_fan_speed
+          value: !lambda return state;
+  - platform: template
+    id: backyard_fan_output_direction
+    type: float
+    write_action:
+      - if:
+          condition:
+            lambda: return ( id(backyard_fan_direction) != state );
+          then:
+             - script.execute: backyard_fan_reverse
+      - globals.set:
+          id: backyard_fan_direction
+          value: !lambda return state;
+
+sensor:
+  - platform: uptime
+    name: "${display_devicename} Uptime"
+    id: uptime_seconds
+  - platform: wifi_signal
+    name: "${display_devicename} WiFi Signal"
+
+switch:
+  - platform: restart
+    name: "${display_devicename} Restart"
+
+text_sensor:
+  - platform: version
+    name: "${display_devicename} Version"
+  - platform: wifi_info
+    ip_address:
+      name: "${display_devicename} IP Address"
+  - platform: template
+    name: "${display_devicename} Uptime Readable"
+    lambda: |-
+      uint32_t dur = id(uptime_seconds).state;
+      int dys = 0;
+      int hrs = 0;
+      int mnts = 0;
+      if (dur > 86399) {
+        dys = trunc(dur / 86400);
+        dur = dur - (dys * 86400);
+      }
+      if (dur > 3599) {
+        hrs = trunc(dur / 3600);
+        dur = dur - (hrs * 3600);
+      }
+      if (dur > 59) {
+        mnts = trunc(dur / 60);
+        dur = dur - (mnts * 60);
+      }
+      char buffer[17];
+      sprintf(buffer, "%ud, %02u:%02u:%02u", dys, hrs, mnts, dur);
+      return {buffer};
+    icon: mdi:clock-start
+    update_interval: 60s
+
+
+script:
+# ## Backyard Fans ##
+# ** Fan Speed 1: 0xC75D28
+  - id: backyard_fan_speed_1
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB0290304037000FA227492818190909081818190819081818190819090819081909090908181908181818155
+# ** Fan Speed 2: 0xC75D29
+  - id: backyard_fan_speed_2
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB029030403660104226092818190909081818190819081818190819090819081909081908181818181818155
+# ** Fan Speed 3: 0xC75D2E
+  - id: backyard_fan_speed_3
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB02903040370010421DE92818190909081818190819081818190819090819081818190909090908181818155
+# ** Fan Speed 4: 0xC75D25
+  - id: backyard_fan_speed_4
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB0290304035C010E222E92818190909081818190819081818190819090819090819081909090819081908155
+# ** Fan Speed 5: 0xC75D27
+  - id: backyard_fan_speed_5
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB029030403480118226A92818190909081818190819081818190819090819090818181819081908181909055
+# ** Fan Speed 6: 0xC75D26
+  - id: backyard_fan_speed_6
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB0290304036600FA226A92818190909081818190819081818190819090819090818190908190909090818155
+# ** Fan Reverse Direction: 0xC75D2A
+  - id: backyard_fan_reverse
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB0290304035C0104226092818190909081818190819081818190819090819081908190908190818181819055
+# ** Light Toggle: 0xC75D24
+  - id: backyard_fan_light_toggle
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB02903040348012221FC92818190909081818190819081818190819090819090819090908181909090818155
+# ** Fan Toggle: 0xC75D2B
+  - id: backyard_fan_toggle
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB029030403520118220692818190909081818190819081818190819090819081908181909090908190819055
+# ** Burglar?: 0xC75D2D
+  - id: backyard_fan_burglar
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB0290304035C0104226A92818190909081818190819081818190819090819081819081909090818181908155
+# ** Breeze Mode: 0xC75D2A
+  - id: backyard_fan_breeze_mode
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB029030403660104226092818190909081818190819081818190819090819081908190819081909090908155
+# ** Clock?: 0xC75D2D
+  - id: backyard_fan_clock
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB029030403700104227492818190909081818190819081818190819090819081819081818181909090819055
+# ** 1H Timer: 0xC75D21
+  - id: backyard_fan_timer_1h
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB0290304036600FA223892818190909081818190819081818190819090819090909081908181819081818155
+# ** 4H Timer: 0xC75D2C
+  - id: backyard_fan_timer_4h
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB02903040366010E226A92818190909081818190819081818190819090819081819090819090819081909055
+# ** 8H Timer: 0xC75D2E
+  - id: backyard_fan_timer_8h
+    mode: queued
+    then:
+      - rf_bridge.send_raw:
+          raw: AAB0290304035C0104226092818190909081818190819081818190819090819081818190819081819081909055
