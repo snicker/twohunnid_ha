@@ -36,7 +36,7 @@ template:
               {% set entities = states.binary_sensor|selectattr('attributes.device_class','in',['connectivity'])|selectattr('state','in',['unknown','unavailable','off'])|list %}
               {{ entities
                 |rejectattr('entity_id','in',state_attr('group.ignored_connectivity_sensors','entity_id'))
-                |rejectattr('exclude_from_connectivity_alerts','eq',true)
+                |rejectattr('exclude_from_connectivity_alerts','eq',1)
                 |rejectattr('last_changed','ge',ignore_ts)
                 |map(attribute='entity_id')|list }}
             {% endif %}

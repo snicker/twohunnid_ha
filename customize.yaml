@@ -17,4 +17,6 @@ sensor.nexus_7_battery_temperature:
 sensor.nexus_7_battery_state:
   battery_alert_disabled: '1'
 binary_sensor.tesla_model_3_online_sensor:
-  exclude_from_connectivity_alerts: true
+  exclude_from_connectivity_alerts: 1
+binary_sensor.sonoff_4ch_status:
+  exclude_from_connectivity_alerts: 1
