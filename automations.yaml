@@ -4,6 +4,9 @@
   - event: sunset
     offset: -00:10
     platform: sun
+  - platform: sun
+    event: sunset
+    offset: -00:08
   condition: []
   action:
   - data: {}
@@ -21,11 +24,14 @@
       - light.front_pine_tree_holiday_lights
       - light.backyard_landscape_lights
       - light.front_landscape_lights_power
+      - light.north_front_yard_holiday_lights
 - id: '1534899747739'
   alias: 'Exterior Lights: Off at 10pm'
   trigger:
   - at: '22:00'
     platform: time
+  - platform: time
+    at: '22:02'
   condition: []
   action:
   - data: {}
@@ -43,6 +49,7 @@
       - light.front_pine_tree_holiday_lights
       - light.backyard_landscape_lights
       - light.front_landscape_lights_power
+      - light.north_front_yard_holiday_lights
   mode: single
 - id: '1537420454578'
   alias: 'HAStatus: Shutdown'
@@ -623,32 +630,6 @@
       trigger.to_state.state == "off" %} switch.turn_off {% endif %}'
   - delay: 00:00:10
   mode: single
-- id: '1603776641169'
-  alias: 'ALERT: the prowler might be here'
-  description: ''
-  trigger:
-  - entity_id: binary_sensor.motion_front_driveway
-    platform: state
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: alarm_control_panel.home_alarm
-    state: armed_night
-  action:
-  - data:
-      data:
-        action_data:
-          yes_script: script.trigger_exterior_alarm
-        push:
-          category: yesno
-          sound:
-            critical: 1
-            name: US-EN-Morgan-Freeman-Vacate-The-Premises
-            volume: 1
-      message: Motion detected in driveway! Sound the alarm?
-      title: Motion in driveway!
-    service: notify.mobile_app_spacecell
-  mode: single
 - id: '1603835967318'
   alias: Pedestrian Gate Open In Night Mode
   description: ''
@@ -680,6 +661,16 @@
   - data: {}
     entity_id: light.living_room_lights
     service: light.turn_on
+  - service: notify.mobile_app_spacecell
+    data:
+      title: the fucken gate opened
+      message: that guy is probably here
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1
   mode: single
 - id: '1603862067713'
   alias: turn off alarm after 3min
@@ -747,13 +738,11 @@
   description: ''
   trigger:
   - platform: time
-    at: 04:00:00
+    at: 04:00
   condition:
   - condition: time
     weekday:
-    - mon
     - wed
-    - fri
   action:
   - service: script.front_yard_sprinklers_full_cycle
   mode: single
@@ -875,8 +864,8 @@
   - service: notify.nick
     data_template:
       message: 'Air quality alert:  {% if trigger.get(''to_state'') %}{% if trigger.to_state.state|int(default=0)
-        > trigger.from_state.state|int(default=0) %} Air quality is getting worse.  {% else %}
-        Air quality is improving.  {% endif %}{% endif %} {% set aqi = states(''sensor.airnow_aqi'')
+        > trigger.from_state.state|int(default=0) %} Air quality is getting worse.  {%
+        else %} Air quality is improving.  {% endif %}{% endif %} {% set aqi = states(''sensor.airnow_aqi'')
         | int %} A Q I is {{ aqi }}
 
         '
@@ -901,4 +890,111 @@
     data_template:
       message: 'FreeNAS Alert ({{states("sensor.freenas_alert_level")}}) : {{ states(''sensor.freenas_alert_message'')
         }}'
+  mode: single
+- id: '1637732207612'
+  alias: Leak Detected - Shut off water
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.govee_leak_detector_25410
+    - binary_sensor.govee_leak_detector_28624
+    - binary_sensor.govee_leak_detector_26832
+    - binary_sensor.govee_leak_detector_27124
+    - binary_sensor.govee_leak_detector_23480
+    - binary_sensor.govee_leak_detector_2842
+    - binary_sensor.govee_leak_detector_2186
+    to: 'on'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 6a9e8e74194111eba48e6bcf988c4893
+    entity_id: switch.shutoff_valve
+    domain: switch
+  - service: notify.mobile_app_spacecell
+    data:
+      title: Water leak detected!
+      message: A water leak has been detected in the {{ state_attr(trigger.entity_id,'friendly_name')
+        | replace('Leak Sensor - ','') }}!! Water will be shut off immediately!
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+  mode: single
+- id: '1638817196166'
+  alias: Gurushots vote reminder!
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /30
+  condition: []
+  action:
+  - service: notify.nick
+    data:
+      message: Time to vote!
+      title: VOTE!
+  mode: single
+- id: '1643034875718'
+  alias: 'Greenhouse: Lights on at sunrise'
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: '0'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: c4b474e9ab703a1301179d979acc783c
+    entity_id: switch.greenhouse_powerstrip_socket_1
+    domain: switch
+  mode: single
+- id: '1643034917185'
+  alias: 'Greenhouse: Lights off at sundown'
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: '0'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: c4b474e9ab703a1301179d979acc783c
+    entity_id: switch.greenhouse_powerstrip_socket_1
+    domain: switch
+  mode: single
+- id: '1646025607997'
+  alias: Greenhouse Fan Shutoff Timer
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '*'
+  condition:
+  - condition: device
+    type: is_on
+    device_id: c4b474e9ab703a1301179d979acc783c
+    entity_id: switch.greenhouse_powerstrip_usb_ports
+    domain: switch
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.switch.greenhouse_powerstrip_usb_ports.last_changed)
+      > (states(''input_number.greenhouse_fan_run_time'') | int * 60) }}'
+  action:
+  - type: turn_off
+    device_id: c4b474e9ab703a1301179d979acc783c
+    entity_id: switch.greenhouse_powerstrip_usb_ports
+    domain: switch
+  mode: single
+- id: '1646026088711'
+  alias: Greenhouse Fans Auto On
+  description: Turns on hourly
+  trigger:
+  - platform: time_pattern
+    hours: '*'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: c4b474e9ab703a1301179d979acc783c
+    entity_id: switch.greenhouse_powerstrip_usb_ports
+    domain: switch
   mode: single
