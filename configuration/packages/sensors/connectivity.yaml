@@ -31,7 +31,7 @@ template:
         attributes:
           entity_id: >
             {% if state_attr('group.ignored_connectivity_sensors','entity_id') != none %}
-              {% set ignore_seconds = 30 %}
+              {% set ignore_seconds = 60 %}
               {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
               {% set entities = states.binary_sensor|selectattr('attributes.device_class','in',['connectivity'])|selectattr('state','in',['unknown','unavailable','off'])|list %}
               {{ entities
