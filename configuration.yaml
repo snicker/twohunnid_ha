@@ -35,8 +35,6 @@ http:
 ifttt:
   key: !secret ifttt_key
 
-updater:
-
 zeroconf:
 ssdp:
 
