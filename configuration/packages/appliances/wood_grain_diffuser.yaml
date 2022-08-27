@@ -37,12 +37,7 @@ fan:
     speed_state_topic: "tele/woodgrain_diffuser/STATE"
     speed_value_template: "{{ value_json.POWER2 }}"
     speed_command_topic: "cmnd/woodgrain_diffuser/POWER2"
-    payload_low_speed: "OFF"
-    payload_high_speed: "ON"
     qos: 1
-    speeds:
-      - low
-      - high
 
 binary_sensor:
   - platform: mqtt
