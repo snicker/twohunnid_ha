@@ -31,6 +31,3 @@ homeassistant:
     sensor.200stonewoodjuicebox_watts:
       <<: *customize
       friendly_name: Juicebox Watts
-
-juicenet:
-  access_token: !secret juicenet_token
