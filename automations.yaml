@@ -998,3 +998,78 @@
     entity_id: switch.greenhouse_powerstrip_usb_ports
     domain: switch
   mode: single
+- id: '1661021071678'
+  alias: Ignore Connectivity Sensors on Boot
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - service: group.set
+    data:
+      object_id: ignored_connectivity_sensors
+      add_entities:
+      - binary_sensor.sonoff_4ch_status
+      - binary_sensor.tesla_model_3_online_sensor
+  mode: single
+- id: '1668281076121'
+  alias: ZWave Switch Multitap Automator
+  description: ''
+  trigger:
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      value: KeyPressed2x
+  - platform: event
+    event_type: zwave_js_value_notification
+    event_data:
+      value: KeyPressed3x
+  condition: []
+  action:
+  - variables:
+      nodes:
+        node_16:
+          triple_tap_controlled_entity_id: light.living_and_dining_room_lights
+        node_17:
+          double_tap_controlled_entity_id: light.plant_room_lamp
+        node_18:
+          double_tap_controlled_entity_id: light.ballet_studio_lamp
+        node_38:
+          double_tap_controlled_entity_id: light.office_desk_lamp
+          inverted: true
+  - variables:
+      to_state: '{% if trigger.event.data.property_key in (''001'',''002'') and trigger.event.data.property_key
+        == ''001'' %}on{% elif trigger.event.data.property_key == ''002'' %}off{%
+        else %}unknown{% endif %}'
+      node_id: node_{{ trigger.event.data.node_id }}
+      is_double_tap: '{{ trigger.event.data.value == ''KeyPressed2x'' }}'
+      is_triple_tap: '{{ trigger.event.data.value == ''KeyPressed3x'' }}'
+  - variables:
+      controlled_entity_id: '{% if is_double_tap %} {{ nodes.get(node_id,{}).get("double_tap_controlled_entity_id")
+        }} {% elif is_triple_tap %} {{ nodes.get(node_id,{}).get("triple_tap_controlled_entity_id")
+        }} {% endif %}
+
+        '
+      to_state: '{% if nodes.get(node_id,{}).get("inverted") %} {% if to_state ==
+        "on" %}off{%endif%} {% if to_state == "off" %}on{%endif%} {% else %}{{to_state}}{%endif%}
+
+        '
+  - service: persistent_notification.create
+    data:
+      title: ZWave Tap Event
+      message: 'node: {{node_id}} to_state: {{to_state}} 2x: {{is_double_tap}} 3x:
+        {{is_triple_tap}} controlled_entity_id: {{controlled_entity_id }}
+
+        '
+    enabled: true
+    alias: Debug Notification
+  - condition: template
+    value_template: '{{ to_state in (''on'',''off'') and controlled_entity_id != None
+      }}'
+    alias: Validate to_state and controlled_entity_id
+  - service_template: homeassistant.turn_{{to_state}}
+    data:
+      entity_id: '{{ controlled_entity_id }}'
+    alias: Trigger action on controlled_entity_id
+  mode: single
