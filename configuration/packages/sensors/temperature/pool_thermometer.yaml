@@ -1,7 +1,7 @@
-sensor:
-  - platform: mqtt
-    name: pool_thermometer_mqtt
-    state_topic: "rtl_433/AMTX3107/rows/0/data"
+mqtt:
+  sensor:
+    - name: pool_thermometer_mqtt
+      state_topic: "rtl_433/AMTX3107/rows/0/data"
 
 automation:
 

@@ -60,87 +60,74 @@ homeassistant:
       <<: *customize
       friendly_name: "Leak Sensor Button - Spare Bath"
 
-binary_sensor:
-  - platform: mqtt
-    name: govee_leak_detector_27124
-    payload_on: "Water Leak"
-    off_delay: 10
-    device_class: moisture
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/27124/event"
-  - platform: mqtt
-    name: govee_leak_detector_27124_button
-    payload_on: "Button Press"
-    off_delay: 10
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/27124/event"
-    
-  - platform: mqtt
-    name: govee_leak_detector_23480
-    payload_on: "Water Leak"
-    off_delay: 10
-    device_class: moisture
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/23480/event"
-  - platform: mqtt
-    name: govee_leak_detector_23480_button
-    payload_on: "Button Press"
-    off_delay: 10
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/23480/event"
-    
-  - platform: mqtt
-    name: govee_leak_detector_25410
-    payload_on: "Water Leak"
-    off_delay: 10
-    device_class: moisture
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/25410/event"
-  - platform: mqtt
-    name: govee_leak_detector_25410_button
-    payload_on: "Button Press"
-    off_delay: 10
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/25410/event"
-    
-  - platform: mqtt
-    name: govee_leak_detector_28624
-    payload_on: "Water Leak"
-    off_delay: 10
-    device_class: moisture
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/28624/event"
-  - platform: mqtt
-    name: govee_leak_detector_28624_button
-    payload_on: "Button Press"
-    off_delay: 10
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/28624/event"
-    
-  - platform: mqtt
-    name: govee_leak_detector_26832
-    payload_on: "Water Leak"
-    off_delay: 10
-    device_class: moisture
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/26832/event"
-  - platform: mqtt
-    name: govee_leak_detector_26832_button
-    payload_on: "Button Press"
-    off_delay: 10
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/26832/event"
-    
-  - platform: mqtt
-    name: govee_leak_detector_2186
-    payload_on: "Water Leak"
-    off_delay: 10
-    device_class: moisture
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2186/event"
-  - platform: mqtt
-    name: govee_leak_detector_2186_button
-    payload_on: "Button Press"
-    off_delay: 10
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2186/event"
-    
-  - platform: mqtt
-    name: govee_leak_detector_2842
-    payload_on: "Water Leak"
-    off_delay: 10
-    device_class: moisture
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2842/event"
-  - platform: mqtt
-    name: govee_leak_detector_2842_button
-    payload_on: "Button Press"
-    off_delay: 10
-    state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2842/event"
+mqtt:
+  binary_sensor:
+    - name: govee_leak_detector_27124
+      payload_on: "Water Leak"
+      off_delay: 10
+      device_class: moisture
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/27124/event"
+    - name: govee_leak_detector_27124_button
+      payload_on: "Button Press"
+      off_delay: 10
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/27124/event"
+      
+    - name: govee_leak_detector_23480
+      payload_on: "Water Leak"
+      off_delay: 10
+      device_class: moisture
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/23480/event"
+    - name: govee_leak_detector_23480_button
+      payload_on: "Button Press"
+      off_delay: 10
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/23480/event"
+      
+    - name: govee_leak_detector_25410
+      payload_on: "Water Leak"
+      off_delay: 10
+      device_class: moisture
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/25410/event"
+    - name: govee_leak_detector_25410_button
+      payload_on: "Button Press"
+      off_delay: 10
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/25410/event"
+      
+    - name: govee_leak_detector_28624
+      payload_on: "Water Leak"
+      off_delay: 10
+      device_class: moisture
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/28624/event"
+    - name: govee_leak_detector_28624_button
+      payload_on: "Button Press"
+      off_delay: 10
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/28624/event"
+      
+    - name: govee_leak_detector_26832
+      payload_on: "Water Leak"
+      off_delay: 10
+      device_class: moisture
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/26832/event"
+    - name: govee_leak_detector_26832_button
+      payload_on: "Button Press"
+      off_delay: 10
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/26832/event"
+      
+    - name: govee_leak_detector_2186
+      payload_on: "Water Leak"
+      off_delay: 10
+      device_class: moisture
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2186/event"
+    - name: govee_leak_detector_2186_button
+      payload_on: "Button Press"
+      off_delay: 10
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2186/event"
+      
+    - name: govee_leak_detector_2842
+      payload_on: "Water Leak"
+      off_delay: 10
+      device_class: moisture
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2842/event"
+    - name: govee_leak_detector_2842_button
+      payload_on: "Button Press"
+      off_delay: 10
+      state_topic: "rtl_433/iwatchtheplants/devices/Govee-Water/2842/event"

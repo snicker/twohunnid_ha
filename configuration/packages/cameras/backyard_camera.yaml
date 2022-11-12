@@ -24,13 +24,15 @@ camera:
     name: yi_home_camera_backyard_patio
     input: -rtsp_transport tcp -err_detect ignore_err -i rtsp://192.168.1.78/ch0_0.h264
     
+mqtt:
+  binary_sensor:
+    - name: backyard_patio_camera_motion
+      state_topic: "cameras/yicambackyard/motion"
+      payload_on: "motion_start"
+      payload_off: "motion_stop"
+      device_class: motion
+
 binary_sensor:
-  - platform: mqtt
-    name: backyard_patio_camera_motion
-    state_topic: "cameras/yicambackyard/motion"
-    payload_on: "motion_start"
-    payload_off: "motion_stop"
-    device_class: motion
   - platform: ping
     name: backyard_patio_camera_status
     host: 192.168.1.78

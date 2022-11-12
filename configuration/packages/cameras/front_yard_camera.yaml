@@ -24,14 +24,17 @@ camera:
     name: front_yard_camera
     still_image_url: http://192.168.1.75:8080/cgi-bin/snapshot.sh?res=low
     stream_source: rtsp://192.168.1.75:554/ch0_0.h264
+
+mqtt:
+  binary_sensor:
+    - name: front_yard_camera_motion
+      state_topic: "cameras/yicam3/motion"
+      payload_on: "motion_start"
+      payload_off: "motion_stop"
+      device_class: motion
     
+
 binary_sensor:
-  - platform: mqtt
-    name: front_yard_camera_motion
-    state_topic: "cameras/yicam3/motion"
-    payload_on: "motion_start"
-    payload_off: "motion_stop"
-    device_class: motion
   - platform: ping
     name: front_yard_camera_status
     host: 192.168.1.75

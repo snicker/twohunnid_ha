@@ -11,13 +11,13 @@ homeassistant:
       <<: *customize
       friendly_name: "Garage Overhead Light"
 
-light:
-  - platform: mqtt
-    name: garage_overhead_light
-    optimistic: false
-    command_topic: "x10/b9/command"
-    payload_on: "on"
-    payload_off: "off"
-    state_topic: "x10/b9/status"
-    state_value_template: "{{ value }}"
+mqtt:
+  light:
+    - name: garage_overhead_light
+      optimistic: false
+      command_topic: "x10/b9/command"
+      payload_on: "on"
+      payload_off: "off"
+      state_topic: "x10/b9/status"
+      state_value_template: "{{ value }}"
     

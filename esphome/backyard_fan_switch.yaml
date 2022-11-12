@@ -1,0 +1,291 @@
+# .plan
+# press button 1:
+#   broadcast toggle lights
+# press button 2:
+#   broadcast toggle fan
+# double press button 2:
+#   broadcast fan speed 2
+# triple press button 2:
+#   broadcast fan speed 4
+# four press button 2:
+#   broadcast fan speed 6
+# hold button 2:
+#   broadcast breeze mode
+# current state	new state	relay1	relay2	then	relay1	relay2	send_rf_toggle
+# off	on	off	off		on	off	no
+# off	on	off	on		on	on	yes
+# off	on	on	off		on	off	yes
+# off	on	on	on		on	on	no
+# on	off	off	off		off	off	no
+# on	off	off	on		off	on	no
+# on	off	on	off		off	off	no
+# on	off	on	on		off	on	yes
+
+substitutions:
+  devicename: backyard_fan_switch
+  display_devicename: Backyard Fan Switch
+  sonoff_rf_host: 192.168.1.108
+
+esphome:
+  name: ${devicename}
+  platform: ESP8266
+  board: esp01_1m
+
+logger:
+  baud_rate: 0
+
+wifi:
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: ${devicename}
+    password: ${devicename}
+
+captive_portal:
+
+ota:
+  password: !secret ota_api_password
+
+web_server:
+  port: 80
+
+http_request:
+
+api:
+  password: !secret ota_api_password
+
+# ===============
+# = end node configuration
+# ===============
+
+
+globals:
+  - id: backyard_fan_speed
+    type: float
+    initial_value: "0"
+  - id: backyard_fan_direction
+    type: float
+    initial_value: "0"
+  - id: backyard_fan_light_state
+    type: bool
+    initial_value: "false"
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO12
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Backyard Fan Switch Button 1" #lights
+    filters:
+      - delayed_off: 10ms
+    on_release:
+      - light.toggle: backyard_patio_fans_light
+  - platform: gpio
+    pin:
+      number: GPIO3
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Backyard Fan Switch Button 2" #fan
+    filters:
+      - delayed_off: 10ms
+    on_release:
+      - switch.toggle: relay2
+
+switch:
+  - platform: gpio
+    id: relay1
+    pin: GPIO13
+    #internal: true
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    id: relay2
+    pin: GPIO4
+    #internal: true
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    #internal: true
+    id: blue_led
+    pin:
+      number: GPIO0
+      inverted: True
+
+fan:
+  - platform: speed
+    output: backyard_fan_output_fan_speed
+    direction_output: backyard_fan_output_direction
+    speed_count: 6
+    id: backyard_patio_fans
+    name: "Backyard Patio Fans"
+
+light:
+  - platform: binary
+    id: backyard_patio_fans_light
+    name: Backyard Patio Lights
+    output: backyard_fan_output_light
+
+output:
+  - platform: template
+    id: backyard_fan_output_light
+    type: binary
+    write_action:
+      - if:
+          condition:
+            lambda: return ( id(backyard_fan_light_state) != state );
+          then:
+            - if:
+                condition:
+                  lambda: return state;
+                then:
+                  - if:
+                      condition:
+                        switch.is_off: relay1
+                      then:
+                        - switch.turn_on: relay1
+                        - if:
+                            condition:
+                              switch.is_on: relay2
+                            then:
+                              - select.set:
+                                  id: rf_bridge_command_outgoing
+                                  option: backyard_fan_light_toggle
+                      else:
+                        - select.set:
+                            id: rf_bridge_command_outgoing
+                            option: backyard_fan_light_toggle
+                else:
+                  - if:
+                      condition:
+                        and:
+                          - switch.is_on: relay1
+                          - switch.is_off: relay2
+                      then:
+                        - switch.turn_off: relay1
+                      else:
+                        - if:
+                            condition:
+                              and:
+                                - switch.is_off: relay1
+                                - switch.is_on: relay2
+                            then:
+                              - select.set:
+                                  id: rf_bridge_command_outgoing
+                                  option: backyard_fan_light_toggle
+                            else: 
+                              - if:
+                                  condition:
+                                    and:
+                                      - switch.is_on: relay1
+                                      - switch.is_on: relay2
+                                  then:
+                                    - switch.turn_off: relay1
+                                    - select.set:
+                                        id: rf_bridge_command_outgoing
+                                        option: backyard_fan_light_toggle
+      - globals.set:
+          id: backyard_fan_light_state
+          value: !lambda return state;
+  - platform: template
+    id: backyard_fan_output_fan_speed
+    type: float
+    write_action:
+      - if:
+          condition:
+            lambda: return ((id(backyard_fan_speed) > 0) && (state <= 0));
+          then:wh
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_toggle
+      - if:
+          condition:
+            lambda: return ((state > 0) && (state <= .167));
+          then:
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_speed_1
+      - if:
+          condition:
+            lambda: return ((state > .167) && (state <= .334));
+          then:
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_speed_2
+      - if:
+          condition:
+            lambda: return ((state > .334) && (state <= .50));
+          then:
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_speed_3
+      - if:
+          condition:
+            lambda: return ((state > .50) && (state <= .667));
+          then:
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_speed_4
+      - if:
+          condition:
+            lambda: return ((state > .667) && (state <= .834));
+          then:
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_speed_5
+      - if:
+          condition:
+            lambda: return ((state > .834) && (state <= 1));
+          then:
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_speed_6
+      - globals.set:
+          id: backyard_fan_speed
+          value: !lambda return state;
+  - platform: template
+    id: backyard_fan_output_direction
+    type: float
+    write_action:
+      - if:
+          condition:
+            lambda: return ( id(backyard_fan_direction) != state );
+          then:
+            - select.set:
+                id: rf_bridge_command_outgoing
+                option: backyard_fan_reverse
+      - globals.set:
+          id: backyard_fan_direction
+          value: !lambda return state;
+
+
+select:
+  - platform: template
+    id: rf_bridge_command_outgoing
+    optimistic: true
+    options:
+      - backyard_fan_speed_1
+      - backyard_fan_speed_2
+      - backyard_fan_speed_3
+      - backyard_fan_speed_4
+      - backyard_fan_speed_5
+      - backyard_fan_speed_6
+      - backyard_fan_reverse
+      - backyard_fan_light_toggle
+      - backyard_fan_toggle
+      - backyard_fan_burglar
+      - backyard_fan_breeze_mode
+      - backyard_fan_clock
+      - backyard_fan_timer_1h
+      - backyard_fan_timer_4h
+      - backyard_fan_timer_8h
+    on_value:
+      then:
+        - logger.log:
+            format: "sending command to sonoff rf bridge: %s (index %d)"
+            args: ["x.c_str()", "i"]
+        - http_request.post:
+            url: !lambda |-
+              return ((std::string) "http://${sonoff_rf_host}/select/backyard_fan_switch_command_incoming/set?option=" + x.c_str());
+
