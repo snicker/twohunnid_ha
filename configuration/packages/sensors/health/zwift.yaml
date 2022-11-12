@@ -124,19 +124,16 @@ sensor:
     sensors:
       zwift_tron_progress_802962:
         friendly_name: "Zwift Tron Progress"
-        entity_id: sensor.zwift_online_803962
         unit_of_measurement: '%'
         value_template: "{{ state_attr('sensor.zwift_online_803962','totalDistanceClimbed') / 50000 }}"
 
       zwift_ftp_803962:
         friendly_name: "Zwift FTP (803962)"
-        entity_id: sensor.zwift_online_803962
         unit_of_measurement: 'watts'
         value_template: "{{states.sensor.zwift_online_803962.attributes.ftp}}"
           
       zwift_power_zone_803962:
         friendly_name: "Zwift Power Zone (803962)"   
-        entity_id: sensor.zwift_power_803962
         value_template: >-
           {% set ftp = states('sensor.zwift_ftp_803962') | float %}
           {% set power = states('sensor.zwift_power_803962') | float %}
@@ -158,7 +155,6 @@ sensor:
 
   - platform: history_stats
     name: Threshold last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'Threshold'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
@@ -166,7 +162,6 @@ sensor:
           
   - platform: history_stats
     name: Off last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'Off'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
@@ -174,7 +169,6 @@ sensor:
           
   - platform: history_stats
     name: Active Recovery last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'Active Recovery'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
@@ -183,7 +177,6 @@ sensor:
 
   - platform: history_stats
     name: Endurance last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'Endurance'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
@@ -191,7 +184,6 @@ sensor:
           
   - platform: history_stats
     name: Tempo last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'Tempo'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
@@ -199,7 +191,6 @@ sensor:
           
   - platform: history_stats
     name: VO2 Max last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'VO2 Max'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
@@ -207,7 +198,6 @@ sensor:
           
   - platform: history_stats
     name: Anaerobic capacity last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'Anaerobic capacity'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  
@@ -215,7 +205,6 @@ sensor:
           
   - platform: history_stats
     name: Neuromuscular Power last Zwift Session
-    entity_id: sensor.zwift_power_zone_803962
     state: 'Neuromuscular Power'
     type: time
     start: '{{ states.input_datetime.zwift_last_online_803962.attributes.timestamp }}'  

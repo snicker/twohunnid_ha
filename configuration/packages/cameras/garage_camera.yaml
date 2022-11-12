@@ -29,7 +29,6 @@ binary_sensor:
   - platform: template
     sensors:
       garage_camera_motion:
-        entity_id: sensor.yi_camera_motion_garage
         device_class: motion
         value_template: "{{ states('sensor.yi_camera_motion_garage')|int == 1 }}"
   - platform: ping
