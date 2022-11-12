@@ -34,8 +34,6 @@ mqtt:
       command_topic: "cmnd/woodgrain_diffuser/POWER1"
       payload_on: "ON"
       payload_off: "OFF"
-      speed_state_topic: "tele/woodgrain_diffuser/STATE"
-      speed_value_template: "{{ value_json.POWER2 }}"
       qos: 1
 
   binary_sensor:
