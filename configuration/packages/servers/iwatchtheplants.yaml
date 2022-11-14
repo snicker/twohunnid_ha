@@ -16,6 +16,20 @@ binary_sensor:
     count: 3
     scan_interval: 60
 
+template:
+  - binary_sensor:
+      - name: rtl_433_iwatchtheplants_online
+        unique_id: rtl_433_iwatchtheplants_online
+        device_class: connectivity
+        state: "{{ is_state('sensor.rtl_433_daemon','RUNNING') and is_state('sensor.rtl_433_hass_mqtt_discovery_daemon','RUNNING') }}"
+        attributes:
+          rtl_433_daemon: "{{ is_state('sensor.rtl_433_daemon','RUNNING') }}"
+          rtl_433_hass_mqtt_discovery_daemon: "{{ is_state('sensor.rtl_433_hass_mqtt_discovery_daemon','RUNNING') }}"
+      - name: x10_heyu_mqtt_iwatchtheplants_online
+        unique_id: x10_heyu_mqtt_iwatchtheplants_online
+        device_class: connectivity
+        state: "{{ is_state('sensor.x10_heyu_mqtt','RUNNING') }}"
+
 sensor:
   - platform: supervisord
     url: http://iwatchtheplants.twohunnid:9001/RPC2
