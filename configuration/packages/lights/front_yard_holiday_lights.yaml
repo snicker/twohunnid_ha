@@ -40,7 +40,7 @@ homeassistant:
     light.holiday_lighting_central:
       <<: *customize
       friendly_name: "Holiday Lighting - Central"
-      source_switch: switch.bnlink_smart_switch_01
+      source_switch: switch.holiday_lighting_central_outlet
       
     light.christmas_eave_lights:
       <<: *customize
@@ -118,13 +118,13 @@ light:
       holiday_lighting_central:
         unique_id: holiday_lighting_central
         availability_template: "{{ is_state('group.holiday_modes','on') }}"
-        value_template: '{{ is_state("switch.bnlink_smart_switch_01", "on") }}'
+        value_template: '{{ is_state("switch.holiday_lighting_central_outlet", "on") }}'
         turn_on:
           service: switch.turn_on
-          entity_id: switch.bnlink_smart_switch_01
+          entity_id: switch.holiday_lighting_central_outlet
         turn_off:
           service: switch.turn_off
-          entity_id: switch.bnlink_smart_switch_01
+          entity_id: switch.holiday_lighting_central_outlet
 
   - platform: group
     name: christmas_eave_lights
