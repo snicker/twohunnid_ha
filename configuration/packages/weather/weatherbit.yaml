@@ -1,0 +1,67 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'weatherbit'
+
+    sensor.weatherbit_forecast_day_1_wind_bearing:
+      <<: *customize
+    sensor.weatherbit_forecast_day_2_wind_bearing:
+      <<: *customize
+    sensor.weatherbit_forecast_day_3_wind_bearing:
+      <<: *customize
+    sensor.weatherbit_forecast_day_4_wind_bearing:
+      <<: *customize
+    sensor.weatherbit_forecast_day_5_wind_bearing:
+      <<: *customize
+    sensor.weatherbit_forecast_day_6_wind_bearing:
+      <<: *customize
+    sensor.weatherbit_forecast_day_7_wind_bearing:
+      <<: *customize
+    sensor.weatherbit_forecast_day_1_wind_speed:
+      <<: *customize
+    sensor.weatherbit_forecast_day_2_wind_speed:
+      <<: *customize
+    sensor.weatherbit_forecast_day_3_wind_speed:
+      <<: *customize
+    sensor.weatherbit_forecast_day_4_wind_speed:
+      <<: *customize
+    sensor.weatherbit_forecast_day_5_wind_speed:
+      <<: *customize
+    sensor.weatherbit_forecast_day_6_wind_speed:
+      <<: *customize
+    sensor.weatherbit_forecast_day_7_wind_speed:
+      <<: *customize
+
+sensor:
+  - platform: template
+    sensors:
+      weatherbit_forecast_day_1_wind_bearing:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_1', 'wind_bearing') }}"
+      weatherbit_forecast_day_2_wind_bearing:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_2', 'wind_bearing') }}"
+      weatherbit_forecast_day_3_wind_bearing:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_3', 'wind_bearing') }}"
+      weatherbit_forecast_day_4_wind_bearing:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_4', 'wind_bearing') }}"
+      weatherbit_forecast_day_5_wind_bearing:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_5', 'wind_bearing') }}"
+      weatherbit_forecast_day_6_wind_bearing:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_6', 'wind_bearing') }}"
+      weatherbit_forecast_day_7_wind_bearing:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_7', 'wind_bearing') }}"
+
+      weatherbit_forecast_day_1_wind_speed:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_1', 'native_wind_speed') }}"
+      weatherbit_forecast_day_2_wind_speed:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_2', 'native_wind_speed') }}"
+      weatherbit_forecast_day_3_wind_speed:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_3', 'native_wind_speed') }}"
+      weatherbit_forecast_day_4_wind_speed:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_4', 'native_wind_speed') }}"
+      weatherbit_forecast_day_5_wind_speed:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_5', 'native_wind_speed') }}"
+      weatherbit_forecast_day_6_wind_speed:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_6', 'native_wind_speed') }}"
+      weatherbit_forecast_day_7_wind_speed:
+        value_template: "{{ state_attr('sensor.weatherbit_forecast_day_7', 'native_wind_speed') }}"
