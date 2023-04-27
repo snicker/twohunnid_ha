@@ -1,4 +1,6 @@
-﻿homeassistant:
+﻿default_config:
+
+homeassistant:
   #name: !secret home_name
   #latitude: !secret home_lat
   #longitude: !secret home_long
@@ -19,36 +21,14 @@ logger:
   logs:
     custom_components.media_player.firetv: critical
     custom_components.sensor.zwift: warning
-    
-frontend:
-
-mobile_app:
-
-config:
 
 http:
   use_x_forwarded_for: true
   trusted_proxies:
     - "192.168.1.19"
 
-  
 ifttt:
   key: !secret ifttt_key
-
-zeroconf:
-ssdp:
-
-system_health:
-
-conversation:
-
-history:
-
-logbook:
-
-map:
-
-sun:
 
 tts:
   - platform: google_translate
@@ -80,4 +60,3 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 ffmpeg:
-stream:
