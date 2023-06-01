@@ -33,12 +33,10 @@ template:
             {% if state_attr('group.ignored_connectivity_sensors','entity_id') != none %}
               {% set ignore_seconds = 60 %}
               {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
-              {% set entities = states.binary_sensor|selectattr('attributes.device_class','in',['connectivity'])|selectattr('state','in',['unknown','unavailable','off'])|list %}
+              {% set entities = states.binary_sensor|rejectattr('attributes.device_class', 'undefined')|selectattr('state','in',['unknown','unavailable','off'])|selectattr('attributes.device_class','in',['connectivity'])|list %}
               {{ entities
                 |rejectattr('entity_id','in',state_attr('group.ignored_connectivity_sensors','entity_id'))
-                |rejectattr('exclude_from_connectivity_alerts','eq','1')
-                |rejectattr('exclude_from_connectivity_alerts','eq',1)
-                |rejectattr('exclude_from_connectivity_alerts','eq',true)
+                |selectattr('exclude_from_connectivity_alerts','undefined')
                 |rejectattr('last_changed','ge',ignore_ts)
                 |map(attribute='entity_id')|list }}
             {% endif %}
