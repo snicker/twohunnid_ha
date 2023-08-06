@@ -30,11 +30,6 @@ proximity:
     unit_of_measurement: mi
 
 sensor:    
-  - platform: waze_travel_time
-    name: travel_time_nick_to_home
-    origin: device_tracker.life360_nick
-    destination: zone.home
-    region: 'US'
   - platform: template
     sensors:
       travel_time_nick_to_home_eta:
