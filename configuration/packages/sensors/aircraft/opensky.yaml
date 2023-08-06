@@ -34,11 +34,6 @@ input_boolean:
   ghettobird_overhead:
     icon: mdi:helicopter
 
-sensor:
-  - platform: opensky
-    name: sky_at_home
-    radius: 1.6
-
 binary_sensor:
   - platform: template
     sensors:
