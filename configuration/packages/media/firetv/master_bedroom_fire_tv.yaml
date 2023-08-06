@@ -13,9 +13,4 @@ homeassistant:
       <<: *customize
       friendly_name: "Fire TV - Master Bedroom"
       icon: mdi:television
-      
-media_player:
-  - platform: androidtv
-    name: master_bedroom_fire_tv
-    host: 192.168.1.175
-    adbkey: "/config/.android/adbkey"
+    
