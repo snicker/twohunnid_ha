@@ -1,0 +1,205 @@
+esphome:
+  name: garage_door_opener
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: Garage Door Opener
+    password: !secret ap_password
+
+logger:
+  baud_rate: 0
+
+web_server:
+  port: 80
+  auth:
+    username: admin
+    password: !secret ota_api_password
+
+ota:
+  password: !secret ota_api_password
+
+api:
+  password: !secret ota_api_password
+  reboot_timeout: 60s
+
+binary_sensor:
+  - platform: gpio
+    name: "Garage Door Relay Button 1"
+    internal: true
+    pin:
+      number: GPIO0
+      inverted: True
+    on_click:
+      then:
+        - switch.toggle: garage_door_relay_1
+        
+  - platform: gpio
+    name: "Garage Door Relay Button 2"
+    internal: true
+    pin:
+      number: GPIO9
+      inverted: True
+    on_click:
+      then:
+        - switch.toggle: garage_door_relay_2
+  #
+  # new sensors to use
+  # https://protosupplies.com/product/e18-d80nk-adjustable-infrared-proximity-sensor-module/
+  # Brown Wire – Connect to 5V.
+  # Blue Wire –     Connects to Ground
+  # Black Wire  –  Logic Output, active LOW
+  # Black Wire will usually pull high, unless object detected
+  # Info on pins : https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
+  # if the TX (GPIO1) pin is pulled low during boot, boot fails!!
+  # 
+  - platform: gpio
+    name: "Garage Door Open Sensor"
+    id: garage_door_open_sensor
+    pin:
+      number: GPIO1 #tx
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 1000ms
+    on_press:
+      then:
+        - lambda: |-
+            id(garage_door_cover).position = COVER_OPEN;
+            id(garage_door_cover).publish_state();
+    on_release:
+      - then:
+        - if:
+            condition:
+              switch.is_off: garage_door_relay_1
+            then:
+              - cover.close: garage_door_cover
+      - then:
+        - delay: 16s
+        - if:
+            condition:
+              binary_sensor.is_off: garage_door_open_sensor
+            then:
+              - lambda: |-
+                  id(garage_door_cover).position = COVER_CLOSED;
+                  id(garage_door_cover).publish_state();
+
+  - platform: gpio
+    name: "Garage Door Closed Sensor"
+    id: garage_door_closed_sensor
+    pin:
+      number: GPIO3 #rx
+      mode: INPUT_PULLUP
+      inverted: true
+    on_press:
+      then:
+        - lambda: |-
+            id(garage_door_cover).position = COVER_CLOSED;
+            id(garage_door_cover).publish_state();
+    on_release:
+      - then:
+        - if:
+            condition:
+              switch.is_off: garage_door_relay_1
+            then:
+              - cover.open: garage_door_cover
+      - then:
+        - delay: 16s
+        - if:
+            condition:
+              binary_sensor.is_off: garage_door_closed_sensor
+            then:
+              - lambda: |-
+                  id(garage_door_cover).position = COVER_OPEN;
+                  id(garage_door_cover).publish_state();
+      
+switch:
+  - platform: restart
+    name: "Reboot Garage Door Relay"
+    id: garage_door_relay_restart
+    
+  - platform: gpio
+    restore_mode: ALWAYS_OFF
+    pin: 
+      number: GPIO12
+      inverted: False
+    name: "Garage Door Relay Internal Switch 1"
+    id: internal_relay_switch_1
+    internal: True
+    
+  - platform: gpio
+    restore_mode: ALWAYS_OFF
+    inverted: True
+    pin: 
+      number: GPIO13
+      inverted: False
+    name: "Garage Door LED Switch"
+    id: internal_led_switch
+    
+  - platform: gpio
+    restore_mode: ALWAYS_OFF
+    pin: 
+      number: GPIO5
+      inverted: False
+    name: "Garage Door Relay Internal Switch 2"
+    id: internal_relay_switch_2
+    internal: True
+    
+  - platform: template
+    name: "Garage Door Relay 1"
+    id: garage_door_relay_1
+    turn_on_action:
+      - switch.turn_on: internal_relay_switch_1
+      - delay: 1500ms
+      - switch.turn_off: internal_relay_switch_1
+      - delay: 1000ms
+      - switch.turn_off: garage_door_relay_1
+    
+  - platform: template
+    name: "Garage Door Relay 2"
+    id: garage_door_relay_2
+    turn_on_action:
+      - switch.turn_on: internal_relay_switch_2
+      - delay: 250ms
+      - switch.turn_off: internal_relay_switch_2
+      - switch.turn_off: garage_door_relay_2
+
+cover:
+# anticipated behavior
+# when calling open or close on the cover, the relay is toggled
+#   the relay should not be toggled when closing unless the "open" sensor is activated
+# when the open sensor is activated, set the cover state to open
+# when the open sensor is deactivated, start "closing" the cover
+#   this should not trigger if the relay button was pressed, only if the hand button is pressed
+
+  - platform: time_based
+    name: "Garage Door"
+    id: garage_door_cover
+    has_built_in_endstop: True
+
+    open_action:
+      if:
+        condition:
+          binary_sensor.is_on: garage_door_closed_sensor
+        then:
+          - switch.turn_on: garage_door_relay_1
+    open_duration: 15s
+    assumed_state: False
+    device_class: garage
+    close_action:
+      if:
+        condition:
+          binary_sensor.is_on: garage_door_open_sensor
+        then:
+          - switch.turn_on: garage_door_relay_1
+    close_duration: 15s
+
+    stop_action:
+      - switch.turn_on: garage_door_relay_1
