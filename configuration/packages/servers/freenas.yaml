@@ -12,34 +12,7 @@ homeassistant:
       freenas_rest_sensor_token: &freenas_rest_sensor_token
         headers:
           Authorization: !secret freenas_authorization
-    
-    sensor.freenas_tank_report:
-      <<: *customize
-      friendly_name: FreeNAS - Volume Status - Tank
-      
-    sensor.freenas_tank_pct_used:
-      <<: *customize
-      friendly_name: FreeNAS - Volume % Free - Tank
-      
-    sensor.freenas_alert_level:
-      <<: *customize
-      friendly_name: FreeNAS - Alert Level
-      
-    sensor.freenas_alert_message:
-      <<: *customize
-      friendly_name: FreeNAS - Alert Message
-      
-    sensor.freenas_version:
-      <<: *customize
-      friendly_name: FreeNAS - Version
-      
-    sensor.freenas_resilver_time_remaining:
-      <<: *customize
-      
-    sensor.freenas_resilver_etc:
-      <<: *customize
-      friendly_name: FreeNAS - Resilver Estimated Time To Completion
-      
+
     binary_sensor.freenas_network_status:
       <<: *customize
       friendly_name: FreeNAS Network Connection
@@ -130,7 +103,7 @@ sensor:
     <<: *freenas_rest_sensor
     method: POST
     resource: http://freenas.twohunnid/api/v2.0/disk/temperatures
-    payload: '{"names":["ada0", "ada1", "ada2", "ada3","da0","da1","da2","da2"],"powermode":"NEVER"}'
+    payload: '{"names":["ada0", "ada1", "ada2", "ada3","da0","da1","da2","da3"],"powermode":"NEVER"}'
     name: freenas_disk_temps
     json_attributes:
       - ada0
@@ -174,29 +147,41 @@ sensor:
     sensors:
       freenas_tank_pct_used:
         value_template: "{{ state_attr('sensor.freenas_dataset_status_tank','used').parsed | int / ( state_attr('sensor.freenas_dataset_status_tank','available').parsed | int + state_attr('sensor.freenas_dataset_status_tank','used').parsed ) | int }}"
+        unit_of_measurement: "%"
+        unique_id: freenas_tank_pct_used
       freenas_media_pct_used:
         value_template: "{{ state_attr('sensor.freenas_dataset_status_media','used').parsed | int / ( state_attr('sensor.freenas_dataset_status_media','available').parsed | int + state_attr('sensor.freenas_dataset_status_media','used').parsed ) | int }}"
+        unit_of_measurement: "%"
+        unique_id: freenas_media_pct_used
       freenas_disk_temp_ada0:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','ada0') }}"
+        unique_id: freenas_disk_temp_ada0
       freenas_disk_temp_ada1:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','ada1') }}"
+        unique_id: freenas_disk_temp_ada1
       freenas_disk_temp_ada2:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','ada2') }}"
+        unique_id: freenas_disk_temp_ada2
       freenas_disk_temp_ada3:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','ada3') }}"
+        unique_id: freenas_disk_temp_ada3
       freenas_disk_temp_da0:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','da0') }}"
+        unique_id: freenas_disk_temp_da0
       freenas_disk_temp_da1:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','da1') }}"
+        unique_id: freenas_disk_temp_da1
       freenas_disk_temp_da2:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','da2') }}"
+        unique_id: freenas_disk_temp_da2
       freenas_disk_temp_da3:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','da3') }}"
+        unique_id: freenas_disk_temp_da3
