@@ -146,11 +146,19 @@ sensor:
   - platform: template
     sensors:
       freenas_tank_pct_used:
-        value_template: "{{ state_attr('sensor.freenas_dataset_status_tank','used').parsed | int / ( state_attr('sensor.freenas_dataset_status_tank','available').parsed | int + state_attr('sensor.freenas_dataset_status_tank','used').parsed ) | int }}"
+        value_template: >
+          {% set sensor = 'sensor.freenas_dataset_status_tank' %}
+          {% set available = state_attr(sensor,'available').parsed | int %}
+          {% set used = state_attr(sensor,'used').parsed | int %}
+          {{ (used * 100 / ( available + used )) | round(2) }}
         unit_of_measurement: "%"
         unique_id: freenas_tank_pct_used
       freenas_media_pct_used:
-        value_template: "{{ state_attr('sensor.freenas_dataset_status_media','used').parsed | int / ( state_attr('sensor.freenas_dataset_status_media','available').parsed | int + state_attr('sensor.freenas_dataset_status_media','used').parsed ) | int }}"
+        value_template: >
+          {% set sensor = 'sensor.freenas_dataset_status_media' %}
+          {% set available = state_attr(sensor,'available').parsed | int %}
+          {% set used = state_attr(sensor,'used').parsed | int %}
+          {{ (used * 100 / ( available + used )) | round(2) }}
         unit_of_measurement: "%"
         unique_id: freenas_media_pct_used
       freenas_disk_temp_ada0:
