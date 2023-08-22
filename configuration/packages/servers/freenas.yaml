@@ -60,9 +60,9 @@ homeassistant:
 
 ### migration plan after upgrading to TrueNAS 12 (1.0 API deprecated)
 # [ ] add hass-truenas integration in HACS
-# [ ] get status and % used for tank pool from 2.0 endpoints for sensor.freenas_tank_report
+# [X] get status and % used for tank pool from 2.0 endpoints for sensor.freenas_tank_report
 # [ ] get all alerts from 2.0 endpoints
-# [ ] get freenas version from 2.0 endpoints
+# [X] get freenas version from 2.0 endpoints
 # [ ] switch all existing 2.0 endpoints to bearer auth tokens
 
 template:
@@ -84,47 +84,63 @@ binary_sensor:
     scan_interval: 30
 
 sensor:
+  # pool sensors
+  # tank status
   - platform: rest
-    <<: *freenas_rest_sensor
-    name: freenas_tank_report
+    <<: *freenas_rest_sensor_token
+    method: GET
+    resource: http://freenas.twohunnid/api/v2.0/pool/id/6
+    name: freenas_pool_status_tank
+    value_template: "{{ value_json.status }}"
     json_attributes:
       - name
-      - status
-      - used_pct
-      - is_decrypted
-    resource: http://freenas.twohunnid/api/v1.0/storage/volume/tank/?format=json
-    value_template: '{{ value_json.status }}'
-      
+      - scan
+  # tank dataset details
   - platform: rest
-    <<: *freenas_rest_sensor
-    name: freenas_all_alerts
-    resource: http://freenas.twohunnid/api/v1.0/system/alert/?format=json
-    value_template: >
-      {{ value_json.objects | length }}
+    <<: *freenas_rest_sensor_token
+    method: GET
+    resource: http://freenas.twohunnid/api/v2.0/pool/dataset/id/tank
+    name: freenas_dataset_status_tank
+    value_template: "{{ value_json.name }}"
     json_attributes:
-      - objects
-    
+      - used
+      - available
+  # media status
   - platform: rest
-    <<: *freenas_rest_sensor
-    name: freenas_version
+    <<: *freenas_rest_sensor_token
+    method: GET
+    resource: http://freenas.twohunnid/api/v2.0/pool/id/8
+    name: freenas_pool_status_media
+    value_template: "{{ value_json.status }}"
     json_attributes:
-      - fullversion
       - name
-      - version
-    resource: http://freenas.twohunnid/api/v1.0/system/version/?format=json
-    value_template: '{{ value_json.fullversion }}'
+      - scan
+  # media dataset details
+  - platform: rest
+    <<: *freenas_rest_sensor_token
+    method: GET
+    resource: http://freenas.twohunnid/api/v2.0/pool/dataset/id/media
+    name: freenas_dataset_status_media
+    value_template: "{{ value_json.name }}"
+    json_attributes:
+      - used
+      - available
 
   - platform: rest
     <<: *freenas_rest_sensor
     method: POST
     resource: http://freenas.twohunnid/api/v2.0/disk/temperatures
-    payload: '{"names":["ada0", "ada1", "ada2", "ada3"],"powermode":"NEVER"}'
+    payload: '{"names":["ada0", "ada1", "ada2", "ada3","da0","da1","da2","da2"],"powermode":"NEVER"}'
     name: freenas_disk_temps
     json_attributes:
       - ada0
       - ada1
       - ada2
       - ada3
+      - da0
+      - da1
+      - da2
+      - da3
 
   - platform: rest
     <<: *freenas_rest_sensor_token
@@ -137,6 +153,15 @@ sensor:
     method: GET
     resource: http://freenas.twohunnid/api/v2.0/system/info
     name: freenas_info
+    value_template: "{{ value_json.version }}"
+    json_attributes:
+      - loadavg
+      - uptime
+      - uptime_seconds
+      - model
+      - hostname
+      - system_product
+      - system_manufacturer
 
   - platform: rest
     <<: *freenas_rest_sensor_token
@@ -148,25 +173,9 @@ sensor:
   - platform: template
     sensors:
       freenas_tank_pct_used:
-        value_template: "{{ state_attr('sensor.freenas_tank_report','used_pct').title() }}"
-        entity_id: sensor.freenas_tank_report
-      freenas_resilver_etc:
-        value_template: '{{ (now().strftime("%s") | int(default=0) + (states("sensor.freenas_resilver_time_remaining") | int(default=0))) | timestamp_custom("%m/%d/%y %H:%M") }}'
-        entity_id: sensor.freenas_resilver_time_remaining
-      freenas_active_alerts:
-        value_template: >
-          {{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | list | length }}
-        attribute_templates:
-          alerts: "{{ state_attr('sensor.freenas_all_alerts','objects') | rejectattr('dismissed') | sort(attribute='timestamp',reverse=True) | list }}"
-      freenas_alert_level:
-        value_template: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}{% else %}none{% endif %}"
-        attribute_templates:
-          message: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).message }}{% else %}none{% endif %}"
-          timestamp: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).timestamp }}{% else %}0{% endif %}"
-          level: "{% if state_attr('sensor.freenas_active_alerts','alerts') | list | length > 0 %}{{ (state_attr('sensor.freenas_active_alerts','alerts') | list | first).level }}{% else %}none{% endif %}"
-      freenas_alert_message:
-        entity_id: sensor.freenas_alert_level
-        value_template: "{{ state_attr('sensor.freenas_alert_level','message') }}"
+        value_template: "{{ state_attr('sensor.freenas_dataset_status_tank','used').parsed | int / ( state_attr('sensor.freenas_dataset_status_tank','available').parsed | int + state_attr('sensor.freenas_dataset_status_tank','used').parsed ) | int }}"
+      freenas_media_pct_used:
+        value_template: "{{ state_attr('sensor.freenas_dataset_status_media','used').parsed | int / ( state_attr('sensor.freenas_dataset_status_media','available').parsed | int + state_attr('sensor.freenas_dataset_status_media','used').parsed ) | int }}"
       freenas_disk_temp_ada0:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','ada0') }}"
@@ -179,3 +188,15 @@ sensor:
       freenas_disk_temp_ada3:
         unit_of_measurement: 'C°'
         value_template: "{{ state_attr('sensor.freenas_disk_temps','ada3') }}"
+      freenas_disk_temp_da0:
+        unit_of_measurement: 'C°'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da0') }}"
+      freenas_disk_temp_da1:
+        unit_of_measurement: 'C°'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da1') }}"
+      freenas_disk_temp_da2:
+        unit_of_measurement: 'C°'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da2') }}"
+      freenas_disk_temp_da3:
+        unit_of_measurement: 'C°'
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da3') }}"
