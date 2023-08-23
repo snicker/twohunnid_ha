@@ -22,24 +22,20 @@ template:
   - sensor:
       - name: "Offline Devices"
         unique_id: offline_devices
-        icon: "{{ 'mdi:alert-circle' if states('sensor.offline_devices')|int(0) > 0 else 'mdi:check-circle' }}"
+        icon: "{{ iif(states(this.entity_id)|int(-1) > 0,'mdi:alert-circle','mdi:check-circle') }}"
         unit_of_measurement: entities
         state: >
-          {% if state_attr('sensor.offline_devices','entity_id') != none %}
-            {{ state_attr('sensor.offline_devices','entity_id')|count }}
-          {% endif %}
+          {% set entities = state_attr(this.entity_id,'entity_id') %}
+          {{ entities|count if entities != none else none }}
         attributes:
           entity_id: >
-            {% if state_attr('group.ignored_connectivity_sensors','entity_id') != none %}
-              {% set ignore_seconds = 60 %}
-              {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
-              {% set entities = states.binary_sensor|rejectattr('attributes.device_class', 'undefined')|selectattr('state','in',['unknown','unavailable','off'])|selectattr('attributes.device_class','in',['connectivity'])|list %}
-              {{ entities
-                |rejectattr('entity_id','in',state_attr('group.ignored_connectivity_sensors','entity_id'))
-                |selectattr('exclude_from_connectivity_alerts','undefined')
-                |rejectattr('last_changed','ge',ignore_ts)
-                |map(attribute='entity_id')|list }}
-            {% endif %}
+            {% set ignore_seconds = 60 %}
+            {% set ignored = state_attr('group.ignored_connectivity_sensors','entity_id') %}
+            {% set ignore_ts = (now().timestamp() - ignore_seconds)|as_datetime %}
+            {% set entities = states.binary_sensor|rejectattr('attributes.device_class', 'undefined')|selectattr('state','in',['unknown','unavailable','off'])|selectattr('attributes.device_class','in',['connectivity'])|list %}
+            {% set entities =  entities|rejectattr('entity_id','in',ignored)
+                if ignored != none else entities %}
+            {{ entities|map(attribute='entity_id')|list }}
           help: "To supress alerts, add the 'exclude_from_connectivity_alerts' attribute to the entity as true or add to the ignored_connectivity_sensors group."
 
 group:
