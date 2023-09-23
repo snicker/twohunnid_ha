@@ -32,7 +32,7 @@ template:
       - name: miflora_gateway_edgeofspace_online
         unique_id: miflora_gateway_edgeofspace_online
         device_class: connectivity
-        state: "{{ is_state('sensor.miflora-mqtt-daemon','RUNNING') }}"
+        state: "{{ is_state('sensor.miflora_mqtt_daemon','RUNNING') }}"
 
 sensor:
   - platform: supervisord
