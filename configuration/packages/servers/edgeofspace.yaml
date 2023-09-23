@@ -2,34 +2,38 @@ homeassistant:
   customize:
     package.node_anchors:
       customize: &customize
-        package: 'servers/iwatchtheplants'
+        package: 'servers/edgeofspace'
     
-    binary_sensor.iwatchtheplants_connection:
+    binary_sensor.edgeofspace_connection:
       <<: *customize
-      friendly_name: iwatchtheplants Online
+      friendly_name: edgeofspace Online
 
 
 binary_sensor:
   - platform: ping
-    name: iwatchtheplants_connection
-    host: iwatchtheplants.twohunnid
+    name: edgeofspace_connection
+    host: edgeofspace.twohunnid
     count: 3
     scan_interval: 60
 
 template:
   - binary_sensor:
-      - name: rtl_433_iwatchtheplants_online
-        unique_id: rtl_433_iwatchtheplants_online
+      - name: rtl_433_edgeofspace_online
+        unique_id: rtl_433_edgeofspace_online
         device_class: connectivity
         state: "{{ is_state('sensor.rtl_433_daemon','RUNNING') and is_state('sensor.rtl_433_hass_mqtt_discovery_daemon','RUNNING') }}"
         attributes:
           rtl_433_daemon: "{{ is_state('sensor.rtl_433_daemon','RUNNING') }}"
           rtl_433_hass_mqtt_discovery_daemon: "{{ is_state('sensor.rtl_433_hass_mqtt_discovery_daemon','RUNNING') }}"
-      - name: x10_heyu_mqtt_iwatchtheplants_online
-        unique_id: x10_heyu_mqtt_iwatchtheplants_online
+      - name: x10_heyu_mqtt_edgeofspace_online
+        unique_id: x10_heyu_mqtt_edgeofspace_online
         device_class: connectivity
         state: "{{ is_state('sensor.x10_heyu_mqtt','RUNNING') }}"
+      - name: miflora_gateway_edgeofspace_online
+        unique_id: x10_heyu_mqtt_edgeofspace_online
+        device_class: connectivity
+        state: "{{ is_state('sensor.miflora-mqtt-daemon','RUNNING') }}"
 
 sensor:
   - platform: supervisord
-    url: http://iwatchtheplants.twohunnid:9001/RPC2
+    url: http://edgeofspace.twohunnid:9001/RPC2
