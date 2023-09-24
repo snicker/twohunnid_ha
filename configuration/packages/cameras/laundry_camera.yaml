@@ -40,14 +40,6 @@ homeassistant:
       friendly_name: "Laundry Room Camera Status"
       device_class: connectivity
 
-camera:
-  - platform: mjpeg
-    name: dlink_camera_laundry
-    mjpeg_url: http://192.168.1.176/mjpeg.cgi
-    still_image_url: http://192.168.1.176/image/jpeg.cgi
-    username: !secret dlink_camera_username
-    password: !secret dlink_camera_password
-
 binary_sensor:
   - platform: ping
     name: laundry_camera_status
