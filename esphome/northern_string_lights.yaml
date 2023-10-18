@@ -1,5 +1,5 @@
 esphome:
-  name: pool_light
+  name: northern_string_lights
   platform: ESP8266
   board: esp01_1m
   board_flash_mode: dout
@@ -21,13 +21,13 @@ output:
     
 switch:
   - platform: restart
-    name: "Reboot Pool Light Sonoff"
-    id: pool_light_restart
+    name: "Reboot Northern String Lights Sonoff"
+    id: northern_string_lights_restart
 
 light:
   - platform: binary
-    name: "Pool Light"
-    id: pool_light
+    name: "Northern String Lights"
+    id: northern_string_lights
     output: main_relay
     
 binary_sensor:
@@ -36,13 +36,13 @@ binary_sensor:
       number: GPIO2
       mode: INPUT_PULLUP
       inverted: True
-    name: "Pool Light Physical Switch Sensor"
+    name: "Northern String Lights Physical Switch Sensor"
     on_press:
       then:
-        - light.toggle: pool_light
+        - light.toggle: northern_string_lights
     on_release:
       then:
-        - light.toggle: pool_light
+        - light.toggle: northern_string_lights
     on_multi_click:
     - timing:
         - ON for at most 0.5s
@@ -54,7 +54,7 @@ binary_sensor:
         - ON for at most 0.5s
         - OFF for at least 0.2s
       then:
-        - switch.turn_on: pool_light_restart
+        - switch.turn_on: northern_string_lights_restart
         
 # Enable Home Assistant API
 api:
