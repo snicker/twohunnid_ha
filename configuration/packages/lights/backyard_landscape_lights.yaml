@@ -3,12 +3,8 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'backyard_landscape_lights'
-        
-    switch.backyard_landscape_lighting_switch:
-      <<: *customize
-      hidden: true
 
-    light.backyard_landscape_lighting_power:
+    light.backyard_landscape_light_power:
       <<: *customize
       hidden: true
     
@@ -21,33 +17,37 @@ homeassistant:
       friendly_name: "Turn on backyard landscape MiLights when switch is powered"
 
 light:
-  - platform: template
-    lights:
-      backyard_landscape_lighting_power:
-        friendly_name: "Backyard Landscape Lights Power"
-        value_template: '{{ is_state("switch.backyard_landscape_lighting_switch", "on") }}'
-        turn_on:
-          service: switch.turn_on
-          entity_id: switch.backyard_landscape_lighting_switch
-        turn_off:
-          service: switch.turn_off
-          entity_id: switch.backyard_landscape_lighting_switch
-          
   - platform: group
     name: backyard_landscape_lights
     entities:
-      - light.backyard_landscape_lighting_power
-      - light.backyard_palm_tree_lights_2
+      - light.backyard_landscape_light_power
+      - light.milight_hub_canary_palm_lights
+      - light.milight_hub_backyard_palm_tree_lights
       
 automation:
   - alias: backyard_milights_on_when_outlet_on
     trigger:
       platform: state
-      entity_id: switch.backyard_landscape_lighting_power
+      entity_id: switch.backyard_landscape_light_power
       from: 'off'
       to: 'on'
     action:
       - delay: "00:00:01"
       - service: light.turn_on
         data:
-          entity_id: light.backyard_palm_tree_lights_2
+          entity_id:
+            - light.milight_hub_backyard_palm_tree_lights
+            - light.milight_hub_canary_palm_lights
+  - alias: backyard_milights_off_when_outlet_off
+    trigger:
+      platform: state
+      entity_id: switch.backyard_landscape_light_power
+      from: 'on'
+      to: 'off'
+    action:
+      - delay: "00:00:01"
+      - service: light.turn_off
+        data:
+          entity_id:
+            - light.milight_hub_backyard_palm_tree_lights
+            - light.milight_hub_canary_palm_lights
