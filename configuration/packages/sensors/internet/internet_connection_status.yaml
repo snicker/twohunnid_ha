@@ -20,6 +20,14 @@ homeassistant:
       <<: *customize
       friendly_name: "Internet Connection Cumulative Downtime (7d)"
         
+    sensor.internet_connection_disconnections_24h:
+      <<: *customize
+      friendly_name: "Internet Connectivity Lost (24h)"
+        
+    sensor.internet_connection_disconnections_7d:
+      <<: *customize
+      friendly_name: "Internet Connectivity Lost (7d)"
+        
     binary_sensor.external_network_accessible:
       <<: *customize
       friendly_name: "External Network Accessible"
@@ -61,18 +69,32 @@ sensor:
     state: 'on'
     type: ratio
     start: '{{ as_timestamp(now()) - (7 * 86400) }}'  
-    end: '{{ now() }}'
+    end: '{{ as_timestamp(now()) }}'
   - platform: history_stats
     name: internet_connection_downtime_24h
     entity_id: binary_sensor.internet_connection_status
     state: 'off'
     type: time
     start: '{{ as_timestamp(now()) - (1 * 86400) }}'  
-    end: '{{ now() }}'
+    end: '{{ as_timestamp(now()) }}'
   - platform: history_stats
     name: internet_connection_downtime_7d
     entity_id: binary_sensor.internet_connection_status
     state: 'off'
     type: time
     start: '{{ as_timestamp(now()) - (7 * 86400) }}'  
-    end: '{{ now() }}'
+    end: '{{ as_timestamp(now()) }}'
+  - platform: history_stats
+    name: internet_connection_disconnections_24h
+    entity_id: binary_sensor.internet_connection_status
+    state: 'off'
+    type: count
+    start: '{{ as_timestamp(now()) - (1 * 86400) }}'  
+    end: '{{ as_timestamp(now()) }}'
+  - platform: history_stats
+    name: internet_connection_disconnections_7d
+    entity_id: binary_sensor.internet_connection_status
+    state: 'off'
+    type: count
+    start: '{{ as_timestamp(now()) - (7 * 86400) }}'  
+    end: '{{ as_timestamp(now()) }}'
