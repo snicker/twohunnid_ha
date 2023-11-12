@@ -33,6 +33,10 @@ template:
         unique_id: miflora_gateway_edgeofspace_online
         device_class: connectivity
         state: "{{ is_state('sensor.miflora_mqtt_daemon','RUNNING') }}"
+      - name: juicepassproxy_edgeofspace_online
+        unique_id: miflora_gateway_edgeofspace_online
+        device_class: connectivity
+        state: "{{ is_state('sensor.juicepassproxy','RUNNING') }}"
 
 sensor:
   - platform: supervisord
