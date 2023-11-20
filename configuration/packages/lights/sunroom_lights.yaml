@@ -1,0 +1,110 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'sunroom_lights'
+    
+    light.sunroom_lights:
+      <<: *customize
+
+    sensor.sunroom_lights_current_mode:
+      <<: *customize
+
+    sensor.sunroom_lights_last_off:
+      <<: *customize
+
+    automation.sunroom_lights_store_last_off:
+      <<: *customize
+
+    automation.sunroom_lights_set_current_mode:
+      <<: *customize
+
+    automation.sunroom_lights_reset_mode:
+      <<: *customize
+
+# needs:
+# [x] mqtt sensors to track states
+# [x] automation to set "night light" state
+# [x] automation to set "normal light" state
+# [ ] switch entity to select night mode and reflect sensor
+# [ ] script to set to normal mode
+# [ ] script to set to night light mode
+
+mqtt:
+  sensor:
+    - name: "Sunroom Lights Current Mode"
+      state_topic: "lighting/sunroom_lights/mode_state"
+    - name: "Sunroom Lights Last Off"
+      state_topic: "lighting/sunroom_lights/last_off"
+
+automation:
+  - id: sunroom_lights_store_last_off
+    alias: sunroom_lights_store_last_off
+    mode: single
+    trigger:
+      - platform: state
+        entity_id:
+          - light.sunroom_lights
+        to: "off"
+    condition: []
+    action:
+      - service: mqtt.publish
+        data:
+          topic: lighting/sunroom_lights/last_off
+          qos: 0
+          retain: false
+          payload_template: "{{ as_timestamp(now()) }}"
+
+  - id: sunroom_lights_set_current_mode
+    alias: sunroom_lights_set_current_mode
+    mode: single
+    trigger:
+      - platform: state
+        entity_id:
+          - light.sunroom_lights
+        to: "on"
+    condition:
+      - condition: template
+        value_template: |-
+          {% set sensor_value = states('sensor.sunroom_lights_last_off') | float %}
+          {{ (as_timestamp(now()) - sensor_value)|round(3) <= 2 }}
+    action:
+      - service: mqtt.publish
+        data:
+          qos: 0
+          retain: false
+          payload_template: "{{ as_timestamp(now()) }}"
+        action:
+          - service: mqtt.publish
+            data:
+              topic: lighting/sunroom_lights/mode_state
+              qos: 0
+              retain: false
+              payload_template: >
+                {% set current_state = states('sensor.sunroom_lights_current_mode') %}
+                {% if current_state == 'night' %}normal{% else %}night{% endif %}
+
+  - id: sunroom_lights_reset_mode
+    alias: sunroom_lights_reset_mode
+    mode: single
+    trigger:
+      - platform: state
+        entity_id:
+          - light.sunroom_lights
+        to: "off"
+        for:
+          hours: 0
+          minutes: 0
+          seconds: 8
+    condition: []
+    action:
+      - service: mqtt.publish
+        data:
+          topic: lighting/sunroom_lights/mode_state
+          payload: normal
+          retain: true
+  
+
+
+
+        
