@@ -58,6 +58,7 @@ group:
     entities:
     - light.copper_wire_string_lights
     - light.christmas_tree
+    - light.sunroom_christmas_tree
     
 automation:
   - id: enable_christmas_automations
