@@ -36,7 +36,7 @@ switch:
   - platform: template
     switches:
       sunroom_light_night_mode:
-        value_template: "{{ is_state('sensor.sunroom_lights_current_mode', 'night') and is_state('sensor.sunroom_lights','on') }}"
+        value_template: "{{ is_state('sensor.sunroom_lights_current_mode', 'night') and is_state('light.sunroom_lights','on') }}"
         turn_on:
           - service: script.sunroom_lights_activate_night_mode
         turn_off:
