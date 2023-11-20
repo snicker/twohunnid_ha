@@ -13,6 +13,9 @@ homeassistant:
     sensor.sunroom_lights_last_off:
       <<: *customize
 
+    switch.sunroom_light_night_mode:
+      <<: *customize
+
     automation.sunroom_lights_store_last_off:
       <<: *customize
 
@@ -22,20 +25,87 @@ homeassistant:
     automation.sunroom_lights_reset_mode:
       <<: *customize
 
-# needs:
-# [x] mqtt sensors to track states
-# [x] automation to set "night light" state
-# [x] automation to set "normal light" state
-# [ ] switch entity to select night mode and reflect sensor
-# [ ] script to set to normal mode
-# [ ] script to set to night light mode
-
 mqtt:
   sensor:
     - name: "Sunroom Lights Current Mode"
       state_topic: "lighting/sunroom_lights/mode_state"
     - name: "Sunroom Lights Last Off"
       state_topic: "lighting/sunroom_lights/last_off"
+
+switch:
+  - platform: template
+    switches:
+      sunroom_light_night_mode:
+        value_template: "{{ is_state('sensor.sunroom_lights_current_mode', 'night') and is_state('sensor.sunroom_lights','on') }}"
+        turn_on:
+          - service: script.sunroom_lights_activate_night_mode
+        turn_off:
+          - if:
+              - condition: state
+                entity_id: light.sunroom_lights
+                state: "on"
+            then:
+              - service: script.sunroom_lights_activate_normal_mode
+
+script:
+  sunroom_lights_activate_night_mode:
+    alias: Sunroom Lights Activate Night Mode
+    sequence:
+      - script.sunroom_lights_activate_target_mode
+        data:
+          target_mode: night
+
+  sunroom_lights_activate_normal_mode:
+    alias: Sunroom Lights Activate Normal Mode
+    sequence:
+      - script.sunroom_lights_activate_target_mode
+        data:
+          target_mode: normal
+          
+  sunroom_lights_activate_target_mode:
+    alias: Sunroom Lights Activate Target Mode
+    variables:
+      cond1: "{{ states('light.sunroom_lights') == 'on' and states('sensor.sunroom_lights_current_mode') == 'normal' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) <= 2 }}"
+      cond2: "{{ states('light.sunroom_lights') == 'on' and states('sensor.sunroom_lights_current_mode') == 'normal' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) > 2 }}"
+      cond3: "{{ states('light.sunroom_lights') == 'off' and states('sensor.sunroom_lights_current_mode') == 'normal' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) <= 2 }}"
+      cond4: "{{ states('light.sunroom_lights') == 'off' and states('sensor.sunroom_lights_current_mode') == 'normal' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) > 2 }}"
+      cond5: "{{ states('light.sunroom_lights') == 'on' and states('sensor.sunroom_lights_current_mode') == 'night' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) <= 2 }}"
+      cond6: "{{ states('light.sunroom_lights') == 'on' and states('sensor.sunroom_lights_current_mode') == 'night' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) > 2 }}"
+      cond7: "{{ states('light.sunroom_lights') == 'off' and states('sensor.sunroom_lights_current_mode') == 'night' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) <= 2 }}"
+      cond8: "{{ states('light.sunroom_lights') == 'off' and states('sensor.sunroom_lights_current_mode') == 'night' and (as_timestamp(now()) - states('sensor.sunroom_lights_last_off')|float)|round(3) > 2 }}"
+    sequence:
+      - if:
+          - condition: template
+            value_template: "{{ target_mode in ('normal','night') and (cond3 or cond4 or cond7 or cond8) }}"
+        then:
+          - service: light.turn_on
+            target:
+              entity_id: light.sunroom_lights
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 500
+      - if:
+          - condition: template
+            value_template: "{{ (target_mode == 'night' and (cond1 or cond2 or cond4 or cond7 or cond8)) or (target_mode == 'normal' and (cond3 or cond5 or cond6)) }}"
+        then:
+          - service: light.turn_off
+            target:
+              entity_id: light.sunroom_lights
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 500
+          - service: light.turn_on
+            target:
+              entity_id: light.sunroom_lights
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 500
 
 automation:
   - id: sunroom_lights_store_last_off
