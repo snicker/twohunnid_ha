@@ -51,17 +51,17 @@ script:
   sunroom_lights_activate_night_mode:
     alias: Sunroom Lights Activate Night Mode
     sequence:
-      - script.sunroom_lights_activate_target_mode
+      - service: script.sunroom_lights_activate_target_mode
         data:
           target_mode: night
 
   sunroom_lights_activate_normal_mode:
     alias: Sunroom Lights Activate Normal Mode
     sequence:
-      - script.sunroom_lights_activate_target_mode
+      - service: script.sunroom_lights_activate_target_mode
         data:
           target_mode: normal
-          
+
   sunroom_lights_activate_target_mode:
     alias: Sunroom Lights Activate Target Mode
     variables:
