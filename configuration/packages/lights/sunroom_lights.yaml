@@ -71,18 +71,12 @@ automation:
     action:
       - service: mqtt.publish
         data:
+          topic: lighting/sunroom_lights/mode_state
           qos: 0
           retain: false
-          payload_template: "{{ as_timestamp(now()) }}"
-        action:
-          - service: mqtt.publish
-            data:
-              topic: lighting/sunroom_lights/mode_state
-              qos: 0
-              retain: false
-              payload_template: >
-                {% set current_state = states('sensor.sunroom_lights_current_mode') %}
-                {% if current_state == 'night' %}normal{% else %}night{% endif %}
+          payload_template: >
+            {% set current_state = states('sensor.sunroom_lights_current_mode') %}
+            {% if current_state == 'night' %}normal{% else %}night{% endif %}
 
   - id: sunroom_lights_reset_mode
     alias: sunroom_lights_reset_mode
