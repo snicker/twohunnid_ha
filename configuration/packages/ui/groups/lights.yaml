@@ -19,6 +19,7 @@ group:
       - light.ash_tree_holiday_lights
       - light.front_pine_tree_holiday_lights
       - light.backyard_landscape_lights
+      - light.northern_string_lights
     
   exterior_lights:
     icon: mdi:lightbulb
@@ -35,6 +36,7 @@ group:
     - light.olive_tree_holiday_lights
     - light.ash_tree_holiday_lights
     - light.front_pine_tree_holiday_lights
+    - light.northern_string_lights
     
   interior_lights:
     icon: mdi:lightbulb
@@ -44,6 +46,7 @@ group:
     - light.master_bathroom_light
     - light.zwaveproducts_com_wd_100_level
     - light.christmas_tree
+    - light.sunroom_christmas_tree
     - group.copper_wire_string_lights_settings
     - light.zwaveproducts_com_wd_100_level_4
     - light.zwaveproducts_com_wd_100_level_2
@@ -52,4 +55,12 @@ group:
     - light.office_desk_lamp
     - light.plant_room_lamp
     - light.garage_overhead_light
-    - light.ballet_studio_lamp  
+    - light.inovelli_lzw31_sn_dimmer_red_series_level
+    - light.inovelli_lzw31_sn_dimmer_red_series_level_2
+    - light.inovelli_lzw31_sn_dimmer_red_series_level_3
+    - light.inovelli_lzw31_sn_dimmer_red_series_level_4
+    - light.master_bedroom_lamp
+    - light.plant_room_floor_lamp
+    - light.sunroom_lights  
+    - light.sunroom_sconces
+    - light.wood_grain_diffuser_lamp
