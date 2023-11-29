@@ -44,7 +44,7 @@ homeassistant:
 
 sensor:
   - platform: nhl_api
-    team_id: 54
+    team_abbrev: VGK
     name: nhl_golden_knights
   - platform: template
     sensors:
