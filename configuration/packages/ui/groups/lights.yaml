@@ -47,6 +47,7 @@ group:
     - light.zwaveproducts_com_wd_100_level
     - light.christmas_tree
     - light.sunroom_christmas_tree
+    - light.garland_lights
     - group.copper_wire_string_lights_settings
     - light.zwaveproducts_com_wd_100_level_4
     - light.zwaveproducts_com_wd_100_level_2
