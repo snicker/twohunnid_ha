@@ -319,3 +319,15 @@ backyard_drip_sprinklers_one_cycle:
     target:
       entity_id: switch.skydrop_d4d633de_zone_5_watering
   mode: single
+select_random_christmas_tree_preset:
+  alias: Select Random Christmas Tree Preset
+  sequence:
+  - service: select.select_option
+    target:
+      entity_id: select.christmas_tree_wled_preset
+    data:
+      option: "{{ state_attr('select.christmas_tree_wled_preset', 'options')\n    |
+        reject('eq', states('select.christmas_tree_wled_preset'))\n    | list | random
+        }}\n"
+  mode: single
+  icon: mdi:pine-tree

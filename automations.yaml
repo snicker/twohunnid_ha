@@ -25,13 +25,15 @@
       - light.backyard_landscape_lights
       - light.front_landscape_lights_power
       - light.north_front_yard_holiday_lights
+      - light.northern_string_lights
+      - light.controller_rgbw_c3c8ba
 - id: '1534899747739'
   alias: 'Exterior Lights: Off at 10pm'
   trigger:
-  - at: '22:00'
+  - at: '22:00:00'
     platform: time
   - platform: time
-    at: '22:02'
+    at: '22:02:00'
   condition: []
   action:
   - data: {}
@@ -50,6 +52,8 @@
       - light.backyard_landscape_lights
       - light.front_landscape_lights_power
       - light.north_front_yard_holiday_lights
+      - light.northern_string_lights
+      - light.controller_rgbw_c3c8ba
   mode: single
 - id: '1537420454578'
   alias: 'HAStatus: Shutdown'
@@ -1031,12 +1035,14 @@
       nodes:
         node_16:
           triple_tap_controlled_entity_id: light.living_and_dining_room_lights
+          double_tap_controlled_entity_id: light.living_room_lights
         node_17:
-          double_tap_controlled_entity_id: light.plant_room_lamp
+          double_tap_controlled_entity_id: light.plant_room_lamp, light.plant_room_floor_lamp
         node_18:
           double_tap_controlled_entity_id: light.ballet_studio_lamp
         node_38:
-          double_tap_controlled_entity_id: light.office_desk_lamp
+          double_tap_controlled_entity_id: light.office_desk_lamp,switch.greenhouse_powerstrip_socket_2
+          triple_tap_controlled_entity_id: light.inovelli_lzw31_sn_dimmer_red_series_level_4,light.office_desk_lamp,switch.greenhouse_powerstrip_socket_2,switch.greenhouse_powerstrip_socket_1
           inverted: true
   - variables:
       to_state: '{% if trigger.event.data.property_key in (''001'',''002'') and trigger.event.data.property_key
@@ -1062,7 +1068,7 @@
         {{is_triple_tap}} controlled_entity_id: {{controlled_entity_id }}
 
         '
-    enabled: true
+    enabled: false
     alias: Debug Notification
   - condition: template
     value_template: '{{ to_state in (''on'',''off'') and controlled_entity_id != None
@@ -1072,4 +1078,115 @@
     data:
       entity_id: '{{ controlled_entity_id }}'
     alias: Trigger action on controlled_entity_id
+  mode: single
+- id: '1670944281668'
+  alias: WLED Christmas Tree On Fixer
+  description: Turns on all segments when the master control turns on. Stupid
+  trigger:
+  - platform: state
+    entity_id:
+    - light.christmas_tree
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: homeassistant.turn_on
+    data: {}
+    target:
+      entity_id:
+      - light.christmas_tree_wled
+      - light.christmas_tree_wled_segment_1
+      - light.christmas_tree_wled_segment_2
+      - light.christmas_tree_wled_segment_3
+      - light.christmas_tree_wled_segment_4
+      - light.christmas_tree_wled_segment_5
+      - light.christmas_tree_wled_segment_6
+      - light.christmas_tree_wled_segment_7
+      - light.christmas_tree_wled_segment_8
+      - light.christmas_tree_wled_segment_9
+  mode: single
+- id: '1671298362211'
+  alias: Select New Christmas Tree Preset Hourly
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '*'
+  condition:
+  - condition: state
+    entity_id: light.christmas_tree
+    state: 'on'
+  action:
+  - service: script.select_random_christmas_tree_preset
+    data: {}
+  mode: single
+- id: '1682626276859'
+  alias: BirdBuddy Alerts To Telegram
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 6aae8287c7b1a20abaa96fc4df8249fb
+    domain: birdbuddy
+    type: new_postcard
+    feeder_id: d417e006-668f-42a0-afd4-c18fe72f202e
+  condition: []
+  action:
+  - service: notify.ha_debug
+    data_template:
+      title: BirdBuddy Detection
+      message: 'Confirmed:
+
+        {{ trigger.event.data.sighting.sightingReport.sightings|map(attribute=''species'')|reject(''undefined'')|map(attribute=''name'')|list
+        }}
+
+        Unconfirmed:
+
+        {{ trigger.event.data.sighting.sightingReport.sightings|map(attribute=''suggestions'')|reject(''undefined'')|first|map(attribute=''species'')|map(attribute=''name'')|list
+        }}'
+  mode: single
+- id: '1682872961485'
+  alias: BirdBuddy - Dismiss Doves
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 6aae8287c7b1a20abaa96fc4df8249fb
+    domain: birdbuddy
+    type: new_postcard
+    feeder_id: d417e006-668f-42a0-afd4-c18fe72f202e
+  condition: []
+  action:
+  - variables:
+      sightings: '{{trigger.event.data.sighting.sightingReport.sightings}}'
+      postcard: '{{trigger.event.data.postcard}}'
+  - variables:
+      confirmedBirds: '{{sightings|map(attribute=''species'')|reject(''undefined'')|map(attribute=''name'')|list}}'
+      unconfirmedBirds: '{{sightings|map(attribute=''suggestions'')|reject(''undefined'')|first|map(attribute=''species'')|map(attribute=''name'')|list}}'
+  - service: notify.ha_debug
+    data_template:
+      title: BirdBuddy Detection - TEST FOR DOVE DISMISSSER
+      message: 'Confirmed:
+
+        {{ confirmedBirds }}
+
+        Unconfirmed:
+
+        {{ unconfirmedBirds }}'
+  mode: single
+- id: '1705862535837'
+  alias: TeslaUSB Message Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    allowed_methods:
+    - POST
+    - PUT
+    local_only: false
+    webhook_id: -s2ze8_bYIa47ChwFhs_BJwlu
+  condition: []
+  action:
+  - service: persistent_notification.create
+    data:
+      message: 'JSON : {{ trigger.json }} DATA : {{ trigger.data }}
+
+        '
+      title: TeslaUSB
   mode: single
