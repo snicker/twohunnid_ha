@@ -612,24 +612,6 @@
   - data: {}
     entity_id: light.leviton_dzmx1_1lz_dimmer_level
     service: light.turn_off
-- id: '1602885984531'
-  alias: 'Smartthings: Sync Backyard Sprinkler Switches'
-  description: ''
-  trigger:
-  - entity_id: switch.backyard_sprinklers
-    platform: state
-  - entity_id: switch.skydrop_d4d633de_zone_4_watering
-    platform: state
-  condition: []
-  action:
-  - data:
-      entity_id: '{% if trigger.from_state.entity_id == "switch.backyard_sprinklers"
-        %} light.bank_stalamp {% elif trigger.from_state.entity_id == "switch.skydrop_d4d633de_zone_4_watering"
-        %} switch.skydrop_d4d633de_zone_4_watering {% endif %}'
-    service_template: '{% if trigger.to_state.state == "on" %} switch.turn_on {% elif
-      trigger.to_state.state == "off" %} switch.turn_off {% endif %}'
-  - delay: 00:00:10
-  mode: single
 - id: '1603835967318'
   alias: Pedestrian Gate Open In Night Mode
   description: ''

@@ -14,15 +14,15 @@ homeassistant:
 
     binary_sensor.zone_7_is_watering:
       <<: *customize
-      controlled_switch: switch.skydrop_d4d633de_zone_4_watering
+      controlled_switch: switch.backyard_sprinkler_controller_zone_2_backyard_grass
 
     binary_sensor.zone_8_is_watering:
       <<: *customize
-      controlled_switch: switch.skydrop_d4d633de_zone_5_watering
+      controlled_switch: switch.backyard_sprinkler_controller_zone_3_backyard_drip
 
     binary_sensor.zone_9_is_watering:
       <<: *customize
-      controlled_switch: switch.skydrop_d4d633de_zone_3_watering
+      controlled_switch: switch.backyard_sprinkler_controller_zone_1_front_yard_drip
 
 group:
   all_sprinkler_valves:
@@ -34,9 +34,9 @@ group:
       - binary_sensor.front_yard_zone_4_is_watering
       - binary_sensor.front_yard_zone_5_is_watering
       - binary_sensor.shrubs_roses_vegetables_is_watering
-      - switch.skydrop_d4d633de_zone_4_watering
-      - switch.skydrop_d4d633de_zone_5_watering
-      - switch.skydrop_d4d633de_zone_3_watering
+      - switch.backyard_sprinkler_controller_zone_1_front_yard_drip
+      - switch.backyard_sprinkler_controller_zone_2_backyard_grass
+      - switch.backyard_sprinkler_controller_zone_3_backyard_drip
 
 template:
   - trigger:
@@ -48,9 +48,9 @@ template:
           - binary_sensor.front_yard_zone_4_is_watering
           - binary_sensor.front_yard_zone_5_is_watering
           - binary_sensor.shrubs_roses_vegetables_is_watering
-          - switch.skydrop_d4d633de_zone_4_watering
-          - switch.skydrop_d4d633de_zone_5_watering
-          - switch.skydrop_d4d633de_zone_3_watering
+          - switch.backyard_sprinkler_controller_zone_1_front_yard_drip
+          - switch.backyard_sprinkler_controller_zone_2_backyard_grass
+          - switch.backyard_sprinkler_controller_zone_3_backyard_drip
     sensor:
       - name: active_sprinklers
         unique_id: active_sprinklers
