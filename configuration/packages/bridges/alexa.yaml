@@ -39,22 +39,24 @@ group:
     name: "All Alexas"
     
     entities:
-    - media_player.backyard_dot
+    - media_player.living_room_dot
     - media_player.kitchen_dot
-    - media_player.master_bedroom_dot
-    - media_player.plant_room_dot
-    - media_player.master_bed_fire_tv
-    - media_player.living_room_fire_tv
-    - media_player.ballet_studio_fire_tv
-    - media_player.nicholas_s_2nd_echo_input
-    - media_player.nicholas_s_family_hub
-  alexa_notification_media_players:
+    - media_player.kitchen_fridge
     - media_player.backyard_dot
-    - media_player.plant_room_dot
+    - media_player.garage_dot
     - media_player.master_bedroom_dot
-    - media_player.ballet_studio_fire_tv
-    - media_player.nicholas_s_2nd_echo_input
-    - media_player.nicholas_s_family_hub
+    - media_player.office_dot
+    - media_player.plant_room_dot
+    - media_player.sunroom_tv
+  alexa_notification_media_players:
+    - media_player.living_room_dot
+    - media_player.kitchen_dot
+    - media_player.backyard_dot
+    - media_player.garage_dot
+    - media_player.master_bedroom_dot
+    - media_player.office_dot
+    - media_player.plant_room_dot
+    - media_player.sunroom_tv
     
 script:
   alexa_announcement_all:
