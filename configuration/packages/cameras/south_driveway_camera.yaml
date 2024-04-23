@@ -74,5 +74,5 @@ mqtt:
           - 2caa8e974ae4
       entity_category: diagnostic
       value_template: "{{ value_json.uptime }}"
-      state_topic: driveway/south_driveway_camera
-      json_attributes_topic: driveway/south_driveway_camera
+      state_topic: south_driveway/south_driveway_camera
+      json_attributes_topic: south_driveway/south_driveway_camera
