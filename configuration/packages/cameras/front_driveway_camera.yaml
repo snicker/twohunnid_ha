@@ -64,7 +64,7 @@ binary_sensor:
 
 template:
   - binary_sensor:
-      name: front_driveway_camera_mqtt_status
+    - name: front_driveway_camera_mqtt_status
       device_class: connectivity
       state: |-
         {% set to_monitor = 'front_driveway_camera_uptime' %}
