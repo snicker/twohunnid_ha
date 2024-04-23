@@ -8,6 +8,7 @@ homeassistant:
     camera.south_driveway_camera:
       <<: *customize
       friendly_name: "South Driveway Camera"
+      ip_address: 192.168.1.186
       icon: mdi:cctv
     
     binary_sensor.south_driveway_camera_motion_sensor:
@@ -48,16 +49,30 @@ automation:
     action:
       - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
       - service: rest_command.camera_reboot_south_driveway
-    
-binary_sensor:
-  - platform: ping
-    name: south_driveway_camera_status
-    host: 192.168.1.186
-    count: 3
-    scan_interval: 60
-  - platform: template
-    sensors:
-      south_driveway_camera_motion_sensor_debounced:
-        value_template: "{{ is_state('binary_sensor.south_driveway_camera_motion_sensor','on') }}"
-        device_class: motion
-        delay_off: "00:00:10"
+
+template:
+  - binary_sensor:
+    - name: south_driveway_camera_status
+      device_class: connectivity
+      state: |-
+        {% set to_monitor = 'south_driveway_camera_uptime' %}
+        {% set delay = 120 %}
+        {{ as_timestamp(now()) - as_timestamp(states.sensor[to_monitor].last_changed) <= delay }}
+    - name: "south_driveway_camera_motion_sensor_debounced"
+      state: "{{ is_state('binary_sensor.south_driveway_camera_motion_sensor','on') }}"
+      device_class: motion
+      delay_off: "00:00:10"
+
+mqtt:
+  sensor:
+    - name: "South Driveway Camera Uptime"
+      unique_id: south_driveway_camera_uptime
+      object_id: south_driveway_camera_uptime
+      device:
+        identifiers:
+          - south_driveway_camera
+          - 2caa8e974ae4
+      entity_category: diagnostic
+      value_template: "{{ value_json.uptime }}"
+      state_topic: driveway/south_driveway_camera
+      json_attributes_topic: driveway/south_driveway_camera

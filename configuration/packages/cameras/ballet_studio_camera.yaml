@@ -8,6 +8,7 @@ homeassistant:
     camera.yi_home_camera_ballet_studio:
       <<: *customize
       friendly_name: "Ballet Studio Camera"
+      ip_address: 192.168.1.237
       icon: mdi:cctv
     
     binary_sensor.ballet_studio_camera_motion_sensor:
@@ -49,18 +50,32 @@ automation:
       - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
       - service: rest_command.camera_reboot_ballet_studio
 
-binary_sensor:
-  - platform: ping
-    name: ballet_studio_camera_status
-    host: 192.168.1.237
-    count: 3
-    scan_interval: 60
-  - platform: template
-    sensors:
-      ballet_studio_camera_motion_sensor_debounced:
-        value_template: "{{ is_state('binary_sensor.ballet_studio_camera_motion_sensor','on') }}"
-        device_class: motion
-        delay_off: "00:00:10"
+template:
+  - binary_sensor:
+    - name: ballet_studio_camera_status
+      device_class: connectivity
+      state: |-
+        {% set to_monitor = 'ballet_studio_camera_uptime' %}
+        {% set delay = 120 %}
+        {{ as_timestamp(now()) - as_timestamp(states.sensor[to_monitor].last_changed) <= delay }}
+    - name: "ballet_studio_camera_motion_sensor_debounced"
+      state: "{{ is_state('binary_sensor.ballet_studio_camera_motion_sensor','on') }}"
+      device_class: motion
+      delay_off: "00:00:10"
+
+mqtt:
+  sensor:
+    - name: "Ballet Studio Camera Uptime"
+      unique_id: ballet_studio_camera_uptime
+      object_id: ballet_studio_camera_uptime
+      device:
+        identifiers:
+          - ballet_studio_camera
+          - 2caa8e16f083
+      entity_category: diagnostic
+      value_template: "{{ value_json.uptime }}"
+      state_topic: twohunnid/ballet_studio_camera
+      json_attributes_topic: twohunnid/ballet_studio_camera
     
 group:
   ballet_studio_camera:
