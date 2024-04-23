@@ -75,12 +75,12 @@ mqtt:
   sensor:
     - name: "Front Driveway Camera Uptime"
       unique_id: front_driveway_camera_uptime
+      object_id: front_driveway_camera_uptime
       device:
         identifiers:
           - front_driveway_camera
           - 2caa8e96a925
       entity_category: diagnostic
       value_template: "{{ value_json.uptime }}"
-      json_attributes_template: "{{ value_json }}"
       state_topic: driveway/front_driveway_camera
       json_attributes_topic: driveway/front_driveway_camera
