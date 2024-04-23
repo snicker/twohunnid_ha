@@ -61,3 +61,26 @@ binary_sensor:
         value_template: "{{ is_state('binary_sensor.front_driveway_camera_motion_sensor','on') }}"
         device_class: motion
         delay_off: "00:00:10"
+
+template:
+  - binary_sensor:
+      name: front_driveway_camera_mqtt_status
+      device_class: connectivity
+      state: |-
+        {% set to_monitor = 'front_driveway_camera_uptime' %}
+        {% set delay = 120 %}
+        {{ as_timestamp(now()) - as_timestamp(states.binary_sensor[to_monitor].last_changed) <= delay }}
+
+sensor:
+  mqtt:
+    - name: "Front Driveway Camera Uptime"
+      unique_id: front_driveway_camera_uptime
+      device:
+        identifiers:
+          - front_driveway_camera
+          - 2caa8e96a925
+      entity_category: diagnostic
+      value_template: "{{ value_json.uptime }}"
+      json_attributes_template: "{{ value_json }}"
+      state_topic: driveway/front_driveway_camera
+      json_attributes_topic: driveway/front_driveway_camera
