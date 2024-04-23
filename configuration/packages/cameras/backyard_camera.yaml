@@ -7,6 +7,7 @@ homeassistant:
     camera.yi_home_camera_backyard_patio:
       <<: *customize
       friendly_name: "Backyard Patio Camera"
+      ip_address: 192.168.1.78
       icon: mdi:cctv
     
     binary_sensor.backyard_patio_camera_motion:
@@ -32,9 +33,10 @@ mqtt:
       payload_off: "motion_stop"
       device_class: motion
 
-binary_sensor:
-  - platform: ping
-    name: backyard_patio_camera_status
-    host: 192.168.1.78
-    count: 3
-    scan_interval: 60
+template:
+  - binary_sensor:
+    - name: backyard_patio_camera_status
+      device_class: connectivity
+      state: |-
+        {% set to_monitor = 'yi_backyardcam' %}
+        {{ states('device_tracker.' + to_monitor) == 'home' }}
