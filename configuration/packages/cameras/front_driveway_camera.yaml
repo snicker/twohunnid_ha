@@ -71,8 +71,8 @@ template:
         {% set delay = 120 %}
         {{ as_timestamp(now()) - as_timestamp(states.binary_sensor[to_monitor].last_changed) <= delay }}
 
-sensor:
-  mqtt:
+mqtt:
+  sensor:
     - name: "Front Driveway Camera Uptime"
       unique_id: front_driveway_camera_uptime
       device:
