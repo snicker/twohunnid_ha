@@ -10,7 +10,7 @@ weather:
     condition_template: "{{ states('weather.knvlasve1606') }}"
     temperature_template: "{{ states('sensor.ecowitt_temp') | float }}"
     dew_point_template: "{{ states('sensor.ecowitt_dewpoint') | float }}"
-    apparent_temperature_template: "{{ states('sensor.ecowitt_simmerindex') | float"
+    apparent_temperature_template: "{{ states('sensor.ecowitt_simmerindex') | float }}"
     temperature_unit: "°F"
     humidity_template: "{{ states('sensor.ecowitt_humidity') | float }}"
     pressure_template: "{{ states('sensor.ecowitt_baromabs') | float }}"
