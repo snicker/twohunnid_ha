@@ -1,0 +1,23 @@
+homeassistant:
+  customize:
+    package.node_anchors:
+      customize: &customize
+        package: 'ecowitt'
+
+weather:
+  - platform: template
+    name: "Ecowitt Weather Station"
+    condition_template: "{{ states('weather.knvlasve1606') }}"
+    temperature_template: "{{ states('sensor.ecowitt_temp') | float }}"
+    dew_point_template: "{{ states('sensor.ecowitt_dewpoint') | float }}"
+    apparent_temperature_template: "{{ states('sensor.ecowitt_simmerindex') | float"
+    temperature_unit: "°F"
+    humidity_template: "{{ states('sensor.ecowitt_humidity') | float }}"
+    pressure_template: "{{ states('sensor.ecowitt_baromabs') | float }}"
+    pressure_unit: "inHg"
+    wind_speed_template:  "{{ states('sensor.ecowitt_windspeed') | float }}"
+    wind_gust_speed_template: "{{ states('sensor.ecowitt_windgust') | float }}"
+    wind_speed_unit: "mph"
+    wind_bearing_template: "{{ states('sensor.ecowitt_winddir_name') }}"
+    precipitation_unit: "in"
+    forecast_daily_template: "{{ state_attr('weather.knvlasve1606', 'forecast_data') }}"
