@@ -3,40 +3,15 @@ homeassistant:
     package.node_anchors:
       customize: &customize
         package: 'proximity_nick'
-        
-    proximity.nick_home:
-      <<: *customize
-      friendly_name: "Proximity: Nick to Home"
-      
-    sensor.nick_home_dir_of_travel:
-      <<: *customize
-      friendly_name: "Direction of Travel: Nick to Home"
-      
-    sensor.travel_time_nick_to_home:
-      <<: *customize
-      friendly_name: "Travel Time: Nick to Home"
       
     sensor.travel_time_nick_to_home_eta:
       <<: *customize
       friendly_name: "Travel Time: Nick to Home ETA"
-        
-proximity:
-  nick_home:
-    zone: home
-    devices:
-      - device_tracker.nickcell
-      - device_tracker.life360_nick
-    tolerance: 50
-    unit_of_measurement: mi
 
-sensor:    
-  - platform: template
-    sensors:
-      travel_time_nick_to_home_eta:
-        entity_id: sensor.travel_time_nick_to_home
-        value_template: >-
-          {{ (as_timestamp(states.sensor.travel_time_nick_to_home.last_updated) + states.sensor.travel_time_nick_to_home.attributes.duration * 60) | timestamp_custom() }}
-      nick_home_dir_of_travel:
-        entity_id: proximity.nick_home
-        value_template: >-
-          {{ states.proximity.nick_home.attributes.dir_of_travel }}
+template:    
+  - sensor:
+      - name: travel_time_nick_to_home_eta
+        state: >-
+          {% set last_updated = as_timestamp(states.sensor.nick_to_home_travel_time.last_updated) | float %}
+          {% set time_to_dest = states('sensor.nick_to_home_travel_time') | float * 60 %}
+          {{ (last_updated + time_to_dest) | timestamp_custom() }}
