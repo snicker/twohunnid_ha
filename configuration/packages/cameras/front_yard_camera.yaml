@@ -20,12 +20,6 @@ homeassistant:
       friendly_name: "Front Yard Camera Status"
       device_class: connectivity
 
-camera:
-  - platform: generic
-    name: front_yard_camera
-    still_image_url: http://192.168.1.75:8080/cgi-bin/snapshot.sh?res=low
-    stream_source: rtsp://192.168.1.75:554/ch0_0.h264
-
 mqtt:
   binary_sensor:
     - name: front_yard_camera_motion

@@ -20,12 +20,6 @@ homeassistant:
       friendly_name: "Side Yard North Camera Status"
       device_class: connectivity
 
-camera:
-  - platform: generic
-    name: sideyard_north_camera
-    still_image_url: http://192.168.1.73:8080/cgi-bin/snapshot.sh?res=low
-    stream_source: rtsp://192.168.1.73:554/ch0_0.h264
-
 mqtt:
   binary_sensor:
     - name: sideyard_north_camera_motion

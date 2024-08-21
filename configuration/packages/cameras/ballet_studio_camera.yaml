@@ -24,16 +24,6 @@ homeassistant:
       friendly_name: "Ballet Studio Camera Status"
       device_class: connectivity
 
-camera:
-  - platform: generic
-    name: yi_home_camera_ballet_studio
-    still_image_url: https://192.168.1.237/cgi-bin/currentpic.cgi
-    stream_source: rtsp://192.168.1.237:8554/unicast
-    verify_ssl: false
-    authentication: basic
-    username: root
-    password: !secret dafang_cam_password
-
 rest_command:
   camera_reboot_ballet_studio:
     url: 'https://192.168.1.237/cgi-bin/action.cgi?cmd=reboot'
