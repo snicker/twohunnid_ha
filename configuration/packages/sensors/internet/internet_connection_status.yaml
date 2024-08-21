@@ -37,16 +37,6 @@ homeassistant:
       friendly_name: "Internal Network Accessible"
         
 binary_sensor:
-  - platform: ping
-    host: 8.8.8.8
-    name: external_network_accessible
-    scan_interval: 5
-    count: 2
-  - platform: ping
-    host: 192.168.1.1
-    name: internal_network_accessible
-    scan_interval: 5
-    count: 2
   - platform: template
     sensors:
       internet_connection_status:

@@ -8,14 +8,6 @@ homeassistant:
       <<: *customize
       friendly_name: edgeofspace Online
 
-
-binary_sensor:
-  - platform: ping
-    name: edgeofspace_connection
-    host: edgeofspace.twohunnid
-    count: 3
-    scan_interval: 60
-
 template:
   - binary_sensor:
       - name: rtl_433_edgeofspace_online

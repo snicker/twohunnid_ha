@@ -39,10 +39,3 @@ homeassistant:
       <<: *customize
       friendly_name: "Laundry Room Camera Status"
       device_class: connectivity
-
-binary_sensor:
-  - platform: ping
-    name: laundry_camera_status
-    host: 192.168.1.176
-    count: 3
-    scan_interval: 60

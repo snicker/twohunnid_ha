@@ -77,11 +77,6 @@ automation:
               notification_id: milight_gateway_update_required
 
 binary_sensor:
-  - platform: ping
-    name: milight_gateway_status
-    host: 192.168.1.120
-    count: 2
-    scan_interval: 60
   - platform: template
     sensors:
       milight_gateway_update_required:

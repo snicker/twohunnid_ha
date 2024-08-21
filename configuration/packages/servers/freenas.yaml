@@ -49,20 +49,13 @@ template:
       state: >
         {{ states("sensor.freenas_dockervm_status") == "RUNNING" }}
 
-binary_sensor:
-  - platform: ping
-    name: freenas_network_status
-    host: 192.168.1.16
-    count: 2
-    scan_interval: 30
-
 sensor:
   # pool sensors
   # tank status
   - platform: rest
     <<: *freenas_rest_sensor_token
     method: GET
-    resource: http://freenas.twohunnid/api/v2.0/pool/id/6
+    resource: http://192.168.1.16/api/v2.0/pool/id/6
     name: freenas_pool_status_tank
     value_template: "{{ value_json.status }}"
     json_attributes:
@@ -72,7 +65,7 @@ sensor:
   - platform: rest
     <<: *freenas_rest_sensor_token
     method: GET
-    resource: http://freenas.twohunnid/api/v2.0/pool/dataset/id/tank
+    resource: http://192.168.1.16/api/v2.0/pool/dataset/id/tank
     name: freenas_dataset_status_tank
     value_template: "{{ value_json.name }}"
     json_attributes:
@@ -82,7 +75,7 @@ sensor:
   - platform: rest
     <<: *freenas_rest_sensor_token
     method: GET
-    resource: http://freenas.twohunnid/api/v2.0/pool/id/8
+    resource: http://192.168.1.16/api/v2.0/pool/id/8
     name: freenas_pool_status_media
     value_template: "{{ value_json.status }}"
     json_attributes:
@@ -92,7 +85,7 @@ sensor:
   - platform: rest
     <<: *freenas_rest_sensor_token
     method: GET
-    resource: http://freenas.twohunnid/api/v2.0/pool/dataset/id/media
+    resource: http://192.168.1.16/api/v2.0/pool/dataset/id/media
     name: freenas_dataset_status_media
     value_template: "{{ value_json.name }}"
     json_attributes:
@@ -102,7 +95,7 @@ sensor:
   - platform: rest
     <<: *freenas_rest_sensor
     method: POST
-    resource: http://freenas.twohunnid/api/v2.0/disk/temperatures
+    resource: http://192.168.1.16/api/v2.0/disk/temperatures
     payload: '{"names":["ada0", "ada1", "ada2", "ada3","da0","da1","da2","da3"],"powermode":"NEVER"}'
     name: freenas_disk_temps
     json_attributes:
@@ -118,13 +111,13 @@ sensor:
   - platform: rest
     <<: *freenas_rest_sensor_token
     method: GET
-    resource: http://freenas.twohunnid/api/v2.0/system/ready
+    resource: http://192.168.1.16/api/v2.0/system/ready
     name: freenas_ready
 
   - platform: rest
     <<: *freenas_rest_sensor_token
     method: GET
-    resource: http://freenas.twohunnid/api/v2.0/system/info
+    resource: http://192.168.1.16/api/v2.0/system/info
     name: freenas_info
     value_template: "{{ value_json.version }}"
     json_attributes:
@@ -139,7 +132,7 @@ sensor:
   - platform: rest
     <<: *freenas_rest_sensor_token
     method: POST
-    resource: http://freenas.twohunnid/api/v2.0/vm/id/1/status
+    resource: http://192.168.1.16/api/v2.0/vm/id/1/status
     name: freenas_dockervm_status
     value_template: "{{ value_json.state }}"
 
