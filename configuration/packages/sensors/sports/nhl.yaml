@@ -107,7 +107,7 @@ automation:
       - service: mqtt.publish
         data:
           topic: "rtmbot/stoutbot/lasvegas"
-          payload_template: "hockey's on, gkg. the {{ states('sensor.nhl_golden_knights_period') }} period against the {{ state_attr( 'sensor.nhl_golden_knights_opponent', 'friendly_name') }} starts now"
+          payload: "hockey's on, gkg. the {{ states('sensor.nhl_golden_knights_period') }} period against the {{ state_attr( 'sensor.nhl_golden_knights_opponent', 'friendly_name') }} starts now"
   - alias: golden_knights_period_end
     trigger:
       platform: numeric_state
@@ -121,7 +121,7 @@ automation:
       - service: mqtt.publish
         data:
           topic: "rtmbot/stoutbot/lasvegas"
-          payload_template: "the {{ states('sensor.nhl_golden_knights_period') }} period is over. {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}: {{ states('sensor.nhl_golden_knights_home_team') }}, {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }}: {{ states('sensor.nhl_golden_knights_away_team') }}"
+          payload: "the {{ states('sensor.nhl_golden_knights_period') }} period is over. {{ state_attr( 'sensor.nhl_golden_knights_home_team', 'friendly_name') }}: {{ states('sensor.nhl_golden_knights_home_team') }}, {{ state_attr( 'sensor.nhl_golden_knights_away_team', 'friendly_name') }}: {{ states('sensor.nhl_golden_knights_away_team') }}"
   - alias: golden_knights_score
     trigger:
       platform: event
@@ -136,7 +136,7 @@ automation:
     - service: mqtt.publish
       data:
         topic: "rtmbot/stoutbot/lasvegas"
-        payload_template: "knights scored, {{ states.sensor.nhl_golden_knights.attributes.last_goal }}, go knights go"
+        payload: "knights scored, {{ states.sensor.nhl_golden_knights.attributes.last_goal }}, go knights go"
   - id: golden_knights_final_score
     alias: golden_knights_final_score
     initial_state: true
