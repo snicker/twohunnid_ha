@@ -4,7 +4,6 @@ homekit:
   filter:
     include_entities:
       - alarm_control_panel.home_alarm
-      - camera.front_driveway_camera
       - camera.south_driveway_camera
       - camera.yi_home_camera_backyard_patio
       - camera.yi_home_camera_ballet_studio
@@ -17,11 +16,6 @@ homekit:
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
-    camera.front_driveway_camera:
-      video_codec: copy
-      support_audio: True
-      max_width: 1600
-      max_height: 900
     camera.south_driveway_camera:
       video_codec: copy
       support_audio: True
