@@ -4,35 +4,6 @@ homekit:
   filter:
     include_entities:
       - alarm_control_panel.home_alarm
-      - camera.south_driveway_camera
-      - camera.yi_home_camera_backyard_patio
-      - camera.living_room_camera
-      - camera.yi_home_camera_garage
-      - camera.front_door
-      - camera.front_yard_camera
-      - camera.dlink_camera_laundry
-      - camera.sideyard_north_camera
   entity_config:
     alarm_control_panel.home_alarm:
       code: !secret alarm_panel_code
-    camera.south_driveway_camera:
-      video_codec: copy
-      support_audio: True
-      max_width: 1600
-      max_height: 900
-    camera.yi_home_camera_backyard_patio:
-      video_codec: copy
-      support_audio: True
-    camera.living_room_camera:
-      video_codec: copy
-      support_audio: True
-      max_width: 1600
-      max_height: 900
-    camera.yi_home_camera_garage:
-      video_codec: copy
-      max_width: 640
-      max_height: 360
-    camera.front_yard_camera:
-      video_codec: copy
-    camera.sideyard_north_camera:
-      video_codec: copy
