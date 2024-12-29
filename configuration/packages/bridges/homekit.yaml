@@ -6,7 +6,6 @@ homekit:
       - alarm_control_panel.home_alarm
       - camera.south_driveway_camera
       - camera.yi_home_camera_backyard_patio
-      - camera.yi_home_camera_ballet_studio
       - camera.living_room_camera
       - camera.yi_home_camera_garage
       - camera.front_door
@@ -24,11 +23,6 @@ homekit:
     camera.yi_home_camera_backyard_patio:
       video_codec: copy
       support_audio: True
-    camera.yi_home_camera_ballet_studio:
-      video_codec: copy
-      support_audio: True
-      max_width: 1600
-      max_height: 900
     camera.living_room_camera:
       video_codec: copy
       support_audio: True
