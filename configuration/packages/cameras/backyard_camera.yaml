@@ -24,6 +24,19 @@ camera:
   - platform: ffmpeg
     name: yi_home_camera_backyard_patio
     input: -rtsp_transport tcp -err_detect ignore_err -i rtsp://192.168.1.78/ch0_0.h264
+
+rest_command:
+  camera_reboot_backyard_patio_camera:
+    url: 'http://192.168.1.78:8080/cgi-bin/reboot.sh'
+
+automation:
+  - alias: camera_reboot_backyard_patio_nightly
+    trigger:
+      platform: time
+      at: "01:00:00"
+    action:
+      - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
+      - service: rest_command.camera_reboot_backyard_patio_camera
     
 mqtt:
   binary_sensor:

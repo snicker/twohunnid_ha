@@ -20,6 +20,19 @@ homeassistant:
       friendly_name: "Front Yard Camera Status"
       device_class: connectivity
 
+rest_command:
+  camera_reboot_front_yard_camera:
+    url: 'http://192.168.1.75:8080/cgi-bin/reboot.sh'
+
+automation:
+  - alias: camera_reboot_front_yard_nightly
+    trigger:
+      platform: time
+      at: "01:00:00"
+    action:
+      - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
+      - service: rest_command.camera_reboot_front_yard_camera
+
 mqtt:
   binary_sensor:
     - name: front_yard_camera_motion

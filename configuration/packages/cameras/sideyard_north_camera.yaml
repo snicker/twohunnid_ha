@@ -20,6 +20,19 @@ homeassistant:
       friendly_name: "Side Yard North Camera Status"
       device_class: connectivity
 
+rest_command:
+  camera_reboot_side_yard_north_camera:
+    url: 'http://192.168.1.73:8080/cgi-bin/reboot.sh'
+
+automation:
+  - alias: camera_reboot_side_yard_north_nightly
+    trigger:
+      platform: time
+      at: "01:00:00"
+    action:
+      - delay: '00:0{{ range(1,2) | random | int }}:{{ range(10,60) | random | int }}'
+      - service: rest_command.camera_reboot_side_yard_north_camera
+
 mqtt:
   binary_sensor:
     - name: sideyard_north_camera_motion
