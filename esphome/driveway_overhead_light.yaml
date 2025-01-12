@@ -1,0 +1,98 @@
+substitutions:
+  device_index: "01"
+  device_name: driveway_overhead_light
+  friendly_name: Driveway Overhead Light
+
+# Sonoff Mini DIY
+# GPIO0 Button (inverted)
+# GPIO4 SW Input (inverted)
+# GPIO12 Relay and Red LED
+# GPIO13 Blue LED (inverted)
+# GPIO16 Optional sensor
+
+esphome:
+  name: ${device_name}
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: ${device_name}_${device_index}_AP
+    password: !secret ap_password
+
+# Enable logging
+logger:
+
+web_server:
+  port: 80
+
+output:
+- platform: gpio
+  id: gpio_13
+  inverted: True
+  pin: GPIO13
+
+light:
+- platform: binary
+  id: power_led
+  internal: true
+  name: "${friendly_name} Power LED"
+  output: gpio_13
+  effects:
+    - strobe:
+  
+switch:
+  - platform: gpio
+    name: "${friendly_name}"
+    icon: mdi:power-socket-us
+    id: relay1
+    pin:
+      number: GPIO12
+      inverted: False
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+    - light.turn_on: power_led
+    on_turn_off:
+    - light.turn_off: power_led
+
+  - platform: restart
+    name: "Reboot ${friendly_name}"
+    id: reboot
+    
+binary_sensor:
+  - platform: gpio
+    id: power_button
+    pin: 
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    internal: True
+    on_release:
+      then:
+        - switch.toggle: relay1
+  - platform: gpio
+    id: power_switch
+    pin: 
+      number: GPIO4
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      then:
+        - switch.toggle: relay1
+    on_release:
+      then:
+        - switch.toggle: relay1
+        
+# Enable Home Assistant API
+api:
+  password: !secret ota_api_password
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    password: !secret ota_api_password
