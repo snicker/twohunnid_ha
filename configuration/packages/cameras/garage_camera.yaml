@@ -19,12 +19,6 @@ homeassistant:
       <<: *customize
       friendly_name: "Garage Camera Status"
       device_class: connectivity
-
-
-camera:
-  - platform: ffmpeg
-    name: yi_home_camera_garage
-    input: -rtsp_transport tcp -i rtsp://192.168.1.72:554/ch0_1.h264
     
 binary_sensor:
   - platform: template
