@@ -1,0 +1,278 @@
+substitutions:
+  device_name: server_closet_hvac
+  friendly_name: Server Closet HVAC
+
+esphome:
+  name: ${device_name}
+  platform: esp32
+  board: esp32doit-devkit-v1
+  # https://docs.platformio.org/en/latest/boards/espressif32/esp32doit-devkit-v1.html
+
+wifi:
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: ${device_name}_config
+    password: !secret ap_password
+
+logger:
+  baud_rate: 0
+
+web_server:
+  port: 80
+  auth:
+    username: admin
+    password: !secret ota_api_password
+
+ota:
+  platform: esphome
+  password: !secret ota_api_password
+
+api:
+  password: !secret ota_api_password
+
+sensor:
+  - platform: uptime
+    name: "${friendly_name} Uptime"
+    id: uptime_seconds
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+
+  - platform: dht
+    pin: GPIO13
+    model: AM2302
+    temperature:
+      name: "Temperature Sensor 1"
+      id: "temperature_sensor_1"
+      accuracy_decimals: 3
+      filters:
+         - exponential_moving_average:  
+             alpha: 0.1
+             send_every: 1
+    humidity:
+      name: "Humidity Sensor 1"
+    update_interval: 1.3s
+
+  - platform: dht
+    pin: GPIO14
+    model: AM2302
+    temperature:
+      name: "Temperature Sensor 2"
+      id: "temperature_sensor_2"
+      accuracy_decimals: 3
+      filters:
+         - exponential_moving_average:  
+             alpha: 0.1
+             send_every: 1
+    humidity:
+      name: "Humidity Sensor 2"
+    update_interval: 1.3s
+
+  - platform: template
+    id: "server_closet_hvac_temperature_average"    
+    name: "Server Closet Temperature Average"
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    state_class: "measurement"
+    accuracy_decimals: 1
+    lambda: |-
+      return (id(temperature_sensor_1).state + id(temperature_sensor_2).state)/2;
+    update_interval: 3s
+
+  # Read the Tacho PIN and show measured RPM as a sensor (only with 4-pin PWM fans!)
+  # See instructions here: https://esphome.io/components/sensor/pulse_counter.html
+  - platform: pulse_counter
+    pin: 
+      number: GPIO26   # Connect to any input PIN on the ESP
+      mode: INPUT_PULLUP
+    unit_of_measurement: 'RPM'
+    id: fan_speed
+    name: $friendly_name Fan Speed
+    accuracy_decimals: 0
+    filters:
+      - multiply: 0.5  # Depending on how many pulses the fan sends per round - should be 0.5 or 1 - try...
+
+########################################################
+# START THE FAN CONTROLLER SETUP
+
+  - platform: template
+    name: $friendly_name p term
+    id: p_term
+    unit_of_measurement: "%"
+    accuracy_decimals: 2
+
+  - platform: template
+    name: $friendly_name i term
+    id: i_term
+    unit_of_measurement: "%"
+    accuracy_decimals: 2
+
+  - platform: template
+    name: $friendly_name d term
+    id: d_term
+    unit_of_measurement: "%"
+    accuracy_decimals: 2
+
+  - platform: template
+    name: $friendly_name output value
+    unit_of_measurement: "%"
+    id: o_term
+    accuracy_decimals: 2
+
+  - platform: template
+    name: $friendly_name error value
+    id: e_term
+    accuracy_decimals: 2
+
+  - platform: template
+    name: $friendly_name is in deadband
+    id: in_deadband_term
+    accuracy_decimals: 0
+
+  # Every time the fan speed is updated, this sensor will
+  # also be updated for displaying on the frontend. 
+  # See proxy_output.
+  - platform: template
+    name: "Fan Speed (PWM Voltage)"
+    unit_of_measurement: "%"
+    id: fan_speed_pwm_voltage
+
+output:
+  # Wire this pin (13) into the PWM pin of your 12v fan
+  # ledc is the name of the pwm output system on an esp32
+  - platform: ledc
+    id: server_closet_hvac_fan_speed
+    pin: GPIO27
+
+    # 25KHz is standard PC fan frequency, minimises buzzing
+    frequency: "25000 Hz" 
+
+    # my fans stop working below 13% powerful.
+    # also they're  powerful and loud, cap their max speed to 80%
+    min_power: 13%
+    max_power: 100%
+
+    # At 0, actually turn it off, otherwise the power keeps going.
+    zero_means_zero: true
+
+  # This proxy output takes its input
+  # if the manual fan control is on, use the level from that
+  # otherwise use the PID control value.
+  # Then publish the result to the fan (ledc) and 
+  # also publish to the template output sensor
+  - platform: template
+    id: proxy_output
+    type: float
+    write_action:
+      lambda: |-
+        float write_val = 
+          (id(manual_fan_control).state) ?
+            id(manual_fan_control).speed / 100.0 : state*1.0;
+        id(server_closet_hvac_fan_speed).set_level(write_val);
+        id(fan_speed_pwm_voltage).publish_state(write_val*100.0);
+
+# If you turn this on, you can manually set the fan speed.
+# The PID will be ignored. This is done via the proxy_output.
+fan:
+  - platform: speed
+    id: manual_fan_control
+    output: proxy_output
+    name: "Manual Fan Speed"
+
+# Expose a PID-controlled Thermostat
+# Manual: https://esphome.io/components/climate/pid.html
+climate:
+  - platform: pid
+    name: "Server Closet Fan Thermostat"
+    id: server_closet_hvac_thermostat
+    sensor: temperature_sensor_2
+
+    # It is summer right now, so 30c is a decent target.
+    default_target_temperature: 30°C
+    cool_output: proxy_output
+    # cool_output: console_fan_speed
+
+    # ON state change, publish the values to the x_term numbers defined 
+    # above, so that they can be viewed in HA
+    on_state:
+      - sensor.template.publish:
+          id: p_term
+          state: !lambda 'return -id(server_closet_hvac_thermostat).get_proportional_term() * 100.0;'
+      - sensor.template.publish:
+          id: i_term
+          state: !lambda 'return -id(server_closet_hvac_thermostat).get_integral_term()* 100.0;'
+      - sensor.template.publish:
+          id: d_term
+          state: !lambda 'return -id(server_closet_hvac_thermostat).get_derivative_term()* 100.0;'
+      - sensor.template.publish:
+          id: o_term
+          state: !lambda 'return -id(server_closet_hvac_thermostat).get_output_value()* 100.0;'
+      - sensor.template.publish:
+          id: in_deadband_term
+          state: !lambda 'return id(server_closet_hvac_thermostat).in_deadband();'
+      - sensor.template.publish:
+          id: e_term
+          state: !lambda 'return -id(server_closet_hvac_thermostat).get_error_value();'
+        
+    # The extents of the HA Thermostat
+    visual:
+      min_temperature: 20 °C
+      max_temperature: 50 °C
+  
+    # See the README for setting up these parameters.
+    # These are over ridden by the number templates above.
+    control_parameters:
+      kp: 0.3
+      ki: 0.0015
+      kd: 0
+      max_integral: 0.0
+      output_averaging_samples: 1
+      derivative_averaging_samples: 5
+
+    # How to behave when close to the target temperature?
+    deadband_parameters:
+      threshold_high: 0.4°C
+      threshold_low: -1.0°C
+      kp_multiplier: 0.0
+      ki_multiplier: 0.04
+      kd_multiplier: 0.0
+      deadband_output_averaging_samples: 15
+
+switch:
+  # Expose an ESP32 restart button to HA
+  - platform: restart
+    name: ${friendly_name} ESP32 Restart
+    id: server_closet_hvac_restart
+
+# Restart every day at 12:30am. 
+# I've had some memory issues lockup 
+# the device after a couple weeks
+time:
+  - platform: homeassistant
+    on_time:
+      # Every morning at 12:30am
+    - seconds: 0
+      minutes: 30
+      hours: 0
+      then:
+       - switch.turn_on: server_closet_hvac_restart
+
+
+# I was able to find good KP,KI,KD values manually, per the instructions,
+# but you can try pressing the autotune button from home assistant and copying the 
+# values it produces. 
+# See more at: https://esphome.io/components/climate/pid.html#climate-pid-autotune-action
+button:
+- platform: template
+  name: "PID Climate Autotune"
+  on_press: 
+    - climate.pid.autotune: server_closet_hvac_thermostat
+
+# Use the red LED in the device as a status LED, which will blink if there are warnings (slow) or errors (fast)
+status_led:
+  pin:
+    number: GPIO2
+    inverted: True
