@@ -43,7 +43,7 @@ mqtt:
 
 template:
   - binary_sensor:
-    - name: garage_camera_status
+    - name: sideyard_north_camera_status
       device_class: connectivity
       state: |-
         {% set to_monitor = 'side_yard_north_camera' %}
