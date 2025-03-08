@@ -47,7 +47,10 @@ template:
       state: |-
         {% set to_monitor = 'living_room_camera_uptime' %}
         {% set delay = 120 %}
-        {{ as_timestamp(now()) - as_timestamp(states.sensor[to_monitor].last_changed) <= delay }}
+        {% set recent_update = as_timestamp(now()) - as_timestamp(states.sensor[to_monitor].last_changed) <= delay %}
+        {% set to_monitor = 'wyze_livingroom' %}
+        {% set unifi_online = states('device_tracker.' + to_monitor) == 'home' %}
+        {{ recent_update or unifi_online }}
     - name: "living_room_camera_motion_sensor_debounced"
       state: "{{ is_state('binary_sensor.living_room_camera_motion_sensor','on') }}"
       device_class: motion

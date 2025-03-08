@@ -46,8 +46,11 @@ template:
       device_class: connectivity
       state: |-
         {% set to_monitor = 'south_driveway_camera_uptime' %}
-        {% set delay = 120 %}
-        {{ as_timestamp(now()) - as_timestamp(states.sensor[to_monitor].last_changed) <= delay }}
+        {% set delay = 180 %}
+        {% set recent_update = as_timestamp(now()) - as_timestamp(states.sensor[to_monitor].last_changed) <= delay %}
+        {% set to_monitor = 'south_driveway_camera' %}
+        {% set unifi_online = states('device_tracker.' + to_monitor) == 'home' %}
+        {{ recent_update or unifi_online }}
     - name: "south_driveway_camera_motion_sensor_debounced"
       state: "{{ is_state('binary_sensor.south_driveway_camera_motion_sensor','on') }}"
       device_class: motion
