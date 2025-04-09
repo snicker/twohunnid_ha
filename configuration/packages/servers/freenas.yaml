@@ -96,13 +96,13 @@ sensor:
     <<: *freenas_rest_sensor
     method: POST
     resource: http://192.168.1.16/api/v2.0/disk/temperatures
-    payload: '{"names":["ada0", "ada1", "ada2", "ada3","da0","da1","da2","da3"],"powermode":"NEVER"}'
+    payload: '{"names":["da4", "da5", "da6", "da7","da0","da1","da2","da3"],"powermode":"NEVER"}'
     name: freenas_disk_temps
     json_attributes:
-      - ada0
-      - ada1
-      - ada2
-      - ada3
+      - da4
+      - da5
+      - da6
+      - da7
       - da0
       - da1
       - da2
@@ -156,19 +156,19 @@ sensor:
         unique_id: freenas_media_pct_used
       freenas_disk_temp_ada0:
         unit_of_measurement: 'C°'
-        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada0') }}"
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da4') }}"
         unique_id: freenas_disk_temp_ada0
       freenas_disk_temp_ada1:
         unit_of_measurement: 'C°'
-        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada1') }}"
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da5') }}"
         unique_id: freenas_disk_temp_ada1
       freenas_disk_temp_ada2:
         unit_of_measurement: 'C°'
-        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada2') }}"
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da6') }}"
         unique_id: freenas_disk_temp_ada2
       freenas_disk_temp_ada3:
         unit_of_measurement: 'C°'
-        value_template: "{{ state_attr('sensor.freenas_disk_temps','ada3') }}"
+        value_template: "{{ state_attr('sensor.freenas_disk_temps','da7') }}"
         unique_id: freenas_disk_temp_ada3
       freenas_disk_temp_da0:
         unit_of_measurement: 'C°'
