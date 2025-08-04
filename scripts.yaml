@@ -186,3 +186,35 @@ open_tesla_trunk:
   - data_template:
       entity_id: '{{ trunk_id }}'
     service: lock.lock
+select_random_christmas_tree_preset_2:
+  alias: select_random_christmas_tree_preset
+  sequence:
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: '{% set _rand_opt = state_attr(''select.christmas_tree_wled_preset'',''options'')
+        | random %} {{ _rand_opt }}'
+    target:
+      entity_id: select.christmas_tree_wled_preset
+  description: Selects a random preset for the Christmas Tree
+  icon: mdi:pine-tree
+open_plex_on_living_room_firetv:
+  sequence:
+  - action: media_player.select_source
+    metadata: {}
+    data:
+      source: Plex
+    target:
+      device_id: 2a67efb1bd84efb60532ec03f199923b
+  alias: Open Plex on Living Room FireTV
+  description: ''
+play_fallmiliar_favorites_on_livingroom_plex:
+  sequence:
+  - action: media_player.play_media
+    data:
+      entity_id: media_player.plex_plex_for_android_tv_plex_livingroom
+      media_content_type: PLAYLIST
+      media_content_id: '{ "playlist_name": "Fallmiliar Favorites", "shuffle": "1"
+        }'
+  alias: Play Fallmiliar Favorites on Livingroom Plex
+  description: ''

@@ -450,14 +450,21 @@
     platform: state
     to: 'on'
   condition:
-  - condition: or
+  - condition: and
     conditions:
-    - before: sunrise
-      before_offset: -00:10:00
-      condition: sun
-    - after: sunset
-      after_offset: -00:40:00
-      condition: sun
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_night
+    - condition: or
+      conditions:
+      - before: sunrise
+        before_offset: -00:10:00
+        condition: sun
+      - after: sunset
+        after_offset: -00:40:00
+        condition: sun
   - condition: state
     entity_id: light.kitchen_sconces
     for: 00:00:05
@@ -880,9 +887,8 @@
 - id: '1637732207612'
   alias: Leak Detected - Shut off water
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.govee_leak_detector_25410
     - binary_sensor.govee_leak_detector_28624
     - binary_sensor.govee_leak_detector_26832
@@ -891,14 +897,14 @@
     - binary_sensor.govee_leak_detector_2842
     - binary_sensor.govee_leak_detector_2186
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - type: turn_off
-    device_id: 6a9e8e74194111eba48e6bcf988c4893
-    entity_id: switch.shutoff_valve
+    device_id: 68d4eff468311a3c4ba3da8e3ca59556
+    entity_id: ab76af322e9536ab62e5e3eaf12a4bc0
     domain: switch
-  - service: notify.mobile_app_spacecell
-    data:
+  - data:
       title: Water leak detected!
       message: A water leak has been detected in the {{ state_attr(trigger.entity_id,'friendly_name')
         | replace('Leak Sensor - ','') }}!! Water will be shut off immediately!
@@ -908,6 +914,7 @@
             name: default
             critical: 1
             volume: 1
+    action: notify.mobile_app_spacecell
   mode: single
 - id: '1638817196166'
   alias: Gurushots vote reminder!
@@ -992,27 +999,29 @@
     event: start
   condition: []
   action:
-  - service: group.set
-    data:
+  - data:
       object_id: ignored_connectivity_sensors
       add_entities:
       - binary_sensor.sonoff_4ch_status
       - binary_sensor.tesla_model_3_online_sensor
+      - binary_sensor.roborock_q8_max_mop_attached
+      - binary_sensor.roborock_q8_max_water_box_attached
+    action: group.set
   mode: single
 - id: '1668281076121'
   alias: ZWave Switch Multitap Automator
   description: ''
-  trigger:
-  - platform: event
-    event_type: zwave_js_value_notification
+  triggers:
+  - event_type: zwave_js_value_notification
     event_data:
       value: KeyPressed2x
-  - platform: event
-    event_type: zwave_js_value_notification
+    trigger: event
+  - event_type: zwave_js_value_notification
     event_data:
       value: KeyPressed3x
-  condition: []
-  action:
+    trigger: event
+  conditions: []
+  actions:
   - variables:
       nodes:
         node_16:
@@ -1022,10 +1031,12 @@
           double_tap_controlled_entity_id: light.plant_room_lamp, light.plant_room_floor_lamp
         node_18:
           double_tap_controlled_entity_id: light.ballet_studio_lamp
-        node_38:
+        node_71:
           double_tap_controlled_entity_id: light.office_desk_lamp,switch.greenhouse_powerstrip_socket_2
           triple_tap_controlled_entity_id: light.inovelli_lzw31_sn_dimmer_red_series_level_4,light.office_desk_lamp,switch.greenhouse_powerstrip_socket_2,switch.greenhouse_powerstrip_socket_1
           inverted: true
+        node_60:
+          double_tap_controlled_entity_id: light.sunroom_christmas_tree
   - variables:
       to_state: '{% if trigger.event.data.property_key in (''001'',''002'') and trigger.event.data.property_key
         == ''001'' %}on{% elif trigger.event.data.property_key == ''002'' %}off{%
@@ -1043,8 +1054,7 @@
         "on" %}off{%endif%} {% if to_state == "off" %}on{%endif%} {% else %}{{to_state}}{%endif%}
 
         '
-  - service: persistent_notification.create
-    data:
+  - data:
       title: ZWave Tap Event
       message: 'node: {{node_id}} to_state: {{to_state}} 2x: {{is_double_tap}} 3x:
         {{is_triple_tap}} controlled_entity_id: {{controlled_entity_id }}
@@ -1052,12 +1062,13 @@
         '
     enabled: false
     alias: Debug Notification
+    action: persistent_notification.create
   - condition: template
     value_template: '{{ to_state in (''on'',''off'') and controlled_entity_id != None
       }}'
     alias: Validate to_state and controlled_entity_id
-  - service_template: homeassistant.turn_{{to_state}}
-    data:
+  - action: homeassistant.turn_{{to_state}}
+    target:
       entity_id: '{{ controlled_entity_id }}'
     alias: Trigger action on controlled_entity_id
   mode: single
@@ -1090,16 +1101,19 @@
 - id: '1671298362211'
   alias: Select New Christmas Tree Preset Hourly
   description: ''
-  trigger:
-  - platform: time_pattern
-    hours: '*'
-  condition:
+  triggers:
+  - hours: '*'
+    trigger: time_pattern
+  conditions:
   - condition: state
     entity_id: light.christmas_tree
     state: 'on'
-  action:
-  - service: script.select_random_christmas_tree_preset
+  actions:
+  - action: script.turn_on
+    metadata: {}
     data: {}
+    target:
+      entity_id: script.select_random_christmas_tree_preset
   mode: single
 - id: '1682626276859'
   alias: BirdBuddy Alerts To Telegram
@@ -1171,4 +1185,381 @@
 
         '
       title: TeslaUSB
+  mode: single
+- id: '1719453456246'
+  alias: Freenas HIGH wattage
+  description: ''
+  trigger:
+  - type: power
+    platform: device
+    device_id: c6c78defc2df4740bc143e02f04dd35b
+    entity_id: c5b97c59ebda414b11c98734a52d0858
+    domain: sensor
+    above: 110
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_night
+  action:
+  - service: notify.ios_nickcell
+    data:
+      title: Freenas wattage high!
+      message: Freenas wattage over 110W
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+  mode: single
+- id: '1721884167017'
+  alias: Notify of NAS Degradation
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.freenas_pool_status_tank
+    - sensor.freenas_pool_status_media
+    to: DEGRADED
+  - platform: time_pattern
+    hours: '*'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: sensor.freenas_pool_status_tank
+      state: DEGRADED
+    - condition: state
+      entity_id: sensor.freenas_pool_status_media
+      state: DEGRADED
+  action:
+  - service: notify.persistent_notification
+    data:
+      message: NAS is degraded!!
+      title: NAS is degraded!!
+  - service: notify.mobile_app_spacecell
+    data:
+      message: NAS is degraded!!
+      title: NAS is degraded!!
+  - service: notify.nick
+    data:
+      message: NAS is degraded!!
+      title: NAS is degraded!!
+  mode: single
+- id: '1722710341843'
+  alias: Lightning Announcement
+  description: ''
+  triggers:
+  - entity_id:
+    - sensor.ecowitt_lightning_num
+    trigger: state
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.from_state.state | int < trigger.to_state.state |
+      int }}'
+    alias: Lightning Counter Incremented
+  - condition: time
+    after: 06:30:00
+    before: '22:30:00'
+  actions:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - data:
+      alexa: media_player.kitchen_echo_dot
+      title: Lightning Detected
+      type: tts
+      message: 'warning: lightning detected {{ states(''sensor.ecowitt_lightning'')
+        }} miles away. {{ states(''sensor.ecowitt_lightning_num'') | int }} total
+        lightning strikes detected today.'
+    action: script.notify_alexa
+  mode: single
+- id: '1730344083830'
+  alias: halloween_light_color_changer
+  description: Halloween Light Color Changer
+  triggers:
+  - entity_id: automation.halloween_light_color_changer
+    from: 'off'
+    to: 'on'
+    trigger: state
+  actions:
+  - repeat:
+      while:
+      - condition: template
+        value_template: '{{ states(''automation.halloween_light_color_changer'') ==
+          ''on'' }}'
+      sequence:
+      - variables:
+          light_group: light.halloween_lights_color_change_group
+          colors: '{{ states.sensor.colors_halloween.state | from_json }}'
+          total_delay: 60
+      - variables:
+          random_light: '{% set lights = expand(light_group) %}  {% set lights_on
+            = lights | selectattr(''state'',''eq'',''on'') | list %} {{ lights_on
+            | map(attribute=''entity_id'') | list | random }}'
+          random_color: '{{ colors | random }}'
+          next_change_delay: '{% set lights = expand(light_group) %}  {% set lights_on
+            = lights | selectattr(''state'',''eq'',''on'') | list %} {% set lights_on_count
+            = lights_on | length %}  {% set next_change_delay = total_delay / max(1,lights_on_count)
+            %}  {{ next_change_delay }}'
+      - action: light.turn_on
+        data_template:
+          entity_id: '{{ random_light }}'
+          transition: 3
+          rgb_color: '{{ random_color }}'
+      - delay:
+          seconds: '{{ next_change_delay }}'
+  mode: single
+  initial_state: false
+- id: '1735442183581'
+  alias: Publish Garage Camera Motion to MQTT
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.yi_camera_motion_garage
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: 0
+      retain: true
+      topic: cameras/yicamgarage/motion
+      payload: '{{trigger.to_state.state}}'
+  mode: single
+- id: '1737406475206'
+  alias: Active Flight Tracker - Reset Tracking
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    minutes: /5
+  conditions:
+  - condition: template
+    value_template: '{{ states(''input_text.active_tracked_flight'') | length > 0
+      }}'
+  actions:
+  - variables:
+      tracked_flight: '{{ states(''input_text.active_tracked_flight'') }}'
+      device_tracker_entity_id: '{{ ''device_tracker.'' + (states(''input_text.active_tracked_flight'')
+        | lower) }}'
+  - action: text.set_value
+    metadata: {}
+    data:
+      value: '{{ tracked_flight }}'
+    target:
+      entity_id: text.flightradar24_remove_from_track
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  - action: text.set_value
+    metadata: {}
+    data:
+      value: '{{ tracked_flight }}'
+    target:
+      entity_id: text.flightradar24_add_to_track
+  mode: single
+- id: '1737407538209'
+  alias: Active Flight Tracker TTL Notification
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.active_tracked_flight_time_til_land
+    below: 60
+  - trigger: numeric_state
+    entity_id:
+    - sensor.active_tracked_flight_time_til_land
+    below: 20
+  - trigger: numeric_state
+    entity_id:
+    - sensor.active_tracked_flight_time_til_land
+    below: 10
+  - trigger: numeric_state
+    entity_id:
+    - sensor.active_tracked_flight_time_til_land
+    below: 5
+  conditions: []
+  actions:
+  - action: notify.mobile_app_spacecell
+    metadata: {}
+    data:
+      message: '{% set flight_number = states(''input_text.active_tracked_flight'')
+        %} {% set ttl = states(''sensor.active_tracked_flight_time_til_land'') | float
+        | round(0) %}  {% set travel_time = states(''sensor.travel_time_nick_to_harry_reid_airport'')
+        %} Flight {{ flight_number }} lands in {{ttl}} mins! {{travel_time}}m drive
+        time to airport.'
+      title: Flight Tracker Alert
+  mode: single
+- id: '1738726904693'
+  alias: Garage/Door Unlock upon arrival at home
+  description: ''
+  triggers:
+  - trigger: zone
+    entity_id: person.nick
+    zone: zone.200_stonewood_geofence
+    event: enter
+  conditions: []
+  actions:
+  - if:
+    - alias: If moving faster than 8mph
+      condition: template
+      value_template: '{{ state_attr("device_tracker.spacecell","speed") > 3.5 }}'
+    then:
+    - action: cover.open_cover
+      metadata: {}
+      data: {}
+      target:
+        entity_id: cover.garage_door_homekit
+    - action: cover.open_cover
+      metadata: {}
+      data: {}
+      target:
+        entity_id: cover.driveway_swing_gate
+    - action: notify.mobile_app_spacecell
+      metadata: {}
+      data:
+        title: Arriving at 200 Stonewood
+        message: Opening garage... (traveling at {{ state_attr('device_tracker.spacecell','speed')
+          }}m/s)
+    else:
+    - action: script.alarm_disarm
+      metadata: {}
+      data: {}
+    - action: lock.unlock
+      metadata: {}
+      data: {}
+      target:
+        entity_id: lock.kwikset_touchpad_electronic_deadbolt_locked_2
+    - action: notify.mobile_app_spacecell
+      metadata: {}
+      data:
+        title: Arriving at 200 Stonewood
+        message: Unlocking front door... (traveling at {{ state_attr('device_tracker.spacecell','speed')
+          }}m/s)
+  mode: single
+- id: '1739510044701'
+  alias: Smart Test Monitor
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.nas_smart_test
+    below: 11
+  conditions: []
+  actions:
+  - action: notify.mobile_app_spacecell
+    data:
+      message: SMART Test nearly complete
+      title: SMART Test nearly complete
+  mode: single
+- id: '1739571493698'
+  alias: Resilver Status
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.nas_resilver_tank_complete_pct
+    above: 97
+  conditions: []
+  actions:
+  - action: persistent_notification.create
+    metadata: {}
+    data:
+      message: Tank resilver above 97%
+      title: TrueNAS resilver status
+      notification_id: TrueNASresilverstatus
+  - action: notify.mobile_app_spacecell
+    metadata: {}
+    data:
+      message: Tank resilver above 97%
+      title: TrueNAS resilver status
+  mode: single
+- id: '1748188492425'
+  alias: DogJazz 4Eva
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.plant_room_dot
+    from: playing
+    to: idle
+  - trigger: state
+    entity_id:
+    - media_player.plant_room_dot
+    from: playing
+    to: paused
+  conditions:
+  - condition: state
+    entity_id: input_boolean.dogjazz
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.dogjazz
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.dogjazz
+  mode: single
+- id: '1752639974557'
+  alias: Server Closet Exhaust On at 12am
+  description: ''
+  triggers:
+  - trigger: time
+    at: 00:00:00
+  conditions: []
+  actions:
+  - action: fan.turn_on
+    metadata: {}
+    data:
+      percentage: 100
+    target:
+      entity_id: fan.manual_fan_speed
+  mode: single
+- id: '1752640037995'
+  alias: Server Closet Exhaust Off at 6am
+  description: ''
+  triggers:
+  - trigger: time
+    at: 06:00:00
+  conditions: []
+  actions:
+  - action: fan.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: fan.manual_fan_speed
+  mode: single
+- id: '1753482179502'
+  alias: DogJazz Off
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.dogjazz
+    to: 'off'
+  conditions: []
+  actions:
+  - action: media_player.media_stop
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.plant_room_dot
   mode: single
