@@ -1,0 +1,13 @@
+# https://github.com/ivanmihov/homeassistant-ntfy.sh
+
+notify:
+  - name: "ntfy-200stonewood"
+    platform: ntfy
+    url: https://notify.helltoaster.scfs.me/
+    token: !secret ntfy_sh_token
+    topic: 200Stonewood
+  - name: "ntfy-200stonewood-flightalerts"
+    platform: ntfy
+    url: https://notify.helltoaster.scfs.me/
+    token: !secret ntfy_sh_token
+    topic: 200StonewoodFlightAlerts
