@@ -228,3 +228,13 @@ notify_200stonewood:
       title: '{% if title %}200Stonewood: {{ title }}{% else %}200Stonewood{%endif%}'
   alias: notify_200stonewood
   description: ''
+notify_200stonewoodflightalerts:
+  sequence:
+  - action: notify.send_message
+    metadata: {}
+    data:
+      message: '{{ message }}'
+      entity_id: notify.200stonewoodflightalerts
+      title: '{% if title %}200StonewoodFlightAlerts: {{ title }}{% else %}200StonewoodFlightAlerts{%endif%}'
+  alias: notify_200stonewoodflightalerts
+  description: ''
