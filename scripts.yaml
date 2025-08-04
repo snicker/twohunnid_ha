@@ -218,3 +218,13 @@ play_fallmiliar_favorites_on_livingroom_plex:
         }'
   alias: Play Fallmiliar Favorites on Livingroom Plex
   description: ''
+notify_200stonewood:
+  sequence:
+  - action: notify.send_message
+    metadata: {}
+    data:
+      message: '{{ message }}'
+      entity_id: notify.200stonewood
+      title: '{% if title %}200Stonewood: {{ title }}{% else %}200Stonewood{%endif%}'
+  alias: notify_200stonewood
+  description: ''
