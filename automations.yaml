@@ -57,24 +57,24 @@
   mode: single
 - id: '1537420454578'
   alias: 'HAStatus: Shutdown'
-  trigger:
+  triggers:
   - event: shutdown
-    platform: homeassistant
-  condition: []
-  action:
+    trigger: homeassistant
+  conditions: []
+  actions:
   - data:
-      message: brb
-    service: script.notify_200stonewood
+      message: home assistant will be right back!
+    action: script.notify_200stonewood
 - id: '1537420502502'
   alias: 'HAStatus: Start'
-  trigger:
+  triggers:
   - event: start
-    platform: homeassistant
-  condition: []
-  action:
+    trigger: homeassistant
+  conditions: []
+  actions:
   - data:
-      message: back
-    service: script.notify_200stonewood
+      message: home assistant has returned to your regularly scheduled programming
+    action: script.notify_200stonewood
 - id: '1537936842222'
   alias: 'Alarm State: Armed, Run "Alarm State: Armed (Any)" Script'
   trigger:
