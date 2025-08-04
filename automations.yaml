@@ -64,7 +64,7 @@
   action:
   - data:
       message: brb
-    service: notify.nick
+    service: script.notify_200stonewood
 - id: '1537420502502'
   alias: 'HAStatus: Start'
   trigger:
@@ -74,7 +74,7 @@
   action:
   - data:
       message: back
-    service: notify.nick
+    service: script.notify_200stonewood
 - id: '1537936842222'
   alias: 'Alarm State: Armed, Run "Alarm State: Armed (Any)" Script'
   trigger:
@@ -172,7 +172,7 @@
   action:
   - data:
       message: congrats on your zwift level!
-    service: notify.nick
+    service: script.notify_200stonewood
 - id: '1550015887078'
   alias: 'Nick gets Home by car/bike: Activate Scene'
   trigger:
@@ -201,7 +201,7 @@
   - data:
       message: Homeassistant load has been over 2.00 for the 5m average... might want
         to look into it
-    service: notify.nick
+    service: script.notify_200stonewood
 - id: '1558144520212'
   alias: turn off pool lights when you turn them on
   trigger:
@@ -405,7 +405,7 @@
       message: The internet connection at home is back online after {{ ((now() - states.binary_sensor.internet_connection_status.last_changed).total_seconds()
         / 60) | int }}m{{ ((now() - states.binary_sensor.internet_connection_status.last_changed).total_seconds()
         % 60) | int }}s!
-    service: notify.nick
+    service: script.notify_200stonewood
   - data:
       message: The internet is back online!
     service: script.alexa_announcement
@@ -424,7 +424,7 @@
     service: script.notify_alexa
   - data:
       message: ride on!
-    service: notify.nick
+    service: script.notify_200stonewood
 - id: '1587237199784'
   alias: 'Nick gets Home by walking: Activate Scene'
   description: ''
@@ -854,7 +854,7 @@
     above: '300'
   condition: []
   action:
-  - service: notify.nick
+  - service: script.notify_200stonewood
     data_template:
       message: 'Air quality alert:  {% if trigger.get(''to_state'') %}{% if trigger.to_state.state|int(default=0)
         > trigger.from_state.state|int(default=0) %} Air quality is getting worse.  {%
@@ -879,7 +879,7 @@
     entity_id: sensor.freenas_alert_level
   condition: []
   action:
-  - service: notify.nick
+  - service: script.notify_200stonewood
     data_template:
       message: 'FreeNAS Alert ({{states("sensor.freenas_alert_level")}}) : {{ states(''sensor.freenas_alert_message'')
         }}'
@@ -924,7 +924,7 @@
     minutes: /30
   condition: []
   action:
-  - service: notify.nick
+  - service: script.notify_200stonewood
     data:
       message: Time to vote!
       title: VOTE!
@@ -1247,7 +1247,7 @@
     data:
       message: NAS is degraded!!
       title: NAS is degraded!!
-  - service: notify.nick
+  - service: script.notify_200stonewood
     data:
       message: NAS is degraded!!
       title: NAS is degraded!!

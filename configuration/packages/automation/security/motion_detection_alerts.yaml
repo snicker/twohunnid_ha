@@ -156,7 +156,7 @@ script:
   snooze_interior_detection_alerts:
     alias: Snooze Interior Detection Alerts for 30 minutes
     sequence:
-      - service: notify.nick
+      - service: script.notify_200stonewood
         data_template:
           message: "Interior motion detection alerts have been snoozed for 30 minutes."
       - service: homeassistant.turn_on
@@ -167,7 +167,7 @@ script:
   snooze_exterior_detection_alerts:
     alias: Snooze Exterior Detection Alerts for 30 minutes
     sequence:
-      - service: notify.nick
+      - service: script.notify_200stonewood
         data_template:
           message: "Exterior motion detection alerts have been snoozed for 30 minutes."
       - service: homeassistant.turn_on
@@ -186,7 +186,7 @@ script:
   motion_detection_alert:
     alias: Motion Detection Alert
     sequence:
-    - service: notify.nick
+    - service: script.notify_200stonewood
       data_template:
         message: &motion_detected_message >
           Motion detected: {{ state_attr(motion_group,'friendly_name')|replace('Motion Sensors - ','') }}
@@ -202,7 +202,7 @@ script:
       data_template:
         entity_id: "camera.{{ camera_entity_id }}"
         filename: "/tmp/{{ camera_entity_id }}_snapshot.jpg"
-    - service: notify.nick
+    - service: script.notify_200stonewood
       data_template:
         message: *motion_detected_message
         data:

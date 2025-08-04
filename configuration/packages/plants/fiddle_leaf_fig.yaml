@@ -70,4 +70,4 @@ automation:
       value_template: "{{ state_attr('plant.fiddle_leaf_fig','problem') != 'none' }}"
     - data_template:
         message: "{% set plant = 'plant.fiddle_leaf_fig' %}{{ state_attr(plant,'friendly_name') }} has an issue: {{ state_attr(plant,'problem') }}. Moisture: {{ state_attr(plant,'moisture') }}% Temp: {{ state_attr(plant,'temperature') }} Conductivity: {{ state_attr(plant,'conductivity') }}"
-      service: notify.nick
+      service: script.notify_200stonewood

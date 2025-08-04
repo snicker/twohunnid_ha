@@ -39,7 +39,7 @@ script:
   door_open_alert:
     alias: Door Open Alert
     sequence:
-    - service: notify.nick
+    - service: script.notify_200stonewood
       data_template:
         message: &door_open_message >
           The {% for obj in states|sort(attribute='last_updated',reverse=1)if obj.entity_id in state_attr(door_group,'entity_id') and obj.state == 'on' %}{{ obj.attributes.friendly_name|lower }}{% if loop.index < loop.length and loop.nextitem %} and {% endif %}{% if loop.last %}{%if not loop.previtem and not loop.nextitme %} is {% else %} are {% endif %}{%endif%}{% endfor %}open!

@@ -4,7 +4,7 @@ alarm_state_armed_any:
   - data_template:
       message: the alarm has been set to {{ states("alarm_control_panel.home_alarm")|replace("_","
         ") }} mode
-    service: notify.nick
+    service: script.notify_200stonewood
   - service: lock.lock
     data:
       entity_id:
@@ -16,7 +16,7 @@ alarm_state_disarmed:
   sequence:
   - data:
       message: home alarm has been disarmed
-    service: notify.nick
+    service: script.notify_200stonewood
   - service: script.ifttt_piper_disarm
 alarm_state_armed_night:
   alias: 'Alarm State: Armed Night'
@@ -123,7 +123,7 @@ camera_snapshot:
             }}
           file: /tmp/{{ camera_entity_id }}_snapshot.jpg
       message: camerasnap
-    service: notify.nick
+    service: script.notify_200stonewood
 ifttt_piper_arm_stay:
   alias: 'IFTTT: Piper: Arm Stay'
   sequence:
