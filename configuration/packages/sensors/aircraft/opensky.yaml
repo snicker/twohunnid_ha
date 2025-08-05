@@ -50,7 +50,7 @@ automation:
       event_data:
         sensor: sky_at_home
     action:
-      service: notify.200stonewoodflightalerts
+      service: service.notify_200stonewoodflightalerts
       data_template:
         message : 'Flight entry of {{ trigger.event.data.callsign }} (https://www.flightradar24.com/{{ trigger.event.data.callsign }}/)'
 
@@ -61,7 +61,7 @@ automation:
       event_data:
         sensor: sky_at_home
     action:
-      service: notify.200stonewoodflightalerts
+      service: service.notify_200stonewoodflightalerts
       data_template:
         message : 'Flight exit of {{ trigger.event.data.callsign }} '
 
