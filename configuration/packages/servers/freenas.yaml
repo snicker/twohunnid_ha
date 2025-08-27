@@ -114,8 +114,8 @@ sensor:
     resource: http://192.168.1.16/api/v2.0/system/ready
     name: freenas_ready
     value_template: >-
-      {% if value_json is defined %}
-        {{ value_json }}
+      {% if value is defined %}
+        {{ value }}
       {% else %}
         {{ states.sensor['freenas_ready'].state }}
       {% endif %}
