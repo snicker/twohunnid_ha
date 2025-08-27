@@ -47,7 +47,7 @@ template:
     - name: dockervm_online
       device_class: connectivity
       state: >
-        {{ states("sensor.freenas_dockervm_status") == "RUNNING" }}
+        {{ states("sensor.freenas_dockervm_status") == "RUNNING" and is_state("binary_sensor.dockervm_network_status","on") }}
 
 sensor:
   # pool sensors
@@ -113,6 +113,12 @@ sensor:
     method: GET
     resource: http://192.168.1.16/api/v2.0/system/ready
     name: freenas_ready
+    value_template: >-
+      {% if value_json is defined %}
+        {{ value_json }}
+      {% else %}
+        {{ states.sensor['freenas_ready'].state }}
+      {% endif %}
 
   - platform: rest
     <<: *freenas_rest_sensor_token
@@ -134,7 +140,12 @@ sensor:
     method: POST
     resource: http://192.168.1.16/api/v2.0/vm/id/1/status
     name: freenas_dockervm_status
-    value_template: "{{ value_json.state }}"
+    value_template: >-
+      {% if value_json is defined and value_json.state is defined %}
+        {{ value_json.state }}
+      {% else %}
+        {{ states.sensor['freenas_dockervm_status'].state }}
+      {% endif %}
 
   - platform: template
     sensors:
