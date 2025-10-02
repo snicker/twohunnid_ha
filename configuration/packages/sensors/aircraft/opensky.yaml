@@ -49,10 +49,10 @@ automation:
       event_type: opensky_entry
       event_data:
         sensor: sky_at_home
-    action:
-      service: service.notify_200stonewoodflightalerts
-      data_template:
-        message : 'Flight entry of {{ trigger.event.data.callsign }} (https://www.flightradar24.com/{{ trigger.event.data.callsign }}/)'
+    actions:
+      - action: script.notify_200stonewoodflightalerts
+        data_template:
+          message : 'Flight entry of {{ trigger.event.data.callsign }} (https://www.flightradar24.com/{{ trigger.event.data.callsign }}/)'
 
   - alias: 'flight_exit_home_region'
     trigger:
@@ -60,10 +60,10 @@ automation:
       event_type: opensky_exit
       event_data:
         sensor: sky_at_home
-    action:
-      service: service.notify_200stonewoodflightalerts
-      data_template:
-        message : 'Flight exit of {{ trigger.event.data.callsign }} '
+    actions:
+      - action: script.notify_200stonewoodflightalerts
+        data_template:
+          message : 'Flight exit of {{ trigger.event.data.callsign }} '
 
   - alias: 'ghettobird_overhead'
     trigger:
