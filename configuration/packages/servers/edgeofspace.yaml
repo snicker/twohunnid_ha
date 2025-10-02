@@ -32,4 +32,4 @@ template:
 
 sensor:
   - platform: supervisord
-    url: http://edgeofspace.twohunnid:9001/RPC2
+    url: http://edgeofspace.local:9001/RPC2
