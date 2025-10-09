@@ -23,7 +23,8 @@ wifi:
     password: !secret wifi_secondary_password
   ap:
     ssid: ${device_name}_${device_index}_AP
-    password: !secret ap_password
+
+captive_portal:
 
 # Enable logging
 logger:
