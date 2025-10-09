@@ -11,7 +11,7 @@ substitutions:
 # GPIO16 Optional sensor
 
 esphome:
-  name: some-name
+  name: ${device_name}
 
 esp8266:
   board: esp01_1m
