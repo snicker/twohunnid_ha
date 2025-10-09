@@ -91,7 +91,8 @@ binary_sensor:
         
 # Enable Home Assistant API
 api:
-  password: !secret ota_api_password
+  encryption:
+    key: 7FrgAi4k+kJVKW16vA0RuN8nnCkhYI80kWGIDTfxubU=
   reboot_timeout: 0s
 
 ota:
