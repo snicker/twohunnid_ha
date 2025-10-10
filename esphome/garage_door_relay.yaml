@@ -57,8 +57,10 @@ switch:
 
 # Enable Home Assistant API
 api:
-  password: !secret ota_api_password
+  encryption:
+    key: S9sY6pWL8xpohmKKrLbxFif4SjCtOBvtNcxmfADoJJQ=
   reboot_timeout: 0s
 
 ota:
-  password: !secret ota_api_password
+  - platform: esphome
+    password: !secret ota_api_password
