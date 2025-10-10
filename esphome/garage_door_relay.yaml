@@ -20,6 +20,8 @@ wifi:
   ap:
     ssid: ${device_name}_AP
 
+captive_portal:
+
 # Enable logging
 logger:
 
