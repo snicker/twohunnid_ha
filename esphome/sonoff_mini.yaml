@@ -1,5 +1,5 @@
 substitutions:
-  device_index: "01"
+  device_index: "03"
   device_name: sonoff_mini
   friendly_name: Sonoff Mini
 
@@ -11,24 +11,40 @@ substitutions:
 
 esphome:
   name: ${device_name}_${device_index}
-  platform: ESP8266
+
+esp8266:
   board: esp01_1m
 
 wifi:
+  reboot_timeout: 0s
   networks:
   - ssid: !secret wifi_primary_ssid
     password: !secret wifi_primary_password
   - ssid: !secret wifi_secondary_ssid
     password: !secret wifi_secondary_password
   ap:
-    ssid: ${device_name}_${device_index}_AP
-    password: !secret ap_password
+    ssid: ${device_name}_AP
 
-# Enable logging
+captive_portal:
+
+api:
+  encryption:
+    key: imji7mPxqXaBaVTT9pdKqqM8zekJvab7Qkw2Ju+9uCM=
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    id: ha_ota
+    password: !secret ota_api_password
+
 logger:
+  baud_rate: 0
 
 web_server:
   port: 80
+  auth:
+    username: admin
+    password: !secret ota_api_password
 
 output:
 - platform: gpio
@@ -85,12 +101,3 @@ binary_sensor:
     on_release:
       then:
         - switch.toggle: relay1
-        
-# Enable Home Assistant API
-api:
-  password: !secret ota_api_password
-  reboot_timeout: 0s
-
-ota:
-  - platform: esphome
-    password: !secret ota_api_password
