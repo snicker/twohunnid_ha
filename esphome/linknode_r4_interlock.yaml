@@ -5,18 +5,31 @@ substitutions:
 
 esphome:
   name: ${device_name}_${device_index}
-  platform: ESP8266
+
+esp8266:
   board: esp12e
 
 wifi:
+  reboot_timeout: 0s
   networks:
   - ssid: !secret wifi_primary_ssid
     password: !secret wifi_primary_password
   - ssid: !secret wifi_secondary_ssid
     password: !secret wifi_secondary_password
   ap:
-    ssid: ${device_name}_${device_index}_config
-    password: !secret ap_password
+    ssid: ${device_name}_AP
+
+captive_portal:
+
+api:
+  encryption:
+    key: XC6kLNt3hj2JENuPPsX+CSq8bDcUx/2VaDyrkmFXkNE=
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    id: ha_ota
+    password: !secret ota_api_password
 
 logger:
   baud_rate: 0
@@ -26,12 +39,6 @@ web_server:
   auth:
     username: admin
     password: !secret ota_api_password
-
-ota:
-  password: !secret ota_api_password
-
-api:
-  password: !secret ota_api_password
 
 sensor:
   - platform: uptime
