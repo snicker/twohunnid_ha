@@ -26,6 +26,8 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - "192.168.1.19"
+    - "10.136.70.116"
+    - "10.147.19.186"
 
 ifttt:
   key: !secret ifttt_key
