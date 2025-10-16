@@ -1,0 +1,79 @@
+substitutions:
+  device_index: "01"
+  device_name: backyard_string_lights
+  friendly_name: Backyard String Lights
+
+esphome:
+  name: ${device_name}_${device_index}
+
+esp8266:
+  board: esp8285
+
+wifi:
+  reboot_timeout: 0s
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: ${device_name}_AP
+
+captive_portal:
+
+api:
+  encryption:
+    key: XC6kLNt3hj2JENuPPsX+CSq2bDcUx/2VaDyrkmFXkNE=
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    id: ha_ota
+    password: !secret ota_api_password
+
+logger:
+  baud_rate: 0
+
+switch:
+  # relay output
+  - platform: gpio
+    id: relay
+    name: "${friendly_name}"
+    pin: GPIO05
+
+    on_turn_on:
+      - switch.turn_on: blue_led
+      - switch.turn_off: red_led
+
+    on_turn_off:
+      - switch.turn_on: blue_led
+      - switch.turn_on: red_led
+
+  - platform: gpio
+    pin: GPIO12
+    id: red_led
+    name: Red LED
+    inverted: true
+    internal: True
+
+  - platform: gpio
+    pin: GPIO14
+    id: blue_led
+    name: Blue LED
+    inverted: true
+    internal: True
+
+  - platform: restart
+    name: "Reboot ${friendly_name} ${device_index}"
+    id: reboot
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO03
+      mode: INPUT_PULLUP
+      inverted: true
+    name: Main Button
+    internal: True
+    on_press:
+      - switch.toggle: relay
