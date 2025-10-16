@@ -10,14 +10,4 @@ homeassistant:
     light.string_lights:
       <<: *customize
       friendly_name: "String Lights"
-
-mqtt:
-  light:
-    - name: string_lights
-      optimistic: false
-      command_topic: "x10/b2/command"
-      payload_on: "on"
-      payload_off: "off"
-      state_topic: "x10/b2/status"
-      state_value_template: "{{ value }}"
     
