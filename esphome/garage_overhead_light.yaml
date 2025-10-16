@@ -1,0 +1,68 @@
+substitutions:
+  device_index: "01"
+  device_name: garage_overhead_light
+  friendly_name: Garage Overhead Light
+
+esphome:
+  name: ${device_name}
+
+esp8266:
+  board: esp01_1m
+
+wifi:
+  reboot_timeout: 0s
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: ${device_name}_AP
+
+captive_portal:
+
+api:
+  encryption:
+    key: XC6kLNt3hj2JENuPPsX+CSq2bdcUx/2VaDyrkmFXkNE=
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    id: ha_ota
+    password: !secret ota_api_password
+
+logger:
+  baud_rate: 0
+
+web_server:
+  port: 80
+  
+switch:
+  - platform: gpio
+    name: "${friendly_name}"
+    icon: mdi:power-socket-us
+    id: relay1
+    pin:
+      number: GPIO12
+    restore_mode: RESTORE_DEFAULT_OFF
+
+  - platform: restart
+    name: "Reboot ${friendly_name}"
+    id: reboot
+
+status_led:
+  pin:
+    number: GPIO4
+    inverted: true
+    
+binary_sensor:
+  - platform: gpio
+    id: power_button
+    internal: True
+    pin: 
+      number: GPIO13
+      mode: INPUT_PULLUP
+      inverted: true
+    on_press:
+      then:
+        - switch.toggle: relay1

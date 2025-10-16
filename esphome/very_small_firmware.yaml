@@ -1,0 +1,23 @@
+### barebones just so we can upload other firmware if the device is small.
+substitutions:
+  device_index: "01"
+  device_name: very_small_firmware
+
+esphome:
+  name: ${device_name}_${device_index}
+
+esp8266:
+  board: esp01_1m
+
+wifi:
+  reboot_timeout: 0s
+  networks:
+  - ssid: !secret wifi_primary_ssid
+    password: !secret wifi_primary_password
+  - ssid: !secret wifi_secondary_ssid
+    password: !secret wifi_secondary_password
+  ap:
+    ssid: ${device_name}_AP
+
+web_server:
+  port: 80
