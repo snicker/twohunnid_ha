@@ -7,7 +7,7 @@ esphome:
   name: ${device_name}_${device_index}
 
 esp8266:
-  board: esp01_1m
+  board: esp8285
 
 wifi:
   reboot_timeout: 0s
@@ -33,9 +33,6 @@ ota:
 
 logger:
   baud_rate: 0
-
-web_server:
-  port: 80
   
 switch:
   - platform: gpio
