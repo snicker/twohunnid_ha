@@ -994,11 +994,11 @@
 - id: '1661021071678'
   alias: Ignore Connectivity Sensors on Boot
   description: ''
-  trigger:
-  - platform: homeassistant
-    event: start
-  condition: []
-  action:
+  triggers:
+  - event: start
+    trigger: homeassistant
+  conditions: []
+  actions:
   - data:
       object_id: ignored_connectivity_sensors
       add_entities:
@@ -1006,6 +1006,13 @@
       - binary_sensor.tesla_model_3_online_sensor
       - binary_sensor.roborock_q8_max_mop_attached
       - binary_sensor.roborock_q8_max_water_box_attached
+      - binary_sensor.av_closet_exhaust_port_2_status
+      - binary_sensor.av_closet_exhaust_port_3_status
+      - binary_sensor.av_closet_exhaust_port_4_status
+      - binary_sensor.av_closet_exhaust_port_5_status
+      - binary_sensor.av_closet_exhaust_port_6_status
+      - binary_sensor.av_closet_exhaust_port_7_status
+      - binary_sensor.av_closet_exhaust_port_8_status
     action: group.set
   mode: single
 - id: '1668281076121'
