@@ -1,9 +1,19 @@
+# new board : https://www.amazon.com/dp/B0BG2FW79Z
+# used platform: ESP8266 
+# board: esp12e 
+# The pin designation is as follows: 
+# - the relay is on GPIO5, 
+# - the board LED is on GPIO16, 
+# - and the module LED is on GPIO2. 
+# There are drawbacks: 
+#   the button is hardwired to reset, so you cannot use it as a binary sensor; 
+#   native I2C pins are used for the relay, so you'd have to use SWI2C.
+
 esphome:
   name: garage_door_opener_1367
 
 esp8266:
-  board: esp01_1m
-  board_flash_mode: dout
+  board: esp12e
 
 wifi:
   networks:
@@ -32,8 +42,31 @@ api:
   password: !secret ota_api_password
   reboot_timeout: 300s
 
+status_led:
+  pin: GPIO2
+
+output:
+  - platform: esp8266_pwm
+    id: board_led
+    pin:
+      number: GPIO16
+      inverted: True
+
+light:
+  - platform: monochromatic
+    name: "Board LED"
+    output: board_led
+    internal: true
+
+sensor:
+  - platform: wifi_signal
+    name: "Garage Door Opener Wifi Signal"
+    update_interval: 60s
+  - platform: uptime
+    type: seconds
+    name: "Garage Door Opener "
+
 binary_sensor:
-  #
   # new sensors to use
   # https://protosupplies.com/product/e18-d80nk-adjustable-infrared-proximity-sensor-module/
   # Brown Wire – Connect to 5V.
@@ -42,49 +75,53 @@ binary_sensor:
   # Black Wire will usually pull high, unless object detected
   # Info on pins : https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
   # if the TX (GPIO1) pin is pulled low during boot, boot fails!!
-  # 
-  #- platform: gpio
-  #  name: "Garage Door Open Sensor"
-  #  id: garage_door_open_sensor
-  #  pin:
-  #    number: GPIO5 #D1
-  #    mode: INPUT_PULLUP
-  #    inverted: true
-  #  filters:
-  #    - delayed_on: 1000ms
-  #  on_press:
-  #    then:
-  #      - lambda: |-
-  #          id(garage_door_cover).position = COVER_OPEN;
-  #          id(garage_door_cover).publish_state();
-  #  on_release:
-  #    - then:
-  #      - if:
-  #          condition:
-  #            switch.is_off: garage_door_relay_1
-  #          then:
-  #            - cover.close: garage_door_cover
-  #    - then:
-  #      - delay: 16s
-  #      - if:
-  #          condition:
-  #            binary_sensor.is_off: garage_door_open_sensor
-  #          then:
-  #            - lambda: |-
-  #                id(garage_door_cover).position = COVER_CLOSED;
-  #                id(garage_door_cover).publish_state();
-
-  - platform: template
+  # using CAT5/6 cable:
+  # solid brown: 5V
+  # solid blue: Ground
+  # solid orange (actually blue striped): closed sensor signal
+  # solid green: open sensor signal
+  - platform: gpio
     name: "Garage Door Open Sensor"
     id: garage_door_open_sensor
-    condition:
-      binary_sensor.is_off: garage_door_closed_sensor
+    pin:
+      number: GPIO12
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 1000ms
+    on_press:
+      then:
+        - lambda: |-
+            id(garage_door_cover).position = COVER_OPEN;
+            id(garage_door_cover).publish_state();
+    on_release:
+      - then:
+        - if:
+            condition:
+              switch.is_off: garage_door_relay_1
+            then:
+              - cover.close: garage_door_cover
+      - then:
+        - delay: 16s
+        - if:
+            condition:
+              binary_sensor.is_off: garage_door_open_sensor
+            then:
+              - lambda: |-
+                  id(garage_door_cover).position = COVER_CLOSED;
+                  id(garage_door_cover).publish_state();
+
+  #- platform: template
+  #  name: "Garage Door Open Sensor"
+  #  id: garage_door_open_sensor
+  #  condition:
+  #    binary_sensor.is_off: garage_door_closed_sensor
 
   - platform: gpio
     name: "Garage Door Closed Sensor"
     id: garage_door_closed_sensor
     pin:
-      number: GPIO5 #d1
+      number: GPIO14
       mode: INPUT_PULLUP
       inverted: true
     on_press:
@@ -110,6 +147,15 @@ binary_sensor:
                   id(garage_door_cover).publish_state();
       
 switch:
+  - platform: template
+    restore_mode: ALWAYS_OFF
+    name: "Garage Door State Reset to Closed"
+    id: garage_door_state_reset
+    turn_on_action:
+      - lambda: |-
+          id(garage_door_cover)->position = COVER_CLOSED;
+          id(garage_door_cover).publish_state();
+      - switch.turn_off: garage_door_state_reset
   - platform: restart
     name: "Reboot Garage Door Relay"
     id: garage_door_relay_restart
@@ -117,7 +163,7 @@ switch:
   - platform: gpio
     restore_mode: ALWAYS_OFF
     pin: 
-      number: GPIO4 #D2
+      number: GPIO5
       inverted: False
     name: "Garage Door Relay Internal Switch 1"
     id: internal_relay_switch_1
