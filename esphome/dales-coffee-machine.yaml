@@ -1,0 +1,7 @@
+packages:   # as a list
+  - !include xs-ssa6-rgb-smart-plug.yaml
+  
+substitutions:
+  devicename: dales-coffee-machine
+  friendly_name: Dale's Coffee Machine
+
