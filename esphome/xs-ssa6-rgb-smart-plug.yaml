@@ -129,9 +129,62 @@ light:
     default_transition_length: 0.5s
     restore_mode: ALWAYS_OFF
     effects: # List some effects
-      - strobe
-      - flicker
-      - random
+      - strobe:
+      - strobe:
+          name: Triple Green Blink
+          colors:
+            - state: true
+              duration: 150ms
+              red: 0%
+              green: 100%
+              blue: 0%
+            - state: false
+              duration: 150ms
+            - state: true
+              duration: 150ms
+              red: 0%
+              green: 100%
+              blue: 0%
+            - state: false
+              duration: 150ms
+            - state: true
+              duration: 150ms
+              red: 0%
+              green: 100%
+              blue: 0%
+            - state: false
+              duration: 1650ms
+      - flicker:
+      - pulse:
+          name: "Fast Pulse"
+          transition_length: 0.5s
+          update_interval: 0.5s
+          min_brightness: 0%
+          max_brightness: 100%
+      - pulse:
+          name: "Slow Pulse"
+          transition_length: 500ms
+          update_interval: 2s
+      - pulse:
+          name: "Very Slow Pulse"
+          transition_length: 
+            on_length: 1800ms
+            off_length: 1800ms
+          update_interval: 2400ms
+      - pulse:
+          name: "Very Slow Pulse Low Brightness"
+          transition_length: 
+            on_length: 3600ms
+            off_length: 3600ms
+          update_interval: 2400ms
+          min_brightness: 10%
+          max_brightness: 30%
+      - pulse:
+          name: "Asymmetrical Pulse"
+          transition_length:
+            on_length: 1s
+            off_length: 500ms
+          update_interval: 1.5s
 
 # Blink the red light if we aren't connected to WiFi. Could use https://esphome.io/components/status_led.html instead but then we couldn't use the red light for other things as well.
 # Only if not connected after 30s
