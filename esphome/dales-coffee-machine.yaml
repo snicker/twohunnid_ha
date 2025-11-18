@@ -5,3 +5,42 @@ substitutions:
   devicename: dales-coffee-machine
   friendly_name: Dale's Coffee Machine
 
+# ### plan ###
+# # states the switch can be in and light feedback: #
+# - Off (No light)
+# - Auto-off (Pulsating yellow, low brightness, for two hours)
+# - Ready to brew (three blinks periodically)
+# - On (Green)
+# - Failure - attempt to brew without being ready (pulsate red fast for 5 seconds)
+#
+# # sensors/switches exposed in home assistant #
+# - switch state
+# - light
+# - ready to brew switch
+# - ready to brew sensor
+# - brew switch
+# - button state
+#
+# # physical button behavior #
+# when off:
+# - change to "ready to brew"
+# when ready to brew:
+# - change to "on"
+# when "on" or "auto-off":
+# - change to "off"
+#
+# # virtual button behavior #
+# - ready to brew switch
+#   - on turn on:
+#     - run "ready to brew" script
+#   - on turn off:
+#     - run "off" script
+# - brew switch:
+#   - on turn on:
+#     - if state = "ready to brew"
+#       - run "brew" script (turn on relay, solid green light, start delay to turn off relay and pulse light for 2 hours, then off)
+#     - if state != "ready to brew"
+#       - run "failure to brew" script (blink light, run "Off" script)
+#   - on turn off:
+#     - run "Off" script
+#
