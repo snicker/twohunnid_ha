@@ -4,13 +4,16 @@ packages:   # as a list
 substitutions:
   devicename: dales-coffee-machine
   friendly_name: Dale's Coffee Machine
+  sub_on_button_release_script: button_release_next_state
+  sub_relay_is_internal: True
+  sub_button_is_internal: True
 
 # ### plan ###
 # # states the switch can be in and light feedback: #
 # - Off (No light)
 # - Auto-off (Pulsating yellow, low brightness, for two hours)
 # - Ready to brew (three blinks periodically)
-# - On (Green)
+# - Brewing (on) (Green)
 # - Failure - attempt to brew without being ready (pulsate red fast for 5 seconds)
 #
 # # sensors/switches exposed in home assistant #
@@ -44,3 +47,186 @@ substitutions:
 #   - on turn off:
 #     - run "Off" script
 #
+
+# Example configuration entry
+globals:
+  - id: global_state
+    type: std::string
+    restore_value: no
+    max_restore_data_length: 24
+    initial_value: '"Off"'
+
+
+switch:
+  - platform: template
+    id: ready_to_brew
+    name: "Coffee Ready to Brew"
+    restore_mode: ALWAYS_OFF
+    optimistic: True
+    turn_on_action:
+      - if:
+          condition:
+            switch.is_off: ready_to_brew
+          then:
+            - switch.turn_off: brew
+            - script.execute: state_ready_to_brew
+    turn_off_action:
+      - script.execute: state_off
+  - platform: template
+    id: brew
+    name: "Brew"
+    restore_mode: ALWAYS_OFF
+    optimistic: True
+    turn_on_action:
+      - if:
+          condition:
+            switch.is_off: brew
+          then:
+            - script.execute: state_brewing
+    turn_off_action:
+      - script.execute: state_off
+
+binary_sensor:
+  - platform: template
+    name: "Coffee Machine Physical Relay State"
+    id: coffee_machine_physical_relay_state
+    condition:
+      switch.is_on: relay
+
+text_sensor:
+  - platform: template
+    name: "Coffee Machine Switch State"
+    id: coffee_machine_switch_state
+
+script:
+  - id: state_off
+    then:
+      - script.execute: stop_persistent_scripts
+      - light.turn_off: rgb_light
+      - switch.turn_off: relay
+      - script.execute:
+          id: set_global_state
+          state: 'Off'
+      - script.execute: turn_off_switches
+
+  - id: state_auto_off
+    then:
+      - switch.turn_off: relay
+      - script.execute:
+          id: set_global_state
+          state: 'AutoOff'
+      - light.turn_on:
+          id: rgb_light
+          brightness: 50%
+          red: 100%
+          green: 60%
+          blue: 18%
+          effect: "Very Slow Pulse"
+      - delay: 7200s # two hours
+      - script.execute: state_off
+      - script.execute: turn_off_switches
+
+  - id: state_ready_to_brew
+    then:
+      - script.execute: stop_persistent_scripts
+      - light.turn_on:
+          id: rgb_light
+          brightness: 100%
+          red: 0
+          green: 100%
+          blue: 0
+          effect: "Very Slow Pulse"
+      - script.execute:
+          id: set_global_state
+          state: 'ReadyToBrew'
+
+  - id: state_brewing
+    then:
+      - script.stop: state_auto_off
+      - script.stop: state_failure
+      - if:
+          condition:
+            lambda: |-
+              return id(global_state) == "ReadyToBrew";
+          then:
+            - switch.turn_on: relay
+            - light.turn_on: 
+                id: rgb_light
+                brightness: 100%
+                red: 0
+                green: 100%
+                blue: 0
+                effect: "None"
+            - script.execute:
+                id: set_global_state
+                state: 'Brewing'
+            - delay: 5400s # 90 minutes
+            - script.execute: state_auto_off
+          else:
+            - script.execute: state_failure
+
+  - id: state_failure
+    then:
+      - script.stop: state_auto_off
+      - script.execute:
+          id: set_global_state
+          state: 'FailureToBrew'
+      - light.turn_on:
+          id: rgb_light
+          brightness: 100%
+          red: 100%
+          green: 0
+          blue: 0
+          effect: "Fast Pulse"
+      - delay: 5s
+      - script.execute: state_off
+      - script.execute: turn_off_switches
+
+  - id: turn_off_switches
+    then:
+      - if:
+          condition:
+            switch.is_on: ready_to_brew
+          then:
+            switch.turn_off: ready_to_brew
+      - if:
+          condition:
+            switch.is_on: brew
+          then:
+            switch.turn_off: brew
+
+  - id: stop_persistent_scripts
+    then:
+      - script.stop: state_brewing
+      - script.stop: state_auto_off
+      - script.stop: state_failure
+
+  - id: set_global_state
+    parameters:
+      state: string
+    then:
+      - lambda: |-
+          id(global_state) = state;
+      - text_sensor.template.publish:
+          id: coffee_machine_switch_state
+          state: !lambda 'return id(global_state);'
+      
+  - id: button_release_next_state
+    then:
+      - if:
+          condition:
+            lambda: 'return id(global_state) == "Off";'
+          then:
+            - switch.turn_on: ready_to_brew
+          else:
+            - if:
+                condition:
+                  lambda: 'return id(global_state) == "ReadyToBrew";'
+                then:
+                  - switch.turn_on: brew
+                else:
+                  - if:
+                      condition:
+                        lambda: 'return id(global_state) == "Brewing" || id(global_state) == "AutoOff";'
+                      then:
+                        - script.execute: state_off
