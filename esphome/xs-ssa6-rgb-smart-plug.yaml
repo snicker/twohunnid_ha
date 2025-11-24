@@ -5,6 +5,11 @@ substitutions:
   devicename: rgb_smart_plug_10a
   friendly_name: RGB Smart Plug 10A
   device_description: 10A Smart Plug with button and RGB led.
+  sub_on_button_press_script: on_button_press
+  sub_on_button_release_script: on_button_release
+  sub_relay_is_internal: False
+  sub_button_is_internal: False
+  sub_light_is_internal: False
 
 esphome:
   name: $devicename
@@ -73,8 +78,11 @@ binary_sensor:
       number: GPIO13
       inverted: True
     name: ${friendly_name} Button # Name to make button visible in HA
+    internal: ${sub_button_is_internal}
     on_press:
-      - switch.toggle: relay
+      - script.execute: ${sub_on_button_press_script}
+    on_release:
+      - script.execute: ${sub_on_button_release_script}
 
 text_sensor:
   # Reports the ESPHome Version with compile date
@@ -96,6 +104,7 @@ switch:
     name: ${friendly_name}
     pin: GPIO15
     id: relay
+    internal: ${sub_relay_is_internal}
     restore_mode: RESTORE_DEFAULT_OFF #Try to restore relay state after reboot/power-loss event.
     #RESTORE_DEFAULT_OFF (Default) - Attempt to restore state and default to OFF if not possible to restore. Uses flash write cycles.
     #RESTORE_DEFAULT_ON - Attempt to restore state and default to ON. Uses flash write cycles.
@@ -128,6 +137,7 @@ light:
     blue: blue_output
     default_transition_length: 0.5s
     restore_mode: ALWAYS_OFF
+    internal: ${sub_light_is_internal}
     effects: # List some effects
       - strobe:
       - strobe:
@@ -220,3 +230,9 @@ script:
           red: 0%
           green: 100%
           blue: 50%
+  - id: on_button_press
+    then:
+      - delay: 0s
+  - id: on_button_release
+    then:
+      - switch.turn_on: relay
